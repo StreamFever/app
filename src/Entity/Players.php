@@ -20,9 +20,9 @@ class Players
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity=Teams::class, mappedBy="playerIDTeams")
+     * @ORM\ManyToMany(targetEntity=Teams::class, inversedBy="players")
      */
-    private $playerIDTeam;
+    private $playerTeamID;
 
     /**
      * @ORM\OneToOne(targetEntity=Flags::class, cascade={"persist", "remove"})
@@ -36,12 +36,12 @@ class Players
     private $playerName;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $playerAvatar;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $playerUplay;
 
@@ -51,7 +51,7 @@ class Players
     private $playerAtTwitter;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $playerDiscord;
 
@@ -63,11 +63,11 @@ class Players
     /**
      * @ORM\Column(type="boolean")
      */
-    private $playerEtudiantSA;
+    private $playerIsStudentSA;
 
     public function __construct()
     {
-        $this->playerIDTeam = new ArrayCollection();
+        $this->playerTeamID = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -78,29 +78,23 @@ class Players
     /**
      * @return Collection<int, Teams>
      */
-    public function getPlayerIDTeam(): Collection
+    public function getPlayerTeamID(): Collection
     {
-        return $this->playerIDTeam;
+        return $this->playerTeamID;
     }
 
-    public function addPlayerIDTeam(Teams $playerIDTeam): self
+    public function addPlayerTeamID(Teams $playerTeamID): self
     {
-        if (!$this->playerIDTeam->contains($playerIDTeam)) {
-            $this->playerIDTeam[] = $playerIDTeam;
-            $playerIDTeam->setPlayerIDTeams($this);
+        if (!$this->playerTeamID->contains($playerTeamID)) {
+            $this->playerTeamID[] = $playerTeamID;
         }
 
         return $this;
     }
 
-    public function removePlayerIDTeam(Teams $playerIDTeam): self
+    public function removePlayerTeamID(Teams $playerTeamID): self
     {
-        if ($this->playerIDTeam->removeElement($playerIDTeam)) {
-            // set the owning side to null (unless already changed)
-            if ($playerIDTeam->getPlayerIDTeams() === $this) {
-                $playerIDTeam->setPlayerIDTeams(null);
-            }
-        }
+        $this->playerTeamID->removeElement($playerTeamID);
 
         return $this;
     }
@@ -134,7 +128,7 @@ class Players
         return $this->playerAvatar;
     }
 
-    public function setPlayerAvatar(string $playerAvatar): self
+    public function setPlayerAvatar(?string $playerAvatar): self
     {
         $this->playerAvatar = $playerAvatar;
 
@@ -146,7 +140,7 @@ class Players
         return $this->playerUplay;
     }
 
-    public function setPlayerUplay(string $playerUplay): self
+    public function setPlayerUplay(?string $playerUplay): self
     {
         $this->playerUplay = $playerUplay;
 
@@ -170,7 +164,7 @@ class Players
         return $this->playerDiscord;
     }
 
-    public function setPlayerDiscord(string $playerDiscord): self
+    public function setPlayerDiscord(?string $playerDiscord): self
     {
         $this->playerDiscord = $playerDiscord;
 
@@ -189,14 +183,14 @@ class Players
         return $this;
     }
 
-    public function getPlayerEtudiantSA(): ?bool
+    public function getPlayerIsStudentSA(): ?bool
     {
-        return $this->playerEtudiantSA;
+        return $this->playerIsStudentSA;
     }
 
-    public function setPlayerEtudiantSA(bool $playerEtudiantSA): self
+    public function setPlayerIsStudentSA(bool $playerIsStudentSA): self
     {
-        $this->playerEtudiantSA = $playerEtudiantSA;
+        $this->playerIsStudentSA = $playerIsStudentSA;
 
         return $this;
     }

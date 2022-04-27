@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MatchsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,16 +20,16 @@ class Matchs
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=Teams::class, inversedBy="teamIDAlpha", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Teams::class, inversedBy="matchs", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $teamIDAlpha;
+    private $matchIDTeamAlpha;
 
     /**
-     * @ORM\OneToOne(targetEntity=Teams::class, inversedBy="teamIDBeta", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Teams::class, inversedBy="matchs", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $teamIDBeta;
+    private $matchIDTeamBeta;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -45,9 +47,9 @@ class Matchs
     private $matchTimeNext;
 
     /**
-     * @ORM\OneToOne(targetEntity=Maps::class, cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity=Maps::class, inversedBy="matchs")
      */
-    private $matchIDMap;
+    private $matchIDMaps;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -59,31 +61,36 @@ class Matchs
      */
     private $matchStatus;
 
+    public function __construct()
+    {
+        $this->matchIDMaps = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTeamIDAlpha(): ?Teams
+    public function getMatchIDTeamAlpha(): ?Teams
     {
-        return $this->teamIDAlpha;
+        return $this->matchIDTeamAlpha;
     }
 
-    public function setTeamIDAlpha(Teams $teamIDAlpha): self
+    public function setMatchIDTeamAlpha(Teams $matchIDTeamAlpha): self
     {
-        $this->teamIDAlpha = $teamIDAlpha;
+        $this->matchIDTeamAlpha = $matchIDTeamAlpha;
 
         return $this;
     }
 
-    public function getTeamIDBeta(): ?Teams
+    public function getMatchIDTeamBeta(): ?Teams
     {
-        return $this->teamIDBeta;
+        return $this->matchIDTeamBeta;
     }
 
-    public function setTeamIDBeta(Teams $teamIDBeta): self
+    public function setMatchIDTeamBeta(Teams $matchIDTeamBeta): self
     {
-        $this->teamIDBeta = $teamIDBeta;
+        $this->matchIDTeamBeta = $matchIDTeamBeta;
 
         return $this;
     }
@@ -124,14 +131,26 @@ class Matchs
         return $this;
     }
 
-    public function getMatchIDMap(): ?Maps
+    /**
+     * @return Collection<int, Maps>
+     */
+    public function getMatchIDMaps(): Collection
     {
-        return $this->matchIDMap;
+        return $this->matchIDMaps;
     }
 
-    public function setMatchIDMap(?Maps $matchIDMap): self
+    public function addMatchIDMap(Maps $matchIDMap): self
     {
-        $this->matchIDMap = $matchIDMap;
+        if (!$this->matchIDMaps->contains($matchIDMap)) {
+            $this->matchIDMaps[] = $matchIDMap;
+        }
+
+        return $this;
+    }
+
+    public function removeMatchIDMap(Maps $matchIDMap): self
+    {
+        $this->matchIDMaps->removeElement($matchIDMap);
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TeamsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,19 +31,19 @@ class Teams
     private $teamIDFlag;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Players::class, inversedBy="playerIDTeam")
+     * @ORM\ManyToMany(targetEntity=Players::class, mappedBy="playerTeamID")
      */
-    private $playerIDTeams;
+    private $players;
 
     /**
-     * @ORM\OneToOne(targetEntity=Matchs::class, mappedBy="teamIDAlpha", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Matchs::class, mappedBy="matchIDTeamAlpha", cascade={"persist", "remove"})
      */
-    private $teamIDAlpha;
+    private $matchs;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Matchs::class, mappedBy="teamIDBeta", cascade={"persist", "remove"})
-     */
-    private $teamIDBeta;
+    public function __construct()
+    {
+        $this->players = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -72,48 +74,46 @@ class Teams
         return $this;
     }
 
-    public function getPlayerIDTeams(): ?Players
+    /**
+     * @return Collection<int, Players>
+     */
+    public function getPlayers(): Collection
     {
-        return $this->playerIDTeams;
+        return $this->players;
     }
 
-    public function setPlayerIDTeams(?Players $playerIDTeams): self
+    public function addPlayer(Players $player): self
     {
-        $this->playerIDTeams = $playerIDTeams;
+        if (!$this->players->contains($player)) {
+            $this->players[] = $player;
+            $player->addPlayerTeamID($this);
+        }
 
         return $this;
     }
 
-    public function getTeamIDAlpha(): ?Matchs
+    public function removePlayer(Players $player): self
     {
-        return $this->teamIDAlpha;
-    }
-
-    public function setTeamIDAlpha(Matchs $teamIDAlpha): self
-    {
-        // set the owning side of the relation if necessary
-        if ($teamIDAlpha->getTeamIDAlpha() !== $this) {
-            $teamIDAlpha->setTeamIDAlpha($this);
+        if ($this->players->removeElement($player)) {
+            $player->removePlayerTeamID($this);
         }
-
-        $this->teamIDAlpha = $teamIDAlpha;
 
         return $this;
     }
 
-    public function getTeamIDBeta(): ?Matchs
+    public function getMatchs(): ?Matchs
     {
-        return $this->teamIDBeta;
+        return $this->matchs;
     }
 
-    public function setTeamIDBeta(Matchs $teamIDBeta): self
+    public function setMatchs(Matchs $matchs): self
     {
         // set the owning side of the relation if necessary
-        if ($teamIDBeta->getTeamIDBeta() !== $this) {
-            $teamIDBeta->setTeamIDBeta($this);
+        if ($matchs->getMatchIDTeamAlpha() !== $this) {
+            $matchs->setMatchIDTeamAlpha($this);
         }
 
-        $this->teamIDBeta = $teamIDBeta;
+        $this->matchs = $matchs;
 
         return $this;
     }
