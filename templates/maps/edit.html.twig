@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Maps{% endblock %}
+
+{% block body %}
+    <h1>Edit Maps</h1>
+
+    {{ include('maps/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_maps_index') }}">back to list</a>
+
+    {{ include('maps/_delete_form.html.twig') }}
+{% endblock %}
