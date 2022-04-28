@@ -40,7 +40,7 @@ class Game
     private $gameScoreBeta;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="time", nullable=true)
      */
     private $gameTimeNext;
 
@@ -117,12 +117,12 @@ class Game
         return $this;
     }
 
-    public function getGameTimeNext(): ?string
+    public function getGameTimeNext(): ?time
     {
         return $this->gameTimeNext;
     }
 
-    public function setGameTimeNext(?string $gameTimeNext): self
+    public function setGameTimeNext(?time $gameTimeNext): self
     {
         $this->gameTimeNext = $gameTimeNext;
 
