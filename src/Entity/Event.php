@@ -54,6 +54,16 @@ class Event
      */
     private $eventIDSponsor;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $eventStartDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $eventEndDate;
+
     public function __construct()
     {
         $this->eventIDSponsor = new ArrayCollection();
@@ -156,6 +166,30 @@ class Event
     public function removeEventIDSponsor(Sponsor $eventIDSponsor): self
     {
         $this->eventIDSponsor->removeElement($eventIDSponsor);
+
+        return $this;
+    }
+
+    public function getEventStartDate(): ?\DateTimeInterface
+    {
+        return $this->eventStartDate;
+    }
+
+    public function setEventStartDate(?\DateTimeInterface $eventStartDate): self
+    {
+        $this->eventStartDate = $eventStartDate;
+
+        return $this;
+    }
+
+    public function getEventEndDate(): ?\DateTimeInterface
+    {
+        return $this->eventEndDate;
+    }
+
+    public function setEventEndDate(?\DateTimeInterface $eventEndDate): self
+    {
+        $this->eventEndDate = $eventEndDate;
 
         return $this;
     }
