@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\WidgetsRepository;
+use App\Repository\WidgetRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=WidgetsRepository::class)
+ * @ORM\Entity(repositoryClass=WidgetRepository::class)
  */
-class Widgets
+class Widget
 {
     /**
      * @ORM\Id
@@ -28,10 +28,9 @@ class Widgets
     private $widgetVisible;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Streamers::class, inversedBy="widgets")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=Streamer::class, inversedBy="widgets")
      */
-    private $widgetIDStreamer;
+    private $widetIDStreamer;
 
     public function getId(): ?int
     {
@@ -62,14 +61,14 @@ class Widgets
         return $this;
     }
 
-    public function getWidgetIDStreamer(): ?Streamers
+    public function getWidetIDStreamer(): ?Streamer
     {
-        return $this->widgetIDStreamer;
+        return $this->widetIDStreamer;
     }
 
-    public function setWidgetIDStreamer(?Streamers $widgetIDStreamer): self
+    public function setWidetIDStreamer(?Streamer $widetIDStreamer): self
     {
-        $this->widgetIDStreamer = $widgetIDStreamer;
+        $this->widetIDStreamer = $widetIDStreamer;
 
         return $this;
     }

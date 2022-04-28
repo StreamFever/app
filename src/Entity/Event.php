@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\EventsRepository;
+use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=EventsRepository::class)
+ * @ORM\Entity(repositoryClass=EventRepository::class)
  */
-class Events
+class Event
 {
     /**
      * @ORM\Id
@@ -50,13 +50,13 @@ class Events
     private $eventCurrentPhase;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Sponsors::class)
+     * @ORM\ManyToMany(targetEntity=Sponsor::class, inversedBy="events")
      */
-    private $eventIdSponsor;
+    private $eventIDSponsor;
 
     public function __construct()
     {
-        $this->eventIdSponsor = new ArrayCollection();
+        $this->eventIDSponsor = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -137,25 +137,25 @@ class Events
     }
 
     /**
-     * @return Collection<int, Sponsors>
+     * @return Collection<int, Sponsor>
      */
-    public function getEventIdSponsor(): Collection
+    public function getEventIDSponsor(): Collection
     {
-        return $this->eventIdSponsor;
+        return $this->eventIDSponsor;
     }
 
-    public function addEventIdSponsor(Sponsors $eventIdSponsor): self
+    public function addEventIDSponsor(Sponsor $eventIDSponsor): self
     {
-        if (!$this->eventIdSponsor->contains($eventIdSponsor)) {
-            $this->eventIdSponsor[] = $eventIdSponsor;
+        if (!$this->eventIDSponsor->contains($eventIDSponsor)) {
+            $this->eventIDSponsor[] = $eventIDSponsor;
         }
 
         return $this;
     }
 
-    public function removeEventIdSponsor(Sponsors $eventIdSponsor): self
+    public function removeEventIDSponsor(Sponsor $eventIDSponsor): self
     {
-        $this->eventIdSponsor->removeElement($eventIdSponsor);
+        $this->eventIDSponsor->removeElement($eventIDSponsor);
 
         return $this;
     }

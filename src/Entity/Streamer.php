@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\StreamersRepository;
+use App\Repository\StreamerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=StreamersRepository::class)
+ * @ORM\Entity(repositoryClass=StreamerRepository::class)
  */
-class Streamers
+class Streamer
 {
     /**
      * @ORM\Id
@@ -22,7 +22,7 @@ class Streamers
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $streamerPseudo;
+    private $streamPseudo;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -30,7 +30,7 @@ class Streamers
     private $streamerTwitch;
 
     /**
-     * @ORM\OneToMany(targetEntity=Widgets::class, mappedBy="widgetIDStreamer")
+     * @ORM\OneToMany(targetEntity=Widget::class, mappedBy="widetIDStreamer")
      */
     private $widgets;
 
@@ -44,14 +44,14 @@ class Streamers
         return $this->id;
     }
 
-    public function getStreamerPseudo(): ?string
+    public function getStreamPseudo(): ?string
     {
-        return $this->streamerPseudo;
+        return $this->streamPseudo;
     }
 
-    public function setStreamerPseudo(string $streamerPseudo): self
+    public function setStreamPseudo(string $streamPseudo): self
     {
-        $this->streamerPseudo = $streamerPseudo;
+        $this->streamPseudo = $streamPseudo;
 
         return $this;
     }
@@ -69,29 +69,29 @@ class Streamers
     }
 
     /**
-     * @return Collection<int, Widgets>
+     * @return Collection<int, Widget>
      */
     public function getWidgets(): Collection
     {
         return $this->widgets;
     }
 
-    public function addWidget(Widgets $widget): self
+    public function addWidget(Widget $widget): self
     {
         if (!$this->widgets->contains($widget)) {
             $this->widgets[] = $widget;
-            $widget->setWidgetIDStreamer($this);
+            $widget->setWidetIDStreamer($this);
         }
 
         return $this;
     }
 
-    public function removeWidget(Widgets $widget): self
+    public function removeWidget(Widget $widget): self
     {
         if ($this->widgets->removeElement($widget)) {
             // set the owning side to null (unless already changed)
-            if ($widget->getWidgetIDStreamer() === $this) {
-                $widget->setWidgetIDStreamer(null);
+            if ($widget->getWidetIDStreamer() === $this) {
+                $widget->setWidetIDStreamer(null);
             }
         }
 

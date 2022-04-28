@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\TweetsRepository;
+use App\Repository\TweetRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=TweetsRepository::class)
+ * @ORM\Entity(repositoryClass=TweetRepository::class)
  */
-class Tweets
+class Tweet
 {
     /**
      * @ORM\Id
@@ -28,22 +28,22 @@ class Tweets
     private $tweetAt;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $tweetAvatarURL;
+    private $tweetAvatar;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $tweetMediaType;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $tweetMediaURL;
+    private $tweetMediaUrl;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $tweetContent;
 
@@ -76,14 +76,14 @@ class Tweets
         return $this;
     }
 
-    public function getTweetAvatarURL(): ?string
+    public function getTweetAvatar(): ?string
     {
-        return $this->tweetAvatarURL;
+        return $this->tweetAvatar;
     }
 
-    public function setTweetAvatarURL(string $tweetAvatarURL): self
+    public function setTweetAvatar(?string $tweetAvatar): self
     {
-        $this->tweetAvatarURL = $tweetAvatarURL;
+        $this->tweetAvatar = $tweetAvatar;
 
         return $this;
     }
@@ -100,14 +100,14 @@ class Tweets
         return $this;
     }
 
-    public function getTweetMediaURL(): ?string
+    public function getTweetMediaUrl(): ?string
     {
-        return $this->tweetMediaURL;
+        return $this->tweetMediaUrl;
     }
 
-    public function setTweetMediaURL(?string $tweetMediaURL): self
+    public function setTweetMediaUrl(?string $tweetMediaUrl): self
     {
-        $this->tweetMediaURL = $tweetMediaURL;
+        $this->tweetMediaUrl = $tweetMediaUrl;
 
         return $this;
     }
@@ -117,7 +117,7 @@ class Tweets
         return $this->tweetContent;
     }
 
-    public function setTweetContent(string $tweetContent): self
+    public function setTweetContent(?string $tweetContent): self
     {
         $this->tweetContent = $tweetContent;
 

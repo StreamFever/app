@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\PlayersRepository;
+use App\Repository\PlayerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=PlayersRepository::class)
+ * @ORM\Entity(repositoryClass=PlayerRepository::class)
  */
-class Players
+class Player
 {
     /**
      * @ORM\Id
@@ -20,13 +20,12 @@ class Players
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Teams::class, inversedBy="players")
+     * @ORM\ManyToMany(targetEntity=Team::class, inversedBy="players")
      */
-    private $playerTeamID;
+    private $playerIDTeam;
 
     /**
-     * @ORM\OneToOne(targetEntity=Flags::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=Flag::class, inversedBy="players")
      */
     private $playerIDFlag;
 
@@ -63,11 +62,11 @@ class Players
     /**
      * @ORM\Column(type="boolean")
      */
-    private $playerIsStudentSA;
+    private $playerStudentSA;
 
     public function __construct()
     {
-        $this->playerTeamID = new ArrayCollection();
+        $this->playerIDTeam = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,35 +75,35 @@ class Players
     }
 
     /**
-     * @return Collection<int, Teams>
+     * @return Collection<int, Team>
      */
-    public function getPlayerTeamID(): Collection
+    public function getPlayerIDTeam(): Collection
     {
-        return $this->playerTeamID;
+        return $this->playerIDTeam;
     }
 
-    public function addPlayerTeamID(Teams $playerTeamID): self
+    public function addPlayerIDTeam(Team $playerIDTeam): self
     {
-        if (!$this->playerTeamID->contains($playerTeamID)) {
-            $this->playerTeamID[] = $playerTeamID;
+        if (!$this->playerIDTeam->contains($playerIDTeam)) {
+            $this->playerIDTeam[] = $playerIDTeam;
         }
 
         return $this;
     }
 
-    public function removePlayerTeamID(Teams $playerTeamID): self
+    public function removePlayerIDTeam(Team $playerIDTeam): self
     {
-        $this->playerTeamID->removeElement($playerTeamID);
+        $this->playerIDTeam->removeElement($playerIDTeam);
 
         return $this;
     }
 
-    public function getPlayerIDFlag(): ?Flags
+    public function getPlayerIDFlag(): ?Flag
     {
         return $this->playerIDFlag;
     }
 
-    public function setPlayerIDFlag(Flags $playerIDFlag): self
+    public function setPlayerIDFlag(?Flag $playerIDFlag): self
     {
         $this->playerIDFlag = $playerIDFlag;
 
@@ -183,14 +182,14 @@ class Players
         return $this;
     }
 
-    public function getPlayerIsStudentSA(): ?bool
+    public function getPlayerStudentSA(): ?bool
     {
-        return $this->playerIsStudentSA;
+        return $this->playerStudentSA;
     }
 
-    public function setPlayerIsStudentSA(bool $playerIsStudentSA): self
+    public function setPlayerStudentSA(bool $playerStudentSA): self
     {
-        $this->playerIsStudentSA = $playerIsStudentSA;
+        $this->playerStudentSA = $playerStudentSA;
 
         return $this;
     }
