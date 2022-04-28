@@ -2,32 +2,32 @@
 
 namespace App\Repository;
 
-use App\Entity\Events;
+use App\Entity\Player;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Events>
+ * @extends ServiceEntityRepository<Player>
  *
- * @method Events|null find($id, $lockMode = null, $lockVersion = null)
- * @method Events|null findOneBy(array $criteria, array $orderBy = null)
- * @method Events[]    findAll()
- * @method Events[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Player|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Player|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Player[]    findAll()
+ * @method Player[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EventsRepository extends ServiceEntityRepository
+class PlayerRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Events::class);
+        parent::__construct($registry, Player::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Events $entity, bool $flush = true): void
+    public function add(Player $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -39,7 +39,7 @@ class EventsRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Events $entity, bool $flush = true): void
+    public function remove(Player $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -48,15 +48,15 @@ class EventsRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Events[] Returns an array of Events objects
+    //  * @return Player[] Returns an array of Player objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
+            ->orderBy('p.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -65,10 +65,10 @@ class EventsRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Events
+    public function findOneBySomeField($value): ?Player
     {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

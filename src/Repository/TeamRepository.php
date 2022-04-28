@@ -2,32 +2,32 @@
 
 namespace App\Repository;
 
-use App\Entity\Sponsors;
+use App\Entity\Team;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Sponsors>
+ * @extends ServiceEntityRepository<Team>
  *
- * @method Sponsors|null find($id, $lockMode = null, $lockVersion = null)
- * @method Sponsors|null findOneBy(array $criteria, array $orderBy = null)
- * @method Sponsors[]    findAll()
- * @method Sponsors[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Team|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Team|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Team[]    findAll()
+ * @method Team[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SponsorsRepository extends ServiceEntityRepository
+class TeamRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Sponsors::class);
+        parent::__construct($registry, Team::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Sponsors $entity, bool $flush = true): void
+    public function add(Team $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -39,7 +39,7 @@ class SponsorsRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Sponsors $entity, bool $flush = true): void
+    public function remove(Team $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -48,15 +48,15 @@ class SponsorsRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Sponsors[] Returns an array of Sponsors objects
+    //  * @return Team[] Returns an array of Team objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
+            ->orderBy('t.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -65,10 +65,10 @@ class SponsorsRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Sponsors
+    public function findOneBySomeField($value): ?Team
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

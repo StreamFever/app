@@ -2,32 +2,32 @@
 
 namespace App\Repository;
 
-use App\Entity\Players;
+use App\Entity\Widget;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Players>
+ * @extends ServiceEntityRepository<Widget>
  *
- * @method Players|null find($id, $lockMode = null, $lockVersion = null)
- * @method Players|null findOneBy(array $criteria, array $orderBy = null)
- * @method Players[]    findAll()
- * @method Players[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Widget|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Widget|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Widget[]    findAll()
+ * @method Widget[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PlayersRepository extends ServiceEntityRepository
+class WidgetRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Players::class);
+        parent::__construct($registry, Widget::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Players $entity, bool $flush = true): void
+    public function add(Widget $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -39,7 +39,7 @@ class PlayersRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Players $entity, bool $flush = true): void
+    public function remove(Widget $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -48,15 +48,15 @@ class PlayersRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Players[] Returns an array of Players objects
+    //  * @return Widget[] Returns an array of Widget objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
+            ->orderBy('w.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -65,10 +65,10 @@ class PlayersRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Players
+    public function findOneBySomeField($value): ?Widget
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

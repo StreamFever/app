@@ -2,32 +2,32 @@
 
 namespace App\Repository;
 
-use App\Entity\Streamers;
+use App\Entity\Streamer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Streamers>
+ * @extends ServiceEntityRepository<Streamer>
  *
- * @method Streamers|null find($id, $lockMode = null, $lockVersion = null)
- * @method Streamers|null findOneBy(array $criteria, array $orderBy = null)
- * @method Streamers[]    findAll()
- * @method Streamers[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Streamer|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Streamer|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Streamer[]    findAll()
+ * @method Streamer[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class StreamersRepository extends ServiceEntityRepository
+class StreamerRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Streamers::class);
+        parent::__construct($registry, Streamer::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Streamers $entity, bool $flush = true): void
+    public function add(Streamer $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -39,7 +39,7 @@ class StreamersRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Streamers $entity, bool $flush = true): void
+    public function remove(Streamer $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -48,7 +48,7 @@ class StreamersRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Streamers[] Returns an array of Streamers objects
+    //  * @return Streamer[] Returns an array of Streamer objects
     //  */
     /*
     public function findByExampleField($value)
@@ -65,7 +65,7 @@ class StreamersRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Streamers
+    public function findOneBySomeField($value): ?Streamer
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')

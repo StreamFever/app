@@ -2,32 +2,32 @@
 
 namespace App\Repository;
 
-use App\Entity\Widgets;
+use App\Entity\Role;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Widgets>
+ * @extends ServiceEntityRepository<Role>
  *
- * @method Widgets|null find($id, $lockMode = null, $lockVersion = null)
- * @method Widgets|null findOneBy(array $criteria, array $orderBy = null)
- * @method Widgets[]    findAll()
- * @method Widgets[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Role|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Role|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Role[]    findAll()
+ * @method Role[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class WidgetsRepository extends ServiceEntityRepository
+class RoleRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Widgets::class);
+        parent::__construct($registry, Role::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Widgets $entity, bool $flush = true): void
+    public function add(Role $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -39,7 +39,7 @@ class WidgetsRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Widgets $entity, bool $flush = true): void
+    public function remove(Role $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -48,15 +48,15 @@ class WidgetsRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Widgets[] Returns an array of Widgets objects
+    //  * @return Role[] Returns an array of Role objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('w.id', 'ASC')
+            ->orderBy('r.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -65,10 +65,10 @@ class WidgetsRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Widgets
+    public function findOneBySomeField($value): ?Role
     {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

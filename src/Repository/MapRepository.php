@@ -2,32 +2,32 @@
 
 namespace App\Repository;
 
-use App\Entity\Flags;
+use App\Entity\Map;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Flags>
+ * @extends ServiceEntityRepository<Map>
  *
- * @method Flags|null find($id, $lockMode = null, $lockVersion = null)
- * @method Flags|null findOneBy(array $criteria, array $orderBy = null)
- * @method Flags[]    findAll()
- * @method Flags[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Map|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Map|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Map[]    findAll()
+ * @method Map[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class FlagsRepository extends ServiceEntityRepository
+class MapRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Flags::class);
+        parent::__construct($registry, Map::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Flags $entity, bool $flush = true): void
+    public function add(Map $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -39,7 +39,7 @@ class FlagsRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Flags $entity, bool $flush = true): void
+    public function remove(Map $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -48,15 +48,15 @@ class FlagsRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Flags[] Returns an array of Flags objects
+    //  * @return Map[] Returns an array of Map objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
+            ->orderBy('m.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -65,10 +65,10 @@ class FlagsRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Flags
+    public function findOneBySomeField($value): ?Map
     {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

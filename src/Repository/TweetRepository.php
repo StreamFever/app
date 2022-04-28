@@ -2,32 +2,32 @@
 
 namespace App\Repository;
 
-use App\Entity\Teams;
+use App\Entity\Tweet;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Teams>
+ * @extends ServiceEntityRepository<Tweet>
  *
- * @method Teams|null find($id, $lockMode = null, $lockVersion = null)
- * @method Teams|null findOneBy(array $criteria, array $orderBy = null)
- * @method Teams[]    findAll()
- * @method Teams[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Tweet|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Tweet|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Tweet[]    findAll()
+ * @method Tweet[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TeamsRepository extends ServiceEntityRepository
+class TweetRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Teams::class);
+        parent::__construct($registry, Tweet::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Teams $entity, bool $flush = true): void
+    public function add(Tweet $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -39,7 +39,7 @@ class TeamsRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Teams $entity, bool $flush = true): void
+    public function remove(Tweet $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -48,7 +48,7 @@ class TeamsRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Teams[] Returns an array of Teams objects
+    //  * @return Tweet[] Returns an array of Tweet objects
     //  */
     /*
     public function findByExampleField($value)
@@ -65,7 +65,7 @@ class TeamsRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Teams
+    public function findOneBySomeField($value): ?Tweet
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.exampleField = :val')

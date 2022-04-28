@@ -2,32 +2,32 @@
 
 namespace App\Repository;
 
-use App\Entity\Tweets;
+use App\Entity\Flag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Tweets>
+ * @extends ServiceEntityRepository<Flag>
  *
- * @method Tweets|null find($id, $lockMode = null, $lockVersion = null)
- * @method Tweets|null findOneBy(array $criteria, array $orderBy = null)
- * @method Tweets[]    findAll()
- * @method Tweets[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Flag|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Flag|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Flag[]    findAll()
+ * @method Flag[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TweetsRepository extends ServiceEntityRepository
+class FlagRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Tweets::class);
+        parent::__construct($registry, Flag::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Tweets $entity, bool $flush = true): void
+    public function add(Flag $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -39,7 +39,7 @@ class TweetsRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Tweets $entity, bool $flush = true): void
+    public function remove(Flag $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -48,15 +48,15 @@ class TweetsRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Tweets[] Returns an array of Tweets objects
+    //  * @return Flag[] Returns an array of Flag objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
+            ->orderBy('f.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -65,10 +65,10 @@ class TweetsRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Tweets
+    public function findOneBySomeField($value): ?Flag
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
