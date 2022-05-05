@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220428173928 extends AbstractMigration
+final class Version20220504191132 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,12 +20,16 @@ final class Version20220428173928 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user CHANGE user_role_id user_role_id INT DEFAULT NULL, CHANGE user_first_name user_first_name VARCHAR(50) DEFAULT NULL, CHANGE user_last_name user_last_name VARCHAR(50) DEFAULT NULL');
+        $this->addSql('ALTER TABLE widget ADD id_owner_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE widget ADD CONSTRAINT FK_85F91ED02EE78D6C FOREIGN KEY (id_owner_id) REFERENCES user (id)');
+        $this->addSql('CREATE INDEX IDX_85F91ED02EE78D6C ON widget (id_owner_id)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user CHANGE user_role_id user_role_id INT NOT NULL, CHANGE user_first_name user_first_name VARCHAR(255) DEFAULT NULL, CHANGE user_last_name user_last_name VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE widget DROP FOREIGN KEY FK_85F91ED02EE78D6C');
+        $this->addSql('DROP INDEX IDX_85F91ED02EE78D6C ON widget');
+        $this->addSql('ALTER TABLE widget DROP id_owner_id');
     }
 }
