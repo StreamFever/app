@@ -57,10 +57,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $overlaysAllowed;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Logs::class, mappedBy="LogsUser")
+     */
+    private $logs;
+
     public function __construct()
     {
         $this->overlayOwned = new ArrayCollection();
         $this->overlaysAllowed = new ArrayCollection();
+        $this->logs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -228,6 +234,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->overlaysAllowed->removeElement($overlaysAllowed)) {
             $overlaysAllowed->removeWidgetPermission($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Logs>
+     */
+    public function getLogs(): Collection
+    {
+        return $this->logs;
+    }
+
+    public function addLog(Logs $log): self
+    {
+        if (!$this->logs->contains($log)) {
+            $this->logs[] = $log;
+            $log->addLogsUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLog(Logs $log): self
+    {
+        if ($this->logs->removeElement($log)) {
+            $log->removeLogsUser($this);
         }
 
         return $this;
