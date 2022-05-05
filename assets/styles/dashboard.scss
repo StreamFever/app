@@ -1,0 +1,121 @@
+$font: 'Alumni Sans';
+$blue: #144478;
+$yellow: #EBBE1A;
+
+* {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+}
+
+ol,
+li {
+ list-style: none;
+}
+
+a {
+ text-decoration-line: none;
+ color: white
+}
+
+body {
+ background-color: burlywood;
+ font-family: $font;
+}
+
+#grid_container {
+ display: grid;
+ grid-template-columns: 300px 1fr;
+ grid-template-rows: 1fr;
+ gap: 0px 0px;
+ grid-template-areas:
+  ". .";
+}
+
+// Sidebar
+#sidebar {
+ background-color: $blue;
+ min-height: 100vh;
+ max-height: 200vh;
+ height: 100%; // toute la hauteur de l'écran
+
+ .container {
+  padding: 29px 0 46px 36px;
+  display: flex;
+  flex-flow: column nowrap;
+
+  .profile {
+   display: flex;
+   flex-flow: row nowrap;
+   align-items: center;
+   gap: .4rem;
+
+   .left {
+    width: 25%;
+
+    .img {
+     width: 100%;
+
+     img {
+      width: 100%;
+      border-radius: 50%;
+
+     }
+    }
+   }
+
+   .right {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0;
+
+    span {
+     color: white;
+     font-size: 2rem;
+     font-weight: 300;
+    }
+
+    a {
+     color: white;
+     font-size: 1rem;
+     font-weight: 600;
+     margin-top: -1rem;
+
+     &:hover {
+      color: $yellow;
+     }
+    }
+   }
+  }
+
+  .menu {
+   margin: 2rem 0;
+   padding-left: 0;
+
+   li {
+    padding: 1rem 0;
+
+    a {
+     .iconify {
+      font-size: 36px;
+     }
+
+     display: flex;
+     flex-flow: row nowrap;
+     align-items: center;
+     gap: 1.3rem;
+     font-weight: 300;
+     font-size: 1.5rem;
+
+     &:hover {
+      color: $yellow;
+     }
+    }
+   }
+  }
+
+  #second_menu_sidebar {
+   margin-top: 4rem;
+  }
+ }
+}
