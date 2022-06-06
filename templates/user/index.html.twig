@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs
+{% endblock %}
+
+{% block body %}
+	<h1>Liste des utilistateurs</h1>
+	<pre>
+		{{ dump(users) }}
+	</pre>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Avatar</th>
+				<th>Email</th>
+				<th>Roles</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
+				{% set roles = user.roles %}
+				<tr>
+					<td>{{ user.id }}</td>
+					<td><img src="{{ user.avatarURL != null ? user.avatarURL : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Avatar de {{ user.username }}" style="width:15%;"></td>
+					<td>{{ user.username }}</td>
+					<td>
+						{% for role in roles %}
+							{% if role == "ROLE_USER" %}
+								<span class="badge bg-dark">
+									<span class="iconify" data-icon="ant-design:user-outlined"></span>
+									User</span>
+							{% endif %}
+							{% if role == "ROLE_ADMIN" %}
+								<span class="badge bg-danger">
+									<span class="iconify" data-icon="dashicons:admin-network"></span>
+									Admin</span>
+							{% endif %}
+						{% endfor %}
+					</td>
+					<td>
+						<a class="btn btn-info" href="{{ path('app_user_show', {'id': user.id}) }}">
+							<span class="iconify" data-icon="carbon:view-filled"></span>Détails</a>
+						<a class="btn btn-warning" href="{{ path('app_user_edit', {'id': user.id}) }}">
+							<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="9">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_user_new') }}">Create new</a>
+{% endblock %}
