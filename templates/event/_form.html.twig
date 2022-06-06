@@ -1,4 +1,104 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+{% if form_errors(form) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form) }}
+	</div>
+{% endif %}
+
+<div class="form-floating mb-3">
+	{{ form_widget(form.eventName, {
+        'attr': {'class': 'form-control'},
+        'id': "eventName",
+        }) }}
+	{{ form_label(form.eventName, null, {
+    'label': 'Définissez un nom pour l\'événement',
+    'id': 'eventName'
+        }) }}
+</div>
+
+<div class="form-floating mb-3">
+	{{ form_widget(form.eventEdition, {
+        'attr': {'class': 'form-select'},
+        'id': "eventEdition",
+        }) }}
+	{{ form_label(form.eventEdition, null, {
+    'label': 'Sélectionnez une édition',
+    'id': 'eventEdition'
+        }) }}
+</div>
+
+<div class="form-floating mb-3">
+	{{ form_widget(form.eventLogo, {
+        'attr': {'class': 'form-control'},
+        'id': "eventLogo",
+        }) }}
+	{{ form_label(form.eventLogo, null, {
+    'label': 'Définir un logo',
+    'id': 'eventLogo'
+        }) }}
+</div>
+
+<div class="row">
+	<div class="col">
+		<div class="form-floating mb-3">
+			{{ form_widget(form.eventHashtag, {
+            'attr': {'class': 'form-control'},
+            'id': "eventHashtag",
+            }) }}
+			{{ form_label(form.eventHashtag, null, {
+        'label': 'Définir le hashtag',
+        'id': 'eventHashtag'
+            }) }}
+		</div>
+	</div>
+	<div class="col">
+		<div class="form-floating mb-3">
+			{{ form_widget(form.eventCashprize, {
+        'attr': {'class': 'form-control'},
+        'id': "eventCashprize",
+        }) }}
+			{{ form_label(form.eventCashprize, null, {
+    'label': 'Définir le cashprize',
+    'id': 'eventCashprize'
+        }) }}
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col">
+		{{ form_widget(form.eventStartDate, {
+        'attr': {'class': 'form-control'},
+        'id': "eventStartDate",
+        }) }}
+		{{ form_label(form.eventStartDate, null, {
+    'label': 'Définir la date de départ',
+    'id': 'eventStartDate'
+        }) }}
+	</div>
+	<div class="col">
+		{{ form_widget(form.eventEndDate, {
+        'attr': {'class': 'form-control'},
+        'id': "eventEndDate",
+        }) }}
+		{{ form_label(form.eventEndDate, null, {
+    'label': 'Définir la date de fin',
+    'id': 'eventEndDate'
+        }) }}
+	</div>
+</div>
+
+<div class="form-floating mb-3">
+	{{ form_widget(form.eventIdSponsor, {
+        'attr': {'class': 'form-select'},
+        'id': "eventIdSponsor",
+        }) }}
+	{{ form_label(form.eventIdSponsor, null, {
+    'label': 'Sélectionnez des sponsors',
+    'id': 'eventIdSponsor'
+        }) }}
+</div>
+
+<button class="btn btn-success">{{ button_label|default('Créer cet événement') }}</button>
 {{ form_end(form) }}
