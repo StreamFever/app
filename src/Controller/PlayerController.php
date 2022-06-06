@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/player")
+ * @Route("/admin/players")
  */
 class PlayerController extends AbstractController
 {
@@ -24,6 +24,7 @@ class PlayerController extends AbstractController
             'players' => $playerRepository->findAll(),
         ]);
     }
+
 
     /**
      * @Route("/new", name="app_player_new", methods={"GET", "POST"})
