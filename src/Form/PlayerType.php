@@ -18,10 +18,12 @@ class PlayerType extends AbstractType
             ->add('playerName')
             ->add('playerAvatar')
             ->add('playerUplay')
+            ->add('playerUplayTag')
             ->add('playerAtTwitter')
             ->add('playerDiscord')
             ->add('playerTwitch')
             ->add('playerStudentSA')
+            ->add('playerIdOBSNinja')
             ->add('playerIDTeam', EntityType::class, ['class' => Team::class,
             'choice_label' => 'team_name',
             'multiple' => true,

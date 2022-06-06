@@ -1,0 +1,30 @@
+{% extends "base_overlay.html.twig" %}
+
+{% block body %}
+	{% for overlay in overlays %}
+		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "cams" or overlay.widgetIdBeta and overlay.widgetIdBeta == "cams" %}
+			{{ include('overlay/widgets/cams/v1.html.twig') }}
+		{% endif %}
+		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "topbar" or overlay.widgetIdBeta and overlay.widgetIdBeta == "topbar" %}
+			{{ include('overlay/widgets/topbar/v1.html.twig') }}
+		{% endif %}
+		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "versus" or overlay.widgetIdBeta and overlay.widgetIdBeta == "versus" %}
+			{{ include('overlay/widgets/versus/v1.html.twig') }}
+		{% endif %}
+		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "popup_text" or overlay.widgetIdBeta and overlay.widgetIdBeta == "popup_text" %}
+			{{ include('overlay/widgets/popup/small_txt.html.twig') }}
+		{% endif %}
+		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "next" or overlay.widgetIdBeta and overlay.widgetIdBeta == "next" %}
+			{{ include('overlay/widgets/next/v1.html.twig') }}
+		{% endif %}
+		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "tweet_sample" or overlay.widgetIdBeta and overlay.widgetIdBeta == "tweet_sample" %}
+			{{ include('overlay/widgets/tweets/sample.html.twig') }}
+		{% endif %}
+		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "tweet_img" or overlay.widgetIdBeta and overlay.widgetIdBeta == "tweet_img" %}
+			{{ include('overlay/widgets/tweets/img.html.twig') }}
+		{% endif %}
+		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "tweet_video" or overlay.widgetIdBeta and overlay.widgetIdBeta == "tweet_video" %}
+			{{ include('overlay/widgets/tweets/video.html.twig') }}
+		{% endif %}
+	{% endfor %}
+{% endblock %}

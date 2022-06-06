@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un nouveau widget
+{% endblock %}
+
+{% block body %}
+	<h1>Créer un nouveau widget</h1>
+
+	{{ include('overlay/_form.html.twig') }}
+
+	<a class="btn btn-dark" href="{{ path('app_overlay_index') }}">Retour à la liste</a>
+{% endblock %}

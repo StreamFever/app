@@ -1,0 +1,69 @@
+{{ form_start(form) }}
+
+{% if form_errors(form) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form) }}
+	</div>
+{% endif %}
+
+
+<div class="form-floating mb-3">
+	{{ form_widget(form.widgetName, {
+        'attr': {'class': 'form-control'},
+        'id': "widgetName",
+        }) }}
+	{{ form_label(form.widgetName, null, {
+    'label': 'Définissez un nom pour le widget',
+    'id': 'widgetName'
+        }) }}
+</div>
+
+<div class="form-floating mb-3">
+	{{ form_widget(form.widgetIdAlpha, {
+        'attr': {'class': 'form-control'},
+        'id': "widgetIdAlpha",
+        }) }}
+	{{ form_label(form.widgetIdAlpha, null, {
+    'label': 'Définissez un id pour le widget principal',
+    'id': 'widgetIdAlpha'
+        }) }}
+</div>
+
+<div class="form-floating mb-3">
+	{{ form_widget(form.widgetIdBeta, {
+        'attr': {'class': 'form-control'},
+        'id': "widgetIdBeta",
+        }) }}
+	{{ form_label(form.widgetIdBeta, null, {
+    'label': 'Définissez un id pour le widget secondaire',
+    'id': 'widgetIdBeta'
+        }) }}
+</div>
+
+<div class="form-floating mb-3">
+	{{ form_widget(form.widgetOwner, {
+        'attr': {'class': 'form-select'},
+        'id': "widgetOwner",
+        }) }}
+	{{ form_label(form.widgetOwner, null, {
+    'label': 'Voulez-vous changer le propriétaire de cet overlay ?',
+    'id': 'widgetOwner'
+        }) }}
+</div>
+
+<div>
+	{{ form_label(form.WidgetPermission, null, {
+    'label': 'Merci de sélectionner les personnes qui peuvent gérer votre overlay :',
+    'label_attr': {'class': 'form-label select-label'},
+    }) }}
+	{{ form_widget(form.WidgetPermission, {
+        'attr': {
+            'class': 'selectpicker form-control',
+            'data-max-options': 7
+            },
+        }) }}
+</div>
+
+
+<button class="btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
+{{ form_end(form) }}

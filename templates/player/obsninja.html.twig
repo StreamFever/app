@@ -1,0 +1,15 @@
+{% extends 'base_overlay.html.twig' %}
+
+{% block title %}OBS Ninja Player
+{% endblock %}
+
+{% block body %}
+	{% if player.playerIdOBSNinja %}
+		<iframe src="https://live.artaic.fr/?view={{player.playerIdOBSNinja}}&scene&room=heros_oregon&password=herosoregonsa&sl=fire" frameborder="0"></iframe>
+		<span id="rank">
+			<div class="img">
+				<img src="https://zupimages.net/up/22/18/8txy.png" alt="">
+			</div>
+		</span>
+	{% endif %}
+{% endblock %}
