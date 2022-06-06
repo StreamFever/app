@@ -1,50 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Player{% endblock %}
+{% block title %}Player
+{% endblock %}
 
 {% block body %}
-    <h1>Player</h1>
+	<h1>Player</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ player.id }}</td>
-            </tr>
-            <tr>
-                <th>PlayerName</th>
-                <td>{{ player.playerName }}</td>
-            </tr>
-            <tr>
-                <th>PlayerAvatar</th>
-                <td>{{ player.playerAvatar }}</td>
-            </tr>
-            <tr>
-                <th>PlayerUplay</th>
-                <td>{{ player.playerUplay }}</td>
-            </tr>
-            <tr>
-                <th>PlayerAtTwitter</th>
-                <td>{{ player.playerAtTwitter }}</td>
-            </tr>
-            <tr>
-                <th>PlayerDiscord</th>
-                <td>{{ player.playerDiscord }}</td>
-            </tr>
-            <tr>
-                <th>PlayerTwitch</th>
-                <td>{{ player.playerTwitch }}</td>
-            </tr>
-            <tr>
-                <th>PlayerStudentSA</th>
-                <td>{{ player.playerStudentSA ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<tableclass="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ player.id }}</td>
+			</tr>
+			<tr>
+				<th>Id OBS NINJA</th>
+				<td>{
+					{% if {{ player.playerIdOBSNinja }} %}
+						{{ player.playerIdOBSNinja }}
+					{% endif %}}</td>
+			</tr>
+			<tr>
+				<th>PlayerName</th>
+				<td>{{ player.playerName }}</td>
+			</tr>
+			<tr>
+				<th>PlayerAvatar</th>
+				<td>{{ player.playerAvatar }}</td>
+			</tr>
+			<tr>
+				<th>PlayerUplay</th>
+				<td>{{ player.playerUplay }}</td>
+			</tr>
+			<tr>
+				<th>PlayerAtTwitter</th>
+				<td>{{ player.playerAtTwitter }}</td>
+			</tr>
+			<tr>
+				<th>PlayerDiscord</th>
+				<td>{{ player.playerDiscord }}</td>
+			</tr>
+			<tr>
+				<th>PlayerTwitch</th>
+				<td>{{ player.playerTwitch }}</td>
+			</tr>
+			<tr>
+				<th>PlayerStudentSA</th>
+				<td>{{ player.playerStudentSA ? 'Yes' : 'No' }}</td>
+			</tr>
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_player_index') }}">back to list</a>
+	<a href="{{ path('app_player_index') }}">back to list</a>
 
-    <a href="{{ path('app_player_edit', {'id': player.id}) }}">edit</a>
+	<a href="{{ path('app_player_edit', {'id': player.id}) }}">edit</a>
 
-    {{ include('player/_delete_form.html.twig') }}
+	{{ include('player/_delete_form.html.twig') }}
 {% endblock %}
