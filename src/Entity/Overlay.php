@@ -6,9 +6,15 @@ use App\Repository\OverlayRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=OverlayRepository::class)
+ * @ApiResource(
+ * normalizationContext={"groups"={"read:overlay"}}
+ * )
  */
 class Overlay
 {
@@ -16,28 +22,45 @@ class Overlay
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"read:overlay"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read:overlay"})
      */
     private $widgetName;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"read:overlay"})
      */
     private $widgetVisible;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="overlayOwned")
+     * @Groups({"read:overlay"})
      */
     private $widgetOwner;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="overlaysAllowed")
+     * @Groups({"read:overlay"})
      */
     private $WidgetPermission;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"read:overlay"})
+     */
+    private $WidgetIdAlpha;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read:overlay"})
+     */
+    private $WidgetIdBeta;
 
     public function __construct()
     {
@@ -105,6 +128,30 @@ class Overlay
     public function removeWidgetPermission(User $widgetPermission): self
     {
         $this->WidgetPermission->removeElement($widgetPermission);
+
+        return $this;
+    }
+
+    public function getWidgetIdAlpha(): ?string
+    {
+        return $this->WidgetIdAlpha;
+    }
+
+    public function setWidgetIdAlpha(string $WidgetIdAlpha): self
+    {
+        $this->WidgetIdAlpha = $WidgetIdAlpha;
+
+        return $this;
+    }
+
+    public function getWidgetIdBeta(): ?string
+    {
+        return $this->WidgetIdBeta;
+    }
+
+    public function setWidgetIdBeta(?string $WidgetIdBeta): self
+    {
+        $this->WidgetIdBeta = $WidgetIdBeta;
 
         return $this;
     }

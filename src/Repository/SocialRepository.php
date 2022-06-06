@@ -2,32 +2,32 @@
 
 namespace App\Repository;
 
-use App\Entity\StatusGame;
+use App\Entity\Social;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<StatusGame>
+ * @extends ServiceEntityRepository<Social>
  *
- * @method StatusGame|null find($id, $lockMode = null, $lockVersion = null)
- * @method StatusGame|null findOneBy(array $criteria, array $orderBy = null)
- * @method StatusGame[]    findAll()
- * @method StatusGame[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Social|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Social|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Social[]    findAll()
+ * @method Social[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class StatusGameRepository extends ServiceEntityRepository
+class SocialRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, StatusGame::class);
+        parent::__construct($registry, Social::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(StatusGame $entity, bool $flush = true): void
+    public function add(Social $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -39,7 +39,7 @@ class StatusGameRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(StatusGame $entity, bool $flush = true): void
+    public function remove(Social $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -48,7 +48,7 @@ class StatusGameRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return StatusGame[] Returns an array of StatusGame objects
+    //  * @return Social[] Returns an array of Social objects
     //  */
     /*
     public function findByExampleField($value)
@@ -65,7 +65,7 @@ class StatusGameRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?StatusGame
+    public function findOneBySomeField($value): ?Social
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')

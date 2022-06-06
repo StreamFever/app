@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\GameRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=GameRepository::class)
  */
 class Game
@@ -20,48 +22,57 @@ class Game
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=Team::class, inversedBy="gameTeamAlpha", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="games")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $gameIDTeamAlpha;
+    private $gameIdTeamAlpha;
 
     /**
-     * @ORM\OneToOne(targetEntity=Team::class, inversedBy="gameTeamBeta", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="gamesBeta")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $gameIDTeamBeta;
+    private $gameIdTeamBeta;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $gameScoreAlpha;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $gameScoreBeta;
-
-    /**
-     * @ORM\Column(type="time", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $gameTimeNext;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Map::class, inversedBy="games")
-     */
-    private $gameIDMaps;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity=Format::class)
+     * @ORM\JoinColumn(nullable=false)
      */
     private $gameFormat;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity=Status::class, inversedBy="games")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $gameStatus;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $gameScoreTeamAlpha;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $gameScoreTeamBeta;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Map::class)
+     */
+    private $gameIdMaps;
+
     public function __construct()
     {
-        $this->gameIDMaps = new ArrayCollection();
+        $this->gameIdMaps = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->gameFormat;
     }
 
     public function getId(): ?int
@@ -69,62 +80,86 @@ class Game
         return $this->id;
     }
 
-    public function getGameIDTeamAlpha(): ?Team
+    public function getGameIdTeamAlpha(): ?Team
     {
-        return $this->gameIDTeamAlpha;
+        return $this->gameIdTeamAlpha;
     }
 
-    public function setGameIDTeamAlpha(?Team $gameIDTeamAlpha): self
+    public function setGameIdTeamAlpha(?Team $gameIdTeamAlpha): self
     {
-        $this->gameIDTeamAlpha = $gameIDTeamAlpha;
+        $this->gameIdTeamAlpha = $gameIdTeamAlpha;
 
         return $this;
     }
 
-    public function getGameIDTeamBeta(): ?Team
+    public function getGameIdTeamBeta(): ?Team
     {
-        return $this->gameIDTeamBeta;
+        return $this->gameIdTeamBeta;
     }
 
-    public function setGameIDTeamBeta(?Team $gameIDTeamBeta): self
+    public function setGameIdTeamBeta(?Team $gameIdTeamBeta): self
     {
-        $this->gameIDTeamBeta = $gameIDTeamBeta;
+        $this->gameIdTeamBeta = $gameIdTeamBeta;
 
         return $this;
     }
 
-    public function getGameScoreAlpha(): ?int
-    {
-        return $this->gameScoreAlpha;
-    }
-
-    public function setGameScoreAlpha(?int $gameScoreAlpha): self
-    {
-        $this->gameScoreAlpha = $gameScoreAlpha;
-
-        return $this;
-    }
-
-    public function getGameScoreBeta(): ?int
-    {
-        return $this->gameScoreBeta;
-    }
-
-    public function setGameScoreBeta(?int $gameScoreBeta): self
-    {
-        $this->gameScoreBeta = $gameScoreBeta;
-
-        return $this;
-    }
-
-    public function getGameTimeNext(): ?time
+    public function getGameTimeNext(): ?\DateTimeInterface
     {
         return $this->gameTimeNext;
     }
 
-    public function setGameTimeNext(?time $gameTimeNext): self
+    public function setGameTimeNext(?\DateTimeInterface $gameTimeNext): self
     {
         $this->gameTimeNext = $gameTimeNext;
+
+        return $this;
+    }
+
+    public function getGameFormat(): ?Format
+    {
+        return $this->gameFormat;
+    }
+
+    public function setGameFormat(?Format $gameFormat): self
+    {
+        $this->gameFormat = $gameFormat;
+
+        return $this;
+    }
+
+    public function getGameStatus(): ?Status
+    {
+        return $this->gameStatus;
+    }
+
+    public function setGameStatus(?Status $gameStatus): self
+    {
+        $this->gameStatus = $gameStatus;
+
+        return $this;
+    }
+
+    public function getGameScoreTeamAlpha(): ?int
+    {
+        return $this->gameScoreTeamAlpha;
+    }
+
+    public function setGameScoreTeamAlpha(?int $gameScoreTeamAlpha): self
+    {
+        $this->gameScoreTeamAlpha = $gameScoreTeamAlpha;
+
+        return $this;
+    }
+
+    public function getGameScoreTeamBeta(): ?int
+    {
+        return $this->gameScoreTeamBeta;
+    }
+
+    public function setGameScoreTeamBeta(?int $gameScoreTeamBeta): self
+    {
+        $this->gameScoreTeamBeta = $gameScoreTeamBeta;
 
         return $this;
     }
@@ -132,47 +167,23 @@ class Game
     /**
      * @return Collection<int, Map>
      */
-    public function getGameIDMaps(): Collection
+    public function getGameIdMaps(): Collection
     {
-        return $this->gameIDMaps;
+        return $this->gameIdMaps;
     }
 
-    public function addGameIDMap(Map $gameIDMap): self
+    public function addGameIdMap(Map $gameIdMap): self
     {
-        if (!$this->gameIDMaps->contains($gameIDMap)) {
-            $this->gameIDMaps[] = $gameIDMap;
+        if (!$this->gameIdMaps->contains($gameIdMap)) {
+            $this->gameIdMaps[] = $gameIdMap;
         }
 
         return $this;
     }
 
-    public function removeGameIDMap(Map $gameIDMap): self
+    public function removeGameIdMap(Map $gameIdMap): self
     {
-        $this->gameIDMaps->removeElement($gameIDMap);
-
-        return $this;
-    }
-
-    public function getGameFormat(): ?string
-    {
-        return $this->gameFormat;
-    }
-
-    public function setGameFormat(?string $gameFormat): self
-    {
-        $this->gameFormat = $gameFormat;
-
-        return $this;
-    }
-
-    public function getGameStatus(): ?string
-    {
-        return $this->gameStatus;
-    }
-
-    public function setGameStatus(?string $gameStatus): self
-    {
-        $this->gameStatus = $gameStatus;
+        $this->gameIdMaps->removeElement($gameIdMap);
 
         return $this;
     }

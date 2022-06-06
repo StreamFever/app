@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=EventRepository::class)
  */
 class Event
@@ -25,7 +27,7 @@ class Event
     private $eventName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=Edition::class, inversedBy="events")
      */
     private $eventEdition;
 
@@ -45,28 +47,29 @@ class Event
     private $eventCashprize;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $eventCurrentPhase;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Sponsor::class, inversedBy="events")
-     */
-    private $eventIDSponsor;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $eventStartDate;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $eventEndDate;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Sponsor::class)
+     */
+    private $eventIdSponsor;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Social::class)
+     */
+    private $eventIdSocial;
+
     public function __construct()
     {
-        $this->eventIDSponsor = new ArrayCollection();
+        $this->eventIdSponsor = new ArrayCollection();
+        $this->eventIdSocial = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -86,12 +89,12 @@ class Event
         return $this;
     }
 
-    public function getEventEdition(): ?string
+    public function getEventEdition(): ?Edition
     {
         return $this->eventEdition;
     }
 
-    public function setEventEdition(string $eventEdition): self
+    public function setEventEdition(?Edition $eventEdition): self
     {
         $this->eventEdition = $eventEdition;
 
@@ -134,48 +137,12 @@ class Event
         return $this;
     }
 
-    public function getEventCurrentPhase(): ?string
-    {
-        return $this->eventCurrentPhase;
-    }
-
-    public function setEventCurrentPhase(?string $eventCurrentPhase): self
-    {
-        $this->eventCurrentPhase = $eventCurrentPhase;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Sponsor>
-     */
-    public function getEventIDSponsor(): Collection
-    {
-        return $this->eventIDSponsor;
-    }
-
-    public function addEventIDSponsor(Sponsor $eventIDSponsor): self
-    {
-        if (!$this->eventIDSponsor->contains($eventIDSponsor)) {
-            $this->eventIDSponsor[] = $eventIDSponsor;
-        }
-
-        return $this;
-    }
-
-    public function removeEventIDSponsor(Sponsor $eventIDSponsor): self
-    {
-        $this->eventIDSponsor->removeElement($eventIDSponsor);
-
-        return $this;
-    }
-
     public function getEventStartDate(): ?\DateTimeInterface
     {
         return $this->eventStartDate;
     }
 
-    public function setEventStartDate(?\DateTimeInterface $eventStartDate): self
+    public function setEventStartDate(\DateTimeInterface $eventStartDate): self
     {
         $this->eventStartDate = $eventStartDate;
 
@@ -187,9 +154,57 @@ class Event
         return $this->eventEndDate;
     }
 
-    public function setEventEndDate(?\DateTimeInterface $eventEndDate): self
+    public function setEventEndDate(\DateTimeInterface $eventEndDate): self
     {
         $this->eventEndDate = $eventEndDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sponsor>
+     */
+    public function getEventIdSponsor(): Collection
+    {
+        return $this->eventIdSponsor;
+    }
+
+    public function addEventIdSponsor(Sponsor $eventIdSponsor): self
+    {
+        if (!$this->eventIdSponsor->contains($eventIdSponsor)) {
+            $this->eventIdSponsor[] = $eventIdSponsor;
+        }
+
+        return $this;
+    }
+
+    public function removeEventIdSponsor(Sponsor $eventIdSponsor): self
+    {
+        $this->eventIdSponsor->removeElement($eventIdSponsor);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Social>
+     */
+    public function getEventIdSocial(): Collection
+    {
+        return $this->eventIdSocial;
+    }
+
+    public function addEventIdSocial(Social $eventIdSocial): self
+    {
+        if (!$this->eventIdSocial->contains($eventIdSocial)) {
+            $this->eventIdSocial[] = $eventIdSocial;
+        }
+
+        return $this;
+    }
+
+    public function removeEventIdSocial(Social $eventIdSocial): self
+    {
+        $this->eventIdSocial->removeElement($eventIdSocial);
 
         return $this;
     }
