@@ -1,43 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Game index{% endblock %}
+{% block title %}Liste des matchs
+{% endblock %}
 
 {% block body %}
-    <h1>Game index</h1>
+	<pre>
+	{{ dump(games) }}
+</pre>
+	<h1>Liste des matchs</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>GameScoreAlpha</th>
-                <th>GameScoreBeta</th>
-                <th>GameTimeNext</th>
-                <th>GameFormat</th>
-                <th>GameStatus</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for game in games %}
-            <tr>
-                <td>{{ game.id }}</td>
-                <td>{{ game.gameScoreAlpha }}</td>
-                <td>{{ game.gameScoreBeta }}</td>
-                <td>{{ game.gameTimeNext }}</td>
-                <td>{{ game.gameFormat }}</td>
-                <td>{{ game.gameStatus }}</td>
-                <td>
-                    <a href="{{ path('app_game_show', {'id': game.id}) }}">show</a>
-                    <a href="{{ path('app_game_edit', {'id': game.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>VS</th>
+				<th colspan="2">Score</th>
+				<th>Time</th>
+				<th>Format</th>
+				<th>Status</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for game in games %}
+				<tr>
+					<td>{{ game.id }}</td>
+					<td>{{ game.gameIdTeamAlpha.teamName }}
+						<span class="iconify" data-icon="noto:vs-button"></span>
+						{{ game.gameIdTeamBeta.teamName }}</td>
+					<td>{{ game.gameScoreTeamAlpha }}</td>
+					<td>{{ game.gameScoreTeamBeta }}</td>
+					<td>{{ game.gameTimeNext }}</td>
+					<td>
+						<span class="badge bg-info">{{ game.gameFormat }}</span>
+					</td>
+					<td>
+						{% if game.gameStatus == "soon" %}
+							<span class="badge bg-info">{{ game.gameStatus }}</span>
+						{% endif %}
+						{% if game.gameStatus == "current" %}
+							<span class="badge bg-success">{{ game.gameStatus }}</span>
+						{% endif %}
+						{% if game.gameStatus == "finished" %}
+							<span class="badge bg-secondary">{{ game.gameStatus }}</span>
+						{% endif %}
+					</td>
+					<td>
+						<a class="btn btn-info" href="{{ path('app_game_show', {'id': game.id}) }}">
+							<span class="iconify" data-icon="carbon:view-filled"></span>Détails</a>
+						<a class="btn btn-warning" href="{{ path('app_game_edit', {'id': game.id}) }}">
+							<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="7">Rien n'a été trouvée</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_game_new') }}">Create new</a>
+	<a class="btn btn-info" href="{{ path('app_game_new') }}">
+		<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>
+		Créer un nouveau match</a>
 {% endblock %}

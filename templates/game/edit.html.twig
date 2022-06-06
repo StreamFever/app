@@ -1,13 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Game{% endblock %}
+{% block title %}Editer le match "{{event.eventName is defined ? event.eventName : ""}}"
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Game</h1>
+	<pre>
+    {{ dump(game) }}
+</pre>
+	<h1>Editer l'événement -
+		{{event.eventName is defined ? event.eventName : ""}}</h1>
 
-    {{ include('game/_form.html.twig', {'button_label': 'Update'}) }}
+	{{ include('game/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('app_game_index') }}">back to list</a>
+	<a class="btn btn-dark" href="{{ path('app_game_index') }}">Retour à la liste</a>
 
-    {{ include('game/_delete_form.html.twig') }}
+	{{ include('game/_delete_form.html.twig') }}
 {% endblock %}
