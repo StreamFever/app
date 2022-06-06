@@ -1,0 +1,60 @@
+$yellow : #EBBE1A;
+$blue : #144478;
+
+#versus {
+ .container_versus {
+  z-index: 9;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 30%;
+  left: 1%;
+  padding: 1rem 2rem;
+  border-right: 25px solid $blue;
+  background-color: white;
+
+  .left {
+   display: flex;
+   flex-flow: column nowrap;
+   justify-content: center;
+   align-items: center;
+
+   .img_profil {
+    width: 60%;
+
+    img {
+     width: 100%
+    }
+   }
+  }
+
+  .center {
+   font-size: 2rem;
+   color: black;
+   padding: 0 1.1rem;
+  }
+
+  .rigth {
+   display: flex;
+   flex-flow: column nowrap;
+   justify-content: center;
+   align-items: center;
+
+   .img_profil {
+    width: 60%;
+
+    img {
+     width: 100%;
+    }
+   }
+
+   .name_profil {
+    color: $blue;
+    font-size: 3rem;
+    text-transform: uppercase;
+   }
+  }
+ }
+}
