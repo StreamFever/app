@@ -47,9 +47,9 @@ class OverlayRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return Overlay[] Returns an array of Overlay objects
-    //  */
+    /**
+    * @return Overlay[] Returns an array of Overlay objects
+    */
     /*
     public function findByExampleField($value)
     {
@@ -63,6 +63,33 @@ class OverlayRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    // Retourne la liste des personnes qui possèdent au minimum un overlay contenant des widgets
+    public function findAllUsersOwned()
+    {
+        return $this->createQueryBuilder('o')
+            ->join('o.widgetOwner', 'u')
+            ->orderBy('o.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+       
+    }
+
+    // Retourne la liste des overlays selon l'id d'un utilisateur
+    public function findAllByIdUser($user_id)
+    {
+        return $this->createQueryBuilder('o')
+            ->join('o.widgetOwner', 'u')
+            ->where('u.id = :user_id')
+            ->setParameter('user_id', $user_id)
+            ->orderBy('o.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+       
+    }
 
     /*
     public function findOneBySomeField($value): ?Overlay

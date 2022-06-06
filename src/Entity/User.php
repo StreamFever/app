@@ -62,6 +62,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $logs;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $username;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $avatarURL;
+
     public function __construct()
     {
         $this->overlayOwned = new ArrayCollection();
@@ -133,7 +143,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setPassword(string $password): self
     {
-        $this->password = $password;
+        $this->password = password_hash($password, PASSWORD_DEFAULT);;
 
         return $this;
     }
@@ -262,6 +272,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->logs->removeElement($log)) {
             $log->removeLogsUser($this);
         }
+
+        return $this;
+    }
+
+    public function setUsername(?string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getAvatarURL(): ?string
+    {
+        return $this->avatarURL;
+    }
+
+    public function setAvatarURL(?string $avatarURL): self
+    {
+        $this->avatarURL = $avatarURL;
 
         return $this;
     }

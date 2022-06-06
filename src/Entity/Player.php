@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PlayerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=PlayerRepository::class)
  */
 class Player
@@ -20,14 +22,9 @@ class Player
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Team::class, inversedBy="players")
+     * @ORM\ManyToMany(targetEntity=Flag::class, inversedBy="players")
      */
-    private $playerIDTeam;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Flag::class, inversedBy="players")
-     */
-    private $playerIDFlag;
+    private $playerIdFlag;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -62,11 +59,21 @@ class Player
     /**
      * @ORM\Column(type="boolean")
      */
-    private $playerStudentSA;
+    private $playerStudentSa;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $playerIdObsNinja;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $playerUplayTag;
 
     public function __construct()
     {
-        $this->playerIDTeam = new ArrayCollection();
+        $this->playerIdFlag = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,37 +82,25 @@ class Player
     }
 
     /**
-     * @return Collection<int, Team>
+     * @return Collection<int, Flag>
      */
-    public function getPlayerIDTeam(): Collection
+    public function getPlayerIdFlag(): Collection
     {
-        return $this->playerIDTeam;
+        return $this->playerIdFlag;
     }
 
-    public function addPlayerIDTeam(Team $playerIDTeam): self
+    public function addPlayerIdFlag(Flag $playerIdFlag): self
     {
-        if (!$this->playerIDTeam->contains($playerIDTeam)) {
-            $this->playerIDTeam[] = $playerIDTeam;
+        if (!$this->playerIdFlag->contains($playerIdFlag)) {
+            $this->playerIdFlag[] = $playerIdFlag;
         }
 
         return $this;
     }
 
-    public function removePlayerIDTeam(Team $playerIDTeam): self
+    public function removePlayerIdFlag(Flag $playerIdFlag): self
     {
-        $this->playerIDTeam->removeElement($playerIDTeam);
-
-        return $this;
-    }
-
-    public function getPlayerIDFlag(): ?Flag
-    {
-        return $this->playerIDFlag;
-    }
-
-    public function setPlayerIDFlag(?Flag $playerIDFlag): self
-    {
-        $this->playerIDFlag = $playerIDFlag;
+        $this->playerIdFlag->removeElement($playerIdFlag);
 
         return $this;
     }
@@ -182,14 +177,38 @@ class Player
         return $this;
     }
 
-    public function getPlayerStudentSA(): ?bool
+    public function getPlayerStudentSa(): ?bool
     {
-        return $this->playerStudentSA;
+        return $this->playerStudentSa;
     }
 
-    public function setPlayerStudentSA(bool $playerStudentSA): self
+    public function setPlayerStudentSa(bool $playerStudentSa): self
     {
-        $this->playerStudentSA = $playerStudentSA;
+        $this->playerStudentSa = $playerStudentSa;
+
+        return $this;
+    }
+
+    public function getPlayerIdObsNinja(): ?string
+    {
+        return $this->playerIdObsNinja;
+    }
+
+    public function setPlayerIdObsNinja(?string $playerIdObsNinja): self
+    {
+        $this->playerIdObsNinja = $playerIdObsNinja;
+
+        return $this;
+    }
+
+    public function getPlayerUplayTag(): ?string
+    {
+        return $this->playerUplayTag;
+    }
+
+    public function setPlayerUplayTag(?string $playerUplayTag): self
+    {
+        $this->playerUplayTag = $playerUplayTag;
 
         return $this;
     }

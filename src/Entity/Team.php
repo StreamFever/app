@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\TeamRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=TeamRepository::class)
  */
 class Team
@@ -20,6 +22,11 @@ class Team
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Flag::class, inversedBy="teams")
+     */
+    private $teamIdFlag;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $teamName;
@@ -30,34 +37,36 @@ class Team
     private $teamLogo;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Flag::class, inversedBy="teams")
+     * @ORM\OneToMany(targetEntity=Game::class, mappedBy="gameIdTeamAlpha")
      */
-    private $teamIDFlag;
+    private $games;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Player::class, mappedBy="playerIDTeam")
+     * @ORM\OneToMany(targetEntity=Game::class, mappedBy="gameIdTeamBeta")
      */
-    private $players;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Game::class, mappedBy="gameIDTeamAlpha", cascade={"persist", "remove"})
-     */
-    private $gameTeamAlpha;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Game::class, mappedBy="gameIDTeamBeta", cascade={"persist", "remove"})
-     */
-    private $gameTeamBeta;
-
+    private $gamesBeta;
 
     public function __construct()
     {
-        $this->players = new ArrayCollection();
+        $this->games = new ArrayCollection();
+        $this->gamesBeta = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getTeamIdFlag(): ?Flag
+    {
+        return $this->teamIdFlag;
+    }
+
+    public function setTeamIdFlag(?Flag $teamIdFlag): self
+    {
+        $this->teamIdFlag = $teamIdFlag;
+
+        return $this;
     }
 
     public function getTeamName(): ?string
@@ -84,87 +93,63 @@ class Team
         return $this;
     }
 
-    public function getTeamIDFlag(): ?Flag
+    /**
+     * @return Collection<int, Game>
+     */
+    public function getGames(): Collection
     {
-        return $this->teamIDFlag;
+        return $this->games;
     }
 
-    public function setTeamIDFlag(?Flag $teamIDFlag): self
+    public function addGame(Game $game): self
     {
-        $this->teamIDFlag = $teamIDFlag;
+        if (!$this->games->contains($game)) {
+            $this->games[] = $game;
+            $game->setGameIdTeamAlpha($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGame(Game $game): self
+    {
+        if ($this->games->removeElement($game)) {
+            // set the owning side to null (unless already changed)
+            if ($game->getGameIdTeamAlpha() === $this) {
+                $game->setGameIdTeamAlpha(null);
+            }
+        }
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Player>
+     * @return Collection<int, Game>
      */
-    public function getPlayers(): Collection
+    public function getGamesBeta(): Collection
     {
-        return $this->players;
+        return $this->gamesBeta;
     }
 
-    public function addPlayer(Player $player): self
+    public function addGamesBetum(Game $gamesBetum): self
     {
-        if (!$this->players->contains($player)) {
-            $this->players[] = $player;
-            $player->addPlayerIDTeam($this);
+        if (!$this->gamesBeta->contains($gamesBetum)) {
+            $this->gamesBeta[] = $gamesBetum;
+            $gamesBetum->setGameIdTeamBeta($this);
         }
 
         return $this;
     }
 
-    public function removePlayer(Player $player): self
+    public function removeGamesBetum(Game $gamesBetum): self
     {
-        if ($this->players->removeElement($player)) {
-            $player->removePlayerIDTeam($this);
+        if ($this->gamesBeta->removeElement($gamesBetum)) {
+            // set the owning side to null (unless already changed)
+            if ($gamesBetum->getGameIdTeamBeta() === $this) {
+                $gamesBetum->setGameIdTeamBeta(null);
+            }
         }
 
         return $this;
     }
-
-    public function getGameTeamAlpha(): ?Game
-    {
-        return $this->gameTeamAlpha;
-    }
-
-    public function setGameTeamAlpha(?Game $gameTeamAlpha): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($gameTeamAlpha === null && $this->gameTeamAlpha !== null) {
-            $this->gameTeamAlpha->setGameIDTeamAlpha(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($gameTeamAlpha !== null && $gameTeamAlpha->getGameIDTeamAlpha() !== $this) {
-            $gameTeamAlpha->setGameIDTeamAlpha($this);
-        }
-
-        $this->gameTeamAlpha = $gameTeamAlpha;
-
-        return $this;
-    }
-
-    public function getGameTeamBeta(): ?Game
-    {
-        return $this->gameTeamBeta;
-    }
-
-    public function setGameTeamBeta(?Game $gameTeamBeta): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($gameTeamBeta === null && $this->gameTeamBeta !== null) {
-            $this->gameTeamBeta->setGameIDTeamBeta(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($gameTeamBeta !== null && $gameTeamBeta->getGameIDTeamBeta() !== $this) {
-            $gameTeamBeta->setGameIDTeamBeta($this);
-        }
-
-        $this->gameTeamBeta = $gameTeamBeta;
-
-        return $this;
-    }
-
 }

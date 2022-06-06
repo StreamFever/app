@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\MapRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=MapRepository::class)
  */
 class Map
@@ -20,7 +20,7 @@ class Map
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=255)
      */
     private $mapName;
 
@@ -28,16 +28,6 @@ class Map
      * @ORM\Column(type="text", nullable=true)
      */
     private $mapImg;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Game::class, mappedBy="gameIDMaps")
-     */
-    private $games;
-
-    public function __construct()
-    {
-        $this->games = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -64,33 +54,6 @@ class Map
     public function setMapImg(?string $mapImg): self
     {
         $this->mapImg = $mapImg;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Game>
-     */
-    public function getGames(): Collection
-    {
-        return $this->games;
-    }
-
-    public function addGame(Game $game): self
-    {
-        if (!$this->games->contains($game)) {
-            $this->games[] = $game;
-            $game->addGameIDMap($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGame(Game $game): self
-    {
-        if ($this->games->removeElement($game)) {
-            $game->removeGameIDMap($this);
-        }
 
         return $this;
     }

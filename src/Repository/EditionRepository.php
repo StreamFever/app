@@ -2,32 +2,32 @@
 
 namespace App\Repository;
 
-use App\Entity\FormatGame;
+use App\Entity\Edition;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<FormatGame>
+ * @extends ServiceEntityRepository<Edition>
  *
- * @method FormatGame|null find($id, $lockMode = null, $lockVersion = null)
- * @method FormatGame|null findOneBy(array $criteria, array $orderBy = null)
- * @method FormatGame[]    findAll()
- * @method FormatGame[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Edition|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Edition|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Edition[]    findAll()
+ * @method Edition[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class FormatGameRepository extends ServiceEntityRepository
+class EditionRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, FormatGame::class);
+        parent::__construct($registry, Edition::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(FormatGame $entity, bool $flush = true): void
+    public function add(Edition $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -39,7 +39,7 @@ class FormatGameRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(FormatGame $entity, bool $flush = true): void
+    public function remove(Edition $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -48,15 +48,15 @@ class FormatGameRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return FormatGame[] Returns an array of FormatGame objects
+    //  * @return Edition[] Returns an array of Edition objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
+            ->orderBy('e.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -65,10 +65,10 @@ class FormatGameRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?FormatGame
+    public function findOneBySomeField($value): ?Edition
     {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

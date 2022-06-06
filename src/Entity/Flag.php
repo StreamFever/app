@@ -30,19 +30,19 @@ class Flag
     private $flagName;
 
     /**
-     * @ORM\OneToMany(targetEntity=Team::class, mappedBy="teamIDFlag")
-     */
-    private $teams;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Player::class, mappedBy="playerIDFlag")
+     * @ORM\ManyToMany(targetEntity=Player::class, mappedBy="playerIdFlag")
      */
     private $players;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Team::class, mappedBy="teamIdFlag")
+     */
+    private $teams;
+
     public function __construct()
     {
-        $this->teams = new ArrayCollection();
         $this->players = new ArrayCollection();
+        $this->teams = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,36 +75,6 @@ class Flag
     }
 
     /**
-     * @return Collection<int, Team>
-     */
-    public function getTeams(): Collection
-    {
-        return $this->teams;
-    }
-
-    public function addTeam(Team $team): self
-    {
-        if (!$this->teams->contains($team)) {
-            $this->teams[] = $team;
-            $team->setTeamIDFlag($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTeam(Team $team): self
-    {
-        if ($this->teams->removeElement($team)) {
-            // set the owning side to null (unless already changed)
-            if ($team->getTeamIDFlag() === $this) {
-                $team->setTeamIDFlag(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Player>
      */
     public function getPlayers(): Collection
@@ -116,7 +86,7 @@ class Flag
     {
         if (!$this->players->contains($player)) {
             $this->players[] = $player;
-            $player->setPlayerIDFlag($this);
+            $player->addPlayerIdFlag($this);
         }
 
         return $this;
@@ -125,9 +95,36 @@ class Flag
     public function removePlayer(Player $player): self
     {
         if ($this->players->removeElement($player)) {
+            $player->removePlayerIdFlag($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Team>
+     */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
+    }
+
+    public function addTeam(Team $team): self
+    {
+        if (!$this->teams->contains($team)) {
+            $this->teams[] = $team;
+            $team->setTeamIdFlag($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeam(Team $team): self
+    {
+        if ($this->teams->removeElement($team)) {
             // set the owning side to null (unless already changed)
-            if ($player->getPlayerIDFlag() === $this) {
-                $player->setPlayerIDFlag(null);
+            if ($team->getTeamIdFlag() === $this) {
+                $team->setTeamIdFlag(null);
             }
         }
 
