@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Widgets
+{% endblock %}
+
+{% block body %}
+	<h1>Liste des Widgets</h1>
+	<pre>
+        {{ dump(overlays) }}
+    </pre>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nom du widget</th>
+				<th>Etat</th>
+				<th>Propriétaire</th>
+				<th colspan="4" style="text-align: center">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for overlay in overlays %}
+				<tr>
+					<td>{{ overlay.id }}</td>
+					<td>{{ overlay.widgetName }}</td>
+					<td>{{ overlay.widgetVisible ? '<span class="iconify" color="green" data-icon="akar-icons:circle-check-fill"></span>' : '<span class="iconify" color="red" data-icon="akar-icons:circle-x-fill"></span>' }}</td>
+					<td>
+						<a target="_blank" href="{{ path('app_overlay_show_browsersource', {'user_id': overlay.widgetOwner.id}) }}">{{ overlay.widgetOwner.username }}</a>
+					</td>
+					<td>
+						<a class="btn btn-danger" href="{{ path('app_overlay_show_by_iduser', {'user_id': overlay.widgetOwner.id}) }}">
+							<span class="iconify" data-icon="ant-design:control-filled"></span>
+							Panel de
+							{{overlay.widgetOwner.username}}</a>
+						<a class="btn btn-info" href="{{ path('app_overlay_show', {'id': overlay.id}) }}">
+							<span class="iconify" data-icon="carbon:view-filled"></span>
+							Détails</a>
+						<a class="btn btn-warning" href="{{ path('app_overlay_edit', {'id': overlay.id}) }}">
+							<span class="iconify" data-icon="bxs:edit"></span>
+							Editer
+						</a>
+						<a class="btn btn-success" target="_blank" href="{{ path('app_overlay_show_browsersource', {'user_id': overlay.widgetOwner.id}) }}">
+							<span class="iconify" data-icon="fa-brands:firefox-browser"></span>
+							Browsersource</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">Rien n'a été trouvé</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a class="btn btn-info" href="{{ path('app_overlay_new') }}" style="color: black;">
+		<span class="iconify" data-icon="bxs:widget"></span>
+		Créer un nouveau Widget</a>
+{% endblock %}

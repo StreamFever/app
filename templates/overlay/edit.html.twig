@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer le widget "{{overlay.widgetName is defined ? overlay.widgetName : ""}}"
+{% endblock %}
+
+{% block body %}
+	<h1>Editer le widget -
+		{{overlay.widgetName is defined ? overlay.widgetName : ""}}</h1>
+
+
+	{{ include('overlay/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+	<a class="btn btn-dark" href="{{ path('app_overlay_index') }}">Retour à la liste</a>
+
+	{{ include('overlay/_delete_form.html.twig') }}
+{% endblock %}
