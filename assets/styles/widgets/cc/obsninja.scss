@@ -1,0 +1,30 @@
+$font: 'Alumni Sans';
+$blue: #144478;
+$yellow: #EBBE1A;
+
+iframe {
+ position: fixed;
+ top: 0;
+ bottom: 0;
+ min-width: 100vh;
+ max-width: 200vh;
+ width: 100%; // toute la hauteur de l'écran
+ min-height: 100vh;
+ max-height: 200vh;
+ height: 100%; // toute la hauteur de l'écran
+}
+
+#rank {
+ position: absolute;
+ bottom: 0;
+ right: 0;
+ width: 12%;
+
+ .img {
+  width: 100%;
+
+  img {
+   width: 100%;
+  }
+ }
+}

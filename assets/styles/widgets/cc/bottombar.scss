@@ -1,0 +1,107 @@
+$yellow : #EBBE1A;
+$blue : #144478;
+
+#bottombar {
+ background: url('https://cdn.artaic.fr/images/overlay/campus_cup/bottombar.png');
+ position: absolute;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ display: grid;
+ grid-template-columns: 94px 444px 143px 1106px 123px;
+
+ .logo {
+  grid-column: 1/2;
+  min-width: 94px;
+  max-width: 94px;
+  width: 10%;
+  padding: .6rem;
+
+  img {
+   width: 100%
+  }
+ }
+
+ .title {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  grid-column: 2/3;
+  font-size: 1.3rem;
+  letter-spacing: .2rem;
+  color: $yellow;
+ }
+
+ .space {
+  grid-column: 3/4;
+ }
+
+ .details {
+  margin-left: 1rem;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  justify-content: center;
+  grid-column: 4/5;
+  color: white;
+
+  .name_cup {
+   padding: .3rem;
+   font-size: 2rem;
+
+   .yellow {
+    color: $yellow;
+   }
+  }
+
+  .text {
+   padding: .3rem;
+   width: 100%;
+   max-width: 1100px;
+   overflow: hidden;
+
+   span {
+    padding: 0 1rem;
+   }
+
+   &:first-child {
+    display: flex;
+    flex-flow: row nowrap;
+    /* display: inline-block; */
+    /* modèle de boîte en ligne */
+    padding-right: 2em;
+    /* un peu d'espace pour la transition */
+    padding-left: 100%;
+    /* placement à droite du conteneur */
+    white-space: nowrap;
+    /* pas de passage à la ligne */
+    animation: marquee 45s infinite linear;
+   }
+  }
+ }
+
+ .sponsor {
+  margin-top: .3rem;
+  margin-left: 1.3rem;
+  grid-column: 5/6;
+  min-width: 100px;
+  max-width: 100px;
+  width: 10%;
+  padding: .6rem;
+
+  img {
+   width: 100%;
+  }
+ }
+}
+
+@keyframes marquee {
+ 0% {
+  transform: translateX(0);
+ }
+
+ 100% {
+  transform: translatex(-3500px);
+ }
+}
