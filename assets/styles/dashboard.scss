@@ -1,121 +1,299 @@
+@import url('./ui.scss');
 $font: 'Alumni Sans';
 $blue: #144478;
 $yellow: #EBBE1A;
+$black_1 : #202225;
+$black_2 : rgba(0, 0, 0, 0.58);
+$black_3 : #171821;
+$white : #FFFFFF;
+$grey_1 : #DFDFDF;
 
 * {
- margin: 0;
- padding: 0;
- box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 ol,
 li {
- list-style: none;
+  list-style: none;
 }
 
 a {
- text-decoration-line: none;
- color: white
+  text-decoration-line: none;
+  color: white
 }
 
 body {
- background-color: burlywood;
- font-family: $font;
+  background-color: $grey_1;
+  font-family: $font;
+}
+
+table {
+
+  td {
+    color: $black_1;
+
+    a {
+      color: $black_1;
+    }
+  }
 }
 
 #grid_container {
- display: grid;
- grid-template-columns: 300px 1fr;
- grid-template-rows: 1fr;
- gap: 0px 0px;
- grid-template-areas:
-  ". .";
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-template-columns: 0.25fr 1.1fr 0.35fr;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
 }
 
 // Sidebar
 #sidebar {
- background-color: $blue;
- min-height: 100vh;
- max-height: 200vh;
- height: 100%; // toute la hauteur de l'écran
-
- .container {
-  padding: 29px 0 46px 36px;
-  display: flex;
-  flex-flow: column nowrap;
+  background-color: $blue;
+  min-height: 100vh;
+  max-height: 200vh;
+  height: 100%; // toute la hauteur de l'écran
 
   .profile {
-   display: flex;
-   flex-flow: row nowrap;
-   align-items: center;
-   gap: .4rem;
+    padding: 1rem;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: .4rem;
 
-   .left {
-    width: 25%;
+    .left {
+      width: 40%;
 
-    .img {
-     width: 100%;
+      .img {
+        width: 100%;
 
-     img {
-      width: 100%;
-      border-radius: 50%;
+        img {
+          width: 100%;
+          border-radius: 50%;
 
-     }
+        }
+      }
     }
-   }
 
-   .right {
+    .right {
+      display: flex;
+      flex-flow: column nowrap;
+      gap: .5rem;
+
+      width: 60%;
+
+      span {
+        color: white;
+        font-size: 1.4rem;
+        font-weight: 300;
+      }
+
+      a {
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+        margin-top: -1rem;
+
+        &:hover {
+          color: $yellow;
+        }
+      }
+    }
+  }
+
+  .container {
+    padding: 0 2.2rem;
     display: flex;
     flex-flow: column nowrap;
-    gap: 0;
 
-    span {
-     color: white;
-     font-size: 2rem;
-     font-weight: 300;
+    .menu {
+      padding-left: 0;
+
+      li {
+        padding: 1rem 0;
+
+        a {
+          .iconify {
+            font-size: 28px;
+          }
+
+          display: flex;
+          flex-flow: row nowrap;
+          align-items: center;
+          gap: 1.3rem;
+          font-weight: 300;
+          font-size: 1.3rem;
+
+          &:hover {
+            color: $yellow;
+          }
+        }
+      }
     }
 
-    a {
-     color: white;
-     font-size: 1rem;
-     font-weight: 600;
-     margin-top: -1rem;
-
-     &:hover {
-      color: $yellow;
-     }
+    #second_menu_sidebar {
+      margin-top: 2rem;
     }
-   }
   }
+}
 
-  .menu {
-   margin: 2rem 0;
-   padding-left: 0;
+#content {
+  background-color: $white;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  padding: 1rem;
 
-   li {
-    padding: 1rem 0;
+}
 
-    a {
-     .iconify {
-      font-size: 36px;
-     }
+// Rightbar
+#rightbar {
+  background-color: $grey_1;
 
-     display: flex;
-     flex-flow: row nowrap;
-     align-items: center;
-     gap: 1.3rem;
-     font-weight: 300;
-     font-size: 1.5rem;
+  .container {
+    padding: 1rem 2rem;
 
-     &:hover {
-      color: $yellow;
-     }
+    .top {
+      padding: 1.3rem 0;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+
+      h2 {
+        font-size: 2rem;
+        color: black;
+      }
+
+      .notification {
+
+        .iconify {
+          font-size: 2rem;
+          color: $black_2;
+        }
+      }
     }
-   }
-  }
 
-  #second_menu_sidebar {
-   margin-top: 4rem;
+    .content {
+      .card_rightbar {
+        margin: .5rem 0;
+
+        .top {
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: space-between;
+
+          .left_top {}
+
+          .actions a {
+            color: $black_2;
+
+            &:hover {
+              color: $black_1;
+            }
+          }
+        }
+
+        .content {
+          padding: .5rem 1rem;
+          border-radius: 10px;
+          background-color: $black_3;
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: space-between;
+          align-items: center;
+
+          .left {
+            span {
+              color: $white;
+              font-style: normal;
+              font-weight: 600;
+              font-size: 2rem;
+            }
+
+            .switch-toggle {
+              float: left;
+              background: #242729;
+
+              input {
+                position: absolute;
+                opacity: 0;
+              }
+
+              input+label {
+                padding: 7px;
+                float: left;
+                color: #fff;
+                cursor: pointer;
+                text-transform: uppercase;
+              }
+
+              input:checked+label {
+                background: green;
+              }
+
+              input.off:checked+label {
+                background: red;
+              }
+            }
+          }
+
+          .right {
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            gap: .4rem;
+
+            .barre {
+              background: #FD7E50;
+              width: 4px;
+              height: 47px;
+              border-radius: 30px;
+            }
+
+            .details {
+              display: flex;
+              flex-flow: column nowrap;
+              gap: 0;
+
+              span {
+                color: $white;
+
+                &:first-of-type {
+                  font-style: normal;
+                  font-weight: 300;
+                  font-size: 1rem;
+                }
+
+                &:last-of-type {
+                  margin-top: -.4rem;
+                  font-style: normal;
+                  font-weight: 500;
+                  font-size: 1.3rem;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
- }
+}
+
+
+#buttons_section {
+  .btn-group {
+    padding: .5rem;
+    display: flex;
+
+    .btn {
+      color: white;
+      background-color: $blue;
+      border: none;
+      border-bottom-right-radius: 30px;
+      padding: .5rem 1rem;
+      font-size: 1.6rem;
+      text-transform: uppercase;
+    }
+  }
 }
