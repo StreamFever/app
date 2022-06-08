@@ -6,7 +6,7 @@
 {% block body %}
 	<h1>Map index</h1>
 
-	<table class="table">
+	<table id="mapList" class="table">
 		<thead>
 			<tr>
 				<th>Id</th>
@@ -34,5 +34,7 @@
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_map_new') }}">Create new</a>
+	<a class="btn btn-info" href="{{ path('app_map_new') }}">
+		<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>
+		Ajouter une carte</a>
 {% endblock %}

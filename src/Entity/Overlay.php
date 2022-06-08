@@ -62,6 +62,16 @@ class Overlay
      */
     private $WidgetIdBeta;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $widgetVersionAlpha;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $widgetVersionBeta;
+
     public function __construct()
     {
         $this->WidgetPermission = new ArrayCollection();
@@ -152,6 +162,30 @@ class Overlay
     public function setWidgetIdBeta(?string $WidgetIdBeta): self
     {
         $this->WidgetIdBeta = $WidgetIdBeta;
+
+        return $this;
+    }
+
+    public function getWidgetVersionAlpha(): ?string
+    {
+        return $this->widgetVersionAlpha;
+    }
+
+    public function setWidgetVersionAlpha(?string $widgetVersionAlpha): self
+    {
+        $this->widgetVersionAlpha = $widgetVersionAlpha;
+
+        return $this;
+    }
+
+    public function getWidgetVersionBeta(): ?string
+    {
+        return $this->widgetVersionBeta;
+    }
+
+    public function setWidgetVersionBeta(?string $widgetVersionBeta): self
+    {
+        $this->widgetVersionBeta = $widgetVersionBeta;
 
         return $this;
     }

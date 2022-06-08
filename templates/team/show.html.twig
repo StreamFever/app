@@ -1,30 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Team{% endblock %}
+{% block title %}Team
+{% endblock %}
 
 {% block body %}
-    <h1>Team</h1>
+	<h1>Team</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ team.id }}</td>
-            </tr>
-            <tr>
-                <th>TeamName</th>
-                <td>{{ team.teamName }}</td>
-            </tr>
-            <tr>
-                <th>TeamLogo</th>
-                <td>{{ team.teamLogo }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ team.id }}</td>
+			</tr>
+			<tr>
+				<th>Nom de l'équipe</th>
+				<td>{{ team.teamName }}</td>
+			</tr>
+			<tr>
+				<th>TeamLogo</th>
+				<td>{{ team.teamLogo }}</td>
+			</tr>
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_team_index') }}">back to list</a>
+	<a class="btn btn-dark" href="{{ path('app_team_index') }}">
+		<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
+		Retour à la liste</a>
 
-    <a href="{{ path('app_team_edit', {'id': team.id}) }}">edit</a>
+	<a href="{{ path('app_team_edit', {'id': team.id}) }}">
+		<span class="iconify" data-icon="akar-icons:edit"></span>
+		Editer</a>
 
-    {{ include('team/_delete_form.html.twig') }}
+	{{ include('team/_delete_form.html.twig') }}
 {% endblock %}

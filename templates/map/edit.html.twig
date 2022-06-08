@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Map{% endblock %}
+{% block title %}Edit Map
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Map</h1>
+	<h1>Edit Map</h1>
 
-    {{ include('map/_form.html.twig', {'button_label': 'Update'}) }}
+	{{ include('map/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('app_map_index') }}">back to list</a>
+	<a class="btn btn-dark" href="{{ path('app_map_index') }}">
+		<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
+		Retour à la liste</a>
 
-    {{ include('map/_delete_form.html.twig') }}
+	{{ include('map/_delete_form.html.twig') }}
 {% endblock %}

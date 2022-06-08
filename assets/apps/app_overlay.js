@@ -7,7 +7,11 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 // import './styles/app.css';
+
+// TODO: Importer selon la version des widgets, soit le index des dossiers ou individuellement les styles
 import '../styles/widgets/cc/index.scss';
 import '../js/widgets/index';
+
+
 
 console.log("JS & CSS Overlay OK");

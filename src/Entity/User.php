@@ -72,6 +72,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $avatarURL;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $pseudo;
+
     public function __construct()
     {
         $this->overlayOwned = new ArrayCollection();
@@ -291,6 +296,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAvatarURL(?string $avatarURL): self
     {
         $this->avatarURL = $avatarURL;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(?string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
 
         return $this;
     }

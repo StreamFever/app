@@ -29,6 +29,16 @@ class OverlayType extends AbstractType
                     'placeholder' => 'hereYourPlaceHolder'
                 )
             ))
+            ->add('widgetVersionAlpha',  null, array(
+                'attr' => array(
+                    'placeholder' => 'hereYourPlaceHolder'
+                )
+            ))
+            ->add('widgetVersionBeta',  null, array(
+                'attr' => array(
+                    'placeholder' => 'hereYourPlaceHolder'
+                )
+            ))
             ->add('widgetOwner', EntityType::class, ['class' => User::class,
             'choice_label' => 'username',
             'multiple' => false,

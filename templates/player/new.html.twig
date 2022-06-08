@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Player{% endblock %}
+{% block title %}New Player
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Player</h1>
+	<h1>Create new Player</h1>
 
-    {{ include('player/_form.html.twig') }}
+	{{ include('player/_form.html.twig') }}
 
-    <a href="{{ path('app_player_index') }}">back to list</a>
+	<a class="btn btn-dark" href="{{ path('app_player_index') }}"><span class="iconify" data-icon="akar-icons:arrow-back-thick"></span> Retour à la liste</a>
 {% endblock %}

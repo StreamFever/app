@@ -1,54 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Event{% endblock %}
+{% block title %}Détails de l'évent :
+	{{ event.eventName }}
+{% endblock %}
 
 {% block body %}
-    <h1>Event</h1>
+	<h1>Event</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ event.id }}</td>
-            </tr>
-            <tr>
-                <th>EventName</th>
-                <td>{{ event.eventName }}</td>
-            </tr>
-            <tr>
-                <th>EventEdition</th>
-                <td>{{ event.eventEdition }}</td>
-            </tr>
-            <tr>
-                <th>EventLogo</th>
-                <td>{{ event.eventLogo }}</td>
-            </tr>
-            <tr>
-                <th>EventHashtag</th>
-                <td>{{ event.eventHashtag }}</td>
-            </tr>
-            <tr>
-                <th>EventCashprize</th>
-                <td>{{ event.eventCashprize }}</td>
-            </tr>
-            <tr>
-                <th>EventCurrentPhase</th>
-                <td>{{ event.eventCurrentPhase }}</td>
-            </tr>
-            <tr>
-                <th>EventStartDate</th>
-                <td>{{ event.eventStartDate ? event.eventStartDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>EventEndDate</th>
-                <td>{{ event.eventEndDate ? event.eventEndDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ event.id }}</td>
+			</tr>
+			<tr>
+				<th>Nom</th>
+				<td>{{ event.eventName }}</td>
+			</tr>
+			<tr>
+				<th>Edition</th>
+				<td>{{ event.eventEdition }}</td>
+			</tr>
+			<tr>
+				<th>Logo</th>
+				<td>{{ event.eventLogo }}</td>
+			</tr>
+			<tr>
+				<th>Hashtag</th>
+				<td>{{ event.eventHashtag }}</td>
+			</tr>
+			<tr>
+				<th>Cashprize</th>
+				<td>{{ event.eventCashprize }}</td>
+			</tr>
+			<tr>
+				<th>Début</th>
+				<td>{{ event.eventStartDate ? event.eventStartDate|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Fin</th>
+				<td>{{ event.eventEndDate ? event.eventEndDate|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+		</tbody>
+	</table>
 
-    <a class="btn btn-light" href="{{ path('app_event_index') }}">Retour en arrière</a>
+	<a class="btn btn-dark" href="{{ path('app_event_index') }}"><span class="iconify" data-icon="akar-icons:arrow-back-thick"></span> Retour en arrière</a>
 
-    <a class="btn btn-dark" href="{{ path('app_event_edit', {'id': event.id}) }}">Editer l'événement</a>
+	<a class="btn btn-light" href="{{ path('app_event_edit', {'id': event.id}) }}"><span class="iconify" data-icon="akar-icons:edit"></span> Editer l'événement</a>
 
-    {{ include('event/_delete_form.html.twig') }}
+	{{ include('event/_delete_form.html.twig') }}
 {% endblock %}

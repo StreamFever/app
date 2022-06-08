@@ -1,4 +1,90 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+
+{% if form_errors(form) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form) }}
+	</div>
+{% endif %}
+
+
+<div class="row">
+	<div class="col">
+		<div class="form-floating mb-3">
+			{{ form_widget(form.email, {
+                'attr': {'class': 'form-control'},
+                'id': "email",
+                }) }}
+			{{ form_label(form.email, null, {
+            'label': 'Définissez l\'email',
+            'id': 'email'
+                }) }}
+        </div>
+    </div>
+    <div class="col">
+        <div class="form-floating mb-3">
+            {{ form_widget(form.pseudo, {
+                'attr': {'class': 'form-control'},
+                'id': "pseudo",
+                }) }}
+            {{ form_label(form.pseudo, null, {
+            'label': 'Définissez son pseudo',
+            'id': 'pseudo'
+                }) }}
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col">
+		<div class="form-floating mb-3">
+			{{ form_widget(form.userFirstName, {
+                'attr': {'class': 'form-control'},
+                'id': "userFirstName",
+                }) }}
+			{{ form_label(form.userFirstName, null, {
+            'label': 'Définissez son prénom',
+            'id': 'userFirstName'
+                }) }}
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="form-floating mb-3">
+			{{ form_widget(form.userLastName, {
+                'attr': {'class': 'form-control'},
+                'id': "userLastName",
+                }) }}
+			{{ form_label(form.userLastName, null, {
+            'label': 'Définissez son nom',
+            'id': 'userLastName'
+                }) }}
+		</div>
+	</div>
+</div>
+
+
+<div class="form-floating mb-3">
+	{{ form_widget(form.avatarURL, {
+        'attr': {'class': 'form-control'},
+        'id': "avatarURL",
+        }) }}
+	{{ form_label(form.avatarURL, null, {
+    'label': 'Définissez son avatar',
+    'id': 'avatarURL'
+        }) }}
+</div>
+
+<div class="input-group mb-3">
+	<button class="btn btn-primary" type="button" id="generatePassword">Générer un mot de passe</button>
+	<button class="btn btn-dark" type="button" id="showpwd">
+		<span class="iconify" data-icon="emojione-v1:eyes"></span>
+	</button>
+	{{ form_widget(form.password, {
+    'attr': {'class': 'form-control'},
+    'id': "password",
+    }) }}
+
+</div>
+
+<button class="btn btn-success"><span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span> {{ button_label|default('Créer l\'utilisateur') }}</button>
+		{{ form_end(form) }}

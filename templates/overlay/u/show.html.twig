@@ -11,7 +11,7 @@
   {{ dump(overlays) }}
  </pre>
 
-	<table class="table">
+	<table id="showOverlayU" class="table">
 		<thead>
 			<tr>
 				<th>Id</th>
@@ -27,13 +27,13 @@
 					<td>{{ overlay.widgetName }}</td>
 					<td>{{ overlay.widgetVisible ? 'Yes' : 'No' }}</td>
 					<td>
-						<a href="{{ path('app_overlay_show', {'id': overlay.id}) }}">show</a>
-						<a href="{{ path('app_overlay_edit', {'id': overlay.id}) }}">edit</a>
+						<a class="btn btn-info" href="{{ path('app_overlay_show', {'id': overlay.id}) }}"><span class="iconify" data-icon="carbon:view-filled"></span> Détails</a>
+						<a class="btn btn-warning" href="{{ path('app_overlay_edit', {'id': overlay.id}) }}"><span class="iconify" data-icon="akar-icons:edit"></span> Editer</a>
 					</td>
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="4">no records found</td>
+					<td colspan="4">Rien n'a été trouvé</td>
 				</tr>
 			{% endfor %}
 		</tbody>

@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Team{% endblock %}
+{% block title %}Ajouter une nouvelle équipe
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Team</h1>
+	<h1>Ajouter une nouvelle équipe</h1>
 
-    {{ include('team/_form.html.twig') }}
+	{{ include('team/_form.html.twig') }}
 
-    <a href="{{ path('app_team_index') }}">back to list</a>
+	<a class="btn btn-dark" href="{{ path('app_team_index') }}">
+		<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
+		Retour à la liste</a>
 {% endblock %}

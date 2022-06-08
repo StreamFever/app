@@ -42,9 +42,13 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+    <a class="btn btn-dark" href="{{ path('app_user_index') }}">
+		<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
+		Retour à la liste</a>
 
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+	<a href="{{ path('app_user_edit', {'id': team.id}) }}">
+		<span class="iconify" data-icon="akar-icons:edit"></span>
+		Editer</a>
 
     {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

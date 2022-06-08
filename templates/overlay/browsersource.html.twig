@@ -1,12 +1,16 @@
 {% extends "base_overlay.html.twig" %}
 
+
 {% block body %}
+	<pre>
+	{{ dump(overlays) }}
+</pre>
 	{% for overlay in overlays %}
 		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "cams" or overlay.widgetIdBeta and overlay.widgetIdBeta == "cams" %}
 			{{ include('overlay/widgets/cams/v1.html.twig') }}
 		{% endif %}
 		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "topbar" or overlay.widgetIdBeta and overlay.widgetIdBeta == "topbar" %}
-			{{ include('overlay/widgets/topbar/v1.html.twig') }}
+			{{ include('overlay/widgets/topbar/heros.html.twig') }}
 		{% endif %}
 		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "versus" or overlay.widgetIdBeta and overlay.widgetIdBeta == "versus" %}
 			{{ include('overlay/widgets/versus/v1.html.twig') }}

@@ -9,14 +9,14 @@
 		{{ dump(users) }}
 	</pre>
 
-	<table class="table">
+	<table id="userList" class="table">
 		<thead>
 			<tr>
 				<th>Id</th>
 				<th>Avatar</th>
 				<th>Email</th>
 				<th>Roles</th>
-				<th>actions</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -49,11 +49,13 @@
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="9">no records found</td>
+					<td colspan="9">Rien n'a été trouvé</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_user_new') }}">Create new</a>
+	<a class="btn btn-info" href="{{ path('app_user_new') }}" style="color: black;">
+		<span class="iconify" data-icon="bxs:widget"></span>
+		Créer un nouvel utilisateur</a>
 {% endblock %}

@@ -40,6 +40,34 @@
         }) }}
 </div>
 
+<div class="row">
+	<div class="col">
+		<div class="form-floating mb-3">
+			{{ form_widget(form.widgetVersionAlpha, {
+        'attr': {'class': 'form-control'},
+        'id': "widgetVersionAlpha",
+        }) }}
+			{{ form_label(form.widgetVersionAlpha, null, {
+    'label': 'Définissez la version pour le widget principal',
+    'id': 'widgetVersionAlpha'
+        }) }}
+		</div>
+	</div>
+	<div class="col">
+		<div class="form-floating mb-3">
+			{{ form_widget(form.widgetVersionBeta, {
+        'attr': {'class': 'form-control'},
+        'id': "widgetVersionBeta",
+        }) }}
+			{{ form_label(form.widgetVersionBeta, null, {
+    'label': 'Définissez la version pour le widget secondaire',
+    'id': 'widgetVersionBeta'
+        }) }}
+		</div>
+	</div>
+</div>
+
+
 <div class="form-floating mb-3">
 	{{ form_widget(form.widgetOwner, {
         'attr': {'class': 'form-select'},
@@ -65,5 +93,5 @@
 </div>
 
 
-<button class="btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
+<button class="btn btn-success"><span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span> {{ button_label|default('Sauvegarder') }}</button>
 {{ form_end(form) }}
