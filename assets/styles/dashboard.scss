@@ -40,20 +40,39 @@ table {
   }
 }
 
-#grid_container {
+#grid_container.big {
   display: grid;
   grid-auto-rows: 1fr;
   grid-template-columns: 0.25fr 1.1fr 0.35fr;
   grid-template-rows: 1fr;
   gap: 0px 0px;
 }
+#grid_container.mini {
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-template-columns: 0.10fr 1.3fr 0.35fr;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
+}
 
 // Sidebar
-#sidebar {
+.big-sidebar {
   background-color: $blue;
   min-height: 100vh;
   max-height: 200vh;
   height: 100%; // toute la hauteur de l'écran
+  position: relative;
+
+  #sidebar_btn {
+    cursor: pointer;
+    position: absolute;
+    top: 5%;
+    right: -5%;
+    border: 1px rgba(0, 0, 0, 0.58);
+    background-color: $white;
+    box-shadow: 1px 1px 1px solid $black_1;
+    border-radius: 30%;
+  }
 
   .profile {
     padding: 1rem;
@@ -113,9 +132,108 @@ table {
       li {
         padding: 1rem 0;
 
+        .flex-menu {
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: space-between;
+        }
+
         a {
           .iconify {
             font-size: 28px;
+          }
+
+          display: flex;
+          flex-flow: row nowrap;
+          align-items: center;
+          gap: 1.3rem;
+          font-weight: 300;
+          font-size: 1.3rem;
+
+          &:hover {
+            color: $yellow;
+          }
+        }
+      }
+    }
+
+    #second_menu_sidebar {
+      margin-top: 2rem;
+    }
+  }
+}
+
+// Sidebar réduite
+.mini-sidebar {
+  background-color: $blue;
+  min-height: 100vh;
+  max-height: 200vh;
+  height: 100%; // toute la hauteur de l'écran
+  position: relative;
+
+  #sidebar_btn {
+    cursor: pointer;
+    position: absolute;
+    top: 5%;
+    right: -5%;
+    border: 1px rgba(0, 0, 0, 0.58);
+    background-color: $white;
+    box-shadow: 1px 1px 1px solid $black_1;
+    border-radius: 30%;
+  }
+
+  .profile {
+    padding: 1rem;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: .4rem;
+
+    .left {
+      width: 100%;
+
+      .img {
+        width: 100%;
+
+        img {
+          width: 100%;
+          border-radius: 50%;
+
+        }
+      }
+    }
+
+    .right {
+      display: none;
+    }
+  }
+
+  .container {
+    padding: 0 2.2rem;
+    display: flex;
+    flex-flow: column nowrap;
+
+    .menu {
+      padding-left: 0;
+
+      li {
+        padding: 1rem 0;
+
+        .flex-menu {
+          display: none;
+        }
+
+        a {
+
+          span {
+            &:first-of-type {
+              font-size: 28px;
+              width: 100%;
+            }
+
+            &:last-of-type {
+              display: none;
+            }
           }
 
           display: flex;
