@@ -47,6 +47,7 @@ table {
   grid-template-rows: 1fr;
   gap: 0px 0px;
 }
+
 #grid_container.mini {
   display: grid;
   grid-auto-rows: 1fr;
@@ -414,4 +415,11 @@ table {
       text-transform: uppercase;
     }
   }
+}
+
+#twitchIframe {
+  max-width: 1100px;
+  width: 100%;
+  max-height: 500px;
+  height: 100%;
 }

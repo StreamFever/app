@@ -3,6 +3,7 @@
 {% block title %}Overlay
 {% endblock %}
 
+
 {% block body %}
 	<h1>Panel de
 		{{overlays[0].widgetOwner.username}}</h1>
@@ -11,24 +12,37 @@
   {{ dump(overlays) }}
  </pre>
 
+	<a href="{{ path('app_overlay_show_browsersource', {'user_id': overlays[0].widgetOwner.id}) }}" target="_blank" class="btn btn-info" style="width: 100%">Accéder au browsersource</a>
+	<button class="btn btn-warning" style="width: 100%" onclick="copierTexte(this, event)" value="https://v4.dev.symfony.artaic.fr{{ path('app_overlay_show_browsersource', {'user_id': overlays[0].widgetOwner.id}) }}">Copier le browsersource</button>
+
+
+	<iframe id="twitchIframe" src="https://player.twitch.tv/?channel=sixquatre&parent=v4.dev.symfony.artaic.fr" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>
+
 	<table id="showOverlayU" class="table">
 		<thead>
 			<tr>
-				<th>Id</th>
-				<th>WidgetName</th>
-				<th>WidgetVisible</th>
-				<th>actions</th>
+				<th>ID</th>
+				<th>Nom</th>
+				<th>Etat</th>
+				{# <th>Accès</th> #}
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for overlay in overlays %}
 				<tr>
-					<td>{{ overlay.id }}</td>
+					<td>{{ overlay.widgetIdBeta != null ? "3 états" : "2 états" }}</td>
 					<td>{{ overlay.widgetName }}</td>
-					<td>{{ overlay.widgetVisible ? 'Yes' : 'No' }}</td>
+					<td>{{ overlay.widgetVisible ? 'Actif' : 'Non-actif' }}</td>
+					//TODO: Afficher les pseudos des gens qui ont accès à l'overlay
+					{# <th>{{ overlay.WidgetPermission }}</th> #}
 					<td>
-						<a class="btn btn-info" href="{{ path('app_overlay_show', {'id': overlay.id}) }}"><span class="iconify" data-icon="carbon:view-filled"></span> Détails</a>
-						<a class="btn btn-warning" href="{{ path('app_overlay_edit', {'id': overlay.id}) }}"><span class="iconify" data-icon="akar-icons:edit"></span> Editer</a>
+						<a class="btn btn-info" href="{{ path('app_overlay_show', {'id': overlay.id}) }}">
+							<span class="iconify" data-icon="carbon:view-filled"></span>
+							Détails</a>
+						<a class="btn btn-warning" href="{{ path('app_overlay_edit', {'id': overlay.id}) }}">
+							<span class="iconify" data-icon="akar-icons:edit"></span>
+							Editer</a>
 					</td>
 				</tr>
 			{% else %}
@@ -38,9 +52,6 @@
 			{% endfor %}
 		</tbody>
 	</table>
-
-	<a href="{{ path('app_overlay_show_browsersource', {'user_id': overlays[0].widgetOwner.id}) }}" target="_blank" class="btn btn-info">Accéder au browsersource</a>
-
 
 	<section id="buttons_section">
 		<div class=".container-lg">
