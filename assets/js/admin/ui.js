@@ -57,15 +57,16 @@ const random = (length = 13) => {
 
 };
 
-// FIXME: sort un undefined sur les autres pages
-// document.getElementById('generatePassword').addEventListener('click', () => {
-//   document.getElementById('password').value = random();
-// })
+if (window.location.pathname == "/admin/user/new") {
+  document.getElementById('generatePassword').addEventListener('click', () => {
+    document.getElementById('password').value = random();
+  })
 
-// document.getElementById('slide-in-toppwd').addEventListener('click', () => {
-//   if (document.getElementById('password').type == "password") {
-//     document.getElementById('password').type = "text"
-//   } else if (document.getElementById('password').type == "text") {
-//     document.getElementById('password').type = "password"
-//   }
-// })
+  document.getElementById('slide-in-toppwd').addEventListener('click', () => {
+    if (document.getElementById('password').type == "password") {
+      document.getElementById('password').type = "text"
+    } else if (document.getElementById('password').type == "text") {
+      document.getElementById('password').type = "password"
+    }
+  })
+}

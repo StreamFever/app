@@ -1,0 +1,189 @@
+$font: 'Alumni Sans';
+$blue: #144478;
+$yellow: #EBBE1A;
+$black_1 : #202225;
+$black_2 : rgba(0, 0, 0, 0.58);
+$black_3 : #171821;
+$white : #FFFFFF;
+$grey_1 : #DFDFDF;
+
+
+.wrap {
+ display: grid;
+ grid-auto-rows: 1fr;
+ grid-template-columns: 2.5fr 1fr;
+ grid-template-rows: 1fr;
+ gap: 0px 0px;
+
+ .left {
+  background-image: url('https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1159&q=80');
+  background-size: cover;
+  background-repeat: no-repeat;
+  //height: 100%;
+  min-height: 100vh;
+  max-height: 100vh;
+  grid-columns: 1/2;
+
+  .logo {
+   width: 10%;
+
+   img {
+    width: 100%;
+   }
+  }
+ }
+
+ .right {
+  grid-columns: 2/3;
+
+  .top {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: .4rem 1rem;
+
+   a,
+   span {
+    font-family: 'Alumni Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 36px;
+    text-decoration-line: none;
+    color: $black_1;
+   }
+  }
+
+  .menu {
+   display: flex;
+   gap: 1rem;
+   align-items: center;
+   padding: 1rem;
+
+   border-bottom: 1px solid $grey_1;
+
+   li {
+    a {
+     font-family: $font;
+     font-style: normal;
+     font-weight: 300;
+     font-size: 1.5rem;
+     color: #F1960D;
+     text-decoration-line: none;
+
+     &:hover {
+      color: $blue;
+      border-bottom: 2px solid $blue;
+      padding-bottom: 18px;
+     }
+    }
+
+    .active {
+     border-bottom: 2px solid $yellow;
+     padding-bottom: 18px;
+
+     &:hover {
+      border-bottom: 2px solid $yellow;
+      color: #F1960D;
+     }
+    }
+   }
+  }
+
+  #sign-in-form {
+   padding: 4rem 1rem;
+   max-width: 350px;
+   width: 100%;
+   margin: 0 auto;
+
+   input {
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
+
+
+    font-family: $font;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1rem;
+   }
+
+   label {
+    font-family: $font;
+    font-style: normal;
+    font-weight: 300;
+    color: $black_2;
+   }
+
+   input#inputPassword {
+    position: relative;
+
+   }
+
+   #showpwd {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+   }
+
+   .links {
+    margin-top: 1rem;
+
+    a {
+     font-family: $font;
+     font-style: normal;
+     font-weight: 300;
+     font-size: 1rem;
+     color: #F1960D;
+     text-decoration-line: none;
+     transition: all 0.3s ease-in-in;
+
+     &:hover {
+      transition: all 0.3s ease-in-out;
+      color: $blue;
+      text-decoration-line: underline;
+     }
+    }
+   }
+
+   .submit {
+    margin-top: 2rem;
+    border: none;
+    background: $yellow;
+    width: 100%;
+    padding: .3rem;
+
+    color: #FFFFFF;
+    font-family: $font;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.4rem;
+    transition: all 0.3s ease-in-in;
+
+    &:hover {
+     transition: all 0.3s ease-in-out;
+     background: $blue;
+    }
+   }
+  }
+ }
+}
+
+
+.display_none {
+ display: none !important;
+}
+
+@media screen and (max-width: 1050px) {
+ .wrap {
+  grid-template-columns: 1fr 1fr;
+ }
+}
+
+@media screen and (max-width: 590px) {
+ .wrap {
+  display: block;
+  .left {
+   display: none;
+  }
+ }
+}
