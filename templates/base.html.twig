@@ -158,8 +158,25 @@
 					</div>
 				</aside>
 			{% endif %}
-			<section id="content"> {% block body %}{% endblock %}
-				</section>
+			<section id="content"> 
+			<div class="top">
+				<div class="left">
+				{% if app.user %}
+				<span>Hello <strong>{{ app.user.userFirstName != null ? app.user.userFirstName : app.user.pseudo }} 👋</strong></span>
+				<p>Welcome on your dashboard</p>
+				{% endif %}
+				</div>
+				<div class="right">
+				<div class="buttons">
+					<a href="#" data-id="langage"><span class="iconify" data-icon="bi:translate"></span></a>
+					<a href="#" data-id="theme"><span class="iconify" data-icon="fluent:weather-moon-48-filled"></span></a>
+					<a href="#" data-id="tutorials"><span class="iconify" data-icon="entypo:info"></span></a>
+				</div>
+				</div>
+			</div>
+
+			{% block body %}{% endblock %}
+			</section>
 
 
 				{% if app.user %}

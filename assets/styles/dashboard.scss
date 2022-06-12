@@ -27,6 +27,8 @@ a {
 body {
   background-color: $grey_1;
   font-family: $font;
+  height: 100vh;
+  width: 100vw;
 }
 
 table {
@@ -263,6 +265,94 @@ table {
   border-bottom-right-radius: 30px;
   padding: 1rem;
 
+  .top {
+    padding: .5rem;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+
+    .left {
+      span {
+        font-family: $font;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 2rem;
+      }
+
+      p {
+        font-family: $font;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 1.2rem;
+      }
+    }
+
+    .right {
+
+      .buttons {
+        a {
+
+
+          &[data-id="langage"] {
+            background-color: rgba(0, 36, 149, 0.58);
+            color: white;
+            border: 1px solid rgba(0, 36, 149, 0.58);
+            border-radius: 30px;
+            padding: 0.5rem 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+              transition: all 0.3s ease-in-out;
+              background-color: white;
+              color: rgba(0, 36, 149, 0.58);
+            }
+          }
+
+          &[data-id="theme"] {
+            background-color: rgba(235, 190, 26, 0.36);
+            color: $black_1;
+            border: 1px solid rgba(235, 190, 26, 0.36);
+            border-radius: 30px;
+            padding: 0.5rem 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+              transition: all 0.3s ease-in-out;
+              background-color: white;
+              color: rgba(235, 190, 26, 0.36);
+            }
+          }
+
+          &[data-id="tutorials"] {
+            background-color: #002495;
+            color: white;
+            border: 1px solid #002495;
+            border-radius: 30px;
+            padding: 0.5rem 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+              transition: all 0.3s ease-in-out;
+              background-color: white;
+              color: #002495;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 // Rightbar
