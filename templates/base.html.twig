@@ -100,12 +100,29 @@
 									</a>
 								</li>
 								{% if is_granted('ROLE_ADMIN') %}
-									<li>
-										<a href="{{ path('app_user_index') }}">
-											<span class="iconify" data-icon="ph:users-light"></span>
-											<span>Users</span>
-										</a>
-									</li>
+									<li class="dropdown-menu-source">
+										<div class="flex-menu">
+											<a href="{{ path('app_user_index') }}">
+												<span class="iconify" data-icon="ph:users-thin"></span>
+												<span>Users</span>
+											</a>
+											<a data-id="dropdown" href="#">
+												<span class="iconify" data-icon="fe:arrow-right"></span>
+											</a>
+										</div>
+										<ul data-id="dropdown-menu" class="display_none">
+											<li>
+												<a href="{{ path('app_team_index') }}">
+													<span class="iconify" data-icon="fluent:people-team-16-regular"></span>Teams
+												</a>
+											</li>
+											<li>
+												<a href="{{ path('app_player_index') }}">
+													<span class="iconify" data-icon="ant-design:user-outlined"></span>Players
+												</a>
+											</li>
+										</ul>
+								</li>
 								{% endif %}
 								{% if is_granted('ROLE_ADMIN') %}
 									<li>
