@@ -178,17 +178,14 @@
 			{% block body %}{% endblock %}
 			</section>
 
-
 				{% if app.user %}
 					{% if overlays is defined and 'admin/overlay/u' in app.request.uri %}
 						{{ include('components/rightbar_widgets.html.twig') }}
-					{% endif %}
 
-					{% if calendar is defined and 'admin/overlay/u' not in app.request.uri %}
+					{% else %}
 						{{ include('components/rightbar_agenda.html.twig') }}
 					{% endif %}
 				{% endif %}
 			</div>
 		</body>
 	</html>
-</body></html></body></html>
