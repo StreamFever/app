@@ -8,15 +8,17 @@
 	<h1>Panel de
 		{{overlays[0].widgetOwner.username}}</h1>
 
-	<pre>
-  {{ dump(overlays) }}
- </pre>
+	{# <pre>
+	  {{ dump(overlays) }}
+	 </pre> #}
 
 	<a href="{{ path('app_overlay_show_browsersource', {'user_id': overlays[0].widgetOwner.id}) }}" target="_blank" class="btn btn-info" style="width: 100%">Accéder au browsersource</a>
 	<button class="btn btn-warning" style="width: 100%" onclick="copierTexte(this, event)" value="https://v4.dev.symfony.artaic.fr{{ path('app_overlay_show_browsersource', {'user_id': overlays[0].widgetOwner.id}) }}">Copier le browsersource</button>
 
 
-	<iframe id="twitchIframe" src="https://player.twitch.tv/?channel=sixquatre&parent=v4.dev.symfony.artaic.fr" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>
+	<div>
+		<iframe src="https://player.twitch.tv/?channel=sixquatre&parent=v4.dev.symfony.artaic.fr" frameborder="0" allowfullscreen="true" scrolling="no" width="900px" height="500px"></iframe>
+	</div>
 
 	<table id="showOverlayU" class="table">
 		<thead>
@@ -70,171 +72,171 @@
 		</div>
 	</section>
 
-	<section id="sponsor">
-		<div class="container">
-			<div class="form-floating mb-3">
-				<select disabled class="form-select" id="floatSelectSponsor" aria-label="Floating label select example">
-					<option selected>--Sélectionnez--</option>
-					<option value="1">One</option>
-					<option value="2">Two</option>
-					<option value="3">Three</option>
-				</select>
-				<label for="floatSelectSponsor">Sélectionnez un sponsor</label>
-			</div>
-		</div>
-	</section>
-
-	<section id="popup">
-		<div class="container">
-			<div class="form-floating mb-3">
-				<textarea class="form-control" placeholder="Leave a comment here" id="floatTextPopup" style="height: 100px"></textarea>
-				<label for="floatTextPopup">Contenu de la popup</label>
-			</div>
-		</div>
-	</section>
-
-	<section id="event">
-		<div class="container">
-			<div class="form-floating mb-3">
-				<input disabled type="text" class="form-control" id="floatNameEvent" placeholder="name@example.com">
-				<label for="floatNameEvent">Nom de l'évent</label>
-			</div>
-			<div class="form-floating mb-3">
-				<input disabled type="text" class="form-control" id="floatHashtagEvent" placeholder="Password">
-				<label for="floatHashtagEvent">Hashtag de l'évent</label>
-			</div>
-			<div class="form-floating mb-3">
-				<input disabled type="text" class="form-control" id="floatPhaseEvent" placeholder="Password">
-				<label for="floatPhaseEvent">Phase de l'évent</label>
-			</div>
-			<div class="form-floating mb-3">
-				<input disabled type="text" class="form-control" id="floatRoundEvent" placeholder="Password">
-				<label for="floatRoundEvent">Round de l'évent</label>
-			</div>
-
-			<button class="btn btn-success btn-icon-text" type="button" onclick="update_event()">
-				<i class="fa-solid fa-triangle-exclamation"></i>
-				Mettre à jour</button>
-			<button type="button" class="btn btn-warning btn-icon-text">
-				<i class="fa-solid fa-rotate"></i>
-				Reset
-			</button>
-		</div>
-	</section>
-
-	<section id="match">
-		<div class="container">
-			<div class="row g-2">
-				<div class="col-md">
-					<div class="form-floating mb-3 mb-3">
-						<input disabled type="text" class="form-control" id="floatTeamAcurrentMatch" placeholder="name@example.com">
-						<label for="floatTeamAcurrentMatch">Nom de l'équipe A</label>
-					</div>
-				</div>
-				<div class="col-md">
-					<div class="form-floating mb-3">
-						<input disabled type="text" class="form-control" id="floatTeamBcurrentMatch" placeholder="Password">
-						<label for="floatTeamBcurrentMatch">Nom de l'équipe B</label>
-					</div>
+	{# <section id="sponsor">
+			<div class="container">
+				<div class="form-floating mb-3">
+					<select disabled class="form-select" id="floatSelectSponsor" aria-label="Floating label select example">
+						<option selected>--Sélectionnez--</option>
+						<option value="1">One</option>
+						<option value="2">Two</option>
+						<option value="3">Three</option>
+					</select>
+					<label for="floatSelectSponsor">Sélectionnez un sponsor</label>
 				</div>
 			</div>
-			<div class="row g-2">
-				<div class="col-md">
-					<div class="form-floating mb-3 mb-3">
-						<input disabled type="text" class="form-control" id="floatScoreTeamAcurrentMatch" placeholder="name@example.com">
-						<label for="floatScoreTeamAcurrentMatch">0</label>
-					</div>
-				</div>
-				<div class="col-md">
-					<div class="form-floating mb-3">
-						<input disabled type="text" class="form-control" id="floatScoreTeamBcurrentMatch" placeholder="Password">
-						<label for="floatScoreTeamBcurrentMatch">0</label>
-					</div>
+		</section>
+	
+		<section id="popup">
+			<div class="container">
+				<div class="form-floating mb-3">
+					<textarea class="form-control" placeholder="Leave a comment here" id="floatTextPopup" style="height: 100px"></textarea>
+					<label for="floatTextPopup">Contenu de la popup</label>
 				</div>
 			</div>
-			<div class="row g-2">
-				<div class="col-md">
-					<div class="form-floating mb-3">
-						<select disabled class="form-select" id="floatCurrentFormat" aria-label="Floating label select example">
-							<option selected>--Sélectionnez--</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
-						</select>
-						<label for="floatCurrentFormat">Sélectionnez un format</label>
-					</div>
+		</section>
+	
+		<section id="event">
+			<div class="container">
+				<div class="form-floating mb-3">
+					<input disabled type="text" class="form-control" id="floatNameEvent" placeholder="name@example.com">
+					<label for="floatNameEvent">Nom de l'évent</label>
 				</div>
-				<div class="col-md">
-					<div class="form-floating mb-3">
-						<select disabled class="form-select" id="floatCurrentMap" aria-label="Floating label select example">
-							<option selected>--Sélectionnez--</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
-						</select>
-						<label for="floatCurrentMap">Sélectionnez une carte</label>
-					</div>
+				<div class="form-floating mb-3">
+					<input disabled type="text" class="form-control" id="floatHashtagEvent" placeholder="Password">
+					<label for="floatHashtagEvent">Hashtag de l'évent</label>
 				</div>
+				<div class="form-floating mb-3">
+					<input disabled type="text" class="form-control" id="floatPhaseEvent" placeholder="Password">
+					<label for="floatPhaseEvent">Phase de l'évent</label>
+				</div>
+				<div class="form-floating mb-3">
+					<input disabled type="text" class="form-control" id="floatRoundEvent" placeholder="Password">
+					<label for="floatRoundEvent">Round de l'évent</label>
+				</div>
+	
+				<button class="btn btn-success btn-icon-text" type="button" onclick="update_event()">
+					<i class="fa-solid fa-triangle-exclamation"></i>
+					Mettre à jour</button>
+				<button type="button" class="btn btn-warning btn-icon-text">
+					<i class="fa-solid fa-rotate"></i>
+					Reset
+				</button>
 			</div>
-
-
-			<button class="btn btn-success btn-icon-text" type="button" onclick="update_event()">
-				<i class="fa-solid fa-triangle-exclamation"></i>
-				Mettre à jour</button>
-			<button type="button" class="btn btn-warning btn-icon-text">
-				<i class="fa-solid fa-rotate"></i>
-				Reset
-			</button>
-		</div>
-	</section>
-
-	<section id="twitter">
-		<div class="container">
-			<div class="row g-2">
-				<div class="col-md">
-					<div class="form-floating mb-3 mb-3">
-						<input disabled type="text" class="form-control" id="floatHashtagFollow" placeholder="name@example.com">
-						<label for="floatHashtagFollow">Définir le hashtag à suivre</label>
-					</div>
-				</div>
-				<div class="col-md">
-					<button class="btn btn-success btn-icon-text" type="button" onclick="update_event()">
-						<i class="fa-solid fa-triangle-exclamation"></i>
-						Mettre à jour</button>
-				</div>
-			</div>
-
-
-			<div class="form-check form-switch">
-				<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchRecupTweets">
-				<label class="form-check-label" for="flexSwitchRecupTweets">Récupération des tweets</label>
-			</div>
-
-			<div class="row g-2">
-				<div class="col-md">
-					<button class="btn btn-success btn-icon-text" type="button" onclick="update_event()">
-						<i class="fa-solid fa-file-check"></i>
-						Voir les tweets</button>
-					<button class="btn btn-warning btn-icon-text" type="button" onclick="update_event()">
-						<i class="fa-solid fa-triangle-exclamation"></i>
-						Reset</button>
-				</div>
-				<div class="col-md">
-					<div class="row g-2">
-						<div class="col-md">
-							<button class="btn btn-success btn-icon-text" type="button" onclick="update_event()">
-								<i class="fa-solid fa-play"></i>
-								Play</button>
+		</section>
+	
+		<section id="match">
+			<div class="container">
+				<div class="row g-2">
+					<div class="col-md">
+						<div class="form-floating mb-3 mb-3">
+							<input disabled type="text" class="form-control" id="floatTeamAcurrentMatch" placeholder="name@example.com">
+							<label for="floatTeamAcurrentMatch">Nom de l'équipe A</label>
 						</div>
-						<div class="col-md">
-							<div class="form-floating mb-3 mb-3">
-								<input disabled type="text" class="form-control" id="floatTimeTweetDisplay" placeholder="name@example.com">
-								<label for="floatTimeTweetDisplay">Définir un temps d'affichage</label>
+					</div>
+					<div class="col-md">
+						<div class="form-floating mb-3">
+							<input disabled type="text" class="form-control" id="floatTeamBcurrentMatch" placeholder="Password">
+							<label for="floatTeamBcurrentMatch">Nom de l'équipe B</label>
+						</div>
+					</div>
+				</div>
+				<div class="row g-2">
+					<div class="col-md">
+						<div class="form-floating mb-3 mb-3">
+							<input disabled type="text" class="form-control" id="floatScoreTeamAcurrentMatch" placeholder="name@example.com">
+							<label for="floatScoreTeamAcurrentMatch">0</label>
+						</div>
+					</div>
+					<div class="col-md">
+						<div class="form-floating mb-3">
+							<input disabled type="text" class="form-control" id="floatScoreTeamBcurrentMatch" placeholder="Password">
+							<label for="floatScoreTeamBcurrentMatch">0</label>
+						</div>
+					</div>
+				</div>
+				<div class="row g-2">
+					<div class="col-md">
+						<div class="form-floating mb-3">
+							<select disabled class="form-select" id="floatCurrentFormat" aria-label="Floating label select example">
+								<option selected>--Sélectionnez--</option>
+								<option value="1">One</option>
+								<option value="2">Two</option>
+								<option value="3">Three</option>
+							</select>
+							<label for="floatCurrentFormat">Sélectionnez un format</label>
+						</div>
+					</div>
+					<div class="col-md">
+						<div class="form-floating mb-3">
+							<select disabled class="form-select" id="floatCurrentMap" aria-label="Floating label select example">
+								<option selected>--Sélectionnez--</option>
+								<option value="1">One</option>
+								<option value="2">Two</option>
+								<option value="3">Three</option>
+							</select>
+							<label for="floatCurrentMap">Sélectionnez une carte</label>
+						</div>
+					</div>
+				</div>
+	
+	
+				<button class="btn btn-success btn-icon-text" type="button" onclick="update_event()">
+					<i class="fa-solid fa-triangle-exclamation"></i>
+					Mettre à jour</button>
+				<button type="button" class="btn btn-warning btn-icon-text">
+					<i class="fa-solid fa-rotate"></i>
+					Reset
+				</button>
+			</div>
+		</section>
+	
+		<section id="twitter">
+			<div class="container">
+				<div class="row g-2">
+					<div class="col-md">
+						<div class="form-floating mb-3 mb-3">
+							<input disabled type="text" class="form-control" id="floatHashtagFollow" placeholder="name@example.com">
+							<label for="floatHashtagFollow">Définir le hashtag à suivre</label>
+						</div>
+					</div>
+					<div class="col-md">
+						<button class="btn btn-success btn-icon-text" type="button" onclick="update_event()">
+							<i class="fa-solid fa-triangle-exclamation"></i>
+							Mettre à jour</button>
+					</div>
+				</div>
+	
+	
+				<div class="form-check form-switch">
+					<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchRecupTweets">
+					<label class="form-check-label" for="flexSwitchRecupTweets">Récupération des tweets</label>
+				</div>
+	
+				<div class="row g-2">
+					<div class="col-md">
+						<button class="btn btn-success btn-icon-text" type="button" onclick="update_event()">
+							<i class="fa-solid fa-file-check"></i>
+							Voir les tweets</button>
+						<button class="btn btn-warning btn-icon-text" type="button" onclick="update_event()">
+							<i class="fa-solid fa-triangle-exclamation"></i>
+							Reset</button>
+					</div>
+					<div class="col-md">
+						<div class="row g-2">
+							<div class="col-md">
+								<button class="btn btn-success btn-icon-text" type="button" onclick="update_event()">
+									<i class="fa-solid fa-play"></i>
+									Play</button>
+							</div>
+							<div class="col-md">
+								<div class="form-floating mb-3 mb-3">
+									<input disabled type="text" class="form-control" id="floatTimeTweetDisplay" placeholder="name@example.com">
+									<label for="floatTimeTweetDisplay">Définir un temps d'affichage</label>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section> #}
 {% endblock %}
