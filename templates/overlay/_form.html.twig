@@ -67,6 +67,17 @@
 	</div>
 </div>
 
+<div class="form-check">
+	{{ form_widget(form.widgetVisible, {
+        'attr': {'class': 'form-check-input'},
+        'id': "widgetVisible",
+        }) }}
+	{{ form_label(form.widgetVisible, null, {
+    'label': 'Par défaut, le widget n\'est pas visible',
+    'attr': {'class': 'form-check-label'},
+    'id': 'widgetVisible'
+        }) }}
+</div>
 
 <div class="form-floating mb-3">
 	{{ form_widget(form.widgetOwner, {
