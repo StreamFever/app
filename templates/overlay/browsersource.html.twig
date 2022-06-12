@@ -6,8 +6,8 @@
 	{{ dump(overlays) }}
 </pre>
 	{% for overlay in overlays %}
-		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "cams" or overlay.widgetIdBeta and overlay.widgetIdBeta == "cams" %}
-			{{ include('overlay/widgets/cams/v1.html.twig') }}
+		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "cam_heros" or overlay.widgetIdBeta and overlay.widgetIdBeta == "cam_heros" %}
+			{{ include('overlay/widgets/cams/five.html.twig') }}
 		{% endif %}
 		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "topbar" or overlay.widgetIdBeta and overlay.widgetIdBeta == "topbar" %}
 			{{ include('overlay/widgets/topbar/heros.html.twig') }}
@@ -21,14 +21,8 @@
 		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "next" or overlay.widgetIdBeta and overlay.widgetIdBeta == "next" %}
 			{{ include('overlay/widgets/next/v1.html.twig') }}
 		{% endif %}
-		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "tweet_sample" or overlay.widgetIdBeta and overlay.widgetIdBeta == "tweet_sample" %}
-			{{ include('overlay/widgets/tweets/sample.html.twig') }}
-		{% endif %}
-		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "tweet_img" or overlay.widgetIdBeta and overlay.widgetIdBeta == "tweet_img" %}
-			{{ include('overlay/widgets/tweets/img.html.twig') }}
-		{% endif %}
-		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "tweet_video" or overlay.widgetIdBeta and overlay.widgetIdBeta == "tweet_video" %}
-			{{ include('overlay/widgets/tweets/video.html.twig') }}
+		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "tweets" or overlay.widgetIdBeta and overlay.widgetIdBeta == "tweets" %}
+			{{ include('overlay/widgets/tweets/index.html.twig') }}
 		{% endif %}
 	{% endfor %}
 {% endblock %}
