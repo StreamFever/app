@@ -454,10 +454,22 @@ table {
             gap: .4rem;
 
             .barre {
-              background: #FD7E50;
+              background: #002495;
               width: 4px;
               height: 47px;
               border-radius: 30px;
+
+              &[data-id="orange"] {
+                background: #FD7E50;
+              }
+
+              &[data-id="yellow"] {
+                background: #faed02;
+              }
+
+              &[data-id="green"] {
+                background: #088e03;
+              }
             }
 
             .details {
