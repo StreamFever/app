@@ -7,247 +7,189 @@
 {% block body %}
 
 	{# <pre>
-																	  {{ dump(overlays) }}
-																	 </pre> #}
+																														  {{ dump(overlays) }}
+																														 </pre> #}
 
 	<a href="{{ path('app_overlay_show_browsersource', {'user_id': overlays[0].widgetOwner.id}) }}" target="_blank" class="btn btn-info" style="width: 100%">Accéder au browsersource</a>
 	<button class="btn btn-warning" style="width: 100%" onclick="copierTexte(this, event)" value="https://v4.dev.symfony.artaic.fr{{ path('app_overlay_show_browsersource', {'user_id': overlays[0].widgetOwner.id}) }}">Copier le browsersource</button>
 
-
-	<div class="row">
-		<div class="col">
-			<div id="twitch-embed-content">
-				<div id="twitch-embed" class="twitch-embed-small">
-					<a href="#" id="btn_toggle_size_twitch">
-						<span class="iconify" data-icon="system-uicons:scale-extend"></span>
-					</a>
-				</div>
-
-			</div>
+	<div id="twitch-embed-content">
+		<div id="twitch-embed" class="twitch-embed-small">
+			<a href="#" id="btn_toggle_size_twitch">
+				<span class="iconify" data-icon="system-uicons:scale-extend"></span>
+			</a>
 		</div>
-		<div class="col">
-			<table id="showOverlayU" class="table">
-				<thead>
+
+
+		<table id="showOverlayU" class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nom</th>
+					<th>Etat</th>
+					{# <th>Accès</th> #}
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for overlay in overlays %}
 					<tr>
-						<th>ID</th>
-						<th>Nom</th>
-						<th>Etat</th>
-						{# <th>Accès</th> #}
-						<th>Actions</th>
+						<td>{{ overlay.widgetIdBeta != null ? "3 états" : "2 états" }}</td>
+						<td>{{ overlay.widgetName }}</td>
+						<td>{{ overlay.widgetVisible ? 'Actif' : 'Non-actif' }}</td>
+						//TODO: Afficher les pseudos des gens qui ont accès à l'overlay
+						{# <th>{{ overlay.WidgetPermission }}</th> #}
+						<td>
+							<a class="btn btn-info" href="{{ path('app_overlay_show', {'id': overlay.id}) }}">
+								<span class="iconify" data-icon="carbon:view-filled"></span>
+								Détails</a>
+							<a class="btn btn-warning" href="{{ path('app_overlay_edit', {'id': overlay.id}) }}">
+								<span class="iconify" data-icon="akar-icons:edit"></span>
+								Editer</a>
+						</td>
 					</tr>
-				</thead>
-				<tbody>
-					{% for overlay in overlays %}
-						<tr>
-							<td>{{ overlay.widgetIdBeta != null ? "3 états" : "2 états" }}</td>
-							<td>{{ overlay.widgetName }}</td>
-							<td>{{ overlay.widgetVisible ? 'Actif' : 'Non-actif' }}</td>
-							//TODO: Afficher les pseudos des gens qui ont accès à l'overlay
-							{# <th>{{ overlay.WidgetPermission }}</th> #}
-							<td>
-								<a class="btn btn-info" href="{{ path('app_overlay_show', {'id': overlay.id}) }}">
-									<span class="iconify" data-icon="carbon:view-filled"></span>
-									Détails</a>
-								<a class="btn btn-warning" href="{{ path('app_overlay_edit', {'id': overlay.id}) }}">
-									<span class="iconify" data-icon="akar-icons:edit"></span>
-									Editer</a>
-							</td>
-						</tr>
-					{% else %}
-						<tr>
-							<td colspan="4">Rien n'a été trouvé</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		</div>
+				{% else %}
+					<tr>
+						<td colspan="4">Rien n'a été trouvé</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	</div>
 
 
 	<section id="buttons_section">
-		<div class=".container-lg">
-			<div class="btn-group" role="group" aria-label="Basic example">
-				<button type="button" class="btn btn-info" onclick="show_section('section_video')">Vidéo</button>
+		<div class="container-lg">
+			<div
+				class="btn-group" role="group" aria-label="Basic example">
+				{# <button type="button" class="btn btn-info" onclick="show_section('section_video')">Vidéo</button> #}
 				<button type="button" class="btn btn-info" onclick="show_section('section_event')">Evénement</button>
-				<button type="button" class="btn btn-info" onclick="show_section('section_match')">Match</button>
+				{# <button type="button" class="btn btn-info" onclick="show_section('section_match')">Match</button> #}
 				<button type="button" class="btn btn-info" onclick="show_section('section_next')">A suivre</button>
 				<button type="button" class="btn btn-info" onclick="show_section('section_tweet')">Tweet</button>
-				<button type="button" class="btn btn-info" onclick="show_section('section_poll')">Sondage</button>
-				<button type="button" class="btn btn-info" onclick="show_section('section_popup')">Popup</button>
-				<button type="button" class="btn btn-info" onclick="show_section()">Casters</button>
-				<button type="button" class="btn btn-info" onclick="show_section()">Players</button>
-				<button type="button" class="btn btn-info" onclick="show_section('section_sondage')">Sondage</button>
+				{# <button type="button" class="btn btn-info" onclick="show_section('section_poll')">Sondage</button> #}
+			{# <button type="button" class="btn btn-info" onclick="show_section('section_popup')">Popup</button> #}
+				{# <button type="button" class="btn btn-info" onclick="show_section()">Casters</button> #}
+				{# <button type="button" class="btn btn-info" onclick="show_section()">Players</button> #}
 			</div>
 		</div>
 	</section>
 
-	{# <section id="sponsor">
-																					<div class="container">
-																						<div class="form-floating mb-3">
-																							<select disabled class="form-select" id="floatSelectSponsor" aria-label="Floating label select example">
-																								<option selected>--Sélectionnez--</option>
-																								<option value="1">One</option>
-																								<option value="2">Two</option>
-																								<option value="3">Three</option>
-																							</select>
-																							<label for="floatSelectSponsor">Sélectionnez un sponsor</label>
-																						</div>
-																					</div>
-																				</section>
-																			
-																				<section id="popup">
-																					<div class="container">
-																						<div class="form-floating mb-3">
-																							<textarea class="form-control" placeholder="Leave a comment here" id="floatTextPopup" style="height: 100px"></textarea>
-																							<label for="floatTextPopup">Contenu de la popup</label>
-																						</div>
-																					</div>
-																				</section>
-																			
-																				<section id="event">
-																					<div class="container">
-																						<div class="form-floating mb-3">
-																							<input disabled type="text" class="form-control" id="floatNameEvent" placeholder="name@example.com">
-																							<label for="floatNameEvent">Nom de l'évent</label>
-																						</div>
-																						<div class="form-floating mb-3">
-																							<input disabled type="text" class="form-control" id="floatHashtagEvent" placeholder="Password">
-																							<label for="floatHashtagEvent">Hashtag de l'évent</label>
-																						</div>
-																						<div class="form-floating mb-3">
-																							<input disabled type="text" class="form-control" id="floatPhaseEvent" placeholder="Password">
-																							<label for="floatPhaseEvent">Phase de l'évent</label>
-																						</div>
-																						<div class="form-floating mb-3">
-																							<input disabled type="text" class="form-control" id="floatRoundEvent" placeholder="Password">
-																							<label for="floatRoundEvent">Round de l'évent</label>
-																						</div>
-																			
-																						<button class="btn btn-success btn-icon-text" type="button" onclick="update_event()">
-																							<i class="fa-solid fa-triangle-exclamation"></i>
-																							Mettre à jour</button>
-																						<button type="button" class="btn btn-warning btn-icon-text">
-																							<i class="fa-solid fa-rotate"></i>
-																							Reset
-																						</button>
-																					</div>
-																				</section>
-																			
-																				<section id="match">
-																					<div class="container">
-																						<div class="row g-2">
-																							<div class="col-md">
-																								<div class="form-floating mb-3 mb-3">
-																									<input disabled type="text" class="form-control" id="floatTeamAcurrentMatch" placeholder="name@example.com">
-																									<label for="floatTeamAcurrentMatch">Nom de l'équipe A</label>
-																								</div>
-																							</div>
-																							<div class="col-md">
-																								<div class="form-floating mb-3">
-																									<input disabled type="text" class="form-control" id="floatTeamBcurrentMatch" placeholder="Password">
-																									<label for="floatTeamBcurrentMatch">Nom de l'équipe B</label>
-																								</div>
-																							</div>
-																						</div>
-																						<div class="row g-2">
-																							<div class="col-md">
-																								<div class="form-floating mb-3 mb-3">
-																									<input disabled type="text" class="form-control" id="floatScoreTeamAcurrentMatch" placeholder="name@example.com">
-																									<label for="floatScoreTeamAcurrentMatch">0</label>
-																								</div>
-																							</div>
-																							<div class="col-md">
-																								<div class="form-floating mb-3">
-																									<input disabled type="text" class="form-control" id="floatScoreTeamBcurrentMatch" placeholder="Password">
-																									<label for="floatScoreTeamBcurrentMatch">0</label>
-																								</div>
-																							</div>
-																						</div>
-																						<div class="row g-2">
-																							<div class="col-md">
-																								<div class="form-floating mb-3">
-																									<select disabled class="form-select" id="floatCurrentFormat" aria-label="Floating label select example">
-																										<option selected>--Sélectionnez--</option>
-																										<option value="1">One</option>
-																										<option value="2">Two</option>
-																										<option value="3">Three</option>
-																									</select>
-																									<label for="floatCurrentFormat">Sélectionnez un format</label>
-																								</div>
-																							</div>
-																							<div class="col-md">
-																								<div class="form-floating mb-3">
-																									<select disabled class="form-select" id="floatCurrentMap" aria-label="Floating label select example">
-																										<option selected>--Sélectionnez--</option>
-																										<option value="1">One</option>
-																										<option value="2">Two</option>
-																										<option value="3">Three</option>
-																									</select>
-																									<label for="floatCurrentMap">Sélectionnez une carte</label>
-																								</div>
-																							</div>
-																						</div>
-																			
-																			
-																						<button class="btn btn-success btn-icon-text" type="button" onclick="update_event()">
-																							<i class="fa-solid fa-triangle-exclamation"></i>
-																							Mettre à jour</button>
-																						<button type="button" class="btn btn-warning btn-icon-text">
-																							<i class="fa-solid fa-rotate"></i>
-																							Reset
-																						</button>
-																					</div>
-																				</section>
-																			
-																				<section id="twitter">
-																					<div class="container">
-																						<div class="row g-2">
-																							<div class="col-md">
-																								<div class="form-floating mb-3 mb-3">
-																									<input disabled type="text" class="form-control" id="floatHashtagFollow" placeholder="name@example.com">
-																									<label for="floatHashtagFollow">Définir le hashtag à suivre</label>
-																								</div>
-																							</div>
-																							<div class="col-md">
-																								<button class="btn btn-success btn-icon-text" type="button" onclick="update_event()">
-																									<i class="fa-solid fa-triangle-exclamation"></i>
-																									Mettre à jour</button>
-																							</div>
-																						</div>
-																			
-																			
-																						<div class="form-check form-switch">
-																							<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchRecupTweets">
-																							<label class="form-check-label" for="flexSwitchRecupTweets">Récupération des tweets</label>
-																						</div>
-																			
-																						<div class="row g-2">
-																							<div class="col-md">
-																								<button class="btn btn-success btn-icon-text" type="button" onclick="update_event()">
-																									<i class="fa-solid fa-file-check"></i>
-																									Voir les tweets</button>
-																								<button class="btn btn-warning btn-icon-text" type="button" onclick="update_event()">
-																									<i class="fa-solid fa-triangle-exclamation"></i>
-																									Reset</button>
-																							</div>
-																							<div class="col-md">
-																								<div class="row g-2">
-																									<div class="col-md">
-																										<button class="btn btn-success btn-icon-text" type="button" onclick="update_event()">
-																											<i class="fa-solid fa-play"></i>
-																											Play</button>
-																									</div>
-																									<div class="col-md">
-																										<div class="form-floating mb-3 mb-3">
-																											<input disabled type="text" class="form-control" id="floatTimeTweetDisplay" placeholder="name@example.com">
-																											<label for="floatTimeTweetDisplay">Définir un temps d'affichage</label>
-																										</div>
-																									</div>
-																								</div>
-																							</div>
-																						</div>
-																					</div>
-																				</section> #}
+	<section id="section_event">
+		<div
+			class="container">
+			{# TODO: Meta_key : text_topbar #}
+			<div class="form-floating mb-3">
+				<input disabled type="text" class="form-control" id="floatTextTopbar" placeholder="name@example.com">
+				<label for="floatTextTopbar">Texte sur la topbar</label>
+			</div>
+
+			<button class="btn btn-success btn-icon-text" type="button" onclick="">
+				<i class="fa-solid fa-triangle-exclamation"></i>
+				Mettre à jour</button>
+			<button type="button" class="btn btn-warning btn-icon-text">
+				<i class="fa-solid fa-rotate"></i>
+				Reset
+			</button>
+		</div>
+	</section>
+
+	<section id="section_popup">
+		<div class="container">
+		{# TODO: Meta_key : text_popup #}
+			<div class="form-floating mb-3">
+				<textarea class="form-control" placeholder="Leave a comment here" id="floatTextPopup" style="height: 100px"></textarea>
+				<label for="floatTextPopup">Contenu de la popup</label>
+			</div>
+
+{# TODO: Meta_key : text_marquee #}
+			<div class="form-floating">
+				<textarea class="form-control" placeholder="Leave a comment here" id="bottombarvalue" maxlength="241" oninput="changePopup()"></textarea>
+				<label for="floatingTextarea">Texte dans la bottombar</label>
+			</div>
+		</div>
+	</section>
+
+	<section id="section_twitter">
+		<div class="container">
+			<div class="row g-2">
+				<div class="col-md">
+					<div class="form-floating mb-3 mb-3">
+						<input disabled type="text" class="form-control" id="floatHashtagFollow" placeholder="name@example.com">
+						<label for="floatHashtagFollow">Définir le hashtag à suivre</label>
+					</div>
+				</div>
+				<div class="col-md">
+					<button class="btn btn-success btn-icon-text" type="button" onclick="update_event()">
+						<i class="fa-solid fa-triangle-exclamation"></i>
+						Mettre à jour</button>
+				</div>
+			</div>
+
+
+			<div class="form-check form-switch">
+				<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchRecupTweets">
+				<label class="form-check-label" for="flexSwitchRecupTweets">Récupération des tweets</label>
+			</div>
+
+			<div class="row g-2">
+				<div class="col-md">
+					<button class="btn btn-success btn-icon-text" type="button" onclick="update_event()">
+						<i class="fa-solid fa-file-check"></i>
+						Voir les tweets</button>
+					<button class="btn btn-warning btn-icon-text" type="button" onclick="update_event()">
+						<i class="fa-solid fa-triangle-exclamation"></i>
+						Reset</button>
+				</div>
+				<div class="col-md">
+					<div class="row g-2">
+						<div class="col-md">
+							<button class="btn btn-success btn-icon-text" type="button" onclick="update_event()">
+								<i class="fa-solid fa-play"></i>
+								Play</button>
+						</div>
+						<div class="col-md">
+							<div class="form-floating mb-3 mb-3">
+								<input disabled type="text" class="form-control" id="floatTimeTweetDisplay" placeholder="name@example.com">
+								<label for="floatTimeTweetDisplay">Définir un temps d'affichage</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="section_next">
+		<div class="row">
+			<div class="col">
+				<div class="form-floating mb-3">
+					<input type="text" class="form-control" name="team_a_next" id="next_team_a" placeholder="X" value="" oninput="changeNext()">
+					<label for="team_a_next">Equipe A</label>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-floating mb-3">
+					<input type="text" class="form-control" name="team_b_next" id="next_team_b" placeholder="X" value="" oninput="changeNext()">
+					<label for="team_b_next">Equipe B</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-floating mb-3">
+			<input type="text" class="form-control" name="heure_next" id="heure_nextmatch" placeholder="X" value="" oninput="changeNext()">
+			<label for="heure_next">Heure du match</label>
+		</div>
+
+		{# Btn Update & Reset #}
+		<button class="btn btn-success btn-icon-text" type="button" onclick="updatenext()">
+			<i class="mdi mdi-alert btn-icon-prepend"></i>
+			Mettre à jour</button>
+		<button type="button" class="btn btn-warning btn-icon-text">
+			<i class="mdi mdi-reload btn-icon-prepend"></i>
+			Reset
+		</button>
+	</section>
 
 
 {% endblock %}

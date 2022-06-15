@@ -72,9 +72,15 @@ class Overlay
      */
     private $widgetVersionBeta;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=MetaOverlays::class, mappedBy="overlayId")
+     */
+    private $metaOverlays;
+
     public function __construct()
     {
         $this->WidgetPermission = new ArrayCollection();
+        $this->metaOverlays = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -186,6 +192,33 @@ class Overlay
     public function setWidgetVersionBeta(?string $widgetVersionBeta): self
     {
         $this->widgetVersionBeta = $widgetVersionBeta;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MetaOverlays>
+     */
+    public function getMetaOverlays(): Collection
+    {
+        return $this->metaOverlays;
+    }
+
+    public function addMetaOverlay(MetaOverlays $metaOverlay): self
+    {
+        if (!$this->metaOverlays->contains($metaOverlay)) {
+            $this->metaOverlays[] = $metaOverlay;
+            $metaOverlay->addOverlayId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMetaOverlay(MetaOverlays $metaOverlay): self
+    {
+        if ($this->metaOverlays->removeElement($metaOverlay)) {
+            $metaOverlay->removeOverlayId($this);
+        }
 
         return $this;
     }
