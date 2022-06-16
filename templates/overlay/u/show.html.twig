@@ -7,8 +7,8 @@
 {% block body %}
 
 	{# <pre>
-																														  {{ dump(overlays) }}
-																														 </pre> #}
+			{{ dump(overlays) }}
+		</pre> #}
 
 	<a href="{{ path('app_overlay_show_browsersource', {'user_id': overlays[0].widgetOwner.id}) }}" target="_blank" class="btn btn-info" style="width: 100%">Accéder au browsersource</a>
 	<button class="btn btn-warning" style="width: 100%" onclick="copierTexte(this, event)" value="https://v4.dev.symfony.artaic.fr{{ path('app_overlay_show_browsersource', {'user_id': overlays[0].widgetOwner.id}) }}">Copier le browsersource</button>
@@ -95,14 +95,15 @@
 	</section>
 
 	<section id="section_popup">
-		<div class="container">
-		{# TODO: Meta_key : text_popup #}
+		<div
+			class="container">
+			{# TODO: Meta_key : text_popup #}
 			<div class="form-floating mb-3">
 				<textarea class="form-control" placeholder="Leave a comment here" id="floatTextPopup" style="height: 100px"></textarea>
 				<label for="floatTextPopup">Contenu de la popup</label>
 			</div>
 
-{# TODO: Meta_key : text_marquee #}
+			{# TODO: Meta_key : text_marquee #}
 			<div class="form-floating">
 				<textarea class="form-control" placeholder="Leave a comment here" id="bottombarvalue" maxlength="241" oninput="changePopup()"></textarea>
 				<label for="floatingTextarea">Texte dans la bottombar</label>

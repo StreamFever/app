@@ -108,15 +108,14 @@ class OverlayController extends AbstractController
     /**
      * @Route("admin/overlay/{id}", name="app_overlay_show", methods={"GET"})
      */
-    public function show(OverlayRepository $overlayRepository, Overlay $overlay, User $user): Response
+    public function show(Overlay $overlay): Response
     {
         return $this->render('overlay/show.html.twig', [
-            'overlays' => $overlayRepository->findAll(),
             'overlay' => $overlay,
-            'user' =>$user,
             'controller_name' => "Overlay"
         ]);
     }
+
 
     /**
      * @Route("admin/overlay/{id}/edit", name="app_overlay_edit", methods={"GET", "POST"})

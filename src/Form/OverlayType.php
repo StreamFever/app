@@ -19,6 +19,11 @@ class OverlayType extends AbstractType
                     'placeholder' => 'hereYourPlaceHolder'
                 )
            ))
+           ->add('widgetVisible',  null, array(
+            'attr' => array(
+                'placeholder' => 'hereYourPlaceHolder'
+            ),
+            ))
             ->add('widgetIdAlpha',  null, array(
                 'attr' => array(
                     'placeholder' => 'hereYourPlaceHolder'
