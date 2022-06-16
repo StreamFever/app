@@ -35,14 +35,14 @@
 						<span class="badge bg-info" style="color: #212529">{{ event.eventCashprize }}</span>
 					</td>
 					<td>
-						{% if "now"|date_modify("+1 day")|date("m/d/Y") == event.eventStartDate|date('m/d/Y') %}
+						{% if "now"|date_modify("+1 day")|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
 							<span class="badge bg-warning pulsate-bck">Demain</span>
 						{% endif %}
-						{% if "now"|date_modify("-1 day")|date("m/d/Y") == event.eventStartDate|date('m/d/Y') %}
+						{% if "now"|date_modify("-1 day")|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
 							<span class="badge bg-light">Hier</span>
 						{% endif %}
-						{% if "now"|date_modify("-1 day")|date("m/d/Y") != event.eventStartDate|date('m/d/Y') and "now"|date_modify("+1 day")|date("m/d/Y") != event.eventStartDate|date('m/d/Y') %}
-							<span class="badge bg-light" style="color: #212529">{{ event.eventStartDate ? event.eventStartDate|date('d/m H:i') : '' }}</span>
+						{% if "now"|date_modify("-1 day")|date("m/d/Y", "Europe/Paris") != event.eventStartDate|date('m/d/Y', "Europe/Paris") and "now"|date_modify("+1 day")|date("m/d/Y", "Europe/Paris") != event.eventStartDate|date('m/d/Y') %}
+							<span class="badge bg-light" style="color: #212529">{{ event.eventStartDate ? event.eventStartDate|date('d/m H:i', "Europe/Paris") : '' }}</span>
 						{% endif %}
 					</td>
 					<td>
