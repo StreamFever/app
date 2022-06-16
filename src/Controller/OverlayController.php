@@ -92,8 +92,26 @@ class OverlayController extends AbstractController
                 $entityManager->persist($overlay);
                 $entityManager->flush();
             }
+            if ($data->getWidgetIdAlpha() == "cam_heros" || $data->getWidgetIdBeta() == "cam_heros" || $data->getWidgetIdAlpha() == "cam_tournoi" || $data->getWidgetIdBeta() == "cam_tournoi") {
+                for ($i=0; $i < 5; $i++) { 
+                    // Insère les données suivantes dans la table meta_overlays si nécessaire
+                    // DOCS: https://symfony.com/doc/current/doctrine/associations.html
+                    $meta = new MetaOverlays();
+                    $meta->setMetaKey('id_cam_obsninja_'.$i);
+                    $meta->setMetaValue("");
+
+                    
+                    // relates this product to the category
+                    $overlay->addMetaOverlay($meta);
+
+                    $entityManager = $doctrine->getManager();
+                    $entityManager->persist($meta);
+                    $entityManager->persist($overlay);
+                    $entityManager->flush();
+                }
+            }
             
-            return $this->redirectToRoute('app_overlay_index', null , Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_overlay_index', [] , Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('overlay/new.html.twig', [
@@ -176,6 +194,24 @@ class OverlayController extends AbstractController
                 $entityManager->persist($meta);
                 $entityManager->persist($overlay);
                 $entityManager->flush();
+            }
+            if ($data->getWidgetIdAlpha() == "cam_heros" || $data->getWidgetIdBeta() == "cam_heros" || $data->getWidgetIdAlpha() == "cam_tournoi" || $data->getWidgetIdBeta() == "cam_tournoi") {
+                for ($i=0; $i < 5; $i++) { 
+                    // Insère les données suivantes dans la table meta_overlays si nécessaire
+                    // DOCS: https://symfony.com/doc/current/doctrine/associations.html
+                    $meta = new MetaOverlays();
+                    $meta->setMetaKey('id_cam_obsninja_'.$i);
+                    $meta->setMetaValue("");
+
+                    
+                    // relates this product to the category
+                    $overlay->addMetaOverlay($meta);
+
+                    $entityManager = $doctrine->getManager();
+                    $entityManager->persist($meta);
+                    $entityManager->persist($overlay);
+                    $entityManager->flush();
+                }
             }
             return $this->redirectToRoute('app_overlay_index', [], Response::HTTP_SEE_OTHER);
         }

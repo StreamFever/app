@@ -5,9 +5,9 @@
 
 {% block body %}
 	<h1>Liste des Widgets</h1>
-	{# <pre>
+	<pre>
         {{ dump(overlays) }}
-    </pre> #}
+    </pre>
 
 
 	<table id="overlayList" class="table">
@@ -27,20 +27,30 @@
 					<td>{{ overlay.widgetName }}</td>
 					<td>{{ overlay.widgetVisible ? '<span class="iconify" color="green" data-icon="akar-icons:circle-check-fill"></span>' : '<span class="iconify" color="red" data-icon="akar-icons:circle-x-fill"></span>' }}</td>
 					<td>
-						<a target="_blank" href="{{ path('app_overlay_show_browsersource', {'user_id': overlay.widgetOwner.id}) }}">{{ overlay.widgetOwner.username }}</a>
+						{% if is_granted('ROLE_ADMIN') %}
+							<a target="_blank" href="{{ path('app_user_show', {'id': overlay.widgetOwner.id}) }}">
+								<strong>{{ overlay.widgetOwner.pseudo }}</strong>
+							</a>
+						{% else %}
+							<span>
+								<strong>{{ overlay.widgetOwner.pseudo }}</strong>
+							</span>
+						{% endif %}
 					</td>
 					<td>
 						<a class="btn btn-danger" href="{{ path('app_overlay_show_by_iduser', {'user_id': overlay.widgetOwner.id}) }}">
 							<span class="iconify" data-icon="ant-design:control-filled"></span>
 							Panel de
-							{{overlay.widgetOwner.username}}</a>
+							{{overlay.widgetOwner.pseudo}}</a>
 						<a class="btn btn-info" href="{{ path('app_overlay_show', {'id': overlay.id}) }}">
 							<span class="iconify" data-icon="carbon:view-filled"></span>
 							Détails</a>
-						<a class="btn btn-warning" href="{{ path('app_overlay_edit', {'id': overlay.id}) }}">
-							<span class="iconify" data-icon="bxs:edit"></span>
-							Editer
-						</a>
+						{% if is_granted('ROLE_ADMIN') or app.user.id == overlay.widgetOwner.id %}
+							<a class="btn btn-warning" href="{{ path('app_overlay_edit', {'id': overlay.id}) }}">
+								<span class="iconify" data-icon="bxs:edit"></span>
+								Editer
+							</a>
+						{% endif %}
 						<a class="btn btn-success" target="_blank" href="{{ path('app_overlay_show_browsersource', {'user_id': overlay.widgetOwner.id}) }}">
 							<span class="iconify" data-icon="fa-brands:firefox-browser"></span>
 							Browsersource</a>

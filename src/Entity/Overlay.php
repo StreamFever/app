@@ -83,6 +83,11 @@ class Overlay
         $this->metaOverlays = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->widgetName;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -122,6 +127,14 @@ class Overlay
         $this->widgetOwner = $widgetOwner;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getEditionNameFromOverlay(): Collection
+    {
+        return $this->wid;
     }
 
     /**
