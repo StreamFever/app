@@ -10,6 +10,7 @@
 
 // TODO: Importer selon la version des widgets, soit le index des dossiers ou individuellement les styles
 import '../styles/widgets/cc/index.scss';
+import '../js/admin/control_widget';
 import '../js/widgets/index';
 
 
