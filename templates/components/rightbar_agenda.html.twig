@@ -12,7 +12,7 @@
 			{{ dump(events) }}
 		</pre>
 			{% for event in events %}
-				{% if event.eventStartDate|date > "now"|date_modify("now")|date and event.eventStartDate|date < "now"|date_modify("now")|date_modify("+1 week")|date %}
+				{% if event.eventStartDate|date > "now"|date_modify("now")|date and event.eventStartDate|date < "now"|date_modify("now")|date_modify("+1 week")|date or "now"|date_modify("now")|date("m/d/Y") == event.eventEndDate|date("m/d/Y") %}
 					{% block card_agenda %}
 						<div class="card_rightbar">
 							<div class="top">
@@ -20,12 +20,13 @@
 									{% if "now"|date_modify("+1 day")|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
 										<span class="badge bg-warning pulsate-bck">Demain</span>
 									{% endif %}
+									{% if "now"|date_modify("now")|date("m/d/Y") == event.eventEndDate|date("m/d/Y") %}
+										<span class="badge bg-success pulsate-bck">Maintenant</span>
+									{% endif %}
 									{% if "now"|date_modify("-1 day")|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
 										<span class="badge bg-light">Hier</span>
 									{% endif %}
-									{% if "now"|date_modify("-1 day")|date("m/d/Y", "Europe/Paris") != event.eventStartDate|date('m/d/Y', "Europe/Paris") and "now"|date_modify("+1 day")|date("m/d/Y", "Europe/Paris") != event.eventStartDate|date('m/d/Y') %}
 										<span class="badge bg-light" style="color: #212529">{{ event.eventStartDate ? event.eventStartDate|date('j l, F', "Europe/Paris") : '' }}</span>
-									{% endif %}
 								</div>
 								<div class="actions">
 									<a href="#">•••</a>
