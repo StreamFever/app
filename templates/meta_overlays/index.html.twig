@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MetaOverlays index{% endblock %}
+
+{% block body %}
+    <h1>MetaOverlays index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>MetaKey</th>
+                <th>MetaValue</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for meta_overlay in meta_overlays %}
+            <tr>
+                <td>{{ meta_overlay.id }}</td>
+                <td>{{ meta_overlay.metaKey }}</td>
+                <td>{{ meta_overlay.metaValue }}</td>
+                <td>
+                    <a href="{{ path('app_meta_overlays_show', {'id': meta_overlay.id}) }}">show</a>
+                    <a href="{{ path('app_meta_overlays_edit', {'id': meta_overlay.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_meta_overlays_new') }}">Create new</a>
+{% endblock %}

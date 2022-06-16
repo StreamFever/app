@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MetaOverlays{% endblock %}
+
+{% block body %}
+    <h1>MetaOverlays</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ meta_overlay.id }}</td>
+            </tr>
+            <tr>
+                <th>MetaKey</th>
+                <td>{{ meta_overlay.metaKey }}</td>
+            </tr>
+            <tr>
+                <th>MetaValue</th>
+                <td>{{ meta_overlay.metaValue }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_meta_overlays_index') }}">back to list</a>
+
+    <a href="{{ path('app_meta_overlays_edit', {'id': meta_overlay.id}) }}">edit</a>
+
+    {{ include('meta_overlays/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New MetaOverlays{% endblock %}
+
+{% block body %}
+    <h1>Create new MetaOverlays</h1>
+
+    {{ include('meta_overlays/_form.html.twig') }}
+
+    <a href="{{ path('app_meta_overlays_index') }}">back to list</a>
+{% endblock %}
