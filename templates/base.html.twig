@@ -27,10 +27,11 @@
 			<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.js"></script>
 			<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+			<script src="https://player.twitch.tv/js/embed/v1.js"></script>
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 	</head>
-	<body>
+	<body class="theme_light">
 
 		<input type="text" id="userID" value="{{app.user.id}}" style="display: none;" disabled>
 		<input type="text" id="username" value="{{app.user.pseudo}}" style="display: none;" disabled>
@@ -87,18 +88,30 @@
 									</div>
 									<ul data-id="dropdown-menu" class="display_none">
 										<li>
-											<a href="{{ path('app_game_index') }}">
-												<span class="iconify" data-icon="ph:game-controller-thin"></span>Matchs
+											<a href="{{ path('app_map_index') }}">
+												<span class="iconify" data-icon="et:map"></span>Maps
 											</a>
 										</li>
 									</ul>
 								</li>
-								<li>
-									<a href="{{ path('app_overlay_index') }}">
-										<span class="iconify" data-icon="et:puzzle"></span>
-										<span>Overlays</span>
-									</a>
-								</li>
+								<li class="dropdown-menu-source">
+										<div class="flex-menu">
+											<a href="{{ path('app_overlay_index') }}">
+												<span class="iconify" data-icon="et:puzzle"></span>
+												<span>Overlays</span>
+											</a>
+											<a data-id="dropdown" href="#">
+												<span class="iconify" data-icon="fe:arrow-right"></span>
+											</a>
+										</div>
+										<ul data-id="dropdown-menu" class="display_none">
+											<li>
+												<a href="{{ path('app_meta_overlays_index') }}">
+													<span class="iconify" data-icon="carbon:data-class"></span>Metas
+												</a>
+											</li>
+										</ul>
+									</li>
 								{% if is_granted('ROLE_ADMIN') %}
 									<li class="dropdown-menu-source">
 										<div class="flex-menu">
@@ -122,7 +135,7 @@
 												</a>
 											</li>
 										</ul>
-								</li>
+									</li>
 								{% endif %}
 								{% if is_granted('ROLE_ADMIN') %}
 									<li>
@@ -158,34 +171,54 @@
 					</div>
 				</aside>
 			{% endif %}
-			<section id="content"> 
-			<div class="top">
-				<div class="left">
-				{% if app.user %}
-				<span>Hello <strong>{{ app.user.userFirstName != null ? app.user.userFirstName : app.user.pseudo }} 👋</strong></span>
-				<p>Welcome on your dashboard</p>
-				{% endif %}
-				</div>
-				<div class="right">
-				<div class="buttons">
-					<a href="#" data-id="langage"><span class="iconify" data-icon="bi:translate"></span></a>
-					<a href="#" data-id="theme"><span class="iconify" data-icon="fluent:weather-moon-48-filled"></span></a>
-					<a href="#" data-id="tutorials"><span class="iconify" data-icon="entypo:info"></span></a>
-				</div>
-				</div>
-			</div>
+			<section id="content">
+				<span class="badge bg-warning text-dark">BETA v4.1</span>
+				<div class="top">
+					<div class="left">
+						{% if app.user %}
+							{% if overlays is defined and 'admin/overlay/u' in app.request.uri %}
+								<span>Hello
+									<strong>{{ app.user.userFirstName != null ? app.user.userFirstName : app.user.pseudo }}
+										👋</strong>
+								</span>
+								<p>Panel of
+									{{overlays[0].widgetOwner.pseudo}}</p>
 
-			{% block body %}{% endblock %}
+							{% else %}
+								<span>Hello
+									<strong>{{ app.user.userFirstName != null ? app.user.userFirstName : app.user.pseudo }}
+										👋</strong>
+								</span>
+								<p>Welcome on your dashboard</p>
+							{% endif %}
+						{% endif %}
+					</div>
+					<div class="right">
+						<div class="buttons">
+							<a href="#" data-id="langage">
+								<span class="iconify" data-icon="bi:translate"></span>
+							</a>
+							<a href="#" data-id="theme">
+								<span class="iconify" data-icon="fluent:weather-moon-48-filled"></span>
+							</a>
+							<a href="#" data-id="tutorials">
+								<span class="iconify" data-icon="entypo:info"></span>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				{% block body %}{% endblock %}
 			</section>
 
-				{% if app.user %}
-					{% if overlays is defined and 'admin/overlay/u' in app.request.uri %}
-						{{ include('components/rightbar_widgets.html.twig') }}
+			{% if app.user %}
+				{% if overlays is defined and 'admin/overlay/u' in app.request.uri %}
+					{{ include('components/rightbar_widgets.html.twig') }}
 
-					{% else %}
-						{{ include('components/rightbar_agenda.html.twig') }}
-					{% endif %}
+				{% elseif events is defined %}
+					{{ include('components/rightbar_agenda.html.twig') }}
 				{% endif %}
-			</div>
-		</body>
-	</html>
+			{% endif %}
+		</div>
+	</body>
+</html>
