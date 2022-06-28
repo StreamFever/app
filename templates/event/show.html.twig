@@ -1,18 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détails de l'évent :
-	{{ event.eventName }}
+{% block title %}Détails de l'évent "{{event.eventName is defined ? event.eventName : ""}}"
 {% endblock %}
 
 {% block body %}
-	<h1>Event</h1>
+	<h1>Détails de l'évent "{{event.eventName is defined ? event.eventName : ""}}"</h1>
 
 	<table class="table">
 		<tbody>
+		{% if is_granted('ROLE_ADMIN') %}
 			<tr>
 				<th>Id</th>
 				<td>{{ event.id }}</td>
 			</tr>
+			{% endif %}
 			<tr>
 				<th>Nom</th>
 				<td>{{ event.eventName }}</td>

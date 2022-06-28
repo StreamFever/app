@@ -1,19 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Logs index{% endblock %}
+{% block title %}Liste des logs{% endblock %}
 
 {% block body %}
-    <h1>Logs index</h1>
+    <h1>Liste des logs</h1>
 
     <table id="logList" class="display">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>LogsTimestamp</th>
-                <th>LogsLevel</th>
-                <th>LogsText</th>
-                <th>LogsOverlay</th>
-                <th>actions</th>
+                <th>Date</th>
+                <th>Level</th>
+                <th>Détail de la trame</th>
+                <th>Overlay</th>
             </tr>
         </thead>
         <tbody>
@@ -24,18 +23,13 @@
                 <td>{{ log.LogsLevel }}</td>
                 <td>{{ log.LogsText }}</td>
                 <td>{{ log.LogsOverlay }}</td>
-                <td>
-                    <a href="{{ path('app_logs_show', {'id': log.id}) }}">show</a>
-                    <a href="{{ path('app_logs_edit', {'id': log.id}) }}">edit</a>
-                </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">Rien n'a été trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_logs_new') }}">Create new</a>
 {% endblock %}

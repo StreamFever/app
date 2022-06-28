@@ -1,34 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Map index
+{% block title %}Liste des cartes
 {% endblock %}
 
 {% block body %}
-	<h1>Map index</h1>
+	<h1>Liste des cartes</h1>
 
 	<table id="mapList" class="table">
 		<thead>
 			<tr>
-				<th>Id</th>
-				<th>MapName</th>
-				<th>MapImg</th>
-				<th>actions</th>
+				{% if is_granted('ROLE_ADMIN') %}
+					<th>Id</th>
+				{% endif %}
+				<th>Nom</th>
+				<th>Image</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for map in maps %}
 				<tr>
-					<td>{{ map.id }}</td>
+					{% if is_granted('ROLE_ADMIN') %}
+						<td>{{ map.id }}</td>
+					{% endif %}
 					<td>{{ map.mapName }}</td>
 					<td>{{ map.mapImg }}</td>
 					<td>
-						<a href="{{ path('app_map_show', {'id': map.id}) }}">show</a>
-						<a href="{{ path('app_map_edit', {'id': map.id}) }}">edit</a>
+						<a class="btn btn-info" href="{{ path('app_map_show', {'id': map.id}) }}">
+							<span class="iconify" data-icon="carbon:view-filled"></span>Détails</a>
+						<a class="btn btn-warning" href="{{ path('app_map_edit', {'id': map.id}) }}">
+							<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
 					</td>
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="4">no records found</td>
+					<td colspan="4">Aucune carte n'a été créée</td>
 				</tr>
 			{% endfor %}
 		</tbody>

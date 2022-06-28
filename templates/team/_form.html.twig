@@ -1,6 +1,39 @@
 {{ form_start(form) }}
-{{ form_widget(form) }}
-<button class="btn">
+
+{% if form_errors(form) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form) }}
+	</div>
+{% endif %}
+
+<div class="row">
+	<div class="col">
+		<div class="form-floating mb-3">
+			{{ form_widget(form.teamName, {
+        'attr': {'class': 'form-control'},
+        'id': "teamName",
+        }) }}
+			{{ form_label(form.teamName, null, {
+    'label': 'Définissez le nom de l\'équipe',
+    'id': 'teamName'
+        }) }}
+		</div>
+	</div>
+	<div class="col">
+		<div class="form-floating mb-3">
+			{{ form_widget(form.teamLogo, {
+            'attr': {'class': 'form-control'},
+            'id': "teamLogo",
+            }) }}
+			{{ form_label(form.teamLogo, null, {
+        'label': 'Définissez l\'image de l\'équipe',
+        'id': 'teamLogo'
+            }) }}
+        </div>
+    </div>
+</div>
+
+<button class="btn btn-success">
 	<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
-	{{ button_label|default('Sauvegarder') }}</button>
+	{{ button_label|default('Créer l\'équipe') }}</button>
 {{ form_end(form) }}

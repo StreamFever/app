@@ -2,13 +2,16 @@
 
 
 {% block body %}
-	<pre>
-	{{ dump(overlays) }}
-</pre>
+	{# <pre>
+	{{ dump(metas) }}
+</pre> #}
 	{% for overlay in overlays %}
-		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "cam_heros" or overlay.widgetIdBeta and overlay.widgetIdBeta == "cam_heros" %}
-			{{ include('overlay/widgets/cams/five.html.twig') }}
+		{# {% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "cam_tournament_alpha" or overlay.widgetIdBeta and overlay.widgetIdBeta == "cam_tournament_alpha" %}
+			{{ include('overlay/widgets/cams/team_alpha.html.twig') }}
 		{% endif %}
+		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "cam_tournament_beta" or overlay.widgetIdBeta and overlay.widgetIdBeta == "cam_tournament_beta" %}
+			{{ include('overlay/widgets/cams/team_beta.html.twig') }}
+		{% endif %} #}
 		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "topbar" or overlay.widgetIdBeta and overlay.widgetIdBeta == "topbar" %}
 			{{ include('overlay/widgets/topbar/v1.html.twig') }}
 		{% endif %}

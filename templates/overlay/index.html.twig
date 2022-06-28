@@ -13,7 +13,9 @@
 	<table id="overlayList" class="table">
 		<thead>
 			<tr>
-				<th>Id</th>
+				{% if is_granted('ROLE_ADMIN') %}
+					<th>Id</th>
+				{% endif %}
 				<th>Nom du widget</th>
 				<th>Etat</th>
 				<th>Propriétaire</th>
@@ -23,7 +25,9 @@
 		<tbody>
 			{% for overlay in overlays %}
 				<tr>
-					<td>{{ overlay.id }}</td>
+					{% if is_granted('ROLE_ADMIN') %}
+						<td>{{ overlay.id }}</td>
+					{% endif %}
 					<td>{{ overlay.widgetName }}</td>
 					<td>{{ overlay.widgetVisible ? '<span class="iconify" color="green" data-icon="akar-icons:circle-check-fill"></span>' : '<span class="iconify" color="red" data-icon="akar-icons:circle-x-fill"></span>' }}</td>
 					<td>

@@ -1,54 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}Détail de l'utilisateur "{{user.username is defined ? user.username : ""}}"
+{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+	<h1>Détail de l'utilisateur "{{user.username is defined ? user.username : ""}}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>UserFirstName</th>
-                <td>{{ user.userFirstName }}</td>
-            </tr>
-            <tr>
-                <th>UserLastName</th>
-                <td>{{ user.userLastName }}</td>
-            </tr>
-            <tr>
-                <th>Username</th>
-                <td>{{ user.username }}</td>
-            </tr>
-            <tr>
-                <th>AvatarURL</th>
-                <td>{{ user.avatarURL }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<table class="table">
+		<tbody>
+			{% if is_granted('ROLE_ADMIN') %}
+				<tr>
+					<th>Id</th>
+					<td>{{ user.id }}</td>
+				</tr>
+			{% endif %}
+			<tr>
+				<th>Email</th>
+				<td>{{ user.email }}</td>
+			</tr>
+			<tr>
+				<th>Roles</th>
+				<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+			</tr>
+			<tr>
+				<th>Prénom</th>
+				<td>{{ user.userFirstName }}</td>
+			</tr>
+			<tr>
+				<th>Nom</th>
+				<td>{{ user.userLastName }}</td>
+			</tr>
+			<tr>
+				<th>Pseudo</th>
+				<td>{{ user.username }}</td>
+			</tr>
+			<tr>
+				<th>Avatar</th>
+				<td><img style="width: 100px; height: 100px;" src="{{ user.avatarURL is defined ? user.avatarURL : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Avatar de {{ user.username }} - SA Prod"></td>
+			</tr>
+		</tbody>
+	</table>
 
-    <a class="btn btn-dark" href="{{ path('app_user_index') }}">
+	<a class="btn btn-dark" href="{{ path('app_user_index') }}">
 		<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
 		Retour à la liste</a>
 
 	{# <a href="{{ path('app_user_edit', {'id': team.id}) }}">
-		<span class="iconify" data-icon="akar-icons:edit"></span>
-		Editer</a> #}
+							<span class="iconify" data-icon="akar-icons:edit"></span>
+							Editer</a> #}
 
-    {{ include('user/_delete_form.html.twig') }}
+	{{ include('user/_delete_form.html.twig') }}
 {% endblock %}

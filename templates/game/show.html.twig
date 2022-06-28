@@ -1,36 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Game
+{% block title %}Détail du match "{{game.gameIdTeamAlpha.teamName is defined and game.gameIdTeamBeta.teamName is defined ? game.gameIdTeamAlpha.teamName ~ " VS " ~ game.gameIdTeamBeta.teamName : ""}}"
 {% endblock %}
 
 {% block body %}
-	<h1>Game</h1>
+	<h1>Détail du match "{{game.gameIdTeamAlpha.teamName is defined and game.gameIdTeamBeta.teamName is defined ? game.gameIdTeamAlpha.teamName ~ " VS " ~ game.gameIdTeamBeta.teamName : ""}}"</h1>
 
 	<table class="table">
 		<tbody>
+			{% if is_granted('ROLE_ADMIN') %}
+				<tr>
+					<th>Id</th>
+					<td>{{ game.id }}</td>
+				</tr>
+			{% endif %}
 			<tr>
-				<th>Id</th>
-				<td>{{ game.id }}</td>
+				<th>Versus</th>
+				<th>{{ game.gameIdTeamAlpha.teamName ~ " VS " ~ game.gameIdTeamBeta.teamName }}</th>
 			</tr>
 			<tr>
-				<th>gameScoreTeamAlpha</th>
-				<td>{{ game.gameScoreTeamAlpha }}</td>
+				<th>Score</th>
+				<td>{{ game.gameScoreTeamAlpha ~ " - " ~ game.gameScoreTeamBeta }}</td>
 			</tr>
 			<tr>
-				<th>gameScoreTeamBeta</th>
-				<td>{{ game.gameScoreTeamBeta }}</td>
+				<th>Date</th>
+				<th>
+					{% if "now"|date_modify("+1 day")|date("m/d/Y", "Europe/Paris") == game.gameTimeNext|date('m/d/Y', "Europe/Paris") %}
+						<span class="badge bg-warning pulsate-bck">Demain</span>
+					{% endif %}
+					{% if "now"|date_modify("-1 day")|date("m/d/Y", "Europe/Paris") == game.gameTimeNext|date('m/d/Y', "Europe/Paris") %}
+						<span class="badge bg-light">Hier</span>
+					{% endif %}
+					{% if "now"|date_modify("-1 day")|date("m/d/Y", "Europe/Paris") != game.gameTimeNext|date('m/d/Y', "Europe/Paris") and "now"|date_modify("+1 day")|date("m/d/Y", "Europe/Paris") != game.gameTimeNext|date('m/d/Y') %}
+						<span class="badge bg-light" style="color: #212529">{{ game.gameTimeNext ? game.gameTimeNext|date('d/m H:i', "Europe/Paris") : '' }}</span>
+					{% endif %}
+				</th>
 			</tr>
 			<tr>
-				<th>GameTimeNext</th>
-				<td>{{ game.gameTimeNext }}</td>
-			</tr>
-			<tr>
-				<th>GameFormat</th>
+				<th>Format</th>
 				<td>{{ game.gameFormat }}</td>
 			</tr>
 			<tr>
-				<th>GameStatus</th>
-				<td>{{ game.gameStatus }}</td>
+				<th>Status</th>
+				<th>
+					{% if game.gameStatus == "soon" %}
+						<span class="badge bg-info">{{ game.gameStatus }}</span>
+					{% endif %}
+					{% if game.gameStatus == "current" %}
+						<span class="badge bg-success">{{ game.gameStatus }}</span>
+					{% endif %}
+					{% if game.gameStatus == "finished" %}
+						<span class="badge bg-secondary">{{ game.gameStatus }}</span>
+					{% endif %}
+				</th>
 			</tr>
 		</tbody>
 	</table>

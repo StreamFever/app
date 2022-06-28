@@ -1,51 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Player
+{% block title %}Détail du joueur "{{player.playerName is defined ? player.playerName : ""}}"
 {% endblock %}
 
 {% block body %}
-	<h1>Player</h1>
+	<h1>Détail du joueur "{{player.playerName is defined ? player.playerName : ""}}"</h1>
 
-	<tableclass="table">
+	<table class="table">
 		<tbody>
+		{% if is_granted('ROLE_ADMIN') %}
 			<tr>
 				<th>Id</th>
 				<td>{{ player.id }}</td>
 			</tr>
+			{% endif %}
 			<tr>
 				<th>Id OBS NINJA</th>
-				<td>{
-					{% if {{ player.playerIdOBSNinja }} %}
+				<td>
+					{% if player.playerIdOBSNinja %}
 						{{ player.playerIdOBSNinja }}
-					{% endif %}}</td>
+					{% endif %}
+				</td>
 			</tr>
 			<tr>
-				<th>PlayerName</th>
+				<th>Nom du joueur</th>
 				<td>{{ player.playerName }}</td>
 			</tr>
 			<tr>
 				<th>PlayerAvatar</th>
-				<td>{{ player.playerAvatar }}</td>
+				<td><img style="width: 100px; height: 100px;" src="{{ player.playerAvatar is defined ? player.playerAvatar : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Avatar de {{ player.playerName }} - SA Prod"></td>
 			</tr>
 			<tr>
-				<th>PlayerUplay</th>
+				<th>Uplay</th>
 				<td>{{ player.playerUplay }}</td>
 			</tr>
 			<tr>
-				<th>PlayerAtTwitter</th>
+				<th>Twitter</th>
 				<td>{{ player.playerAtTwitter }}</td>
 			</tr>
 			<tr>
-				<th>PlayerDiscord</th>
+				<th>Discord</th>
 				<td>{{ player.playerDiscord }}</td>
 			</tr>
 			<tr>
-				<th>PlayerTwitch</th>
+				<th>Twitch</th>
 				<td>{{ player.playerTwitch }}</td>
 			</tr>
 			<tr>
-				<th>PlayerStudentSA</th>
-				<td>{{ player.playerStudentSA ? 'Yes' : 'No' }}</td>
+				<th>Status d'étudiant</th>
+				<td>{{ player.playerStudentSA ? '<span class="iconify" color="green" data-icon="akar-icons:circle-check-fill"></span>' : '<span class="iconify" color="red" data-icon="akar-icons:circle-x-fill"></span>' }}</td>
 			</tr>
 		</tbody>
 	</table>

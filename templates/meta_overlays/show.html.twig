@@ -1,30 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}MetaOverlays{% endblock %}
+{% block title %}Détail de la métadonnée "{{meta_overlay.metaKey is defined ? meta_overlay.metaKey : ""}}"
+{% endblock %}
 
 {% block body %}
-    <h1>MetaOverlays</h1>
+	<h1>Détail de la métadonnée "{{meta_overlay.metaKey is defined ? meta_overlay.metaKey : ""}}"</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ meta_overlay.id }}</td>
-            </tr>
-            <tr>
-                <th>MetaKey</th>
-                <td>{{ meta_overlay.metaKey }}</td>
-            </tr>
-            <tr>
-                <th>MetaValue</th>
-                <td>{{ meta_overlay.metaValue }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<table class="table">
+		<tbody>
+			{% if is_granted('ROLE_ADMIN') %}
+				<tr>
+					<th>Id</th>
+					<td>{{ meta_overlay.id }}</td>
+				</tr>
+			{% endif %}
+			<tr>
+				<th>Clé</th>
+				<td>{{ meta_overlay.metaKey }}</td>
+			</tr>
+			<tr>
+				<th>Valeur</th>
+				<td>{{ meta_overlay.metaValue }}</td>
+			</tr>
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_meta_overlays_index') }}">back to list</a>
+	<a class="btn btn-dark" href="{{ path('app_meta_overlays_index') }}">
+		<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
+		Retour à la liste</a>
 
-    <a href="{{ path('app_meta_overlays_edit', {'id': meta_overlay.id}) }}">edit</a>
+	<a class="btn btn-light" href="{{ path('app_meta_overlays_edit', {'id': meta_overlay.id}) }}">
+		<span class="iconify" data-icon="akar-icons:edit"></span>
+		Editer</a>
 
-    {{ include('meta_overlays/_delete_form.html.twig') }}
+	{{ include('meta_overlays/_delete_form.html.twig') }}
 {% endblock %}

@@ -1,6 +1,104 @@
 {{ form_start(form) }}
-{{ form_widget(form) }}
-<button class="btn btn-success">
-	<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
-	{{ button_label|default('Sauvegarder') }}</button>
-{{ form_end(form) }}
+
+{% if form_errors(form) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form) }}
+	</div>
+{% endif %}
+
+<div class="form-check">
+	{{ form_widget(form.playerStudentSa, {
+        'attr': {'class': 'form-check-input'},
+        'id': "playerStudentSa",
+        }) }}
+	{{ form_label(form.playerStudentSa, null, {
+    'label': 'Êtes vous étudiant ',
+    'attr': {'class': 'form-check-label'},
+    'id': 'playerStudentSa'
+        }) }}
+</div>
+
+
+<div class="row">
+	<div class="col">
+		<div class="form-floating mb-3">
+			{{ form_widget(form.playerName, {
+        'attr': {'class': 'form-control'},
+        'id': "playerName",
+        }) }}
+			{{ form_label(form.playerName, null, {
+    'label': 'Définissez le nom du joueur',
+    'id': 'playerName'
+        }) }}
+		</div>
+	</div>
+	<div class="col">
+		<div class="form-floating mb-3">
+			{{ form_widget(form.playerAvatar, {
+            'attr': {'class': 'form-control'},
+            'id': "playerAvatar",
+            }) }}
+			{{ form_label(form.playerAvatar, null, {
+        'label': 'Définissez l\'image du joueur',
+        'id': 'playerAvatar'
+            }) }}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="form-floating mb-3">
+            {{ form_widget(form.playerUplay, {
+                'attr': {'class': 'form-control'},
+                'id': "playerUplay",
+                }) }}
+            {{ form_label(form.playerUplay, null, {
+            'label': 'Définissez le pseudo uplay',
+            'id': 'playerUplay'
+                }) }}
+        </div>
+    </div>
+    <div class="col">
+        <div class="form-floating mb-3">
+            {{ form_widget(form.playerUplayTag, {
+                    'attr': {'class': 'form-control'},
+                    'id': "playerUplayTag",
+                    }) }}
+            {{ form_label(form.playerUplayTag, null, {
+                'label': 'Définissez le tag Uplay',
+                'id': 'playerUplayTag'
+                    }) }}
+        </div>
+    </div>
+</div>
+<div class="form-floating mb-3">
+{{ form_widget(form.playerDiscord, {
+        'attr': {'class': 'form-control'},
+        'id': "playerDiscord",
+        }) }}{{ form_label(form.playerDiscord, null, {
+'label': 'Définissez le pseudo Discord',
+'id': 'playerDiscord'
+        }) }}
+</div>
+<div class="row">
+<div class="col">
+<div class="form-floating mb-3">
+	{{ form_widget(form.playerAtTwitter, {
+        'attr': {'class': 'form-control'},
+        'id': "playerAtTwitter",
+        }) }}
+	{{ form_label(form.playerAtTwitter, null, {
+    'label': 'Définissez le pseudo Twitter',
+    'id': 'playerAtTwitter'
+        }) }}
+</div></div><div class="col">
+<div class="form-floating mb-3">
+	{{ form_widget(form.playerTwitch, {
+            'attr': {'class': 'form-control'},
+            'id': "playerTwitch",
+            }) }}
+	{{ form_label(form.playerTwitch, null, {
+        'label': 'Définissez le pseudo Twitch',
+        'id': 'playerTwitch'
+            }) }}
+</div></div></div><button class="btn btn-success"><span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>{{ button_label|default('Créer le joueur') }}</button>{{ form_end(form) }}

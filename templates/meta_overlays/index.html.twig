@@ -1,37 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}MetaOverlays index{% endblock %}
+{% block title %}Liste des métadonnées overlays
+{% endblock %}
 
 {% block body %}
-    <h1>MetaOverlays index</h1>
+	<h1>Liste des métadonnées overlays</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>MetaKey</th>
-                <th>MetaValue</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for meta_overlay in meta_overlays %}
-            <tr>
-                <td>{{ meta_overlay.id }}</td>
-                <td>{{ meta_overlay.metaKey }}</td>
-                <td>{{ meta_overlay.metaValue }}</td>
-                <td>
-                    <a href="{{ path('app_meta_overlays_show', {'id': meta_overlay.id}) }}">show</a>
-                    <a href="{{ path('app_meta_overlays_edit', {'id': meta_overlay.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				{% if is_granted('ROLE_ADMIN') %}
+					<th>Id</th>
+				{% endif %}
+				<th>Clé</th>
+				<th>Valeur</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for meta_overlay in meta_overlays %}
+				<tr>
+					{% if is_granted('ROLE_ADMIN') %}
+						<td>{{ meta_overlay.id }}</td>
+					{% endif %}
+					<td>{{ meta_overlay.metaKey }}</td>
+					<td>{{ meta_overlay.metaValue }}</td>
+					<td>
+						<a class="btn btn-info" href="{{ path('app_meta_overlays_show', {'id': meta_overlay.id}) }}">
+							<span class="iconify" data-icon="carbon:view-filled"></span>Détails</a>
+						<a class="btn btn-warning" href="{{ path('app_meta_overlays_edit', {'id': meta_overlay.id}) }}">
+							<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">Aucune métadonnée n'a été trouvée</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_meta_overlays_new') }}">Create new</a>
+    <a class="btn btn-info" href="{{ path('app_meta_overlays_new') }}">
+		<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>
+		Créer une nouvelle metadonnée</a>
 {% endblock %}

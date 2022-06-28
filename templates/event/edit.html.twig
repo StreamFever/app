@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Editer l'événement -
+	<h1>Vous éditez l'événement :
 		{{event.eventName is defined ? event.eventName : ""}}</h1>
 
 	{{ include('event/_form.html.twig', {'button_label': 'Mettre à jour'}) }}

@@ -12,7 +12,9 @@
 	<table id="gameList" class="table">
 		<thead>
 			<tr>
-				<th>Id</th>
+				{% if is_granted('ROLE_ADMIN') %}
+					<th>Id</th>
+				{% endif %}
 				<th>VS</th>
 				<th colspan="2">Score</th>
 				<th>Time</th>
@@ -24,13 +26,15 @@
 		<tbody>
 			{% for game in games %}
 				<tr>
-					<td>{{ game.id }}</td>
+					{% if is_granted('ROLE_ADMIN') %}
+						<td>{{ game.id }}</td>
+					{% endif %}
 					<td>{{ game.gameIdTeamAlpha.teamName }}
 						<span class="iconify" data-icon="noto:vs-button"></span>
 						{{ game.gameIdTeamBeta.teamName }}</td>
 					<td>{{ game.gameScoreTeamAlpha }}</td>
 					<td>{{ game.gameScoreTeamBeta }}</td>
-					<td>{{ game.gameTimeNext }}</td>
+					<td>{{ game.gameTimeNext|date }}</td>
 					<td>
 						<span class="badge bg-info">{{ game.gameFormat }}</span>
 					</td>

@@ -1,14 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Editer le match "{{event.eventName is defined ? event.eventName : ""}}"
+{% block title %}Editer le match "{{game.gameIdTeamAlpha.teamName is defined and game.gameIdTeamBeta.teamName is defined ? game.gameIdTeamAlpha.teamName ~ " VS " ~ game.gameIdTeamBeta.teamName : ""}}"
 {% endblock %}
 
 {% block body %}
-	<pre>
-    {{ dump(game) }}
-</pre>
-	<h1>Editer l'événement -
-		{{event.eventName is defined ? event.eventName : ""}}</h1>
+	<h1>Vous éditez le match :
+		{{game.gameIdTeamAlpha.teamName is defined and game.gameIdTeamBeta.teamName is defined ? game.gameIdTeamAlpha.teamName ~ " VS " ~ game.gameIdTeamBeta.teamName : ""}}
+	</h1>
 
 	{{ include('game/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 

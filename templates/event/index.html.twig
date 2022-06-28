@@ -8,7 +8,9 @@
 	<table id="eventList" class="display">
 		<thead>
 			<tr>
-				<th>Id</th>
+				{% if is_granted('ROLE_ADMIN') %}
+					<th>Id</th>
+				{% endif %}
 				<th>Nom</th>
 				<th>Edition</th>
 				<th>Logo</th>
@@ -22,7 +24,9 @@
 		<tbody>
 			{% for event in events %}
 				<tr>
-					<td>{{ event.id }}</td>
+					{% if is_granted('ROLE_ADMIN') %}
+						<td>{{ event.id }}</td>
+					{% endif %}
 					<td>{{ event.eventName }}</td>
 					<td>
 						<span class="badge bg-info" style="color: #212529">{{ event.eventEdition }}</span>

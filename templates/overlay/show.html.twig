@@ -1,24 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Overlay
+{% block title %}Détail du widget "{{overlay.widgetName is defined ? overlay.widgetName : ""}}"
 {% endblock %}
 
 {% block body %}
-	<h1>Overlay</h1>
+	<h1>Détail du widget "{{overlay.widgetName is defined ? overlay.widgetName : ""}}"</h1>
 
 	<table class="table">
 		<tbody>
+			{% if is_granted('ROLE_ADMIN') %}
+				<tr>
+					<th>Id</th>
+					<td>{{ overlay.id }}</td>
+				</tr>
+			{% endif %}
 			<tr>
-				<th>Id</th>
-				<td>{{ overlay.id }}</td>
-			</tr>
-			<tr>
-				<th>WidgetName</th>
+				<th>Nom du widget</th>
 				<td>{{ overlay.widgetName }}</td>
 			</tr>
 			<tr>
-				<th>WidgetVisible</th>
-				<td>{{ overlay.widgetVisible ? 'Yes' : 'No' }}</td>
+				<th>Actif</th>
+				<td>{{ overlay.widgetVisible ? '<span class="iconify" color="green" data-icon="akar-icons:circle-check-fill"></span>' : '<span class="iconify" color="red" data-icon="akar-icons:circle-x-fill"></span>' }}</td>
 			</tr>
 		</tbody>
 	</table>

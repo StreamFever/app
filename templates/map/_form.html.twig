@@ -1,6 +1,39 @@
 {{ form_start(form) }}
-{{ form_widget(form) }}
+
+{% if form_errors(form) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form) }}
+	</div>
+{% endif %}
+
+<div class="row">
+	<div class="col">
+		<div class="form-floating mb-3">
+			{{ form_widget(form.mapName, {
+        'attr': {'class': 'form-control'},
+        'id': "mapName",
+        }) }}
+			{{ form_label(form.mapName, null, {
+    'label': 'Définissez le nom de la carte',
+    'id': 'mapName'
+        }) }}
+		</div>
+	</div>
+	<div class="col">
+		<div class="form-floating mb-3">
+			{{ form_widget(form.mapImg, {
+            'attr': {'class': 'form-control'},
+            'id': "mapImg",
+            }) }}
+			{{ form_label(form.mapImg, null, {
+        'label': 'Définissez l\'image de la carte',
+        'id': 'mapImg'
+            }) }}
+		</div>
+	</div>
+</div>
+
 <button class="btn btn-success">
 	<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
-	{{ button_label|default('Sauvegarder') }}</button>
+	{{ button_label|default('Créer la carte') }}</button>
 {{ form_end(form) }}

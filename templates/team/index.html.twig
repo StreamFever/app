@@ -1,34 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Team index
+{% block title %}Liste des équipes
 {% endblock %}
 
 {% block body %}
-	<h1>Team index</h1>
+	<h1>Liste des équipes</h1>
 
 	<table id="teamList" class="table">
 		<thead>
 			<tr>
-				<th>Id</th>
-				<th>TeamName</th>
-				<th>TeamLogo</th>
-				<th>actions</th>
+				{% if is_granted('ROLE_ADMIN') %}
+					<th>Id</th>
+				{% endif %}
+				<th>Nom</th>
+				<th>Logo</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for team in teams %}
 				<tr>
-					<td>{{ team.id }}</td>
+					{% if is_granted('ROLE_ADMIN') %}
+						<td>{{ team.id }}</td>
+					{% endif %}
 					<td>{{ team.teamName }}</td>
 					<td>{{ team.teamLogo }}</td>
 					<td>
-						<a href="{{ path('app_team_show', {'id': team.id}) }}">show</a>
-						<a href="{{ path('app_team_edit', {'id': team.id}) }}">edit</a>
+						<a class="btn btn-info" href="{{ path('app_team_show', {'id': team.id}) }}">
+							<span class="iconify" data-icon="carbon:view-filled"></span>Détails</a>
+						<a class="btn btn-warning" href="{{ path('app_team_edit', {'id': team.id}) }}">
+							<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
 					</td>
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="4">no records found</td>
+					<td colspan="4">Aucune équipe n'a été trouvée</td>
 				</tr>
 			{% endfor %}
 		</tbody>
