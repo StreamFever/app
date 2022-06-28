@@ -64,11 +64,14 @@ class OverlayRepository extends ServiceEntityRepository
     }
     */
 
-    // Retourne la liste des personnes qui possèdent au minimum un overlay contenant des widgets
-    public function findAllUsersOwned()
+    // Retourne la liste des widgets que l'user à accès (même si ce n'est pas le propriétaire) ou qu'il a crée
+    public function findAllOverlaysWhereIdUser($user_id)
     {
         return $this->createQueryBuilder('o')
-            ->join('o.widgetOwner', 'u')
+            ->join('o.WidgetPermission', 'u1')
+            ->join('o.widgetOwner', 'u2')
+            ->where('u1.id = :user_id OR u2.id = :user_id')
+            ->setParameter('user_id', $user_id)
             ->orderBy('o.id', 'ASC')
             ->getQuery()
             ->getResult()
@@ -76,7 +79,22 @@ class OverlayRepository extends ServiceEntityRepository
        
     }
 
-    // Retourne la liste des overlays selon l'id d'un utilisateur
+    // Même utilité que celle au dessus sauf qu'on veut que les 2 derniers
+    public function findLatestOverlaysWhereIdUser($user_id)
+    {
+        return $this->createQueryBuilder('o')
+            ->join('o.WidgetPermission', 'u1')
+            ->join('o.widgetOwner', 'u2')
+            ->where('u1.id = :user_id OR u2.id = :user_id')
+            ->setParameter('user_id', $user_id)
+            ->orderBy('o.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+       
+    }
+
+    // Retourne la liste des widgets selon l'id d'un utilisateur
     public function findAllByIdUser($user_id)
     {
         return $this->createQueryBuilder('o')
