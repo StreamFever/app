@@ -6,9 +6,9 @@
 
 {% block body %}
 
-	{# <pre>
-			{{ dump(overlays) }}
-		</pre> #}
+<pre>
+	{{ dump(test) }}
+</pre>
 
 	<a href="{{ path('app_overlay_show_browsersource', {'user_id': overlays[0].widgetOwner.id}) }}" target="_blank" class="btn btn-info" style="width: 100%">Accéder au browsersource</a>
 	<button class="btn btn-warning" style="width: 100%" onclick="copierTexte(this, event)" value="https://v4.dev.symfony.artaic.fr{{ path('app_overlay_show_browsersource', {'user_id': overlays[0].widgetOwner.id}) }}">Copier le browsersource</button>
@@ -46,6 +46,9 @@
 							<a class="btn btn-warning" href="{{ path('app_overlay_edit', {'id': overlay.id}) }}">
 								<span class="iconify" data-icon="akar-icons:edit"></span>
 								Editer</a>
+								<a class="btn btn-warning" href="{{ path('app_meta_overlays_index')}}">
+								<span class="iconify" data-icon="akar-icons:edit"></span>
+								Editer la méta</a>
 						</td>
 					</tr>
 				{% else %}
