@@ -1,0 +1,43 @@
+<style>
+	.display_none {
+		display: none !important;
+	}
+
+	iframe {
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		min-width: 100vh;
+		max-width: 200vh;
+		width: 100%; // toute la hauteur de l'écran
+		min-height: 100vh;
+		max-height: 200vh;
+		height: 100%; // toute la hauteur de l'écran
+	}
+</style>
+
+{% set array = [] %}
+
+{% for meta in metas %}
+	{% for i in 5..9 %}
+		{% if meta.metaKey == "id_cam_team_obsninja_" ~ i %}
+			{% set array = array|merge([meta.metaValue]) %}
+		{% endif %}
+	{% endfor %}
+
+{% endfor %}
+<section id="bottom_cam">
+	<div class="container_cam">
+		<div class="left">
+			<iframe src="https://live.artaic.fr/?view={{array[0]}}&mutespeaker" frameborder="0"></iframe>
+			<iframe src="https://live.artaic.fr/?view={{array[1]}}&mutespeaker" frameborder="0"></iframe>
+		</div>
+		<div class="center">
+			<iframe src="https://live.artaic.fr/?view={{array[2]}}&mutespeaker" frameborder="0"></iframe>
+		</div>
+		<div class="right">
+			<iframe src="https://live.artaic.fr/?view={{array[3]}}&mutespeaker" frameborder="0"></iframe>
+			<iframe src="https://live.artaic.fr/?view={{array[4]}}&mutespeaker" frameborder="0"></iframe>
+		</div>
+	</div>
+</section>

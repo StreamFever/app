@@ -1,12 +1,31 @@
-<section id="smalltext">
-	<div id="popuptext" class="container_popup">
-		<div id="leftpopuptext" class="left">
-			<div class="img">
-				<img id="popuplogoimg" src="" alt="">
+{% set popupText = [] %}
+{% for meta in metas %}
+	{% if meta.metaKey == 'popup_text' %}
+		{% set popupText = popupText|merge([meta]) %}
+	{% endif %}
+{% endfor %}
+
+{% set currentEvent = [] %}
+{% for event in events %}
+	{% if "now"|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
+		{% set currentEvent = currentEvent|merge([event]) %}
+	{% endif %}
+{% endfor %}
+
+{% for overlay in overlays %}
+	{% if overlay.widgetIdAlpha == "popup_text" or  overlay.widgetIdBeta == "popup_text" and popupText[0].metaValue is not empty %}
+		<section id="smalltext" class="{{overlay.widgetVisible ? "" : "display_none"}}">
+			<div id="popuptext" class="container_popup">
+				<div id="leftpopuptext" class="left">
+					<div class="img">
+						<img id="popuplogoimg" src="{{ currentEvent[0].eventLogo != null ? currentEvent.event.eventLogo : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Logo de l'événement">
+					</div>
+				</div>
+				<div id="textpopuptext" class="text">
+					<span id="txtvalue">{{ popupText[0].metaValue }}</span>
+				</div>
 			</div>
-		</div>
-		<div id="textpopuptext" class="text">
-			<span id="txtvalue">Ceci est un test</span>
-		</div>
-	</div>
-</section>
+		</section>
+
+	{% endif %}
+{% endfor %}
