@@ -77,10 +77,16 @@ class Overlay
      */
     private $metaOverlays;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Websocket::class)
+     */
+    private $wsId;
+
     public function __construct()
     {
         $this->WidgetPermission = new ArrayCollection();
         $this->metaOverlays = new ArrayCollection();
+        $this->wsId = new ArrayCollection();
     }
 
     public function __toString()
@@ -232,6 +238,30 @@ class Overlay
         if ($this->metaOverlays->removeElement($metaOverlay)) {
             $metaOverlay->removeOverlayId($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Websocket>
+     */
+    public function getWsId(): Collection
+    {
+        return $this->wsId;
+    }
+
+    public function addWsId(Websocket $wsId): self
+    {
+        if (!$this->wsId->contains($wsId)) {
+            $this->wsId[] = $wsId;
+        }
+
+        return $this;
+    }
+
+    public function removeWsId(Websocket $wsId): self
+    {
+        $this->wsId->removeElement($wsId);
 
         return $this;
     }

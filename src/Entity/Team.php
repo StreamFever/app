@@ -52,6 +52,11 @@ class Team
         $this->gamesBeta = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+	return $this->teamName;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

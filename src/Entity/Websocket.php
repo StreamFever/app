@@ -27,6 +27,11 @@ class Websocket
      */
     private $websocketID;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $overlID;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,18 @@ class Websocket
     public function setWebsocketID(string $websocketID): self
     {
         $this->websocketID = $websocketID;
+
+        return $this;
+    }
+
+    public function getOverlID(): ?int
+    {
+        return $this->overlID;
+    }
+
+    public function setOverlID(int $overlID): self
+    {
+        $this->overlID = $overlID;
 
         return $this;
     }
