@@ -163,3 +163,8 @@
 	-webkit-animation: pulsate-bck 0.5s ease-in-out infinite both;
 	animation: pulsate-bck 0.5s ease-in-out infinite both;
 }
+
+.slide-out-fwd-center {
+	-webkit-animation: slide-out-fwd-center 0.7s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+	        animation: slide-out-fwd-center 0.7s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}
