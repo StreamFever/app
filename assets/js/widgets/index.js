@@ -6,6 +6,14 @@ console.log("Index Widgets OK");
 // window.x = function(...) permet de pouvoir lancer la fonction dans la console commme :
 // >> x.call()
 
+export const test = () => {
+ console.log("test")
+ topbar.className = 'slide-out-top'
+ setTimeout(() => {
+  topbar.className = 'display_none'
+ }, 1000);
+}
+
 window.showTopbar = function showTopBar() {
  topbar.className = 'swing-in-top-fwd'
  console.log("TOP")

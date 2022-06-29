@@ -43,6 +43,25 @@ document.getElementById('sidebar_btn').addEventListener('click', (event) => {
 })
 
 
+document.querySelector('a[data-id="theme"]').addEventListener('click', (event) => {
+  if (document.querySelector('a[data-id="theme"]').className == "theme_dark") {
+    document.querySelector('a[data-id="theme"]').setAttribute('data-effect', `light`);
+    document.querySelector('a[data-id="theme"]').classList.remove('theme_dark');
+    document.querySelector('a[data-id="theme"]').classList.add('theme_light');
+
+    document.getElementById('content').classList.remove('theme_dark');
+    document.getElementById('content').classList.add('theme_light');
+  } else {
+    document.querySelector('a[data-id="theme"]').setAttribute('data-effect', `dark`);
+    document.querySelector('a[data-id="theme"]').classList.remove('theme_light');
+    document.querySelector('a[data-id="theme"]').classList.add('theme_dark');
+
+    document.getElementById('content').classList.remove('theme_light');
+    document.getElementById('content').classList.add('theme_dark');
+  }
+});
+
+
 const random = (length = 13) => {
   // Declare all characters
   let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789&é"(-è_çà)=$^ù!:;,<';

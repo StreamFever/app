@@ -14,6 +14,6 @@ export const getCheckedValueIntoRadio = (dataArray, list) => {
    }
   }
  }
-  // TODO: Génère une liste d'overlay actif selon l'admin donc à envoyer en WS
+ // TODO: Génère une liste d'overlay actif selon l'admin donc à envoyer en WS
  console.log(list);
 }
