@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Team;
 use App\Entity\Flag;
+use App\Entity\Game;
 use App\Entity\Player;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -17,15 +18,13 @@ class TeamType extends AbstractType
         $builder
             ->add('teamName')
             ->add('teamLogo')
-            ->add('teamIDFlag', EntityType::class, ['class' => Flag::class,
-            'choice_label' => 'flag_name',
-            'label' => 'Pays'])
-            ->add('players', EntityType::class, ['class' => Player::class,
-            'choice_label' => 'player_name',
-            'multiple' => true,
-            'label' => 'Player'])
-            ->add('gameTeamAlpha')
-            ->add('gameTeamBeta')
+            // ->add('teamIDFlag', EntityType::class, ['class' => Flag::class,
+            // 'choice_label' => 'flag_name',
+            // 'label' => 'Pays'])
+            // ->add('players', EntityType::class, ['class' => Player::class,
+            // 'choice_label' => 'player_name',
+            // 'multiple' => true,
+            // 'label' => 'Player'])
         ;
     }
 
