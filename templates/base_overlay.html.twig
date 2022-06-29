@@ -29,6 +29,19 @@
 		{% endblock %}
 	</head>
 	<body>
+		<div id="loading-wrapper">
+			<div id="loading-text">
+				<h3>Chargement de la production</h3>
+				<div class="lds-facebook">
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+			</div>
+			<div class="logo">
+				<img src="https://cdn.artaic.fr/images/love_gif.gif" alt="">
+			</div>
+		</div>
 		{% block body %}{% endblock %}
 	</body>
 </html>
