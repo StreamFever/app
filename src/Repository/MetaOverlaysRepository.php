@@ -47,6 +47,20 @@ class MetaOverlaysRepository extends ServiceEntityRepository
         }
     }
 
+    // Retourne la liste des overlays selon l'id d'un utilisateur
+    public function findAllByIdUser($overlay_id)
+    {
+        return $this->createQueryBuilder('m')
+            ->join('m.id', 'o')
+            ->where('m.id = :overlay_id')
+            ->setParameter('overlay_id', $overlay_id)
+            ->orderBy('o.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return MetaOverlays[] Returns an array of MetaOverlays objects
     //  */
