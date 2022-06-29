@@ -2,12 +2,20 @@
 
 namespace App\Controller;
 
+use App\Entity\Game;
+use App\Entity\Event;
 use App\Entity\User;
 use App\Entity\Overlay;
 use App\Entity\MetaOverlays;
+
 use App\Form\OverlayType;
+
+use App\Repository\GameRepository;
+use App\Repository\EventRepository;
+use App\Repository\UserRepository;
 use App\Repository\OverlayRepository;
 use App\Repository\MetaOverlaysRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,8 +30,10 @@ class OverlayController extends AbstractController
      */
     public function index(OverlayRepository $overlayRepository): Response
     {
+        $currentUser = $this->getUser();
+        
         return $this->render('overlay/index.html.twig', [
-            'overlays' => $overlayRepository->findAll(),
+            'overlays' => $overlayRepository->findAllOverlaysWhereIdUser($currentUser->getId()),
             'controller_name' => "Overlay"
         ]);
     }
@@ -92,12 +102,12 @@ class OverlayController extends AbstractController
                 $entityManager->persist($overlay);
                 $entityManager->flush();
             }
-            if ($data->getWidgetIdAlpha() == "cam_heros" || $data->getWidgetIdBeta() == "cam_heros" || $data->getWidgetIdAlpha() == "cam_tournoi" || $data->getWidgetIdBeta() == "cam_tournoi") {
+            if ($data->getWidgetIdAlpha() == "cam_heros" || $data->getWidgetIdBeta() == "cam_heros") {
                 for ($i=0; $i < 5; $i++) { 
                     // Insère les données suivantes dans la table meta_overlays si nécessaire
                     // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                     $meta = new MetaOverlays();
-                    $meta->setMetaKey('id_cam_obsninja_'.$i);
+                    $meta->setMetaKey('id_cam_heros_obsninja_'.$i);
                     $meta->setMetaValue("");
 
                     
@@ -109,6 +119,40 @@ class OverlayController extends AbstractController
                     $entityManager->persist($overlay);
                     $entityManager->flush();
                 }
+            }
+            if ($data->getWidgetIdAlpha() == "cam_tournament_alpha" || $data->getWidgetIdBeta() == "cam_tournament_alpha" || $data->getWidgetIdAlpha() == "cam_tournament_beta" || $data->getWidgetIdBeta() == "cam_tournament_beta") {
+                for ($i=0; $i < 10; $i++) { 
+                    // Insère les données suivantes dans la table meta_overlays si nécessaire
+                    // DOCS: https://symfony.com/doc/current/doctrine/associations.html
+                    $meta = new MetaOverlays();
+                    $meta->setMetaKey('id_cam_team_obsninja_'.$i);
+                    $meta->setMetaValue("");
+
+                    
+                    // relates this product to the category
+                    $overlay->addMetaOverlay($meta);
+
+                    $entityManager = $doctrine->getManager();
+                    $entityManager->persist($meta);
+                    $entityManager->persist($overlay);
+                    $entityManager->flush();
+                }
+            }
+            if ($data->getWidgetIdAlpha() == "tweets" || $data->getWidgetIdBeta() == "tweets") {
+                // Insère les données suivantes dans la table meta_overlays si nécessaire
+                // DOCS: https://symfony.com/doc/current/doctrine/associations.html
+                $meta = new MetaOverlays();
+                $meta->setMetaKey('curent_tweet_format');
+                $meta->setMetaValue("");
+
+                
+                // relates this product to the category
+                $overlay->addMetaOverlay($meta);
+
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($meta);
+                $entityManager->persist($overlay);
+                $entityManager->flush();
             }
             
             return $this->redirectToRoute('app_overlay_index', [] , Response::HTTP_SEE_OTHER);
@@ -241,10 +285,16 @@ class OverlayController extends AbstractController
     /**
      * @Route("overlay/{user_id}/browsersource", name="app_overlay_show_browsersource", methods={"GET"})
      */
-    public function showBrowsersource(OverlayRepository $overlayRepository, int $user_id): Response
+    public function showBrowsersource(OverlayRepository $overlayRepository, MetaOverlaysRepository $metaOverlaysRepository, GameRepository $gamesRepository, EventRepository $eventsRepository, int $user_id): Response
     {
+        $overlay_id = 2;
+
+        //TODO: Remplacer les findAll() par findAllByUserId()
         return $this->render('overlay/browsersource.html.twig', [
+            'games' => $gamesRepository->findAll(),
+            'events' => $eventsRepository->findAll(),
             'overlays' => $overlayRepository->findAllByIdUser($user_id),
+            'metas' => $metaOverlaysRepository->findAll(),
             'controller_name' => "Browsersource"
         ]);
     }
@@ -254,8 +304,20 @@ class OverlayController extends AbstractController
      */
     public function showByIdUser(OverlayRepository $overlayRepository, int $user_id): Response
     {
+        $data = $overlayRepository->findAllOverlaysWhereIdUser($user_id);
+
+        $currentUser = $this->getUser();
+
+
+        for ($i=0; $i < count($data); $i++) { 
+            # code...
+            
+        }
+
+
         return $this->render('overlay/u/show.html.twig', [
             'overlays' => $overlayRepository->findAllByIdUser($user_id),
+            'test' => $data[0],
             'controller_name' => "Overlay"
         ]);
     }
