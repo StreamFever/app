@@ -4,6 +4,9 @@
 {% endblock %}
 
 {% block body %}
+<pre>
+	{{ dump(game.gameIdMaps.snapshot) }}
+</pre>
 	<h1>Vous éditez le match :
 		{{game.gameIdTeamAlpha.teamName is defined and game.gameIdTeamBeta.teamName is defined ? game.gameIdTeamAlpha.teamName ~ " VS " ~ game.gameIdTeamBeta.teamName : ""}}
 	</h1>
