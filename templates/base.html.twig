@@ -95,23 +95,37 @@
 									</ul>
 								</li>
 								<li class="dropdown-menu-source">
-										<div class="flex-menu">
-											<a href="{{ path('app_overlay_index') }}">
-												<span class="iconify" data-icon="et:puzzle"></span>
-												<span>Overlays</span>
+									<div class="flex-menu">
+										<a href="{{ path('app_overlay_index') }}">
+											<span class="iconify" data-icon="et:puzzle"></span>
+											<span>Overlays</span>
+										</a>
+										<a data-id="dropdown" href="#">
+											<span class="iconify" data-icon="fe:arrow-right"></span>
+										</a>
+									</div>
+									<ul data-id="dropdown-menu" class="display_none">
+										{% if service_overlay.getOverlaysForSidebar is defined %}
+											{% set arrOverlaysSidebar = [] %}
+											{% for item in service_overlay.getOverlaysForSidebar %}
+												{% if item.widgetOwner.id not in arrOverlaysSidebar and arrOverlaysSidebar|length != 2 %}
+													<li>
+														<a href="{{ path('app_overlay_show_by_iduser', {'user_id': item.widgetOwner.id}) }}">
+															<span class="iconify" data-icon="fluent:puzzle-cube-piece-20-regular"></span>
+															{{item.widgetOwner.pseudo}}
+														</a>
+													</li>
+													{% set arrOverlaysSidebar = arrOverlaysSidebar|merge([item.widgetOwner.id]) %}
+												{% endif %}
+											{% endfor %}
+										{% endif %}
+										<li>
+											<a href="{{ path('app_meta_overlays_index') }}">
+												<span class="iconify" data-icon="carbon:data-class"></span>Metas
 											</a>
-											<a data-id="dropdown" href="#">
-												<span class="iconify" data-icon="fe:arrow-right"></span>
-											</a>
-										</div>
-										<ul data-id="dropdown-menu" class="display_none">
-											<li>
-												<a href="{{ path('app_meta_overlays_index') }}">
-													<span class="iconify" data-icon="carbon:data-class"></span>Metas
-												</a>
-											</li>
-										</ul>
-									</li>
+										</li>
+									</ul>
+								</li>
 								{% if is_granted('ROLE_ADMIN') %}
 									<li class="dropdown-menu-source">
 										<div class="flex-menu">
@@ -136,6 +150,12 @@
 											</li>
 										</ul>
 									</li>
+
+								{% else %}
+									<ul>
+										<li><ahref="{{ path('app_team_index') }}"><span class="iconify" data-icon="fluent:people-team-16-regular"></span>Teams</a></li>
+										<li><ahref="{{ path('app_player_index') }}"><span class="iconify" data-icon="ant-design:user-outlined"></span>Players</a></li>
+									</ul>
 								{% endif %}
 								{% if is_granted('ROLE_ADMIN') %}
 									<li>
