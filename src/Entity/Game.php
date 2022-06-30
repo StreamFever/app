@@ -65,6 +65,12 @@ class Game
      */
     private $gameIdMaps;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="games")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userId;
+
     public function __construct()
     {
         $this->gameIdMaps = new ArrayCollection();
@@ -184,6 +190,18 @@ class Game
     public function removeGameIdMap(Map $gameIdMap): self
     {
         $this->gameIdMaps->removeElement($gameIdMap);
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(?User $userId): self
+    {
+        $this->userId = $userId;
 
         return $this;
     }

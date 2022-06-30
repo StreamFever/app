@@ -20,11 +20,6 @@ class Logs
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="logs")
-     */
-    private $LogsUser;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $LogsTimestamp;
@@ -44,38 +39,19 @@ class Logs
      */
     private $LogsOverlay;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="logs")
+     */
+    private $UserId;
+
     public function __construct()
     {
-        $this->LogsUser = new ArrayCollection();
+        $this->UserId = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getLogsUser(): Collection
-    {
-        return $this->LogsUser;
-    }
-
-    public function addLogsUser(User $logsUser): self
-    {
-        if (!$this->LogsUser->contains($logsUser)) {
-            $this->LogsUser[] = $logsUser;
-        }
-
-        return $this;
-    }
-
-    public function removeLogsUser(User $logsUser): self
-    {
-        $this->LogsUser->removeElement($logsUser);
-
-        return $this;
     }
 
     public function getLogsTimestamp(): ?\DateTimeInterface
@@ -119,9 +95,33 @@ class Logs
         return $this->LogsOverlay;
     }
 
-    public function setLogsOverlay(?string $LogsOverlay): self
+    public function setLogsOverlay(string $LogsOverlay): self
     {
         $this->LogsOverlay = $LogsOverlay;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUserId(): Collection
+    {
+        return $this->UserId;
+    }
+
+    public function addUserId(User $userId): self
+    {
+        if (!$this->UserId->contains($userId)) {
+            $this->UserId[] = $userId;
+        }
+
+        return $this;
+    }
+
+    public function removeUserId(User $userId): self
+    {
+        $this->UserId->removeElement($userId);
 
         return $this;
     }

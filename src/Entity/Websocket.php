@@ -20,55 +20,55 @@ class Websocket
     /**
      * @ORM\Column(type="integer")
      */
-    private $userID;
+    private $userId;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $websocketID;
+    private $websocketId;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $overlID;
+    private $overlId;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUserID(): ?int
+    public function getUserId(): ?int
     {
-        return $this->userID;
+        return $this->userId;
     }
 
-    public function setUserID(int $userID): self
+    public function setUserId(int $userId): self
     {
-        $this->userID = $userID;
+        $this->userId = $userId;
 
         return $this;
     }
 
-    public function getWebsocketID(): ?string
+    public function getWebsocketId(): ?string
     {
-        return $this->websocketID;
+        return $this->websocketId;
     }
 
-    public function setWebsocketID(string $websocketID): self
+    public function setWebsocketId(string $websocketId): self
     {
-        $this->websocketID = $websocketID;
+        $this->websocketId = $websocketId;
 
         return $this;
     }
 
-    public function getOverlID(): ?int
+    public function getOverlId(): ?int
     {
-        return $this->overlID;
+        return $this->overlId;
     }
 
-    public function setOverlID(int $overlID): self
+    public function setOverlId(?int $overlId): self
     {
-        $this->overlID = $overlID;
+        $this->overlId = $overlId;
 
         return $this;
     }

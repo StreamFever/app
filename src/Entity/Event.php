@@ -66,6 +66,12 @@ class Event
      */
     private $eventIdSocial;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="events")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userId;
+
     public function __construct()
     {
         $this->eventIdSponsor = new ArrayCollection();
@@ -205,6 +211,18 @@ class Event
     public function removeEventIdSocial(Social $eventIdSocial): self
     {
         $this->eventIdSocial->removeElement($eventIdSocial);
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(?User $userId): self
+    {
+        $this->userId = $userId;
 
         return $this;
     }
