@@ -29,6 +29,8 @@
 		{% endblock %}
 	</head>
 	<body>
+		<input type="text" id="userID" value="{{app.user.id}}" style="display: none;" disabled>
+		<input type="text" id="username" value="{{app.user.pseudo}}" style="display: none;" disabled>
 		<div id="loading-wrapper">
 			<div id="loading-text">
 				<h3>Chargement de la production</h3>
