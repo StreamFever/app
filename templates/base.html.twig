@@ -120,7 +120,7 @@
 											{% endfor %}
 										{% endif %}
 										<li>
-											<a href="{{ path('app_meta_overlays_index') }}">
+											<a href="{{ path('app_meta_index') }}">
 												<span class="iconify" data-icon="carbon:data-class"></span>Metas
 											</a>
 										</li>
@@ -153,8 +153,8 @@
 
 								{% else %}
 									<ul>
-										<li><ahref="{{ path('app_team_index') }}"><span class="iconify" data-icon="fluent:people-team-16-regular"></span>Teams</a></li>
-										<li><ahref="{{ path('app_player_index') }}"><span class="iconify" data-icon="ant-design:user-outlined"></span>Players</a></li>
+										<li><ahref="{{path('app_team_index')}}"><span class="iconify" data-icon="fluent:people-team-16-regular"></span>Teams</a></li>
+										<li><ahref="{{path('app_player_index')}}"><span class="iconify" data-icon="ant-design:user-outlined"></span>Players</a></li>
 									</ul>
 								{% endif %}
 								{% if is_granted('ROLE_ADMIN') %}
@@ -196,13 +196,13 @@
 				<div class="top">
 					<div class="left">
 						{% if app.user %}
-							{% if overlays is defined and 'admin/overlay/u' in app.request.uri %}
+							{% if app.request.get('id') is defined and app.request.get('id') is not null and 'admin/overlay/' in app.request.uri %}
 								<span>Hello
 									<strong>{{ app.user.userFirstName != null ? app.user.userFirstName : app.user.pseudo }}
 										👋</strong>
 								</span>
 								<p>Panel of
-									{{overlays[0].widgetOwner.pseudo}}</p>
+									{{overlay.OverlayOwner.pseudo}}</p>
 
 							{% else %}
 								<span>Hello
@@ -232,7 +232,7 @@
 			</section>
 
 			{% if app.user %}
-				{% if overlays is defined and 'admin/overlay/u' in app.request.uri %}
+				{% if app.request.get('id') is defined and app.request.get('id') is not null and 'admin/overlay/' in app.request.uri %}
 					{{ include('components/rightbar_widgets.html.twig') }}
 
 				{% elseif events is defined %}
