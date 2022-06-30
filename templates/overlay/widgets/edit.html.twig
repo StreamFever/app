@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Widgets{% endblock %}
+
+{% block body %}
+    <h1>Edit Widgets</h1>
+
+    {{ include('overlay/widgets/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_widgets_index') }}">back to list</a>
+
+    {{ include('overlay/widgets/_delete_form.html.twig') }}
+{% endblock %}

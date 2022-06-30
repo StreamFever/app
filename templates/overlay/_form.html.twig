@@ -6,103 +6,43 @@
 	</div>
 {% endif %}
 
-
-<div class="form-floating mb-3">
-	{{ form_widget(form.widgetName, {
+<div class="col">
+	<div class="form-floating mb-3">
+		{{ form_widget(form.OverlayName, {
         'attr': {'class': 'form-control'},
-        'id': "widgetName",
+        'id': "OverlayName",
         }) }}
-	{{ form_label(form.widgetName, null, {
-    'label': 'Définissez un nom pour le widget',
-    'id': 'widgetName'
+		{{ form_label(form.OverlayName, null, {
+    'label': 'Définissez le nom de votre overlay',
+    'id': 'OverlayName'
         }) }}
-</div>
-
-<div class="form-floating mb-3">
-	{{ form_widget(form.widgetIdAlpha, {
-        'attr': {'class': 'form-control'},
-        'id': "widgetIdAlpha",
-        }) }}
-	{{ form_label(form.widgetIdAlpha, null, {
-    'label': 'Définissez un id pour le widget principal',
-    'id': 'widgetIdAlpha'
-        }) }}
-</div>
-
-<div class="form-floating mb-3">
-	{{ form_widget(form.widgetIdBeta, {
-        'attr': {'class': 'form-control'},
-        'id': "widgetIdBeta",
-        }) }}
-	{{ form_label(form.widgetIdBeta, null, {
-    'label': 'Définissez un id pour le widget secondaire',
-    'id': 'widgetIdBeta'
-        }) }}
-</div>
-
-<div class="row">
-	<div class="col">
-		<div class="form-floating mb-3">
-			{{ form_widget(form.widgetVersionAlpha, {
-        'attr': {'class': 'form-control'},
-        'id': "widgetVersionAlpha",
-        }) }}
-			{{ form_label(form.widgetVersionAlpha, null, {
-    'label': 'Définissez la version pour le widget principal',
-    'id': 'widgetVersionAlpha'
-        }) }}
-		</div>
 	</div>
-	<div class="col">
-		<div class="form-floating mb-3">
-			{{ form_widget(form.widgetVersionBeta, {
-        'attr': {'class': 'form-control'},
-        'id': "widgetVersionBeta",
-        }) }}
-			{{ form_label(form.widgetVersionBeta, null, {
-    'label': 'Définissez la version pour le widget secondaire',
-    'id': 'widgetVersionBeta'
-        }) }}
-		</div>
-	</div>
-</div>
-
-<div class="form-check">
-	{{ form_widget(form.widgetVisible, {
-        'attr': {'class': 'form-check-input'},
-        'id': "widgetVisible",
-        }) }}
-	{{ form_label(form.widgetVisible, null, {
-    'label': 'Par défaut, le widget n\'est pas visible',
-    'attr': {'class': 'form-check-label'},
-    'id': 'widgetVisible'
-        }) }}
-</div>
-
-<div class="form-floating mb-3">
-	{{ form_widget(form.widgetOwner, {
-        'attr': {'class': 'form-select'},
-        'id': "widgetOwner",
-        }) }}
-	{{ form_label(form.widgetOwner, null, {
-    'label': 'Voulez-vous changer le propriétaire de cet overlay ?',
-    'id': 'widgetOwner'
-        }) }}
 </div>
 
 <div>
-	{{ form_label(form.WidgetPermission, null, {
-    'label': 'Merci de sélectionner les personnes qui peuvent gérer votre overlay :',
+	{{ form_label(form.OverlayAccess, null, {
+    'label': 'Merci de définir qui peut avoir accès à votre overlay',
     'label_attr': {'class': 'form-label select-label'},
     }) }}
-	{{ form_widget(form.WidgetPermission, {
+	{{ form_widget(form.OverlayAccess, {
         'attr': {
             'class': 'selectpicker form-control',
-            'data-max-options': 7
+            'data-max-options': 5
             },
         }) }}
 </div>
 
+{{ form_label(form.OverlayOwner, null, {
+    'label_attr': {'class': 'display_none'},
+    }) }}
+{{ form_widget(form.OverlayOwner, {
+        'attr': {
+            'class': 'display_none',
+            },
+        }) }}
 
-<button class="btn btn-success"><span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span> {{ button_label|default('Créer ce widget') }}</button>
+
+<button class="btn btn-success">
+	<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
+	{{ button_label|default('Créer l\'overlay') }}</button>
 {{ form_end(form) }}

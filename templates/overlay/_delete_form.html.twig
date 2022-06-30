@@ -1,6 +1,4 @@
-<form method="post" action="{{ path('app_overlay_delete', {'id': overlay.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce widget ?');">
-	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ overlay.id) }}">
-	<button class="btn btn-danger">
-		<span class="iconify" data-icon="ant-design:delete-filled"></span>
-		Supprimer le widget</button>
+<form method="post" action="{{ path('app_overlay_delete', {'id': overlay.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ overlay.id) }}">
+    <button class="btn">Delete</button>
 </form>

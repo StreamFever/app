@@ -1,21 +1,12 @@
-{% set currentGame = [] %}
-{% for game in games %}
-	{% if game.gameStatus == "current" %}
-		{% set currentGame = currentGame|merge([game]) %}
-	{% endif %}
-{% endfor %}
-
-{% for overlay in overlays  %}
-	{% if overlay.widgetIdAlpha == "next" or  overlay.widgetIdBeta == "next"  %}
-		<section id="nextmatch" class="{{overlay.widgetVisible ? "" : "display_none"}}">
-			<div id="teams_nextmatch" class="teams">
-				<span id="nextmatch_team_a">{{currentGame[0].gameIdTeamAlpha.teamName|slice(0,5)|replace({' ': ''})|upper }}</span>
-				<span id="vs">VS</span>
-				<span id="nextmatch_team_b">{{currentGame[0].gameIdTeamBeta.teamName|slice(0,5)|replace({' ': ''})|upper }}</span>
-			</div>
-			<div id="textnextmatch" class="text">
-				<span class="nextmatch_next" id="nextmatch_heure">{{currentGame[0].gameTimeNext|date("H:i")}}</span>
-			</div>
-		</section>
-	{% endif %}
-{% endfor %}
+{% if widget.WidgetIdAlpha == "next" or  widget.WidgetIdBeta == "next"  %}
+	<section id="nextmatch" class="{{widget.WidgetVisible ? "" : "display_none"}}">
+		<div id="teams_nextmatch" class="teams">
+			<span id="nextmatch_team_a">{{currentGame[0].gameIdTeamAlpha.teamName|slice(0,5)|replace({' ': ''})|upper }}</span>
+			<span id="vs">VS</span>
+			<span id="nextmatch_team_b">{{currentGame[0].gameIdTeamBeta.teamName|slice(0,5)|replace({' ': ''})|upper }}</span>
+		</div>
+		<div id="textnextmatch" class="text">
+			<span class="nextmatch_next" id="nextmatch_heure">{{currentGame[0].gameTimeNext|date("H:i")}}</span>
+		</div>
+	</section>
+{% endif %}

@@ -5,16 +5,9 @@
 	{% endif %}
 {% endfor %}
 
-{% set currentEvent = [] %}
-{% for event in events %}
-	{% if "now"|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
-		{% set currentEvent = currentEvent|merge([event]) %}
-	{% endif %}
-{% endfor %}
 
-{% for overlay in overlays %}
-	{% if overlay.widgetIdAlpha == "popup_text" or  overlay.widgetIdBeta == "popup_text" and popupText[0].metaValue is not empty %}
-		<section id="smalltext" class="{{overlay.widgetVisible ? "" : "display_none"}}">
+	{% if widget.WidgetIdAlpha == "popup_text" or  Widget.widgetIdBeta == "popup_text" and popupText[0].metaValue is not empty %}
+		<section id="smalltext" class="{{widget.WidgetVisible ? "" : "display_none"}}">
 			<div id="popuptext" class="container_popup">
 				<div id="leftpopuptext" class="left">
 					<div class="img">
@@ -28,4 +21,3 @@
 		</section>
 
 	{% endif %}
-{% endfor %}

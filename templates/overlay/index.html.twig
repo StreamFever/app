@@ -1,106 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des panels
-{% endblock %}
+{% block title %}Overlay index{% endblock %}
 
 {% block body %}
+    <h1>Overlay index</h1>
 
-	<h2>Mon panel</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for overlay in overlays %}
+            <tr>
+                <td>{{ overlay.id }}</td>
+                <td>
+                    <a href="{{ path('app_overlay_show', {'id': overlay.id}) }}">show</a>
+                    <a href="{{ path('app_overlay_edit', {'id': overlay.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-	
-
-
-<table class="table">
-		<tbody>
-			<tr>
-				<th>Personnes qui ont accès à votre panel</th>
-				<td class="bodyAccess">
-								<div class="flex">
-									{% for overlay in overlays %}
-									{% if overlay.widgetOwner.id == app.user.id %}
-										{% for bodyAccess in overlay.WidgetPermission.snapshot %}
-											{% if bodyAccess.pseudo != "Websocket" %}
-												<div class="avatar">
-													<img src="{{bodyAccess.avatarURL != null ? bodyAccess.avatarURL : 'https://cdn.artaic.fr/images/Blason-Salty.png'}}" alt="Avatar de {{bodyAccess.pseudo}}" title="Avatar de {{bodyAccess.pseudo}}">
-													<p>{{bodyAccess.pseudo != app.user.pseudo ? bodyAccess.pseudo : 'Vous' }}</p>
-												</div>
-											{% endif %}
-										{% endfor %}
-									{% endif %}
-								{% endfor %}
-								</div>
-				</td>
-			</tr>
-			<tr>
-				<th>Accès</th>
-				<td>
-					<a class="btn btn-light" href="{{ path('app_overlay_show_by_iduser', {'user_id': app.user.id}) }}">
-									<span class="iconify" data-icon="akar-icons:edit"></span>
-									Accéder à mon panel</a>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-
-
-
-	<h1>Liste des panels que vous avez accès</h1>
-
-	<p>Vous pouvez retrouver ci-dessous la liste des <strong>panels</strong> auquels vous avez la permission d'y accéder.</p>
-
-	<table id="overlayList" class="table">
-		<thead>
-			<tr>
-				{% if is_granted('ROLE_ADMIN') %}
-					<th>Id</th>
-				{% endif %}
-				<th>Propriétaire</th>
-				<th>Personnes qui ont accès</th>
-				<th>Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% set arrayId = [] %}
-			{% for overlay in overlays %}
-				{% if overlay.widgetOwner.id not in arrayId %}
-					{% if overlay.widgetOwner.id != app.user.id %}
-						<tr>
-						{% if is_granted('ROLE_ADMIN') %}
-							<td>{{overlay.widgetOwner.id}}</td>
-						{% endif %}
-						<td>{{overlay.widgetOwner.username}}</td>
-						<td class="bodyAccess">
-							<div class="flex">
-								{% for bodyAccess in overlay.WidgetPermission.snapshot %}
-									{% if bodyAccess.pseudo != "Websocket" %}
-										<div class="avatar">
-											<img src="{{bodyAccess.avatarURL != null ? bodyAccess.avatarURL : 'https://cdn.artaic.fr/images/Blason-Salty.png'}}" alt="Avatar de {{bodyAccess.pseudo}}" title="Avatar de {{bodyAccess.pseudo}}">
-											<p>{{bodyAccess.pseudo != app.user.pseudo ? bodyAccess.pseudo : 'Vous' }}</p>
-										</div>
-									{% endif %}
-								{% endfor %}
-							</div>
-						</td>
-						<td>
-							<a class="btn btn-light" href="{{ path('app_overlay_show_by_iduser', {'user_id': overlay.widgetOwner.id}) }}">
-								<span class="iconify" data-icon="akar-icons:edit"></span>
-								Accéder au panel de
-								{{overlay.widgetOwner.username}}</a>
-						</td>
-					</tr>
-					{% endif %}
-					
-					{% set arrayId = arrayId|merge([overlay.widgetOwner.id]) %}
-				{% endif %}
-			{% else %}
-				<tr>
-					<td colspan="4">Rien n'a été trouvé</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-
-	<a class="btn btn-info" href="{{ path('app_overlay_new') }}" style="color: black;">
-		<span class="iconify" data-icon="bxs:widget"></span>
-		Créer un nouveau Widget</a>
+    <a href="{{ path('app_overlay_new') }}">Create new</a>
 {% endblock %}

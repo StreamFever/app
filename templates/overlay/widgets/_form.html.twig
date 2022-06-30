@@ -1,0 +1,106 @@
+{{ form_start(form) }}
+
+{% if form_errors(form) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form) }}
+	</div>
+{% endif %}
+
+
+<div class="input-grp-center">
+	<h3>Sélectionnez un overlay</h3>
+	<p>Vous devez choisir parmi vos overlays sur lequel vous souhaitez insérer ce widget que vous allez créer.</p>
+	<div class="form-floating mb-3">
+		{{ form_widget(form.overlay, {
+        'attr': {'class': 'form-select'},
+        'id': "overlay",
+        }) }}
+		{{ form_label(form.overlay, null, {
+        'label': 'Sélectionnez un overlay',
+        'id': 'overlay'
+            }) }}
+		{{ form_help(form.overlay) }}
+	</div>
+</div>
+
+
+<div class="input-grp">
+	<h3>Informations globales du widget</h3>
+	<p>Vous devez renseigné tous les champs dans ce groupe.</p>
+
+	<div class="row">
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.WidgetName, {
+        'attr': {'class': 'form-control'},
+        'id': "WidgetName",
+        }) }}
+				{{ form_label(form.WidgetName, null, {
+    'label': 'Définissez le nom du widget',
+    'id': 'WidgetName'
+        }) }}
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.WidgetIdAlpha, {
+            'attr': {'class': 'form-control'},
+            'id': "WidgetIdAlpha",
+            }) }}
+				{{ form_label(form.WidgetIdAlpha, null, {
+        'label': 'Définissez son identifiant unique',
+        'id': 'WidgetIdAlpha'
+            }) }}
+			</div>
+			<div class="form-floating mb-3">
+				{{ form_widget(form.WidgetVersionAlpha, {
+            'attr': {'class': 'form-control'},
+            'id': "WidgetVersionAlpha",
+            }) }}
+				{{ form_label(form.WidgetVersionAlpha, null, {
+        'label': 'Définissez sa version',
+        'id': 'WidgetVersionAlpha'
+            }) }}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="input-grp-2">
+	<h3>Associer ce widget</h3>
+	<p>Si le widget que vous voulez créer est un groupe de deux sous-widget, dans ce cas vous devez renseigner dans
+		<strong>le groupe au dessus</strong>, l'identifiant du premier sous-widget et ci-dessous l'identifiant du second sous-widget.</p>
+	<p>Ainsi, ils seront liés et vous obtiendrez un bouton à 3 états.</p>
+	<div class="row">
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.WidgetIdBeta, {
+            'attr': {'class': 'form-control'},
+            'id': "WidgetIdBeta",
+            }) }}
+				{{ form_label(form.WidgetIdBeta, null, {
+        'label': 'Définissez l\'identifiant du widget associé',
+        'id': 'WidgetIdBeta'
+            }) }}
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                {{ form_widget(form.WidgetVersionBeta, {
+                'attr': {'class': 'form-control'},
+                'id': "WidgetVersionBeta",
+                }) }}
+                {{ form_label(form.WidgetVersionBeta, null, {
+            'label': 'Définissez sa version',
+            'id': 'WidgetVersionBeta'
+                }) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<button class="btn btn-success">
+	<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
+	{{ button_label|default('Créer le widget') }}</button>
+{{ form_end(form) }}

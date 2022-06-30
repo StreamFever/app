@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Overlay
+{% endblock %}
+
+
+{% block body %}
+
+	<div id="twitch-embed-content">
+		<div id="twitch-embed" class="twitch-embed-small">
+			<a href="#" id="btn_toggle_size_twitch">
+				<span class="iconify" data-icon="system-uicons:scale-extend"></span>
+			</a>
+		</div>
+	</div>
+
+
+	<p>Vous vous situez sur le panel de
+		<strong>{{overlay.OverlayOwner.pseudo}}</strong>.</p>
+	<p>Si vous avez accès à cette page c'est que
+		<strong>{{overlay.OverlayOwner.pseudo}}</strong>
+		vous a donné accès à son panel pour son overlay :
+		<strong style="font-size: 2rem">{{overlay.OverlayName}}</strong>
+	</p>
+
+	<section id="overlay_show_access_person">
+		<h2>Qui a accès à mon overlay ?</h2>
+		<p>Toutes les personnes qui ont accès à votre overlay sont listés ci-dessous.</p>
+		{% if overlay.OverlayAccess.snapshot is not null %}
+			{% for person in overlay.OverlayAccess.snapshot %}
+				<div class="avatar">
+					<img src="{{person.avatarURL != null ? person.avatarURL : 'https://cdn.artaic.fr/images/Blason-Salty.png'}}" alt="Avatar de {{person.pseudo}}" title="Avatar de {{person.pseudo}}">
+					<p>{{person.pseudo != app.user.pseudo ? person.pseudo : 'Vous' }}</p>
+				</div>
+			{% endfor %}
+		{% endif %}
+		<a class="btn btn-warning" href="{{ path('app_overlay_edit', {'id': overlay.id}) }}">
+			<span class="iconify" data-icon="bxs:edit"></span>Editer les permission</a>
+	</section>
+
+
+	<div id="overlay_show" class="btn-section">
+		<div class="row">
+			<div class="col">
+				<p>Vous pouvez accéder au
+					<strong>browsersource</strong>
+					de cette overlay en cliquant le sur lien suivant.</p>
+				<p>
+					<em>Ca ouvrira un nouvel onglet 😉</em>
+				</p>
+				<a href="{{ path('app_overlay_show_browsersource', {'id': overlay.id}) }}" target="_blank" class="btn btn-info" style="width: 100%">Accéder au browsersource</a>
+			</div>
+			<div class="col">
+				<p>Vous pouvez cliquer sur le bouton suivant afin de copier le lien de votre browsersource.</p>
+				<p>
+					<u>Ce lien sera à coller sur votre OBS Studio, Streamlabs ou logiciel similaire afin d'avoir votre rendu.</u>
+				</p>
+				<button class="btn btn-warning" style="width: 100%" onclick="copierTexte(this, event)" value="https://v4.dev.symfony.artaic.fr{{ path('app_overlay_show_browsersource', {'id': overlay.id}) }}">Copier le browsersource</button>
+			</div>
+		</div>
+	</div>
+
+	<section id="overlay_show" class="container">
+		<div class="row">
+			<div class="col">
+				<h3>Widgets de l'overlay</h3>
+				<p>Retrouvez la liste des widgets qui appartiennent à l'overlay "{{overlay.OverlayName}}"</p>
+				<table class="table">
+					<thead>
+						<tr>
+							{% if is_granted('ROLE_ADMIN') %}
+								<th>Id</th>
+							{% endif %}
+							<th>Nom</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for widget in widgets %}
+							<tr>
+								{% if is_granted('ROLE_ADMIN') %}
+									<td>{{ widget.id }}</td>
+								{% endif %}
+								<td>{{ widget.WidgetName }}</td>
+								<td>
+									<a href="{{ path('app_widgets_show', {'id': widget.id}) }}">show</a>
+									<a href="{{ path('app_widgets_edit', {'id': widget.id}) }}">edit</a>
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="8">no records found</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			<div class="col">
+				<h3>Metadonnées de l'overlay</h3>
+				<p>Vous pouvez retrouvez la liste des métadonnées de l'overlay "{{overlay.OverlayName}}"</p>
+				<table class="table">
+					<thead>
+						<tr>
+							{% if is_granted('ROLE_ADMIN') %}
+								<th>Id</th>
+							{% endif %}
+							<th>Clé</th>
+							<th>Valeur</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for meta in metas %}
+							<tr>
+								<td>{{ meta.id }}</td>
+								<td>{{ meta.MetaKey }}</td>
+								<td>{{ meta.MetaValue }}</td>
+								<td>
+									<a href="{{ path('app_meta_show', {'id': meta.id}) }}">show</a>
+									<a href="{{ path('app_meta_edit', {'id': meta.id}) }}">edit</a>
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="4">no records found</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+
+
+{% endblock %}

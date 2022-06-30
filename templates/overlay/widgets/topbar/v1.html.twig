@@ -1,21 +1,5 @@
-{% set currentEvent = [] %}
-{% for event in events %}
-	{% if "now"|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
-		{% set currentEvent = currentEvent|merge([event]) %}
-	{% endif %}
-{% endfor %}
-
-{% set currentGame = [] %}
-{% for game in games %}
-	{% if game.gameStatus == "current" %}
-		{% set currentGame = currentGame|merge([game]) %}
-	{% endif %}
-{% endfor %}
-
-
-{% for overlay in overlays %}
-	{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "topbar" or overlay.widgetIdBeta and overlay.widgetIdBeta == "topbar" %}
-		<section id="topbar" class="{{overlay.widgetVisible ? "" : "display_none"}}">
+	{% if widget.WidgetIdAlpha and widget.WidgetIdAlpha == "topbar" or widget.WidgetIdBeta and widget.WidgetIdBeta == "topbar" %}
+		<section id="topbar" class="{{widget.WidgetVisible ? "" : "display_none"}}">
 			<div class="lambda">
 				<section id="display">
 					{{currentEvent[0].eventEdition}}
@@ -104,4 +88,3 @@
 				</div>
 			</section>
 		{% endif %}
-	{% endfor %}

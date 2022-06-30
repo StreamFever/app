@@ -1,31 +1,51 @@
 {% extends "base_overlay.html.twig" %}
 
+{% set currentGame = [] %}
+{% for game in games %}
+	{% if game.gameStatus == "current" %}
+		{% set currentGame = currentGame|merge([game]) %}
+	{% endif %}
+{% endfor %}
+
+{% set currentEvent = [] %}
+{% for event in events %}
+	{% if "now"|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
+		{% set currentEvent = currentEvent|merge([event]) %}
+	{% endif %}
+{% endfor %}
+
 
 {% block body %}
-	{# <pre>
-	{{ dump(metas) }}
-</pre> #}
-	{% for overlay in overlays %}
-		{# {% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "cam_tournament_alpha" or overlay.widgetIdBeta and overlay.widgetIdBeta == "cam_tournament_alpha" %}
-			{{ include('overlay/widgets/cams/team_alpha.html.twig') }}
-		{% endif %}
-		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "cam_tournament_beta" or overlay.widgetIdBeta and overlay.widgetIdBeta == "cam_tournament_beta" %}
-			{{ include('overlay/widgets/cams/team_beta.html.twig') }}
-		{% endif %} #}
-		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "topbar" or overlay.widgetIdBeta and overlay.widgetIdBeta == "topbar" %}
-			{{ include('overlay/widgets/topbar/v1.html.twig') }}
-		{% endif %}
-		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "versus" or overlay.widgetIdBeta and overlay.widgetIdBeta == "versus" %}
-			{{ include('overlay/widgets/versus/v1.html.twig') }}
-		{% endif %}
-		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "popup_text" or overlay.widgetIdBeta and overlay.widgetIdBeta == "popup_text" %}
-			{{ include('overlay/widgets/popup/small_txt.html.twig') }}
-		{% endif %}
-		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "next" or overlay.widgetIdBeta and overlay.widgetIdBeta == "next" %}
-			{{ include('overlay/widgets/next/v1.html.twig') }}
-		{% endif %}
-		{% if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "tweets" or overlay.widgetIdBeta and overlay.widgetIdBeta == "tweets" %}
-			{{ include('overlay/widgets/tweets/index.html.twig') }}
-		{% endif %}
-	{% endfor %}
+
+{% if widgets is not empty %}
+		{% for widget in widgets %}
+			{# {% if widget.WidgetIdAlpha and widget.WidgetIdAlpha == "cam_tournament_alpha" or widget.WidgetIdBeta and widget.WidgetIdBeta == "cam_tournament_alpha" %}
+																	{{ include('overlay/widgets/cams/team_alpha.html.twig') }}
+																{% endif %}
+																{% if widget.WidgetIdAlpha and widget.WidgetIdAlpha == "cam_tournament_beta" or widget.WidgetIdBeta and widget.WidgetIdBeta == "cam_tournament_beta" %}
+																	{{ include('overlay/widgets/cams/team_beta.html.twig') }}
+																{% endif %} #}
+			{% if widget.WidgetIdAlpha and widget.WidgetIdAlpha == "topbar" or widget.WidgetIdBeta and widget.WidgetIdBeta == "topbar" %}
+				{{ include('overlay/widgets/topbar/v1.html.twig') }}
+			{% endif %}
+			{% if widget.WidgetIdAlpha and widget.WidgetIdAlpha == "versus" or widget.WidgetIdBeta and widget.WidgetIdBeta == "versus" %}
+				{{ include('overlay/widgets/versus/v1.html.twig') }}
+			{% endif %}
+			{% if widget.WidgetIdAlpha and widget.WidgetIdAlpha == "popup_text" or widget.WidgetIdBeta and widget.WidgetIdBeta == "popup_text" %}
+				{{ include('overlay/widgets/popup/small_txt.html.twig') }}
+			{% endif %}
+			{% if widget.WidgetIdAlpha and widget.WidgetIdAlpha == "next" or widget.WidgetIdBeta and widget.WidgetIdBeta == "next" %}
+				{{ include('overlay/widgets/next/v1.html.twig') }}
+			{% endif %}
+			{% if widget.WidgetIdAlpha and widget.WidgetIdAlpha == "tweets" or widget.WidgetIdBeta and widget.WidgetIdBeta == "tweets" %}
+				{{ include('overlay/widgets/tweets/index.html.twig') }}
+			{% endif %}
+		{% endfor %}
+
+	{% else %}
+		<h1>Aucun widget n'a été inséré sur l'overlay</h1>
+
+		<p>Si vous êtes le propriétaire de cet overlay où que vous y avez accès, vous devez commencer par ajouter un widget afin qu'il puisse être visible sur cet overlay.</p>
+	{% endif %}
+
 {% endblock %}

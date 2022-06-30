@@ -1,6 +1,5 @@
-{% for overlay in overlays %}
-	{% if overlay.widgetIdAlpha == "versus" or  overlay.widgetIdBeta == "versus" %}
-		<section id="versus" class="{{overlay.widgetVisible ? "" : "display_none"}}">
+	{% if widget.WidgetIdAlpha == "versus" or  widget.WidgetIdBeta == "versus" %}
+		<section id="versus" class="{{widget.WidgetVisible ? "" : "display_none"}}">
 			<div id="versuscontainer" class="container_versus">
 				<div id="leftversus" class="left">
 					<div class="name_profil">
@@ -18,4 +17,3 @@
 			</div>
 		</section>
 	{% endif %}
-{% endfor %}
