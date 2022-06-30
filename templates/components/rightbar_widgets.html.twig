@@ -8,10 +8,10 @@
 		</div>
 
 		<pre>
-			{{ dump(overlays) }}
+			{{ dump(widgets) }}
 		</pre>
 		<div class="content">
-			{% for card in overlays %}
+			{% for card in widgets %}
 				{% if card.WidgetIdBeta != null %}
 					{# Switch à 3 états #}
 					{% block card_widget_bars %}
@@ -34,7 +34,7 @@
 									<div class="barre"></div>
 									<div class="details">
 										<span>Widgets</span>
-										<span>{{card.widgetName }}</span>
+										<span>{{card.widgetName | slice(0, 13) }}</span>
 									</div>
 								</div>
 							</a>
