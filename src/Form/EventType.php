@@ -5,13 +5,21 @@ namespace App\Form;
 use App\Entity\Event;
 use App\Entity\Edition;
 use App\Entity\Sponsor;
+
+use Symfony\Component\Security\Core\Security;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EventType extends AbstractType
 {
+
+    public function __construct(Security $security) {
+        $this->security = $security;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -60,6 +68,7 @@ class EventType extends AbstractType
                     'placeholder' => 'hereYourPlaceHolder'
                 )
            ))
+           ->add('userId')
         ;
     }
 

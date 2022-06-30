@@ -68,6 +68,7 @@ class GameType extends AbstractType
                     'placeholder' => 'hereYourPlaceHolder'
                 )
            ))
+           ->add('userId')
         ;
     }
 
