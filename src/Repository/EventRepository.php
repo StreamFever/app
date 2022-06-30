@@ -47,6 +47,20 @@ class EventRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllCreatedByUserId($id_user)
+    {
+        return $this->createQueryBuilder('e')
+            ->join('e.userId', 'u')
+            ->where('u.id = :id_user')
+            ->setParameter('id_user', $id_user)
+            ->orderBy('e.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+       
+    }
+
     // /**
     //  * @return Event[] Returns an array of Event objects
     //  */

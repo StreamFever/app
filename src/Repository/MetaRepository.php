@@ -2,32 +2,32 @@
 
 namespace App\Repository;
 
-use App\Entity\MetaOverlays;
+use App\Entity\Meta;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<MetaOverlays>
+ * @extends ServiceEntityRepository<Meta>
  *
- * @method MetaOverlays|null find($id, $lockMode = null, $lockVersion = null)
- * @method MetaOverlays|null findOneBy(array $criteria, array $orderBy = null)
- * @method MetaOverlays[]    findAll()
- * @method MetaOverlays[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Meta|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Meta|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Meta[]    findAll()
+ * @method Meta[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MetaOverlaysRepository extends ServiceEntityRepository
+class MetaRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, MetaOverlays::class);
+        parent::__construct($registry, Meta::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(MetaOverlays $entity, bool $flush = true): void
+    public function add(Meta $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -39,7 +39,7 @@ class MetaOverlaysRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(MetaOverlays $entity, bool $flush = true): void
+    public function remove(Meta $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -47,22 +47,22 @@ class MetaOverlaysRepository extends ServiceEntityRepository
         }
     }
 
-    // Retourne la liste des overlays selon l'id d'un utilisateur
-    public function findAllByIdUser($overlay_id)
+    public function findAllByOverlay($id_overlay)
     {
         return $this->createQueryBuilder('m')
-            ->join('m.id', 'o')
-            ->where('m.id = :overlay_id')
-            ->setParameter('overlay_id', $overlay_id)
-            ->orderBy('o.id', 'ASC')
+            ->join('m.Widgets', 'w')
+            ->where('w.overlay = :id_overlay')
+            ->setParameter('id_overlay', $id_overlay)
+            ->orderBy('m.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
+       
     }
 
     // /**
-    //  * @return MetaOverlays[] Returns an array of MetaOverlays objects
+    //  * @return Meta[] Returns an array of Meta objects
     //  */
     /*
     public function findByExampleField($value)
@@ -79,7 +79,7 @@ class MetaOverlaysRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?MetaOverlays
+    public function findOneBySomeField($value): ?Meta
     {
         return $this->createQueryBuilder('m')
             ->andWhere('m.exampleField = :val')

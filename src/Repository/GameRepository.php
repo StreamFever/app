@@ -47,6 +47,20 @@ class GameRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllCreatedByUserId($id_user)
+    {
+        return $this->createQueryBuilder('g')
+            ->join('g.userId', 'u')
+            ->where('u.id = :id_user')
+            ->setParameter('id_user', $id_user)
+            ->orderBy('g.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+       
+    }
+
     // /**
     //  * @return Game[] Returns an array of Game objects
     //  */

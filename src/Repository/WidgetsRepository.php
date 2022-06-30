@@ -2,32 +2,32 @@
 
 namespace App\Repository;
 
-use App\Entity\Websocket;
+use App\Entity\Widgets;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Websocket>
+ * @extends ServiceEntityRepository<Widgets>
  *
- * @method Websocket|null find($id, $lockMode = null, $lockVersion = null)
- * @method Websocket|null findOneBy(array $criteria, array $orderBy = null)
- * @method Websocket[]    findAll()
- * @method Websocket[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Widgets|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Widgets|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Widgets[]    findAll()
+ * @method Widgets[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class WebsocketRepository extends ServiceEntityRepository
+class WidgetsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Websocket::class);
+        parent::__construct($registry, Widgets::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Websocket $entity, bool $flush = true): void
+    public function add(Widgets $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -39,7 +39,7 @@ class WebsocketRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Websocket $entity, bool $flush = true): void
+    public function remove(Widgets $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -47,8 +47,22 @@ class WebsocketRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllByOverlay($id_overlay)
+    {
+        return $this->createQueryBuilder('w')
+            ->join('w.overlay', 'o')
+            ->where('o.id = :id_overlay')
+            ->setParameter('id_overlay', $id_overlay)
+            ->orderBy('w.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+       
+    }
+
     // /**
-    //  * @return Websocket[] Returns an array of Websocket objects
+    //  * @return Widgets[] Returns an array of Widgets objects
     //  */
     /*
     public function findByExampleField($value)
@@ -65,7 +79,7 @@ class WebsocketRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Websocket
+    public function findOneBySomeField($value): ?Widgets
     {
         return $this->createQueryBuilder('w')
             ->andWhere('w.exampleField = :val')
