@@ -9,3 +9,7 @@ import { initWsServer } from './ws';
 import './services/colorVideo';
 
 initWsServer.call()
+
+$(function () {
+ $('#datetimepicker1').datetimepicker();
+});
