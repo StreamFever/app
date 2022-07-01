@@ -92,6 +92,21 @@ class OverlayRepository extends ServiceEntityRepository
        
     }
 
+    // Même utilité que celle au dessus sauf qu'on veut que les 2 derniers
+    public function findLatestOverlaysWhereIdUser($user_id)
+    {
+        return $this->createQueryBuilder('o')
+            ->join('o.OverlayAccess', 'u1')
+            ->join('o.OverlayOwner', 'u2')
+            ->where('u1.id = :user_id OR u2.id = :user_id')
+            ->setParameter('user_id', $user_id)
+            ->orderBy('o.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+       
+    }
+
 
     // /**
     //  * @return Overlay[] Returns an array of Overlay objects
