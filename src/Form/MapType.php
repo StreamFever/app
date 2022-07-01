@@ -14,7 +14,7 @@ class MapType extends AbstractType
         $builder
             ->add('mapName')
             ->add('mapImg')
-            ->add('games')
+            //->add('games')
         ;
     }
 
