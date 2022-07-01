@@ -30,9 +30,7 @@
 			<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 			<script src="https://player.twitch.tv/js/embed/v1.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-			<script>
-				
-			</script>
+			<script></script>
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 	</head>
@@ -113,22 +111,17 @@
 										{% if service_overlay.getOverlaysForSidebar is defined %}
 											{% set arrOverlaysSidebar = [] %}
 											{% for item in service_overlay.getOverlaysForSidebar %}
-												{% if item.widgetOwner.id not in arrOverlaysSidebar and arrOverlaysSidebar|length != 2 %}
+												{% if item.OverlayOwner.id not in arrOverlaysSidebar and arrOverlaysSidebar|length != 2 %}
 													<li>
-														<a href="{{ path('app_overlay_show_by_iduser', {'user_id': item.widgetOwner.id}) }}">
+														<a href="{{ path('app_overlay_show', {'id': item.id}) }}">
 															<span class="iconify" data-icon="fluent:puzzle-cube-piece-20-regular"></span>
-															{{item.widgetOwner.pseudo}}
+															{{item.OverlayOwner.pseudo}}
 														</a>
 													</li>
-													{% set arrOverlaysSidebar = arrOverlaysSidebar|merge([item.widgetOwner.id]) %}
+													{% set arrOverlaysSidebar = arrOverlaysSidebar|merge([item.OverlayOwner.id]) %}
 												{% endif %}
 											{% endfor %}
 										{% endif %}
-										<li>
-											<a href="{{ path('app_meta_index') }}">
-												<span class="iconify" data-icon="carbon:data-class"></span>Metas
-											</a>
-										</li>
 									</ul>
 								</li>
 								{% if is_granted('ROLE_ADMIN') %}
