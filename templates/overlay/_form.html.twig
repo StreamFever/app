@@ -6,20 +6,28 @@
 	</div>
 {% endif %}
 
-<div class="col">
-	<div class="form-floating mb-3">
-		{{ form_widget(form.OverlayName, {
+
+<div class="input-grp-center">
+	<h3>Définissez un nom pour votre overlay</h3>
+	<p>Afin de retrouver votre overlay parmis ceux que vous possédez, il est nécessaire que vous lui donniez un nom.</p>
+	<div class="col">
+		<div class="form-floating mb-3">
+			{{ form_widget(form.OverlayName, {
         'attr': {'class': 'form-control'},
         'id': "OverlayName",
         }) }}
-		{{ form_label(form.OverlayName, null, {
+			{{ form_label(form.OverlayName, null, {
     'label': 'Définissez le nom de votre overlay',
     'id': 'OverlayName'
         }) }}
+		</div>
 	</div>
 </div>
 
-<div>
+
+<div class="input-grp">
+    <h3>Qui peut le gérer ?</h3>
+    <p>Définissez qui peut gérer votre overlay dans son espace.</p>
 	{{ form_label(form.OverlayAccess, null, {
     'label': 'Merci de définir qui peut avoir accès à votre overlay',
     'label_attr': {'class': 'form-label select-label'},

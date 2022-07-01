@@ -6,31 +6,34 @@
 	</div>
 {% endif %}
 
-<div class="row">
-	<div class="col">
-		<div class="form-floating mb-3">
-			{{ form_widget(form.mapName, {
+<div class="input-grp-center">
+	<h3>Nom de la carte</h3>
+	<p>Renseignez le nom de la carte.</p>
+	<div class="form-floating mb-3">
+		{{ form_widget(form.mapName, {
         'attr': {'class': 'form-control'},
         'id': "mapName",
         }) }}
-			{{ form_label(form.mapName, null, {
+		{{ form_label(form.mapName, null, {
     'label': 'Définissez le nom de la carte',
     'id': 'mapName'
         }) }}
-		</div>
 	</div>
-	<div class="col">
-		<div class="form-floating mb-3">
-			{{ form_widget(form.mapImg, {
+</div>
+
+<div class="input-grp">
+	<h3>Une image pour la carte ?</h3>
+	<p>Si vous avez une image pour la carte, vous pouvez la définir ici.</p>
+	<div class="form-floating mb-3">
+		{{ form_widget(form.mapImg, {
             'attr': {'class': 'form-control'},
             'id': "mapImg",
             }) }}
-			{{ form_label(form.mapImg, null, {
+		{{ form_label(form.mapImg, null, {
         'label': 'Définissez l\'image de la carte',
         'id': 'mapImg'
             }) }}
 		</div>
-	</div>
 </div>
 
 <button class="btn btn-success">

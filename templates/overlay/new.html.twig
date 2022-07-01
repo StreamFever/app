@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Overlay{% endblock %}
+{% block title %}Créer un nouvel overlay
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Overlay</h1>
+	<h1>Créer un nouvel overlay</h1>
 
-    {{ include('overlay/_form.html.twig') }}
+	{{ include('overlay/_form.html.twig') }}
 
-    <a href="{{ path('app_overlay_index') }}">back to list</a>
+	<a class="btn btn-dark" href="{{ path('app_overlay_index') }}">
+		<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
+		Retour à la liste</a>
 {% endblock %}

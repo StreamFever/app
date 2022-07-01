@@ -6,14 +6,17 @@
 	</div>
 {% endif %}
 
-<div class="row">
-	<div class="col">
-		<div class="form-floating mb-3">
-			{{ form_widget(form.gameIdTeamAlpha, {
+<div class="input-grp-center">
+	<h3>Les équipes</h3>
+	<p>Définissez les équipes qui s'affrontent durant ce match.</p>
+	<div class="row">
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.gameIdTeamAlpha, {
         'attr': {'class': 'form-control'},
         'id': "gameIdTeamAlpha",
         }) }}
-			{{ form_label(form.gameIdTeamAlpha, null, {
+				{{ form_label(form.gameIdTeamAlpha, null, {
     'label': 'Définissez l\'équipe alpha',
     'id': 'gameIdTeamAlpha'
         }) }}
@@ -29,61 +32,104 @@
         'label': 'Définissez l\'équipe beta',
         'id': 'gameIdTeamBeta'
             }) }}
+			</div>
 		</div>
 	</div>
 </div>
 
-<div class="row">
-	<div class="col">
-		<div class="form-floating mb-3">
-			{{ form_widget(form.gameFormat, {
+<div class="input-grp">
+	<h3>Votre match est terminé ?</h3>
+	<p>Renseignez le score de votre match si celui-ci est terminé.</p>
+	<div class="row">
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.gameScoreTeamAlpha, {
+        'attr': {'class': 'form-control'},
+        'id': "gameScoreTeamAlpha",
+        }) }}
+				{{ form_label(form.gameScoreTeamAlpha, null, {
+    'label': 'Définissez le score',
+    'id': 'gameScoreTeamAlpha'
+        }) }}
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.gameScoreTeamBeta, {
+        'attr': {'class': 'form-control'},
+        'id': "gameScoreTeamBeta",
+        }) }}
+				{{ form_label(form.gameScoreTeamBeta, null, {
+    'label': 'Définissez le score',
+    'id': 'gameScoreTeamBeta'
+        }) }}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="input-grp">
+	<h3>Informations complémentaires</h3>
+	<p>Remplissez un maximum d'informations sur ce match afin qu'il puisse profiter pleinement de toutes les fonctionnalités proposées sur la plateforme.</p>
+	<div class="row">
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.gameFormat, {
 			        'attr': {'class': 'form-select'},
 			        'id': "gameFormat",
 			        }) }}
-			{{ form_label(form.gameFormat, null, {
+				{{ form_label(form.gameFormat, null, {
 			    'label': 'Sélectionnez le format',
 			    'id': 'gameFormat'
 			        }) }}
-		</div>
-	</div>
-
-	<div class="col">
-		<div class="form-floating mb-3">
-			{{ form_widget(form.gameStatus, {
-        'attr': {'class': 'form-select'},
-        'id': "gameStatus",
-        }) }}
-			{{ form_label(form.gameStatus, null, {
-    'label': 'Sélectionnez le status',
-    'id': 'gameStatus'
-        }) }}
-		</div>
-	</div>
-</div>
-
-<div>
-	{{ form_label(form.gameIdMaps, null, {
+			</div>
+			<div>
+				{{ form_label(form.gameIdMaps, null, {
     'label': 'Merci de sélectionner la ou les cartes',
     'label_attr': {'class': 'form-label select-label'},
     }) }}
-	{{ form_widget(form.gameIdMaps, {
+				{{ form_widget(form.gameIdMaps, {
         'attr': {
             'class': 'selectpicker form-control',
             'data-max-options': 3
             },
         }) }}
-</div>
+			</div>
+		</div>
 
-<div class="form-group">
-	{{ form_label(form.gameTimeNext, null, {
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.gameStatus, {
+        'attr': {'class': 'form-select'},
+        'id': "gameStatus",
+        }) }}
+				{{ form_label(form.gameStatus, null, {
+    'label': 'Sélectionnez le status',
+    'id': 'gameStatus'
+        }) }}
+			</div>
+			<div class="form-group">
+				{{ form_label(form.gameTimeNext, null, {
     'label': 'Sélectionnez la date de lancement',
     'id': 'gameTimeNext'
         }) }}
-	{{ form_widget(form.gameTimeNext, {
+				{{ form_widget(form.gameTimeNext, {
         'attr': {'class': 'form-control'},
         'id': "gameTimeNext",
         }) }}
+			</div>
+		</div>
+	</div>
 </div>
+
+{{ form_label(form.userId, null, {
+    'label_attr': {'class': 'display_none'},
+    }) }}
+{{ form_widget(form.userId, {
+        'attr': {
+            'class': 'display_none',
+            },
+        }) }}
 
 
 <button class="btn btn-success">

@@ -6,34 +6,37 @@
 	</div>
 {% endif %}
 
-<div class="row">
-	<div class="col">
-		<div class="form-floating mb-3">
-			{{ form_widget(form.teamName, {
+<div class="input-grp-center">
+	<h3>Nom de l'équipe</h3>
+	<p>Il est important de fournir le nom de l'équipe.</p>
+	<div class="form-floating mb-3">
+		{{ form_widget(form.teamName, {
         'attr': {'class': 'form-control'},
         'id': "teamName",
         }) }}
-			{{ form_label(form.teamName, null, {
+		{{ form_label(form.teamName, null, {
     'label': 'Définissez le nom de l\'équipe',
     'id': 'teamName'
         }) }}
 		</div>
-	</div>
-	<div class="col">
-		<div class="form-floating mb-3">
+</div>
+
+<div class="input-grp">
+<h3>Logo de l'équipe</h3>
+<p>Si l'équipe possède un logo, il est possible de l'importer ci-dessous.</p>
+	<div class="form-floating mb-3">
 			{{ form_widget(form.teamLogo, {
             'attr': {'class': 'form-control'},
             'id': "teamLogo",
             }) }}
-			{{ form_label(form.teamLogo, null, {
+		{{ form_label(form.teamLogo, null, {
         'label': 'Définissez l\'image de l\'équipe',
         'id': 'teamLogo'
             }) }}
-        </div>
-    </div>
+	</div>
 </div>
 
 <button class="btn btn-success">
 	<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
 	{{ button_label|default('Créer l\'équipe') }}</button>
-{{ form_end(form) }}
+	{{ form_end(form) }}
