@@ -8,6 +8,8 @@ use App\Entity\Sponsor;
 
 use Symfony\Component\Security\Core\Security;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -50,16 +52,20 @@ class EventType extends AbstractType
                     'placeholder' => 'hereYourPlaceHolder'
                 )
            ))
-            ->add('eventStartDate',  null, array(
-                'attr' => array(
-                    'placeholder' => 'hereYourPlaceHolder'
-                )
-           ))
-            ->add('eventEndDate',  null, array(
-                'attr' => array(
-                    'placeholder' => 'hereYourPlaceHolder'
-                )
-           ))
+            ->add('eventStartDate', DateTimeType::class, [
+                'widget' => 'single_text',
+                'placeholder' => [
+                    'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
+                    'hour' => 'Hour', 'minute' => 'Minute', 'second' => 'Second',
+                ],
+            ])
+            ->add('eventEndDate', DateTimeType::class, [
+                'widget' => 'single_text',
+                'placeholder' => [
+                    'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
+                    'hour' => 'Hour', 'minute' => 'Minute', 'second' => 'Second',
+                ],
+            ])
             ->add('eventIdSponsor', EntityType::class, ['class' => Sponsor::class,
             'choice_label' => 'sponsor_name',
             'multiple' => true,

@@ -8,6 +8,8 @@ use App\Entity\Map;
 use App\Entity\Status;
 use App\Entity\Format;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,11 +29,13 @@ class GameType extends AbstractType
                     'placeholder' => 'hereYourPlaceHolder'
                 )
            ))
-            ->add('gameTimeNext',  null, array(
-                'attr' => array(
-                    'placeholder' => 'hereYourPlaceHolder'
-                )
-           ))
+            ->add('gameTimeNext', DateTimeType::class, [
+                'widget' => 'single_text',
+                'placeholder' => [
+                    'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
+                    'hour' => 'Hour', 'minute' => 'Minute', 'second' => 'Second',
+                ],
+            ])
             ->add('gameFormat', EntityType::class, ['class' => Format::class,
             'choice_label' => 'format_name',
             'label' => 'Format'], array(

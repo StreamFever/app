@@ -12,8 +12,16 @@ class MetaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('MetaKey')
-            ->add('MetaValue')
+            ->add('MetaKey',  null, array(
+                'attr' => array(
+                    'placeholder' => 'hereYourPlaceHolder'
+                )
+           ))
+            ->add('MetaValue',  null, array(
+                'attr' => array(
+                    'placeholder' => 'hereYourPlaceHolder'
+                )
+           ))
             ->add('Widgets')
             ->add('userId')
         ;
