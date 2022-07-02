@@ -35,7 +35,7 @@ class OverlayController extends AbstractController
         $currentUser = $this->getUser();
         
         return $this->render('overlay/index.html.twig', [
-            'overlays' => $overlayRepository->findAll(),
+            'overlays' => $overlayRepository->findAllByIdUser($currentUser->getId()),
             'controller_name' => "Overlay"
         ]);
     }
@@ -134,7 +134,7 @@ class OverlayController extends AbstractController
         //TODO: Remplacer les findAll() par findAllByUserId()
         return $this->render('overlay/browsersource.html.twig', [
             'games' => $gamesRepository->findAllCreatedByUserId($currentUser = $this->getUser()),
-            'events' => $eventsRepository->findAllCreatedByUserId($currentUser = $this->getUser()),
+            'events' => $eventsRepository->findAll(),
             'widgets' => $widgetsRepository->findAllByOverlay($id),
             'metas' => $MetaRepository->findAllByOverlay($id),
             'controller_name' => "Browsersource"

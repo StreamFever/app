@@ -42,12 +42,13 @@ class WidgetsController extends AbstractController
             $widgetsRepository->add($widget);
             $data = $form->getData();
 
-            if ($data->getWidgetIdAlpha() == "topbar" || $data->getWidgetIdBeta() == "topbar") {
+            if ($data->getWidgetId() == "topbar") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
                 $meta->setMetaKey('topbar_title');
                 $meta->setMetaValue("");
+                $meta->setUserId($this->getUser());
 
                 
                 // relates this product to the category
@@ -58,13 +59,13 @@ class WidgetsController extends AbstractController
                 $entityManager->persist($widget);
                 $entityManager->flush();
             }
-            if ($data->getWidgetIdAlpha() == "bottombar" || $data->getWidgetIdBeta() == "bottombar") {
+            if ($data->getWidgetId() == "bottombar") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
                 $meta->setMetaKey('bottombar_marquee');
                 $meta->setMetaValue("");
-
+                $meta->setUserId($this->getUser());
                 
                 // relates this product to the category
                 $widget->addMeta($meta);
@@ -74,13 +75,13 @@ class WidgetsController extends AbstractController
                 $entityManager->persist($widget);
                 $entityManager->flush();
             }
-            if ($data->getWidgetIdAlpha() == "popup_text" || $data->getWidgetIdBeta() == "popup_text") {
+            if ($data->getWidgetId() == "popup_text") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
                 $meta->setMetaKey('popup_text');
                 $meta->setMetaValue("");
-
+                $meta->setUserId($this->getUser());
                 
                 // relates this product to the category
                 $widget->addMeta($meta);
@@ -90,14 +91,14 @@ class WidgetsController extends AbstractController
                 $entityManager->persist($widget);
                 $entityManager->flush();
             }
-            if ($data->getWidgetIdAlpha() == "cam_heros" || $data->getWidgetIdBeta() == "cam_heros") {
+            if ($data->getWidgetId() == "cam_heros") {
                 for ($i=0; $i < 5; $i++) { 
                     // Insère les données suivantes dans la table meta_overlays si nécessaire
                     // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                     $meta = new Meta();
                     $meta->setMetaKey('id_cam_heros_obsninja_'.$i);
                     $meta->setMetaValue("");
-
+                    $meta->setUserId($this->getUser());
                     
                     // relates this product to the category
                     $widget->addMeta($meta);
@@ -108,14 +109,14 @@ class WidgetsController extends AbstractController
                     $entityManager->flush();
                 }
             }
-            if ($data->getWidgetIdAlpha() == "cam_tournament_alpha" || $data->getWidgetIdBeta() == "cam_tournament_alpha" || $data->getWidgetIdAlpha() == "cam_tournament_beta" || $data->getWidgetIdBeta() == "cam_tournament_beta") {
+            if ($data->getWidgetId() == "cam_tournament_alpha" || $data->getWidgetId() == "cam_tournament_beta") {
                 for ($i=0; $i < 10; $i++) { 
                     // Insère les données suivantes dans la table meta_overlays si nécessaire
                     // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                     $meta = new Meta();
                     $meta->setMetaKey('id_cam_team_obsninja_'.$i);
                     $meta->setMetaValue("");
-
+                    $meta->setUserId($this->getUser());
                     
                     // relates this product to the category
                     $widget->addMeta($meta);
@@ -126,13 +127,13 @@ class WidgetsController extends AbstractController
                     $entityManager->flush();
                 }
             }
-            if ($data->getWidgetIdAlpha() == "tweets" || $data->getWidgetIdBeta() == "tweets") {
+            if ($data->getWidgetId() == "tweets") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
                 $meta->setMetaKey('curent_tweet_format');
                 $meta->setMetaValue("");
-
+                $meta->setUserId($this->getUser());
                 
                 // relates this product to the category
                 $widget->addMeta($meta);
@@ -174,13 +175,13 @@ class WidgetsController extends AbstractController
             $widgetsRepository->add($widget);
             $data = $form->getData();
 
-            if ($data->getWidgetIdAlpha() == "topbar" || $data->getWidgetIdBeta() == "topbar") {
+            if ($data->getWidgetId() == "topbar") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
                 $meta->setMetaKey('topbar_title');
                 $meta->setMetaValue("");
-
+                $meta->setUserId($this->getUser());
                 
                 // relates this product to the category
                 $widget->addMeta($meta);
@@ -190,13 +191,13 @@ class WidgetsController extends AbstractController
                 $entityManager->persist($widget);
                 $entityManager->flush();
             }
-            if ($data->getWidgetIdAlpha() == "bottombar" || $data->getWidgetIdBeta() == "bottombar") {
+            if ($data->getWidgetId() == "bottombar") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
                 $meta->setMetaKey('bottombar_marquee');
                 $meta->setMetaValue("");
-
+                $meta->setUserId($this->getUser());
                 
                 // relates this product to the category
                 $widget->addMeta($meta);
@@ -206,13 +207,13 @@ class WidgetsController extends AbstractController
                 $entityManager->persist($widget);
                 $entityManager->flush();
             }
-            if ($data->getWidgetIdAlpha() == "popup_text" || $data->getWidgetIdBeta() == "popup_text") {
+            if ($data->getWidgetId() == "popup_text") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
                 $meta->setMetaKey('popup_text');
                 $meta->setMetaValue("");
-
+                $meta->setUserId($this->getUser());
                 
                 // relates this product to the category
                 $widget->addMeta($meta);
@@ -222,14 +223,14 @@ class WidgetsController extends AbstractController
                 $entityManager->persist($widget);
                 $entityManager->flush();
             }
-            if ($data->getWidgetIdAlpha() == "cam_heros" || $data->getWidgetIdBeta() == "cam_heros") {
+            if ($data->getWidgetId() == "cam_heros") {
                 for ($i=0; $i < 5; $i++) { 
                     // Insère les données suivantes dans la table meta_overlays si nécessaire
                     // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                     $meta = new Meta();
                     $meta->setMetaKey('id_cam_heros_obsninja_'.$i);
                     $meta->setMetaValue("");
-
+                    $meta->setUserId($this->getUser());
                     
                     // relates this product to the category
                     $widget->addMeta($meta);
@@ -240,14 +241,14 @@ class WidgetsController extends AbstractController
                     $entityManager->flush();
                 }
             }
-            if ($data->getWidgetIdAlpha() == "cam_tournament_alpha" || $data->getWidgetIdBeta() == "cam_tournament_alpha" || $data->getWidgetIdAlpha() == "cam_tournament_beta" || $data->getWidgetIdBeta() == "cam_tournament_beta") {
+            if ($data->getWidgetId() == "cam_tournament_alpha" || $data->getWidgetId() == "cam_tournament_beta") {
                 for ($i=0; $i < 10; $i++) { 
                     // Insère les données suivantes dans la table meta_overlays si nécessaire
                     // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                     $meta = new Meta();
                     $meta->setMetaKey('id_cam_team_obsninja_'.$i);
                     $meta->setMetaValue("");
-
+                    $meta->setUserId($this->getUser());
                     
                     // relates this product to the category
                     $widget->addMeta($meta);
@@ -258,13 +259,13 @@ class WidgetsController extends AbstractController
                     $entityManager->flush();
                 }
             }
-            if ($data->getWidgetIdAlpha() == "tweets" || $data->getWidgetIdBeta() == "tweets") {
+            if ($data->getWidgetId() == "tweets") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
                 $meta->setMetaKey('curent_tweet_format');
                 $meta->setMetaValue("");
-
+                $meta->setUserId($this->getUser());
                 
                 // relates this product to the category
                 $widget->addMeta($meta);
