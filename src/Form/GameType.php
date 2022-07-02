@@ -29,7 +29,7 @@ class GameType extends AbstractType
                     'placeholder' => 'hereYourPlaceHolder'
                 )
            ))
-            ->add('gameTimeNext', DateTimeType::class, [
+            ->add('gameStartDate', DateTimeType::class, [
                 'widget' => 'single_text',
                 'placeholder' => [
                     'year' => 'Year', 'month' => 'Month', 'day' => 'Day',

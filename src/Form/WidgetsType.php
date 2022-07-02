@@ -25,22 +25,7 @@ class WidgetsType extends AbstractType
             ->add('WidgetVisible', HiddenType::class, [
                 'empty_data' => 0,
             ])
-            ->add('WidgetIdAlpha',  null, array(
-                'attr' => array(
-                    'placeholder' => 'hereYourPlaceHolder'
-                )
-           ))
-            ->add('WidgetIdBeta',  null, array(
-                'attr' => array(
-                    'placeholder' => 'hereYourPlaceHolder'
-                )
-           ))
-            ->add('WidgetVersionAlpha',  null, array(
-                'attr' => array(
-                    'placeholder' => 'hereYourPlaceHolder'
-                )
-           ))
-            ->add('WidgetVersionBeta',  null, array(
+            ->add('WidgetId',  null, array(
                 'attr' => array(
                     'placeholder' => 'hereYourPlaceHolder'
                 )
@@ -52,6 +37,7 @@ class WidgetsType extends AbstractType
                     'placeholder' => 'hereYourPlaceHolder'
                 )
            ))
+           ->add('isTwoWidgets')
         ;
     }
 

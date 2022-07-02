@@ -74,6 +74,7 @@ class EventType extends AbstractType
                     'placeholder' => 'hereYourPlaceHolder'
                 )
            ))
+           ->add('eventSlots')
            ->add('userId')
         ;
     }
