@@ -39,6 +39,11 @@ class Edition
         return $this->id;
     }
 
+    public function __toString()
+    {
+        return $this->editionName;
+    }
+
     public function getEditionName(): ?string
     {
         return $this->editionName;

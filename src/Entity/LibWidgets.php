@@ -27,9 +27,19 @@ class LibWidgets
      */
     private $libWidgetId;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $libWidgetId2;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __toString()
+    {
+        return $this->libWidgetName;
     }
 
     public function getLibWidgetName(): ?string
@@ -52,6 +62,18 @@ class LibWidgets
     public function setLibWidgetId(string $libWidgetId): self
     {
         $this->libWidgetId = $libWidgetId;
+
+        return $this;
+    }
+
+    public function getLibWidgetId2(): ?string
+    {
+        return $this->libWidgetId2;
+    }
+
+    public function setLibWidgetId2(?string $libWidgetId2): self
+    {
+        $this->libWidgetId2 = $libWidgetId2;
 
         return $this;
     }

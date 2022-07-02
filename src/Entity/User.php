@@ -92,6 +92,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $AvatarUrl;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="userId")
+     */
+    private $events;
+
     public function __construct()
     {
         $this->logs = new ArrayCollection();
@@ -100,11 +105,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->games = new ArrayCollection();
         $this->metas = new ArrayCollection();
         $this->uiData = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __toString()
+    {
+        return $this->email;
     }
 
     public function getUuid(): ?string
@@ -424,6 +435,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAvatarUrl(?string $AvatarUrl): self
     {
         $this->AvatarUrl = $AvatarUrl;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getUserId() === $this) {
+                $event->setUserId(null);
+            }
+        }
 
         return $this;
     }

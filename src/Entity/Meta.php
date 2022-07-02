@@ -33,6 +33,11 @@ class Meta
      */
     private $userId;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Widgets::class, inversedBy="metas")
+     */
+    private $Widgets;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +75,18 @@ class Meta
     public function setUserId(?User $userId): self
     {
         $this->userId = $userId;
+
+        return $this;
+    }
+
+    public function getWidgets(): ?Widgets
+    {
+        return $this->Widgets;
+    }
+
+    public function setWidgets(?Widgets $Widgets): self
+    {
+        $this->Widgets = $Widgets;
 
         return $this;
     }

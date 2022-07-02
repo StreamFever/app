@@ -35,9 +35,15 @@ class Overlay
      */
     private $OverlayAccess;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Widgets::class, mappedBy="overlay")
+     */
+    private $widgets;
+
     public function __construct()
     {
         $this->OverlayAccess = new ArrayCollection();
+        $this->widgets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -89,6 +95,36 @@ class Overlay
     public function removeOverlayAccess(User $overlayAccess): self
     {
         $this->OverlayAccess->removeElement($overlayAccess);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Widgets>
+     */
+    public function getWidgets(): Collection
+    {
+        return $this->widgets;
+    }
+
+    public function addWidget(Widgets $widget): self
+    {
+        if (!$this->widgets->contains($widget)) {
+            $this->widgets[] = $widget;
+            $widget->setOverlay($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWidget(Widgets $widget): self
+    {
+        if ($this->widgets->removeElement($widget)) {
+            // set the owning side to null (unless already changed)
+            if ($widget->getOverlay() === $this) {
+                $widget->setOverlay(null);
+            }
+        }
 
         return $this;
     }
