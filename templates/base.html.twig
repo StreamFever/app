@@ -115,7 +115,7 @@
 													<li>
 														<a href="{{ path('app_overlay_show', {'id': item.id}) }}">
 															<span class="iconify" data-icon="fluent:puzzle-cube-piece-20-regular"></span>
-															{{item.OverlayOwner.pseudo}}
+															{{item.OverlayName}}
 														</a>
 													</li>
 													{% set arrOverlaysSidebar = arrOverlaysSidebar|merge([item.OverlayOwner.id]) %}

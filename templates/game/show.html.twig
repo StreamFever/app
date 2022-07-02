@@ -25,14 +25,14 @@
 			<tr>
 				<th>Date</th>
 				<th>
-					{% if "now"|date_modify("+1 day")|date("m/d/Y", "Europe/Paris") == game.gameTimeNext|date('m/d/Y', "Europe/Paris") %}
+					{% if "now"|date_modify("+1 day")|date("m/d/Y", "Europe/Paris") == game.gameStartDate|date('m/d/Y', "Europe/Paris") %}
 						<span class="badge bg-warning pulsate-bck">Demain</span>
 					{% endif %}
-					{% if "now"|date_modify("-1 day")|date("m/d/Y", "Europe/Paris") == game.gameTimeNext|date('m/d/Y', "Europe/Paris") %}
+					{% if "now"|date_modify("-1 day")|date("m/d/Y", "Europe/Paris") == game.gameStartDate|date('m/d/Y', "Europe/Paris") %}
 						<span class="badge bg-light">Hier</span>
 					{% endif %}
-					{% if "now"|date_modify("-1 day")|date("m/d/Y", "Europe/Paris") != game.gameTimeNext|date('m/d/Y', "Europe/Paris") and "now"|date_modify("+1 day")|date("m/d/Y", "Europe/Paris") != game.gameTimeNext|date('m/d/Y') %}
-						<span class="badge bg-light" style="color: #212529">{{ game.gameTimeNext ? game.gameTimeNext|date('d/m H:i', "Europe/Paris") : '' }}</span>
+					{% if "now"|date_modify("-1 day")|date("m/d/Y", "Europe/Paris") != game.gameStartDate|date('m/d/Y', "Europe/Paris") and "now"|date_modify("+1 day")|date("m/d/Y", "Europe/Paris") != game.gameStartDate|date('m/d/Y') %}
+						<span class="badge bg-light" style="color: #212529">{{ game.gameStartDate ? game.gameStartDate|date('d/m H:i', "Europe/Paris") : '' }}</span>
 					{% endif %}
 				</th>
 			</tr>

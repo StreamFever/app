@@ -26,14 +26,18 @@
 	<section id="overlay_show_access_person">
 		<h2>Qui a accès à mon overlay ?</h2>
 		<p>Toutes les personnes qui ont accès à votre overlay sont listés ci-dessous.</p>
-		{% if overlay.OverlayAccess.snapshot is not null %}
-			{% for person in overlay.OverlayAccess.snapshot %}
-				<div class="avatar">
-					<img src="{{person.avatarURL != null ? person.avatarURL : 'https://cdn.artaic.fr/images/Blason-Salty.png'}}" alt="Avatar de {{person.pseudo}}" title="Avatar de {{person.pseudo}}">
-					<p>{{person.pseudo != app.user.pseudo ? person.pseudo : 'Vous' }}</p>
-				</div>
-			{% endfor %}
-		{% endif %}
+		<div class="flex">
+			{% if overlay.OverlayAccess.snapshot is not null %}
+				{% for person in overlay.OverlayAccess.snapshot %}
+					{% if person.pseudo != "Websocket" %}
+						<div class="avatar">
+							<img src="{{person.avatarURL != null ? person.avatarURL : 'https://cdn.artaic.fr/images/Blason-Salty.png'}}" alt="Avatar de {{person.pseudo}}" title="Avatar de {{person.pseudo}}">
+							<p>{{person.pseudo != app.user.pseudo ? person.pseudo : 'Vous' }}</p>
+						</div>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+		</div>
 		<a class="btn btn-warning" href="{{ path('app_overlay_edit', {'id': overlay.id}) }}">
 			<span class="iconify" data-icon="bxs:edit"></span>Editer les permission</a>
 	</section>
@@ -94,6 +98,9 @@
 						{% endfor %}
 					</tbody>
 				</table>
+				<a class="btn btn-info" href="{{ path('app_widgets_new') }}">
+					<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>
+					Ajouter un widget</a>
 			</div>
 			<div class="col">
 				<h3>Metadonnées de l'overlay</h3>
@@ -127,6 +134,9 @@
 						{% endfor %}
 					</tbody>
 				</table>
+				<a class="btn btn-info" href="{{ path('app_meta_new') }}">
+					<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>
+					Ajouter une métadonnée</a>
 			</div>
 		</div>
 	</section>

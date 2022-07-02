@@ -1,43 +1,58 @@
 {% extends "base_overlay.html.twig" %}
 
 {% set currentGame = [] %}
-{% for game in games %}
-	{% if game.gameStatus == "current" %}
-		{% set currentGame = currentGame|merge([game]) %}
-	{% endif %}
-{% endfor %}
+{% set stopGame = false %}
+{% if stopGame != false %}
+	{% for game in games %}
+		{% if game.gameStatus == "current" %}
+			{% set currentGame = currentGame|merge([game]) %}
+
+		{% else %}
+			{% set currentGame = currentGame|merge([game]) %}
+		{% endif %}
+
+		{% set stopGame = true %}
+	{% endfor %}
+{% endif %}
 
 {% set currentEvent = [] %}
-{% for event in events %}
-	{% if "now"|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
-		{% set currentEvent = currentEvent|merge([event]) %}
-	{% endif %}
-{% endfor %}
+{% set stopEvent = false %}
+{% if stopEvent != false %}
+	{% for event in events %}
+		{% if "now"|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
+			{% set currentEvent = currentEvent|merge([event]) %}
+		{% else %}
+			{% set currentEvent = currentEvent|merge([event]) %}
+		{% endif %}
+
+		{% set stopEvent = true %}
+	{% endfor %}
+{% endif %}
 
 
 {% block body %}
 
-{% if widgets is not empty %}
+	{% if widgets is not empty %}
 		{% for widget in widgets %}
-			{# {% if widget.WidgetIdAlpha and widget.WidgetIdAlpha == "cam_tournament_alpha" or widget.WidgetIdBeta and widget.WidgetIdBeta == "cam_tournament_alpha" %}
-																	{{ include('overlay/widgets/cams/team_alpha.html.twig') }}
-																{% endif %}
-																{% if widget.WidgetIdAlpha and widget.WidgetIdAlpha == "cam_tournament_beta" or widget.WidgetIdBeta and widget.WidgetIdBeta == "cam_tournament_beta" %}
-																	{{ include('overlay/widgets/cams/team_beta.html.twig') }}
-																{% endif %} #}
-			{% if widget.WidgetIdAlpha and widget.WidgetIdAlpha == "topbar" or widget.WidgetIdBeta and widget.WidgetIdBeta == "topbar" %}
+			{# {% if widget.WidgetId and widget.WidgetId == "cam_tournament_alpha" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "cam_tournament_alpha" %}
+																																												{{ include('overlay/widgets/cams/team_alpha.html.twig') }}
+																																											{% endif %}
+																																											{% if widget.WidgetId and widget.WidgetId == "cam_tournament_beta" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "cam_tournament_beta" %}
+																																												{{ include('overlay/widgets/cams/team_beta.html.twig') }}
+																																											{% endif %} #}
+			{% if widget.WidgetId and widget.WidgetId == "topbar" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "topbar" %}
 				{{ include('overlay/widgets/topbar/v1.html.twig') }}
 			{% endif %}
-			{% if widget.WidgetIdAlpha and widget.WidgetIdAlpha == "versus" or widget.WidgetIdBeta and widget.WidgetIdBeta == "versus" %}
+			{% if widget.WidgetId and widget.WidgetId == "versus" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "versus" %}
 				{{ include('overlay/widgets/versus/v1.html.twig') }}
 			{% endif %}
-			{% if widget.WidgetIdAlpha and widget.WidgetIdAlpha == "popup_text" or widget.WidgetIdBeta and widget.WidgetIdBeta == "popup_text" %}
+			{% if widget.WidgetId and widget.WidgetId == "popup_text" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "popup_text" %}
 				{{ include('overlay/widgets/popup/small_txt.html.twig') }}
 			{% endif %}
-			{% if widget.WidgetIdAlpha and widget.WidgetIdAlpha == "next" or widget.WidgetIdBeta and widget.WidgetIdBeta == "next" %}
+			{% if widget.WidgetId and widget.WidgetId == "next" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "next" %}
 				{{ include('overlay/widgets/next/v1.html.twig') }}
 			{% endif %}
-			{% if widget.WidgetIdAlpha and widget.WidgetIdAlpha == "tweets" or widget.WidgetIdBeta and widget.WidgetIdBeta == "tweets" %}
+			{% if widget.WidgetId and widget.WidgetId == "tweets" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "tweets" %}
 				{{ include('overlay/widgets/tweets/index.html.twig') }}
 			{% endif %}
 		{% endfor %}

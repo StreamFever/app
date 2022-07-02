@@ -28,7 +28,7 @@
 {% endfor %}
 
 {% for overlay in overlays %}
-	{% if if overlay.widgetIdAlpha and overlay.widgetIdAlpha == "cam_tournament_alpha" or overlay.widgetIdBeta and overlay.widgetIdBeta == "cam_tournament_alpha" %}
+	{% if if overlay.WidgetId and overlay.WidgetId == "cam_tournament_alpha" or overlay.WidgetId.libWidgetId and overlay.WidgetId.libWidgetId == "cam_tournament_alpha" %}
 		<section id="bottom_cam" class="{{overlay.widgetVisible ? "" : "display_none"}}">
 			<div class="container_cam">
 				<div class="left">

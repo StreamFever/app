@@ -104,6 +104,16 @@
 					</div>
 				</div>
 			</div>
+			<div class="form-floating mb-3">
+				{{ form_widget(form.eventSlots, {
+        'attr': {'class': 'form-control'},
+        'id': "eventSlots",
+        }) }}
+				{{ form_label(form.eventSlots, null, {
+    'label': 'Définir le nombre de participants',
+    'id': 'eventSlots'
+        }) }}
+			</div>
 		</div>
 
 

@@ -1,45 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Widgets index{% endblock %}
+{% block title %}Widgets index
+{% endblock %}
 
 {% block body %}
-    <h1>Widgets index</h1>
+	<h1>Widgets index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>WidgetName</th>
-                <th>WidgetVisible</th>
-                <th>WidgetIdAlpha</th>
-                <th>WidgetIdBeta</th>
-                <th>WidgetVersionAlpha</th>
-                <th>WidgetVersionBeta</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for widget in widgets %}
-            <tr>
-                <td>{{ widget.id }}</td>
-                <td>{{ widget.WidgetName }}</td>
-                <td>{{ widget.WidgetVisible ? 'Yes' : 'No' }}</td>
-                <td>{{ widget.WidgetIdAlpha }}</td>
-                <td>{{ widget.WidgetIdBeta }}</td>
-                <td>{{ widget.WidgetVersionAlpha }}</td>
-                <td>{{ widget.WidgetVersionBeta }}</td>
-                <td>
-                    <a href="{{ path('app_widgets_show', {'id': widget.id}) }}">show</a>
-                    <a href="{{ path('app_widgets_edit', {'id': widget.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>WidgetName</th>
+				<th>WidgetVisible</th>
+				<th>WidgetId</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for widget in widgets %}
+				<tr>
+					<td>{{ widget.id }}</td>
+					<td>{{ widget.WidgetName }}</td>
+					<td>{{ widget.WidgetVisible ? 'Yes' : 'No' }}</td>
+					<td>{{ widget.WidgetId }}</td>
+					<td>
+						<a href="{{ path('app_widgets_show', {'id': widget.id}) }}">show</a>
+						<a href="{{ path('app_widgets_edit', {'id': widget.id}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="8">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_widgets_new') }}">Create new</a>
+	<a href="{{ path('app_widgets_new') }}">Create new</a>
 {% endblock %}
