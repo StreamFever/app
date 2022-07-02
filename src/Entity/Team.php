@@ -2,14 +2,12 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\TeamRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
  * @ORM\Entity(repositoryClass=TeamRepository::class)
  */
 class Team
@@ -50,11 +48,6 @@ class Team
     {
         $this->games = new ArrayCollection();
         $this->gamesBeta = new ArrayCollection();
-    }
-
-    public function __toString()
-    {
-	return $this->teamName;
     }
 
     public function getId(): ?int

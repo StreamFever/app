@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SponsorRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +28,16 @@ class Sponsor
      * @ORM\Column(type="text", nullable=true)
      */
     private $sponsorLogo;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Event::class, mappedBy="eventIdSponsor")
+     */
+    private $events;
+
+    public function __construct()
+    {
+        $this->events = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -52,6 +64,33 @@ class Sponsor
     public function setSponsorLogo(?string $sponsorLogo): self
     {
         $this->sponsorLogo = $sponsorLogo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->addEventIdSponsor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->removeElement($event)) {
+            $event->removeEventIdSponsor($this);
+        }
 
         return $this;
     }

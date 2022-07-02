@@ -22,9 +22,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=180)
      */
-    private $email;
+    private $uuid;
 
     /**
      * @ORM\Column(type="json")
@@ -38,17 +38,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
+     * @ORM\OneToMany(targetEntity=Logs::class, mappedBy="LogsUser")
+     */
+    private $logs;
+
+    /**
      * @ORM\OneToMany(targetEntity=Overlay::class, mappedBy="OverlayOwner")
      */
-    private $overlays;
+    private $overlaysOwned;
 
     /**
      * @ORM\ManyToMany(targetEntity=Overlay::class, mappedBy="OverlayAccess")
      */
-    private $overlaysAccess;
+    private $overlaysAllowed;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToMany(targetEntity=Game::class, mappedBy="userId")
+     */
+    private $games;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Meta::class, mappedBy="userId")
+     */
+    private $metas;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Ui::class, mappedBy="uiUserId")
+     */
+    private $uiData;
+
+    /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="string", length=255)
      */
     private $pseudo;
 
@@ -67,34 +92,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $AvatarUrl;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Logs::class, mappedBy="UserId")
-     */
-    private $logs;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="userId")
-     */
-    private $events;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Game::class, mappedBy="userId")
-     */
-    private $games;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Meta::class, mappedBy="userId")
-     */
-    private $metas;
-
     public function __construct()
     {
-        $this->overlays = new ArrayCollection();
-        $this->overlaysAccess = new ArrayCollection();
         $this->logs = new ArrayCollection();
-        $this->events = new ArrayCollection();
+        $this->overlaysOwned = new ArrayCollection();
+        $this->overlaysAllowed = new ArrayCollection();
         $this->games = new ArrayCollection();
         $this->metas = new ArrayCollection();
+        $this->uiData = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -102,19 +107,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function __toString()
+    public function getUuid(): ?string
     {
-        return $this->email;
+        return $this->uuid;
     }
 
-    public function getEmail(): ?string
+    public function setUuid(string $uuid): self
     {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
+        $this->uuid = $uuid;
 
         return $this;
     }
@@ -134,7 +134,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->uuid;
     }
 
     /**
@@ -192,17 +192,47 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @return Collection<int, Logs>
+     */
+    public function getLogs(): Collection
+    {
+        return $this->logs;
+    }
+
+    public function addLog(Logs $log): self
+    {
+        if (!$this->logs->contains($log)) {
+            $this->logs[] = $log;
+            $log->setLogsUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLog(Logs $log): self
+    {
+        if ($this->logs->removeElement($log)) {
+            // set the owning side to null (unless already changed)
+            if ($log->getLogsUser() === $this) {
+                $log->setLogsUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection<int, Overlay>
      */
     public function getOverlays(): Collection
     {
-        return $this->overlays;
+        return $this->overlaysOwned;
     }
 
     public function addOverlay(Overlay $overlay): self
     {
-        if (!$this->overlays->contains($overlay)) {
-            $this->overlays[] = $overlay;
+        if (!$this->overlaysOwned->contains($overlay)) {
+            $this->overlaysOwned[] = $overlay;
             $overlay->setOverlayOwner($this);
         }
 
@@ -211,7 +241,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeOverlay(Overlay $overlay): self
     {
-        if ($this->overlays->removeElement($overlay)) {
+        if ($this->overlaysOwned->removeElement($overlay)) {
             // set the owning side to null (unless already changed)
             if ($overlay->getOverlayOwner() === $this) {
                 $overlay->setOverlayOwner(null);
@@ -224,130 +254,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Overlay>
      */
-    public function getOverlaysAccess(): Collection
+    public function getOverlaysAllowed(): Collection
     {
-        return $this->overlaysAccess;
+        return $this->overlaysAllowed;
     }
 
-    public function addOverlaysAccess(Overlay $overlaysAccess): self
+    public function addOverlaysAllowed(Overlay $overlaysAllowed): self
     {
-        if (!$this->overlaysAccess->contains($overlaysAccess)) {
-            $this->overlaysAccess[] = $overlaysAccess;
-            $overlaysAccess->addOverlayAccess($this);
+        if (!$this->overlaysAllowed->contains($overlaysAllowed)) {
+            $this->overlaysAllowed[] = $overlaysAllowed;
+            $overlaysAllowed->addOverlayAccess($this);
         }
 
         return $this;
     }
 
-    public function removeOverlaysAccess(Overlay $overlaysAccess): self
+    public function removeOverlaysAllowed(Overlay $overlaysAllowed): self
     {
-        if ($this->overlaysAccess->removeElement($overlaysAccess)) {
-            $overlaysAccess->removeOverlayAccess($this);
-        }
-
-        return $this;
-    }
-
-    public function getPseudo(): ?string
-    {
-        return $this->pseudo;
-    }
-
-    public function setPseudo(?string $pseudo): self
-    {
-        $this->pseudo = $pseudo;
-
-        return $this;
-    }
-
-    public function getUserFirstName(): ?string
-    {
-        return $this->UserFirstName;
-    }
-
-    public function setUserFirstName(?string $UserFirstName): self
-    {
-        $this->UserFirstName = $UserFirstName;
-
-        return $this;
-    }
-
-    public function getUserLastName(): ?string
-    {
-        return $this->UserLastName;
-    }
-
-    public function setUserLastName(?string $UserLastName): self
-    {
-        $this->UserLastName = $UserLastName;
-
-        return $this;
-    }
-
-    public function getAvatarUrl(): ?string
-    {
-        return $this->AvatarUrl;
-    }
-
-    public function setAvatarUrl(?string $AvatarUrl): self
-    {
-        $this->AvatarUrl = $AvatarUrl;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Logs>
-     */
-    public function getLogs(): Collection
-    {
-        return $this->logs;
-    }
-
-    public function addLog(Logs $log): self
-    {
-        if (!$this->logs->contains($log)) {
-            $this->logs[] = $log;
-            $log->addUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLog(Logs $log): self
-    {
-        if ($this->logs->removeElement($log)) {
-            $log->removeUserId($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Event>
-     */
-    public function getEvents(): Collection
-    {
-        return $this->events;
-    }
-
-    public function addEvent(Event $event): self
-    {
-        if (!$this->events->contains($event)) {
-            $this->events[] = $event;
-            $event->setUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEvent(Event $event): self
-    {
-        if ($this->events->removeElement($event)) {
-            // set the owning side to null (unless already changed)
-            if ($event->getUserId() === $this) {
-                $event->setUserId(null);
-            }
+        if ($this->overlaysAllowed->removeElement($overlaysAllowed)) {
+            $overlaysAllowed->removeOverlayAccess($this);
         }
 
         return $this;
@@ -409,6 +334,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $meta->setUserId(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ui>
+     */
+    public function getUiData(): Collection
+    {
+        return $this->uiData;
+    }
+
+    public function addUiData(Ui $uiData): self
+    {
+        if (!$this->uiData->contains($uiData)) {
+            $this->uiData[] = $uiData;
+            $uiData->setUiUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUiData(Ui $uiData): self
+    {
+        if ($this->uiData->removeElement($uiData)) {
+            // set the owning side to null (unless already changed)
+            if ($uiData->getUiUserId() === $this) {
+                $uiData->setUiUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function getUserFirstName(): ?string
+    {
+        return $this->UserFirstName;
+    }
+
+    public function setUserFirstName(?string $UserFirstName): self
+    {
+        $this->UserFirstName = $UserFirstName;
+
+        return $this;
+    }
+
+    public function getUserLastName(): ?string
+    {
+        return $this->UserLastName;
+    }
+
+    public function setUserLastName(?string $UserLastName): self
+    {
+        $this->UserLastName = $UserLastName;
+
+        return $this;
+    }
+
+    public function getAvatarUrl(): ?string
+    {
+        return $this->AvatarUrl;
+    }
+
+    public function setAvatarUrl(?string $AvatarUrl): self
+    {
+        $this->AvatarUrl = $AvatarUrl;
 
         return $this;
     }

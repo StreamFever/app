@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\LogsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,6 +16,12 @@ class Logs
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="logs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $LogsUser;
 
     /**
      * @ORM\Column(type="datetime")
@@ -34,24 +38,21 @@ class Logs
      */
     private $LogsText;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $LogsOverlay;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="logs")
-     */
-    private $UserId;
-
-    public function __construct()
-    {
-        $this->UserId = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getLogsUser(): ?User
+    {
+        return $this->LogsUser;
+    }
+
+    public function setLogsUser(?User $LogsUser): self
+    {
+        $this->LogsUser = $LogsUser;
+
+        return $this;
     }
 
     public function getLogsTimestamp(): ?\DateTimeInterface
@@ -86,42 +87,6 @@ class Logs
     public function setLogsText(string $LogsText): self
     {
         $this->LogsText = $LogsText;
-
-        return $this;
-    }
-
-    public function getLogsOverlay(): ?string
-    {
-        return $this->LogsOverlay;
-    }
-
-    public function setLogsOverlay(string $LogsOverlay): self
-    {
-        $this->LogsOverlay = $LogsOverlay;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUserId(): Collection
-    {
-        return $this->UserId;
-    }
-
-    public function addUserId(User $userId): self
-    {
-        if (!$this->UserId->contains($userId)) {
-            $this->UserId[] = $userId;
-        }
-
-        return $this;
-    }
-
-    public function removeUserId(User $userId): self
-    {
-        $this->UserId->removeElement($userId);
 
         return $this;
     }

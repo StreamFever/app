@@ -34,11 +34,6 @@ class Edition
         $this->events = new ArrayCollection();
     }
 
-    public function __toString()
-    {
-        return $this->editionName;
-    }
-
     public function getId(): ?int
     {
         return $this->id;

@@ -2,14 +2,10 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PlayerRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
  * @ORM\Entity(repositoryClass=PlayerRepository::class)
  */
 class Player
@@ -22,7 +18,7 @@ class Player
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Flag::class, inversedBy="players")
+     * @ORM\ManyToOne(targetEntity=Flag::class, inversedBy="players")
      */
     private $playerIdFlag;
 
@@ -57,50 +53,23 @@ class Player
     private $playerTwitch;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $playerStudentSa;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $playerIdObsNinja;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $playerUplayTag;
-
-    public function __construct()
-    {
-        $this->playerIdFlag = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, Flag>
-     */
-    public function getPlayerIdFlag(): Collection
+    public function getPlayerIdFlag(): ?Flag
     {
         return $this->playerIdFlag;
     }
 
-    public function addPlayerIdFlag(Flag $playerIdFlag): self
+    public function setPlayerIdFlag(?Flag $playerIdFlag): self
     {
-        if (!$this->playerIdFlag->contains($playerIdFlag)) {
-            $this->playerIdFlag[] = $playerIdFlag;
-        }
-
-        return $this;
-    }
-
-    public function removePlayerIdFlag(Flag $playerIdFlag): self
-    {
-        $this->playerIdFlag->removeElement($playerIdFlag);
+        $this->playerIdFlag = $playerIdFlag;
 
         return $this;
     }
@@ -182,33 +151,9 @@ class Player
         return $this->playerStudentSa;
     }
 
-    public function setPlayerStudentSa(bool $playerStudentSa): self
+    public function setPlayerStudentSa(?bool $playerStudentSa): self
     {
         $this->playerStudentSa = $playerStudentSa;
-
-        return $this;
-    }
-
-    public function getPlayerIdObsNinja(): ?string
-    {
-        return $this->playerIdObsNinja;
-    }
-
-    public function setPlayerIdObsNinja(?string $playerIdObsNinja): self
-    {
-        $this->playerIdObsNinja = $playerIdObsNinja;
-
-        return $this;
-    }
-
-    public function getPlayerUplayTag(): ?string
-    {
-        return $this->playerUplayTag;
-    }
-
-    public function setPlayerUplayTag(?string $playerUplayTag): self
-    {
-        $this->playerUplayTag = $playerUplayTag;
 
         return $this;
     }

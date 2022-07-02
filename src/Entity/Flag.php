@@ -30,7 +30,7 @@ class Flag
     private $flagName;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Player::class, mappedBy="playerIdFlag")
+     * @ORM\OneToMany(targetEntity=Player::class, mappedBy="playerIdFlag")
      */
     private $players;
 
@@ -86,7 +86,7 @@ class Flag
     {
         if (!$this->players->contains($player)) {
             $this->players[] = $player;
-            $player->addPlayerIdFlag($this);
+            $player->setPlayerIdFlag($this);
         }
 
         return $this;
@@ -95,7 +95,10 @@ class Flag
     public function removePlayer(Player $player): self
     {
         if ($this->players->removeElement($player)) {
-            $player->removePlayerIdFlag($this);
+            // set the owning side to null (unless already changed)
+            if ($player->getPlayerIdFlag() === $this) {
+                $player->setPlayerIdFlag(null);
+            }
         }
 
         return $this;

@@ -2,14 +2,12 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
  * @ORM\Entity(repositoryClass=EventRepository::class)
  */
 class Event
@@ -32,14 +30,19 @@ class Event
     private $eventEdition;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $eventHashtag;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $eventLogo;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer")
      */
-    private $eventHashtag;
+    private $eventSlots;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -57,20 +60,14 @@ class Event
     private $eventEndDate;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Sponsor::class)
+     * @ORM\ManyToMany(targetEntity=Sponsor::class, inversedBy="events")
      */
     private $eventIdSponsor;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Social::class)
+     * @ORM\ManyToMany(targetEntity=Social::class, inversedBy="events")
      */
     private $eventIdSocial;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="events")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $userId;
 
     public function __construct()
     {
@@ -107,6 +104,18 @@ class Event
         return $this;
     }
 
+    public function getEventHashtag(): ?string
+    {
+        return $this->eventHashtag;
+    }
+
+    public function setEventHashtag(?string $eventHashtag): self
+    {
+        $this->eventHashtag = $eventHashtag;
+
+        return $this;
+    }
+
     public function getEventLogo(): ?string
     {
         return $this->eventLogo;
@@ -119,14 +128,14 @@ class Event
         return $this;
     }
 
-    public function getEventHashtag(): ?string
+    public function getEventSlots(): ?int
     {
-        return $this->eventHashtag;
+        return $this->eventSlots;
     }
 
-    public function setEventHashtag(?string $eventHashtag): self
+    public function setEventSlots(int $eventSlots): self
     {
-        $this->eventHashtag = $eventHashtag;
+        $this->eventSlots = $eventSlots;
 
         return $this;
     }
@@ -211,18 +220,6 @@ class Event
     public function removeEventIdSocial(Social $eventIdSocial): self
     {
         $this->eventIdSocial->removeElement($eventIdSocial);
-
-        return $this;
-    }
-
-    public function getUserId(): ?User
-    {
-        return $this->userId;
-    }
-
-    public function setUserId(?User $userId): self
-    {
-        $this->userId = $userId;
 
         return $this;
     }

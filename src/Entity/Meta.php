@@ -28,11 +28,6 @@ class Meta
     private $MetaValue;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Widgets::class, inversedBy="metas")
-     */
-    private $Widgets;
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="metas")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -63,18 +58,6 @@ class Meta
     public function setMetaValue(?string $MetaValue): self
     {
         $this->MetaValue = $MetaValue;
-
-        return $this;
-    }
-
-    public function getWidgets(): ?Widgets
-    {
-        return $this->Widgets;
-    }
-
-    public function setWidgets(?Widgets $Widgets): self
-    {
-        $this->Widgets = $Widgets;
 
         return $this;
     }

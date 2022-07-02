@@ -27,6 +27,12 @@ class Ui
      */
     private $uiValue;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="uiData")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $uiUserId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +58,18 @@ class Ui
     public function setUiValue(?string $uiValue): self
     {
         $this->uiValue = $uiValue;
+
+        return $this;
+    }
+
+    public function getUiUserId(): ?User
+    {
+        return $this->uiUserId;
+    }
+
+    public function setUiUserId(?User $uiUserId): self
+    {
+        $this->uiUserId = $uiUserId;
 
         return $this;
     }

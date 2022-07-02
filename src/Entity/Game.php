@@ -2,14 +2,12 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\GameRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
  * @ORM\Entity(repositoryClass=GameRepository::class)
  */
 class Game
@@ -36,10 +34,10 @@ class Game
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $gameTimeNext;
+    private $gameStartDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Format::class)
+     * @ORM\ManyToOne(targetEntity=Format::class, inversedBy="games")
      * @ORM\JoinColumn(nullable=false)
      */
     private $gameFormat;
@@ -61,7 +59,7 @@ class Game
     private $gameScoreTeamBeta;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Map::class)
+     * @ORM\ManyToMany(targetEntity=Map::class, inversedBy="games")
      */
     private $gameIdMaps;
 
@@ -74,11 +72,6 @@ class Game
     public function __construct()
     {
         $this->gameIdMaps = new ArrayCollection();
-    }
-
-    public function __toString()
-    {
-        return $this->gameFormat;
     }
 
     public function getId(): ?int
@@ -110,14 +103,14 @@ class Game
         return $this;
     }
 
-    public function getGameTimeNext(): ?\DateTimeInterface
+    public function getGameStartDate(): ?\DateTimeInterface
     {
-        return $this->gameTimeNext;
+        return $this->gameStartDate;
     }
 
-    public function setGameTimeNext(?\DateTimeInterface $gameTimeNext): self
+    public function setGameStartDate(?\DateTimeInterface $gameStartDate): self
     {
-        $this->gameTimeNext = $gameTimeNext;
+        $this->gameStartDate = $gameStartDate;
 
         return $this;
     }

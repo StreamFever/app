@@ -22,7 +22,7 @@ class Status
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $statusName;
+    private $ststatusName;
 
     /**
      * @ORM\OneToMany(targetEntity=Game::class, mappedBy="gameStatus")
@@ -34,24 +34,19 @@ class Status
         $this->games = new ArrayCollection();
     }
 
-    public function __toString()
-    {
-        return $this->statusName;
-    }
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getStatusName(): ?string
+    public function getStstatusName(): ?string
     {
-        return $this->statusName;
+        return $this->ststatusName;
     }
 
-    public function setStatusName(string $statusName): self
+    public function setStstatusName(string $ststatusName): self
     {
-        $this->statusName = $statusName;
+        $this->ststatusName = $ststatusName;
 
         return $this;
     }
