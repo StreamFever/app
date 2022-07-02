@@ -12,7 +12,7 @@
 		</pre>
 		<div class="content">
 			{% for card in widgets %}
-				{% if card.WidgetIdBeta != null %}
+				{% if card.isTwoWidgets %}
 					{# Switch à 3 états #}
 					{% block card_widget_bars %}
 						<div class="card_rightbar">
@@ -20,14 +20,14 @@
 								<div class="left">
 									<div class="switch-toggle switch-3 switch-candy">
 
-										<input id="show_{{card.WidgetIdAlpha}}" name="{{card.WidgetIdAlpha}}" type="radio" checked=""/>
-										<label for="show_{{card.WidgetIdAlpha}}" onclick="change('show_{{card.WidgetIdAlpha}}')">{{card.WidgetIdAlpha  | slice(0, 5)}}</label>
+										<input id="show_{{card.WidgetId.libWidgetId}}" name="{{card.WidgetId.libWidgetId}}" type="radio" checked=""/>
+										<label for="show_{{card.WidgetId.libWidgetId}}" onclick="change('show_{{card.WidgetId.libWidgetId}}')">{{card.WidgetId.libWidgetId  | slice(0, 5)}}</label>
 
-										<input id="off_{{card.WidgetIdAlpha}}_{{card.WidgetIdBeta}}" name="{{card.WidgetIdAlpha}}" class="off" type="radio" checked="checked"/>
-										<label for="off_{{card.WidgetIdAlpha}}_{{card.WidgetIdBeta}}" class="disabled" onclick="change('off_{{card.WidgetIdAlpha}}_{{card.WidgetIdBeta}}')">OFF</label>
+										<input id="off_{{card.WidgetId.libWidgetId}}_{{card.WidgetId.libWidgetId2}}" name="{{card.WidgetId.libWidgetId}}" class="off" type="radio" checked="checked"/>
+										<label for="off_{{card.WidgetId.libWidgetId}}_{{card.WidgetId.libWidgetId2}}" class="disabled" onclick="change('off_{{card.WidgetId.libWidgetId}}_{{card.WidgetId.libWidgetId2}}')">OFF</label>
 
-										<input id="show_{{card.WidgetIdBeta}}" name="{{card.WidgetIdAlpha}}" type="radio"/>
-										<label for="show_{{card.WidgetIdBeta}}" onclick="change('show_{{card.WidgetIdBeta}}')">{{card.WidgetIdBeta  | slice(0, 5)}}</label>
+										<input id="show_{{card.WidgetId.libWidgetId2}}" name="{{card.WidgetId}}" type="radio"/>
+										<label for="show_{{card.WidgetId.libWidgetId2}}" onclick="change('show_{{card.WidgetId.libWidgetId2}}')">{{card.WidgetId.libWidgetId2  | slice(0, 5)}}</label>
 									</div>
 								</div>
 								<div class="right">
@@ -47,11 +47,11 @@
 							<a href="#" class="content">
 								<div class="left">
 									<div class="switch-toggle switch-3 switch-candy">
-											<input id="show_{{card.WidgetIdAlpha}}" name="{{card.WidgetIdAlpha}}" type="radio" checked=""/>
-											<label for="show_{{card.WidgetIdAlpha}}" onclick="change('show_{{card.WidgetIdAlpha}}')">ON</label>
+										<input id="show_{{card.WidgetId.libWidgetId}}" name="{{card.WidgetId.libWidgetId}}" type="radio" checked=""/>
+										<label for="show_{{card.WidgetId.libWidgetId}}" onclick="change('show_{{card.WidgetId.libWidgetId}}')">ON</label>
 
-											<input id="off_{{card.WidgetIdAlpha}}" class="off" name="{{card.WidgetIdAlpha}}" type="radio" checked="checked"/>
-											<label for="off_{{card.WidgetIdAlpha}}" class="disabled" onclick="change('off_{{card.WidgetIdAlpha}}')">OFF</label>
+										<input id="off_{{card.WidgetId.libWidgetId}}" class="off" name="{{card.WidgetId.libWidgetId}}" type="radio" checked="checked"/>
+										<label for="off_{{card.WidgetId.libWidgetId}}" class="disabled" onclick="change('off_{{card.WidgetId.libWidgetId}}')">OFF</label>
 									</div>
 								</div>
 								<div class="right">
@@ -65,7 +65,6 @@
 						</div>
 					{% endblock %}
 				{% endif %}
-
 			{% endfor %}
 		</div>
 	</div>
