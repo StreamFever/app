@@ -47,19 +47,51 @@ class EventRepository extends ServiceEntityRepository
         }
     }
 
-    public function findAllCreatedByUserId($id_user)
+    public function findAll()
     {
+        return $this->findBy(array(), array('eventStartDate' => 'ASC'));
+    }
+
+    public function findFirst()
+    {
+        $date = new \DateTime("NOW");
         return $this->createQueryBuilder('e')
-            ->join('e.userId', 'u')
-            ->where('u.id = :id_user')
-            ->setParameter('id_user', $id_user)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
+            ->where('e.eventStartDate > :date')
+            ->orderBy('e.eventStartDate', 'ASC')
+            ->setParameter(':date', $date)    
+            ->setMaxResults(1)
             ->getQuery()
             ->getResult()
         ;
-       
     }
+
+    public function findRecentsEvent()
+    {
+        $date = new \DateTime("NOW");
+        
+        return $this->createQueryBuilder('e')
+            ->where('e.eventStartDate > :date')
+            ->orderBy('e.id', 'ASC')    
+            ->setParameter(':date', $date)    
+            ->setMaxResults(2)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    // public function findAll($id_user)
+    // {
+    //     return $this->createQueryBuilder('e')
+    //         ->join('e.userId', 'u')
+    //         ->where('u.id = :id_user')
+    //         ->setParameter('id_user', $id_user)
+    //         ->orderBy('e.id', 'ASC')
+    //         ->setMaxResults(10)
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+       
+    // }
 
     // /**
     //  * @return Event[] Returns an array of Event objects

@@ -47,6 +47,20 @@ class UiRepository extends ServiceEntityRepository
         }
     }
 
+    // Retourne la liste des uidata selon l'id d'un utilisateur
+    public function findAllByIdUser($user_id)
+    {
+        return $this->createQueryBuilder('ui')
+            ->join('ui.uiUserId', 'u')
+            ->where('u.id = :user_id')
+            ->setParameter('user_id', $user_id)
+            ->orderBy('ui.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+       
+    }
+
     // /**
     //  * @return Ui[] Returns an array of Ui objects
     //  */

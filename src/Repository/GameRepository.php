@@ -58,7 +58,35 @@ class GameRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
-       
+    }
+
+    public function findFirstCurrentByUserId($id_user)
+    {
+        return $this->createQueryBuilder('g')
+            ->join('g.userId', 'u')
+            ->where('u.id = :id_user AND gs.statusName = :status')
+            ->leftJoin('g.gameStatus', 'gs')
+            ->setParameters(['id_user' => $id_user, 'status' => 'current'])
+            ->orderBy('g.id', 'ASC')
+            ->addOrderBy('g.gameStatus')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findFirstNextByUserId($id_user)
+    {
+        return $this->createQueryBuilder('g')
+            ->join('g.userId', 'u')
+            ->where('u.id = :id_user AND gs.statusName = :status')
+            ->leftJoin('g.gameStatus', 'gs')
+            ->setParameters(['id_user' => $id_user, 'status' => 'soon'])
+            ->orderBy('g.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     // /**
