@@ -87,18 +87,18 @@
 								{% endif %}
 								<td>{{ widget.WidgetName }}</td>
 								<td>
-									<a href="{{ path('app_widgets_show', {'id': widget.id}) }}">show</a>
-									<a href="{{ path('app_widgets_edit', {'id': widget.id}) }}">edit</a>
+									<a class="btn btn-warning" href="{{ path('app_widgets_edit', {'id': widget.id, 'id_overlay': overlay.id}) }}">
+							<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
 								</td>
 							</tr>
 						{% else %}
 							<tr>
-								<td colspan="8">no records found</td>
+								<td colspan="8">Aucune donnée</td>
 							</tr>
 						{% endfor %}
 					</tbody>
 				</table>
-				<a class="btn btn-info" href="{{ path('app_widgets_new') }}">
+				<a class="btn btn-info" href="{{ path('app_widgets_new', {'id_overlay': overlay.id}) }}">
 					<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>
 					Ajouter un widget</a>
 			</div>
@@ -123,13 +123,13 @@
 								<td>{{ meta.MetaKey }}</td>
 								<td>{{ meta.MetaValue }}</td>
 								<td>
-									<a href="{{ path('app_meta_show', {'id': meta.id}) }}">show</a>
-									<a href="{{ path('app_meta_edit', {'id': meta.id}) }}">edit</a>
+									<a class="btn btn-warning" href="{{ path('app_meta_edit', {'id': meta.id, 'id_overlay': overlay.id}) }}">
+							<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
 								</td>
 							</tr>
 						{% else %}
 							<tr>
-								<td colspan="4">no records found</td>
+								<td colspan="4">Aucune donnée</td>
 							</tr>
 						{% endfor %}
 					</tbody>
