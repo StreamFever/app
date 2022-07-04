@@ -6,7 +6,7 @@
 {% block body %}
 	<h1>Liste des utilistateurs</h1>
 	<pre>
-		{{ dump(users) }}
+		{{ dump(uidata.getUiData) }}
 	</pre>
 
 	<table id="userList" class="table">
@@ -15,6 +15,7 @@
 				<th>Id</th>
 				<th>Avatar</th>
 				<th>Email</th>
+				<th>Uuid</th>
 				<th>Roles</th>
 				<th>Actions</th>
 			</tr>
@@ -25,6 +26,7 @@
 				<tr>
 					<td>{{ user.id }}</td>
 					<td><img src="{{ user.avatarURL != null ? user.avatarURL : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Avatar de {{ user.username }}" style="width:15%;"></td>
+					<td>{{ user.email }}</td>
 					<td>{{ user.username }}</td>
 					<td>
 						{% for role in roles %}
