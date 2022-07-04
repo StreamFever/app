@@ -20,16 +20,6 @@ use Doctrine\Persistence\ManagerRegistry;
 class WidgetsController extends AbstractController
 {
     /**
-     * @Route("/", name="app_widgets_index", methods={"GET"})
-     */
-    public function index(WidgetsRepository $widgetsRepository): Response
-    {
-        return $this->render('overlay/widgets/index.html.twig', [
-            'widgets' => $widgetsRepository->findAll(),
-        ]);
-    }
-
-    /**
      * @Route("/new", name="app_widgets_new", methods={"GET", "POST"})
      */
     public function new(Request $request, WidgetsRepository $widgetsRepository, ManagerRegistry $doctrine): Response
@@ -37,12 +27,13 @@ class WidgetsController extends AbstractController
         $widget = new Widgets();
         $form = $this->createForm(WidgetsType::class, $widget);
         $form->handleRequest($request);
+        $idOverlay = $request->get('id_overlay');
 
         if ($form->isSubmitted() && $form->isValid()) {
             $widgetsRepository->add($widget);
             $data = $form->getData();
 
-            if ($data->getWidgetId() == "topbar") {
+            if ($data->getWidgetId() == "Barre d'information") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
@@ -59,7 +50,7 @@ class WidgetsController extends AbstractController
                 $entityManager->persist($widget);
                 $entityManager->flush();
             }
-            if ($data->getWidgetId() == "bottombar") {
+            if ($data->getWidgetId() == "Barre d'information") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
@@ -75,7 +66,7 @@ class WidgetsController extends AbstractController
                 $entityManager->persist($widget);
                 $entityManager->flush();
             }
-            if ($data->getWidgetId() == "popup_text") {
+            if ($data->getWidgetId() == "Popup") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
@@ -91,7 +82,7 @@ class WidgetsController extends AbstractController
                 $entityManager->persist($widget);
                 $entityManager->flush();
             }
-            if ($data->getWidgetId() == "cam_heros") {
+            if ($data->getWidgetId() == "Next") {
                 for ($i=0; $i < 5; $i++) { 
                     // Insère les données suivantes dans la table meta_overlays si nécessaire
                     // DOCS: https://symfony.com/doc/current/doctrine/associations.html
@@ -127,7 +118,7 @@ class WidgetsController extends AbstractController
                     $entityManager->flush();
                 }
             }
-            if ($data->getWidgetId() == "tweets") {
+            if ($data->getWidgetId() == "Tweets") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
@@ -144,22 +135,18 @@ class WidgetsController extends AbstractController
                 $entityManager->flush();
             }
             
-            return $this->redirectToRoute('app_widgets_index', [], Response::HTTP_SEE_OTHER);
+            if ($idOverlay) {
+                return $this->redirectToRoute('app_overlay_show', [
+                    'id' => $idOverlay
+                ], Response::HTTP_SEE_OTHER);
+            } else {
+                return $this->redirectToRoute('app_overlay_index', [], Response::HTTP_SEE_OTHER);
+            }
         }
 
         return $this->renderForm('overlay/widgets/new.html.twig', [
             'widget' => $widget,
             'form' => $form,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="app_widgets_show", methods={"GET"})
-     */
-    public function show(Widgets $widget): Response
-    {
-        return $this->render('overlay/widgets/show.html.twig', [
-            'widget' => $widget,
         ]);
     }
 
@@ -170,18 +157,21 @@ class WidgetsController extends AbstractController
     {
         $form = $this->createForm(WidgetsType::class, $widget);
         $form->handleRequest($request);
+        $idOverlay = $request->get('id_overlay');
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $widgetsRepository->add($widget);
             $data = $form->getData();
 
-            if ($data->getWidgetId() == "topbar") {
+            if ($data->getWidgetId() == "Barre d'information") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
                 $meta->setMetaKey('topbar_title');
                 $meta->setMetaValue("");
                 $meta->setUserId($this->getUser());
+
                 
                 // relates this product to the category
                 $widget->addMeta($meta);
@@ -191,7 +181,7 @@ class WidgetsController extends AbstractController
                 $entityManager->persist($widget);
                 $entityManager->flush();
             }
-            if ($data->getWidgetId() == "bottombar") {
+            if ($data->getWidgetId() == "Barre d'information") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
@@ -207,7 +197,7 @@ class WidgetsController extends AbstractController
                 $entityManager->persist($widget);
                 $entityManager->flush();
             }
-            if ($data->getWidgetId() == "popup_text") {
+            if ($data->getWidgetId() == "Popup") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
@@ -223,7 +213,7 @@ class WidgetsController extends AbstractController
                 $entityManager->persist($widget);
                 $entityManager->flush();
             }
-            if ($data->getWidgetId() == "cam_heros") {
+            if ($data->getWidgetId() == "Next") {
                 for ($i=0; $i < 5; $i++) { 
                     // Insère les données suivantes dans la table meta_overlays si nécessaire
                     // DOCS: https://symfony.com/doc/current/doctrine/associations.html
@@ -259,7 +249,7 @@ class WidgetsController extends AbstractController
                     $entityManager->flush();
                 }
             }
-            if ($data->getWidgetId() == "tweets") {
+            if ($data->getWidgetId() == "Tweets") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
@@ -277,7 +267,13 @@ class WidgetsController extends AbstractController
             }
         
             
-            return $this->redirectToRoute('app_widgets_index', [], Response::HTTP_SEE_OTHER);
+            if ($idOverlay) {
+                return $this->redirectToRoute('app_overlay_show', [
+                    'id' => $idOverlay
+                ], Response::HTTP_SEE_OTHER);
+            } else {
+                return $this->redirectToRoute('app_overlay_index', [], Response::HTTP_SEE_OTHER);
+            }
         }
 
         return $this->renderForm('overlay/widgets/edit.html.twig', [
@@ -295,6 +291,6 @@ class WidgetsController extends AbstractController
             $widgetsRepository->remove($widget);
         }
 
-        return $this->redirectToRoute('app_widgets_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_overlay_index', [], Response::HTTP_SEE_OTHER);
     }
 }

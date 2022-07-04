@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
+
 /**
  * @Route("/admin/events")
  */
@@ -29,14 +32,23 @@ class EventController extends AbstractController
     /**
      * @Route("/new", name="app_event_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EventRepository $eventRepository): Response
+    public function new(Request $request, EventRepository $eventRepository, ManagerRegistry $doctrine): Response
     {
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            if ($data->getEventEdition() == "campus_cup" && $data->getEventLogo() == null) {
+                $data->setEventLogo("https://cdn.artaic.fr/images/CampusCupLogo.png");
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($event);
+                $entityManager->flush();
+            } else {
             $eventRepository->add($event);
+            }
             return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
         }
 

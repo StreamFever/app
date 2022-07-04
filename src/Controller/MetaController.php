@@ -33,10 +33,17 @@ class MetaController extends AbstractController
         $metum = new Meta();
         $form = $this->createForm(MetaType::class, $metum);
         $form->handleRequest($request);
+        $idOverlay = $request->get('id_overlay');
 
         if ($form->isSubmitted() && $form->isValid()) {
             $metaRepository->add($metum);
-            return $this->redirectToRoute('app_meta_index', [], Response::HTTP_SEE_OTHER);
+            if ($idOverlay) {
+                return $this->redirectToRoute('app_overlay_show', [
+                    'id' => $idOverlay
+                ], Response::HTTP_SEE_OTHER);
+            } else {
+                return $this->redirectToRoute('app_overlay_index', [], Response::HTTP_SEE_OTHER);
+            }
         }
 
         return $this->renderForm('overlay/meta/new.html.twig', [
@@ -62,10 +69,17 @@ class MetaController extends AbstractController
     {
         $form = $this->createForm(MetaType::class, $metum);
         $form->handleRequest($request);
+        $idOverlay = $request->get('id_overlay');
 
         if ($form->isSubmitted() && $form->isValid()) {
             $metaRepository->add($metum);
-            return $this->redirectToRoute('app_meta_index', [], Response::HTTP_SEE_OTHER);
+            if ($idOverlay) {
+                return $this->redirectToRoute('app_overlay_show', [
+                    'id' => $idOverlay
+                ], Response::HTTP_SEE_OTHER);
+            } else {
+                return $this->redirectToRoute('app_overlay_index', [], Response::HTTP_SEE_OTHER);
+            }
         }
 
         return $this->renderForm('overlay/meta/edit.html.twig', [
