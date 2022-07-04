@@ -75,6 +75,12 @@ class Event
      */
     private $userId;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=EventFormat::class, inversedBy="events")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $eventFormat;
+
     public function __construct()
     {
         $this->eventIdSponsor = new ArrayCollection();
@@ -238,6 +244,18 @@ class Event
     public function setUserId(?User $userId): self
     {
         $this->userId = $userId;
+
+        return $this;
+    }
+
+    public function getEventFormat(): ?EventFormat
+    {
+        return $this->eventFormat;
+    }
+
+    public function setEventFormat(?EventFormat $eventFormat): self
+    {
+        $this->eventFormat = $eventFormat;
 
         return $this;
     }

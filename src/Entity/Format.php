@@ -39,6 +39,11 @@ class Format
         return $this->id;
     }
 
+    public function __toString()
+    {
+        return $this->formatName;
+    }
+
     public function getFormatName(): ?string
     {
         return $this->formatName;

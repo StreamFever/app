@@ -59,6 +59,11 @@ class Widgets
     public function getId(): ?int
     {
         return $this->id;
+    } 
+
+    public function __toString()
+    {
+        return $this->WidgetName;
     }
 
     public function getWidgetName(): ?string

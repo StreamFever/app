@@ -44,15 +44,26 @@ class Team
      */
     private $gamesBeta;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Player::class, inversedBy="teams")
+     */
+    private $players;
+
     public function __construct()
     {
         $this->games = new ArrayCollection();
         $this->gamesBeta = new ArrayCollection();
+        $this->players = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __toString()
+    {
+        return $this->teamName;
     }
 
     public function getTeamIdFlag(): ?Flag
@@ -147,6 +158,30 @@ class Team
                 $gamesBetum->setGameIdTeamBeta(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Player>
+     */
+    public function getPlayers(): Collection
+    {
+        return $this->players;
+    }
+
+    public function addPlayer(Player $player): self
+    {
+        if (!$this->players->contains($player)) {
+            $this->players[] = $player;
+        }
+
+        return $this;
+    }
+
+    public function removePlayer(Player $player): self
+    {
+        $this->players->removeElement($player);
 
         return $this;
     }
