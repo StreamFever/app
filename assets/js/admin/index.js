@@ -7,9 +7,6 @@ import './ws';
 // import './player';
 import { initWsServer } from './ws';
 import './services/colorVideo';
+import './twitch';
 
 initWsServer.call()
-
-$(function () {
- $('#datetimepicker1').datetimepicker();
-});
