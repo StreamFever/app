@@ -1,0 +1,29 @@
+<div class="event">
+	<div class="event_wrap">
+		<div class="left">
+			<div class="content">
+				<div class="logo">
+					<img src="{{ event.eventLogo != null ? event.eventLogo : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Logo de {{ event.eventName }}">
+				</div>
+				<div class="text">
+					<h3>{{event.eventName|slice(0,15)}}</h3>
+					<div class="details">
+						<span>
+							<span class="iconify" data-icon="bi:people-fill"></span>
+							{{event.eventSlots}}</span>
+						<span>
+							<span class="iconify" data-icon="entypo:game-controller"></span>
+							{{event.eventFormat.eventFormatName}}</span>
+						<span>
+							<span class="iconify" data-icon="emojione:money-bag"></span>
+							{{event.eventCashprize != null ? event.eventCashprize}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="right">
+			<span>{{event.eventStartDate|date('d/m H:i')}}</span>
+		</div>
+	</div>
+	<a href="{{ path('app_event_show', {'id': event.id}) }}">Accéder à l'événement</a>
+</div>

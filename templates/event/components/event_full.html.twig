@@ -1,0 +1,35 @@
+<div class="event-full">
+	<div class="content">
+		<div class="top_left">
+			<span class="name">{{event.eventName}}</span>
+			<span class="edition">{{event.eventEdition}}</span>
+		</div>
+		<div class="top_right">
+			{% if "now"|date_modify("+1 day")|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
+				<span class="badge bg-warning pulsate-bck">Demain</span>
+			{% endif %}
+			{% if "now"|date_modify("-1 day")|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
+				<span class="badge bg-light text-dark">Hier</span>
+			{% endif %}
+			{% if "now"|date_modify("-1 day")|date("m/d/Y", "Europe/Paris") != event.eventStartDate|date('m/d/Y', "Europe/Paris") and "now"|date_modify("+1 day")|date("m/d/Y", "Europe/Paris") != event.eventStartDate|date('m/d/Y') %}
+				<span class="badge bg-light" style="color: #212529">{{ event.eventStartDate ? event.eventStartDate|date('d/m H:i', "Europe/Paris") : '' }}</span>
+			{% endif %}
+		</div>
+		<div class="logo">
+			<img src="{{ event.eventLogo != null ? event.eventLogo : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Logo de {{ event.eventName }}">
+		</div>
+		<div class="details">
+			<span>
+				<span class="iconify" data-icon="bi:people-fill"></span>
+				{{event.eventSlots}}</span>
+			<span>
+				<span class="iconify" data-icon="entypo:game-controller"></span>
+				{{event.eventFormat.eventFormatName}}</span>
+			<span>
+				<span class="iconify" data-icon="emojione:money-bag"></span>
+				{{event.eventCashprize != null ? event.eventCashprize}}</span>
+		</div>
+		<h3>{{event.eventHashtag}}</h3>
+		<a href="{{ path('app_event_show', {'id': event.id}) }}">Accéder à l'événement</a>
+	</div>
+</div>
