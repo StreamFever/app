@@ -2,6 +2,9 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     globals:
         service_overlay: '@App\Service\Overlays'
+        uidata: '@App\Service\Ui'
+        event_service: '@App\Service\Events'
+        game_service: '@App\Service\Games'
 
 when@test:
     twig:
