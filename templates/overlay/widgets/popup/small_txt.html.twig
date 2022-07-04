@@ -6,12 +6,12 @@
 {% endfor %}
 
 
-{% if widget.WidgetId == "popup_text" or  Widget.WidgetId.libWidgetId == "popup_text" and popupText[0].metaValue is not empty %}
+{% if widget.WidgetId == "popup_text" or  widget.WidgetId.libWidgetId == "popup_text" and popupText[0].metaValue is not empty %}
 	<section id="smalltext" class="{{widget.WidgetVisible ? "" : "display_none"}}">
 		<div id="popuptext" class="container_popup">
 			<div id="leftpopuptext" class="left">
 				<div class="img">
-					<img id="popuplogoimg" src="{{ currentEvent[0].eventLogo != null ? currentEvent.event.eventLogo : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Logo de l'événement">
+					<img id="popuplogoimg" src="{{ event_service.getOneCurrentEvent[0].eventLogo != null ? event_service.getOneCurrentEvent[0].eventLogo : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Logo de l'événement">
 				</div>
 			</div>
 			<div id="textpopuptext" class="text">

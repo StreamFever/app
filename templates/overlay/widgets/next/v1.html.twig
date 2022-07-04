@@ -1,12 +1,12 @@
 {% if widget.WidgetId == "next" or  widget.WidgetId.libWidgetId == "next"  %}
 	<section id="nextmatch" class="{{widget.WidgetVisible ? "" : "display_none"}}">
 		<div id="teams_nextmatch" class="teams">
-			<span id="nextmatch_team_a">{{currentGame[0].gameIdTeamAlpha.teamName|slice(0,5)|replace({' ': ''})|upper }}</span>
+			<span id="nextmatch_team_a">{{game_service.getOneNextMatch[0].gameIdTeamAlpha.teamName|slice(0,5)|replace({' ': ''})|upper }}</span>
 			<span id="vs">VS</span>
-			<span id="nextmatch_team_b">{{currentGame[0].gameIdTeamBeta.teamName|slice(0,5)|replace({' ': ''})|upper }}</span>
+			<span id="nextmatch_team_b">{{game_service.getOneNextMatch[0].gameIdTeamBeta.teamName|slice(0,5)|replace({' ': ''})|upper }}</span>
 		</div>
 		<div id="textnextmatch" class="text">
-			<span class="nextmatch_next" id="nextmatch_heure">{{currentGame[0].gameStartDate|date("H:i")}}</span>
+			<span class="nextmatch_next" id="nextmatch_heure">{{game_service.getOneNextMatch[0].gameStartDate|date("H:i")}}</span>
 		</div>
 	</section>
 {% endif %}

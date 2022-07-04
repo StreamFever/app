@@ -2,28 +2,28 @@
 	<section id="topbar" class="{{widget.WidgetVisible ? "" : "display_none"}}">
 		<div class="lambda">
 			<section id="display">
-				{{currentEvent[0].eventEdition}}
+				{{event_service.getOneCurrentEvent[0].eventEdition}}
 			</section>
 		</div>
 		<div
 			class="name_event">
 			{# TODO: Mettre une valeur dynamique #}
 			<span class="hashtag">#</span>
-			{{currentEvent[0].eventHashtag|slice(1)}}
+			{{event_service.getOneCurrentEvent[0].eventHashtag|slice(1)}}
 		</div>
-		<div class="scorea" id="scorea">{{currentGame[0].gameScoreTeamAlpha}}</div>
-		<div id="topbar_team_a" class="teama">{{currentGame[0].gameIdTeamAlpha|slice(0,5)|replace({' ': ''})  }}</div>
+		<div class="scorea" id="scorea">{{game_service.getOneCurrentGame[0].gameScoreTeamAlpha}}</div>
+		<div id="topbar_team_a" class="teama">{{game_service.getOneCurrentGame[0].gameIdTeamAlpha|slice(0,5)|replace({' ': ''})  }}</div>
 		<div class="vs"></div>
-		<div class="logo"><img src="{{ currentEvent[0].eventLogo != null ? currentEvent.event.eventLogo : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Logo de l'event"></div>
-		<div id="topbar_team_b" class="teamb">{{currentGame[0].gameIdTeamBeta|slice(0,5)|replace({' ': ''})   }}</div>
-		<div class="scoreb" id="scoreb">{{currentGame[0].gameScoreTeamBeta}}</div>
+		<div class="logo"><img src="{{ event_service.getOneCurrentEvent[0].eventLogo != null ? event_service.getOneCurrentEvent[0].eventLogo : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Logo de l'event"></div>
+		<div id="topbar_team_b" class="teamb">{{game_service.getOneCurrentGame[0].gameIdTeamBeta|slice(0,5)|replace({' ': ''})   }}</div>
+		<div class="scoreb" id="scoreb">{{game_service.getOneCurrentGame[0].gameScoreTeamBeta}}</div>
 		<div class="carte">
 			<span class="yellow">Map :</span>
-			<span id="currentmap">{{currentGame[0].gameIdMaps.snapshot[0].mapName}}<span></div>
+			<span id="currentmap">{{game_service.getOneCurrentGame[0].gameIdMaps.snapshot[0].mapName}}<span></div>
 				<div id="slider">
 					<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 						<div class="carousel-inner">
-							{% if currentEvent[0].eventEdition != "HER6S" %}
+							{% if event_service.getOneCurrentEvent[0].eventEdition != "HER6S" %}
 								<div class="carousel-item" id="img_slider">
 									<img src="https://cdn.artaic.fr/images/overlay/campus_cup/white_firstblood_logo.png" class="d-block w-100" alt="...">
 								</div>
