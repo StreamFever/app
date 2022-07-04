@@ -8,11 +8,8 @@
 		</div>
 
 		<div class="content">
-			<pre>
-			{{ dump(events) }}
-		</pre>
-			{% for event in events %}
-				{% if event.eventStartDate|date > "now"|date_modify("now")|date and event.eventStartDate|date < "now"|date_modify("now")|date_modify("+1 week")|date or "now"|date_modify("now")|date("m/d/Y") == event.eventEndDate|date("m/d/Y") %}
+			{% for event in event_service.getAllEvents %}
+				{% if "now"|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") or "now"|date("m/d/Y", "Europe/Paris") <= event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
 					{% block card_agenda %}
 						<div class="card_rightbar">
 							<div class="top">
@@ -26,7 +23,7 @@
 									{% if "now"|date_modify("-1 day")|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
 										<span class="badge bg-light">Hier</span>
 									{% endif %}
-										<span class="badge bg-light" style="color: #212529">{{ event.eventStartDate ? event.eventStartDate|date('j l, F', "Europe/Paris") : '' }}</span>
+									<span class="badge bg-light" style="color: #212529">{{ event.eventStartDate ? event.eventStartDate|date('j l, F', "Europe/Paris") : '' }}</span>
 								</div>
 								<div class="actions">
 									<a href="#">•••</a>
