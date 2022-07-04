@@ -34,7 +34,35 @@
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 	</head>
-	<body class="theme_light">
+
+	{% set classGridContainer = "big" %}
+	{% set classAside = "big-sidebar" %}
+	{% set theme = "theme_light" %}
+	{% for ui in uidata.getUiData %}
+
+		{% if ui.uiKey == "theme" %}
+			{% if ui.uiValue == "light" %}
+				{% set theme = "theme_light" %}
+			{% endif %}
+			{% if ui.uiValue == "dark" %}
+				{% set theme = "theme_dark" %}
+			{% endif %}
+		{% endif %}
+
+		{# Sidebar #}
+		{% if ui.uiKey == "sidebar" %}
+			{% if ui.uiValue == "small" %}
+				{% set classGridContainer = "mini" %}
+				{% set classAside = "mini-sidebar" %}
+			{% endif %}
+			{% if ui.uiValue == "big" %}
+				{% set classGridContainer = "big" %}
+				{% set classAside = "big-sidebar" %}
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+
+	<body>
 
 		<input type="text" id="userID" value="{{app.user.id}}" style="display: none;" disabled>
 		<input type="text" id="username" value="{{app.user.pseudo}}" style="display: none;" disabled>
@@ -42,8 +70,9 @@
 		{# {{dump(app.user)}} #}
 		{#{{ url(app.request.attributes.get('_route')) }}#}
 
-			<div id="grid_container" class="big"> {% if app.user %}
-				<aside id="sidebar" class="big-sidebar">
+
+			<div id="grid_container" class="{{classGridContainer}}"> {% if app.user %}
+				<aside id="sidebar" class="{{classAside}}">
 					<span id="sidebar_btn">
 						<span class="iconify" data-icon="fe:arrow-left"></span>
 					</span>
@@ -150,10 +179,14 @@
 									</li>
 
 								{% else %}
-									<ul>
-										<li><ahref="{{path('app_team_index')}}"><span class="iconify" data-icon="fluent:people-team-16-regular"></span>Teams</a></li>
-										<li><ahref="{{path('app_player_index')}}"><span class="iconify" data-icon="ant-design:user-outlined"></span>Players</a></li>
-									</ul>
+									<li>
+										<a href="{{path('app_team_index')}}">
+											<span class="iconify" data-icon="fluent:people-team-16-regular"></span>Teams</a>
+									</li>
+									<li>
+										<a href="{{path('app_player_index')}}">
+											<span class="iconify" data-icon="ant-design:user-outlined"></span>Players</a>
+									</li>
 								{% endif %}
 								{% if is_granted('ROLE_ADMIN') %}
 									<li>
@@ -189,12 +222,12 @@
 					</div>
 				</aside>
 			{% endif %}
-			<section id="content">
+			<section id="content" class="{{theme}}">
 				<span class="badge bg-warning text-dark">BETA v4.1</span>
 				<div class="top">
 					<div class="left">
 						{% if app.user %}
-							{% if app.request.get('id') is defined and app.request.get('id') is not null and 'admin/overlay/' in app.request.uri %}
+							{% if app.request.get('id') is defined and app.request.get('id') is not null and 'admin/overlay/' in app.request.uri and overlay is defined %}
 								<span>Hello
 									<strong>{{ app.user.userFirstName != null ? app.user.userFirstName : app.user.pseudo }}
 										👋</strong>
@@ -216,7 +249,7 @@
 							<a href="#" data-id="langage">
 								<span class="iconify" data-icon="bi:translate"></span>
 							</a>
-							<a href="#" data-id="theme">
+							<a href="#" data-id="theme" data-effect="{{theme == "theme_light" ? "light" : "dark"}}">
 								<span class="iconify" data-icon="fluent:weather-moon-48-filled"></span>
 							</a>
 							<a href="#" data-id="tutorials">
@@ -230,10 +263,10 @@
 			</section>
 
 			{% if app.user %}
-				{% if app.request.get('id') is defined and app.request.get('id') is not null and 'admin/overlay/' in app.request.uri %}
+				{% if app.request.get('id') is defined and app.request.get('id') is not null and 'admin/overlay/' in app.request.uri and widgets is defined %}
 					{{ include('components/rightbar_widgets.html.twig') }}
 
-				{% elseif events is defined %}
+				{% elseif event_service.getAllEvents is defined %}
 					{{ include('components/rightbar_agenda.html.twig') }}
 				{% endif %}
 			{% endif %}
