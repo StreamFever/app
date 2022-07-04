@@ -30,11 +30,11 @@ class PlayerType extends AbstractType
             'placeholder' => 'hereYourPlaceHolder'
         ),
         ))
-            ->add('playerUplayTag',  null, array(
-        'attr' => array(
-            'placeholder' => 'hereYourPlaceHolder'
-        ),
-        ))
+        //     ->add('playerUplayTag',  null, array(
+        // 'attr' => array(
+        //     'placeholder' => 'hereYourPlaceHolder'
+        // ),
+        // ))
             ->add('playerAtTwitter',  null, array(
         'attr' => array(
             'placeholder' => 'hereYourPlaceHolder'
