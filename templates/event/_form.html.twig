@@ -80,6 +80,16 @@
     'id': 'eventStartDate'
         }) }}
 					</div>
+					<div class="form-floating mb-3">
+						{{ form_widget(form.eventFormat, {
+            'attr': {'class': 'form-select'},
+            'id': "eventFormat",
+            }) }}
+						{{ form_label(form.eventFormat, null, {
+        'label': 'Sélectionnez un format',
+        'id': 'eventFormat'
+            }) }}
+					</div>
 				</div>
 				<div class="col">
 					<div class="form-floating mb-3">
@@ -102,9 +112,7 @@
     'id': 'eventEndDate'
         }) }}
 					</div>
-				</div>
-			</div>
-			<div class="form-floating mb-3">
+                    <div class="form-floating mb-3">
 				{{ form_widget(form.eventSlots, {
         'attr': {'class': 'form-control'},
         'id': "eventSlots",
@@ -113,6 +121,8 @@
     'label': 'Définir le nombre de participants',
     'id': 'eventSlots'
         }) }}
+			</div>
+				</div>
 			</div>
 		</div>
 
