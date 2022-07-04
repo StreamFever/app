@@ -32,7 +32,7 @@
 				<td>{{ player.id }}</td>
 			{% endif %}
 			<td>
-				{% if player.playerIdOBSNinja %}
+				{% if player.playerIdOBSNinja is defined %}
 					{{player.playerIdOBSNinja}}
 				{% endif %}
 			</td>

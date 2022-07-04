@@ -32,32 +32,16 @@
 
 <div class="input-grp">
 	<h3>Connexion aux jeux</h3>
-	<div class="row">
-		<div class="col">
-			<div class="form-floating mb-3">
-				{{ form_widget(form.playerUplay, {
-                'attr': {'class': 'form-control'},
-                'id': "playerUplay",
-                }) }}
-				{{ form_label(form.playerUplay, null, {
-            'label': 'Définissez le pseudo uplay',
-            'id': 'playerUplay'
-                }) }}
-			</div>
-		</div>
-		<div class="col">
-			<div class="form-floating mb-3">
-				{{ form_widget(form.playerUplayTag, {
-                    'attr': {'class': 'form-control'},
-                    'id': "playerUplayTag",
-                    }) }}
-				{{ form_label(form.playerUplayTag, null, {
-                'label': 'Définissez le tag Uplay',
-                'id': 'playerUplayTag'
-                    }) }}
-			</div>
-		</div>
-	</div>
+    <div class="form-floating mb-3">
+        {{ form_widget(form.playerUplay, {
+        'attr': {'class': 'form-control'},
+        'id': "playerUplay",
+        }) }}
+        {{ form_label(form.playerUplay, null, {
+    'label': 'Définissez le pseudo uplay',
+    'id': 'playerUplay'
+        }) }}
+    </div>
 </div>
 
 <div class="input-grp">
