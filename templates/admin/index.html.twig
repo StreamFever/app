@@ -4,17 +4,5 @@
 {% endblock %}
 
 {% block body %}
-	{# <iframe id="myvideo" crossorigin="https://youtube.com" width="1536" height="731" src="https://www.youtube.com/embed/u9foWyMSATM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-		<div id="videodom"></div>
-		<div class="controls">
-			<a id="playbtn">PLAY</a>
-			<a id="pausebtn">PAUSE</a>
-		</div>
-		<div class="results">
-			<div class="color-box" id="colorbox"></div>
-			<div class="color-value">RGB:<span id="colorrgb">rgb:(-,-,-)</span>
-				HEX:<span class="hex" id="colorhex">hex:#---</span>
-			</div>
-		</div> #}
-
+	{{ include('event/components/event_hub.html.twig') }}
 {% endblock %}
