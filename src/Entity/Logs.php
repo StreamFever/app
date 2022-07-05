@@ -38,6 +38,11 @@ class Logs
      */
     private $LogsText;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $logsOverlay;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +92,18 @@ class Logs
     public function setLogsText(string $LogsText): self
     {
         $this->LogsText = $LogsText;
+
+        return $this;
+    }
+
+    public function getLogsOverlay(): ?string
+    {
+        return $this->logsOverlay;
+    }
+
+    public function setLogsOverlay(string $logsOverlay): self
+    {
+        $this->logsOverlay = $logsOverlay;
 
         return $this;
     }
