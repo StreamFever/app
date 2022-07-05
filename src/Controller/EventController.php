@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
+use App\Service\FileUploader;
+
 /**
  * @Route("/admin/events")
  */
@@ -32,14 +34,22 @@ class EventController extends AbstractController
     /**
      * @Route("/new", name="app_event_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EventRepository $eventRepository, ManagerRegistry $doctrine): Response
+    public function new(Request $request, FileUploader $fileUploader, EventRepository $eventRepository, ManagerRegistry $doctrine): Response
     {
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $data = $form->getData();
+
+            /** @var UploadedFile $logoFile */
+            $logoFile = $form->get('eventLogo')->getData();
+            if ($logoFile) {
+                $logoFileName = $fileUploader->uploadLogo($logoFile);
+                $data->setEventLogo($logoFileName);
+            }
 
             if ($data->getEventEdition() == "campus_cup" && $data->getEventLogo() == null) {
                 $data->setEventLogo("https://cdn.artaic.fr/images/CampusCupLogo.png");
@@ -73,12 +83,22 @@ class EventController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_event_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Event $event, EventRepository $eventRepository): Response
+    public function edit(Request $request, FileUploader $fileUploader, Event $event, EventRepository $eventRepository): Response
     {
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $data = $form->getData();
+
+            /** @var UploadedFile $logoFile */
+            $logoFile = $form->get('eventLogo')->getData();
+            if ($logoFile) {
+                $logoFileName = $fileUploader->uploadLogo($logoFile);
+                $data->setEventLogo($logoFileName);
+            }
+
             $eventRepository->add($event);
             return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
         }

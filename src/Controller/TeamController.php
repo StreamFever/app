@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Service\FileUploader;
+
 /**
  * @Route("/admin/teams")
  */
@@ -28,13 +30,22 @@ class TeamController extends AbstractController
     /**
      * @Route("/new", name="app_team_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, TeamRepository $teamRepository): Response
+    public function new(Request $request, FileUploader $fileUploader, TeamRepository $teamRepository): Response
     {
         $team = new Team();
         $form = $this->createForm(TeamType::class, $team);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            /** @var UploadedFile $logoFile */
+            $logoFile = $form->get('teamLogo')->getData();
+            if ($logoFile) {
+                $logoFileName = $fileUploader->uploadLogo($logoFile);
+                $data->setTeamLogo($logoFileName);
+            }
+
             $teamRepository->add($team);
             return $this->redirectToRoute('app_team_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -58,12 +69,21 @@ class TeamController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_team_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Team $team, TeamRepository $teamRepository): Response
+    public function edit(Request $request, FileUploader $fileUploader, Team $team, TeamRepository $teamRepository): Response
     {
         $form = $this->createForm(TeamType::class, $team);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            /** @var UploadedFile $logoFile */
+            $logoFile = $form->get('teamLogo')->getData();
+            if ($logoFile) {
+                $logoFileName = $fileUploader->uploadLogo($logoFile);
+                $data->setTeamLogo($logoFileName);
+            }
+            
             $teamRepository->add($team);
             return $this->redirectToRoute('app_team_index', [], Response::HTTP_SEE_OTHER);
         }

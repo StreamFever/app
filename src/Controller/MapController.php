@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Service\FileUploader;
+
 /**
  * @Route("/admin/maps")
  */
@@ -28,13 +30,23 @@ class MapController extends AbstractController
     /**
      * @Route("/new", name="app_map_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, MapRepository $mapRepository): Response
+    public function new(Request $request, FileUploader $fileUploader, MapRepository $mapRepository): Response
     {
         $map = new Map();
         $form = $this->createForm(MapType::class, $map);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $data = $form->getData();
+
+            /** @var UploadedFile $logoFile */
+            $logoFile = $form->get('mapImg')->getData();
+            if ($logoFile) {
+                $logoFileName = $fileUploader->uploadMap($logoFile);
+                $data->setEventLogo($logoFileName);
+            }
+
             $mapRepository->add($map);
             return $this->redirectToRoute('app_map_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -58,12 +70,22 @@ class MapController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_map_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Map $map, MapRepository $mapRepository): Response
+    public function edit(Request $request, FileUploader $fileUploader, Map $map, MapRepository $mapRepository): Response
     {
         $form = $this->createForm(MapType::class, $map);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $data = $form->getData();
+
+            /** @var UploadedFile $logoFile */
+            $logoFile = $form->get('mapImg')->getData();
+            if ($logoFile) {
+                $logoFileName = $fileUploader->uploadMap($logoFile);
+                $data->setMapImg($logoFileName);
+            }
+
             $mapRepository->add($map);
             return $this->redirectToRoute('app_map_index', [], Response::HTTP_SEE_OTHER);
         }

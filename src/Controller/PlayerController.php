@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Service\FileUploader;
+
 /**
  * @Route("/admin/players")
  */
@@ -29,13 +31,22 @@ class PlayerController extends AbstractController
     /**
      * @Route("/new", name="app_player_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, PlayerRepository $playerRepository): Response
+    public function new(Request $request, FileUploader $fileUploader, PlayerRepository $playerRepository): Response
     {
         $player = new Player();
         $form = $this->createForm(PlayerType::class, $player);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            /** @var UploadedFile $logoFile */
+            $logoFile = $form->get('playerAvatar')->getData();
+            if ($logoFile) {
+                $logoFileName = $fileUploader->uploadAvatar($logoFile);
+                $data->setPlayerAvatar($logoFileName);
+            }
+
             $playerRepository->add($player);
             return $this->redirectToRoute('app_player_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -59,12 +70,21 @@ class PlayerController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_player_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Player $player, PlayerRepository $playerRepository): Response
+    public function edit(Request $request, FileUploader $fileUploader, Player $player, PlayerRepository $playerRepository): Response
     {
         $form = $this->createForm(PlayerType::class, $player);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            /** @var UploadedFile $logoFile */
+            $logoFile = $form->get('playerAvatar')->getData();
+            if ($logoFile) {
+                $logoFileName = $fileUploader->uploadAvatar($logoFile);
+                $data->setPlayerAvatar($logoFileName);
+            }
+
             $playerRepository->add($player);
             return $this->redirectToRoute('app_player_index', [], Response::HTTP_SEE_OTHER);
         }
