@@ -25,7 +25,8 @@
 				{% set roles = user.roles %}
 				<tr>
 					<td>{{ user.id }}</td>
-					<td><img src="{{ user.avatarURL != null ? user.avatarURL : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Avatar de {{ user.username }}" style="width:15%;"></td>
+					<td>
+							<a href="{{ user.avatarURL }}" target="_blank"><img style="width: 40%" src="{{ asset('uploads/avatars/' ~ user.avatarURL) }}" alt="Logo de {{ user.pseudo }}"></a>
 					<td>{{ user.email }}</td>
 					<td>{{ user.username }}</td>
 					<td>

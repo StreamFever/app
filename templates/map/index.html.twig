@@ -24,7 +24,7 @@
 						<td>{{ map.id }}</td>
 					{% endif %}
 					<td>{{ map.mapName }}</td>
-					<td>{{ map.mapImg }}</td>
+					<td><a href="{{ map.mapImg }}" target="_blank"><img style="width: 40%" src="{{ asset('uploads/maps/' ~ map.mapImg) }}" alt="Logo de {{ map.mapName }}"></a></td>
 					<td>
 						<a class="btn btn-info" href="{{ path('app_map_show', {'id': map.id}) }}">
 							<span class="iconify" data-icon="carbon:view-filled"></span>Détails</a>

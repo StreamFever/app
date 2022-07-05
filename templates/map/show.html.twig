@@ -20,8 +20,7 @@
 			</tr>
 			<tr>
 				<th>MapImg</th>
-				<td>{{ map.mapImg }}</td>
-				<td><img style="width: 100px; height: 100px;" src="{{ map.mapImg is defined ? map.mapImg : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Image de {{ map.mapName }} - SA Prod"></td>
+				<td><a href="{{ map.mapImg }}" target="_blank"><img style="width: 40%" src="{{ asset('uploads/maps/' ~ map.mapImg) }}" alt="Logo de {{ map.mapName }}"></a></td>
 			</tr>
 		</tbody>
 	</table>

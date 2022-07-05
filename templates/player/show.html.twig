@@ -8,11 +8,11 @@
 
 	<table class="table">
 		<tbody>
-		{% if is_granted('ROLE_ADMIN') %}
-			<tr>
-				<th>Id</th>
-				<td>{{ player.id }}</td>
-			</tr>
+			{% if is_granted('ROLE_ADMIN') %}
+				<tr>
+					<th>Id</th>
+					<td>{{ player.id }}</td>
+				</tr>
 			{% endif %}
 			<tr>
 				<th>Id OBS NINJA</th>
@@ -28,7 +28,9 @@
 			</tr>
 			<tr>
 				<th>PlayerAvatar</th>
-				<td><img style="width: 100px; height: 100px;" src="{{ player.playerAvatar is defined ? player.playerAvatar : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Avatar de {{ player.playerName }} - SA Prod"></td>
+				<td>
+					<a href="{{ player.playerAvatar }}" target="_blank"><img style="width: 40%" src="{{ asset('uploads/avatars/' ~ player.playerAvatar) }}" alt="Logo de {{ player.playerName }}"></a>
+				</td>
 			</tr>
 			<tr>
 				<th>Uplay</th>

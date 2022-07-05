@@ -36,7 +36,9 @@
 			</tr>
 			<tr>
 				<th>Avatar</th>
-				<td><img style="width: 100px; height: 100px;" src="{{ user.avatarURL is defined ? user.avatarURL : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Avatar de {{ user.username }} - SA Prod"></td>
+				<td>
+					<a href="{{ user.avatarURL }}" target="_blank"><img style="width: 40%" src="{{ asset('uploads/avatars/' ~ user.avatarURL) }}" alt="Logo de {{ user.pseudo }}"></a>
+				</td>
 			</tr>
 		</tbody>
 	</table>
@@ -46,8 +48,8 @@
 		Retour à la liste</a>
 
 	{# <a href="{{ path('app_user_edit', {'id': team.id}) }}">
-							<span class="iconify" data-icon="akar-icons:edit"></span>
-							Editer</a> #}
+									<span class="iconify" data-icon="akar-icons:edit"></span>
+									Editer</a> #}
 
 	{{ include('user/_delete_form.html.twig') }}
 {% endblock %}

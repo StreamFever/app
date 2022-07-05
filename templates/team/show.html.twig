@@ -18,7 +18,9 @@
 			</tr>
 			<tr>
 				<th>TeamLogo</th>
-				<td>{{ team.teamLogo }}</td>
+				<td>
+					<a href="{{ team.teamLogo }}" target="_blank"><img style="width: 40%" src="{{ asset('uploads/logos/' ~ team.teamLogo) }}" alt="Logo de {{ team.teamName }}"></a>
+				</td>
 			</tr>
 		</tbody>
 	</table>

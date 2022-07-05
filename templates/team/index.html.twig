@@ -24,7 +24,9 @@
 						<td>{{ team.id }}</td>
 					{% endif %}
 					<td>{{ team.teamName }}</td>
-					<td>{{ team.teamLogo }}</td>
+					<td>
+						<a href="{{ team.teamLogo }}" target="_blank"><img style="width: 40%" src="{{ asset('uploads/logos/' ~ team.teamLogo) }}" alt="Logo de {{ team.teamName }}"></a>
+					</td>
 					<td>
 						<a class="btn btn-info" href="{{ path('app_team_show', {'id': team.id}) }}">
 							<span class="iconify" data-icon="carbon:view-filled"></span>Détails</a>
