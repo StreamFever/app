@@ -11,9 +11,11 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class EventType extends AbstractType
 {
@@ -37,11 +39,29 @@ class EventType extends AbstractType
                    'placeholder' => 'hereYourPlaceHolder'
                )
           ))
-            ->add('eventLogo',  null, array(
-                'attr' => array(
-                    'placeholder' => 'hereYourPlaceHolder'
-                )
-           ))
+            ->add('eventLogo', FileType::class, [
+                'label' => 'Logo event',
+
+                // unmapped means that this field is not associated to any entity property
+                'mapped' => false,
+
+                // make it optional so you don't have to re-upload the PDF file
+                // every time you edit the Product details
+                'required' => false,
+
+                // unmapped fields can't define their validation using annotations
+                // in the associated entity, so you can use the PHP constraint classes
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpeg',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid PNG or JPEG image',
+                    ])
+                ],
+            ])
             ->add('eventHashtag',  null, array(
                 'attr' => array(
                     'placeholder' => 'hereYourPlaceHolder'
