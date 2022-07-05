@@ -79,7 +79,7 @@
 					<div class="profile">
 						<div class="left">
 							<div class="img">
-								<img src="{% if app.user.avatarURL %} {{app.user.avatarURL}} {% else %} https://cdn.artaic.fr/images/CampusCupLogo.png {% endif %}" alt="Photo de profil">
+								<img src="{% if app.user.avatarURL %} {{ asset('uploads/avatars/' ~ app.user.avatarURL) }} {% else %} https://cdn.artaic.fr/images/CampusCupLogo.png {% endif %}" alt="Photo de profil">
 							</div>
 						</div>
 						<div class="right">
