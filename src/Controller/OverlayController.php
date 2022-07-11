@@ -73,6 +73,7 @@ class OverlayController extends AbstractController
      */
     public function show(Overlay $overlay, WidgetsRepository $widgetsRepository, MetaRepository $metaRepository, int $id): Response
     {
+        // $this->security->overlayAccess($id, $this->getUser()->getId());
         $widgets = $widgetsRepository->findAllByOverlay($id);
         $metas = $metaRepository->findAllByOverlay($id);
         return $this->render('overlay/panel.html.twig', [
