@@ -60,6 +60,21 @@ class GameRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findFirst()
+    {
+        return $this->createQueryBuilder('g')
+            ->join('g.userId', 'u')
+            ->where('g.overlayId IS NOT NULL AND gs.statusName = :status')
+            ->leftJoin('g.gameStatus', 'gs')
+            ->setParameters(['status' => 'current'])
+            ->orderBy('g.id', 'ASC')
+            ->addOrderBy('g.gameStatus')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function findFirstCurrentByUserId($id_user)
     {
         return $this->createQueryBuilder('g')

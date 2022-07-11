@@ -56,7 +56,7 @@ class EventRepository extends ServiceEntityRepository
     {
         $date = new \DateTime("NOW");
         return $this->createQueryBuilder('e')
-            ->where('e.eventStartDate > :date')
+            ->where('e.eventStartDate > :date AND e.overlayId IS NOT NULL')
             ->orderBy('e.eventStartDate', 'ASC')
             ->setParameter(':date', $date)    
             ->setMaxResults(1)

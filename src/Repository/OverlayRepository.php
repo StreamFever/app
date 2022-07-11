@@ -93,6 +93,9 @@ class OverlayRepository extends ServiceEntityRepository
     }
 
     // Même utilité que celle au dessus sauf qu'on veut que les 2 derniers
+    /*
+    * @ORM\Column(type="array", nullable=true)
+    */
     public function findLatestOverlaysWhereIdUser($user_id)
     {
         return $this->createQueryBuilder('o')
