@@ -3,6 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Meta;
+use App\Entity\Widgets;
+
+use App\Repository\WidgetsRepository;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

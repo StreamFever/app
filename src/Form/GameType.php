@@ -7,6 +7,10 @@ use App\Entity\Team;
 use App\Entity\Map;
 use App\Entity\Status;
 use App\Entity\Format;
+use App\Entity\Overlay;
+use App\Repository\OverlayRepository;
+
+use Symfony\Component\Security\Core\Security;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -16,6 +20,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GameType extends AbstractType
 {
+
+    public function __construct(Security $security) {
+        $this->security = $security;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -73,6 +82,19 @@ class GameType extends AbstractType
                 )
            ))
            ->add('userId')
+           ->add('overlayId', EntityType::class, 
+           [
+               'class' => Overlay::class, 
+               'choice_label' => 'overlay_name',
+               'query_builder' => function (OverlayRepository $overlayrepository) {
+                   return $overlayrepository->createQueryBuilder('o')
+                   ->join('o.OverlayAccess', 'u1')
+                   ->join('o.OverlayOwner', 'u2')
+                   ->where('u1.id = :user_id OR u2.id = :user_id')
+                   ->setParameter('user_id', $this->security->getUser()->getId())
+                   ->orderBy('o.id', 'ASC');
+               },
+               ])
         ;
     }
 

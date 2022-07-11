@@ -6,6 +6,9 @@ use App\Entity\Event;
 use App\Entity\Edition;
 use App\Entity\Sponsor;
 
+use App\Entity\Overlay;
+use App\Repository\OverlayRepository;
+
 use Symfony\Component\Security\Core\Security;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -105,6 +108,19 @@ class EventType extends AbstractType
                 'placeholder' => 'hereYourPlaceHolder'
             )
        ))
+       ->add('overlayId', EntityType::class, 
+       [
+           'class' => Overlay::class, 
+           'choice_label' => 'overlay_name',
+           'query_builder' => function (OverlayRepository $overlayrepository) {
+               return $overlayrepository->createQueryBuilder('o')
+               ->join('o.OverlayAccess', 'u1')
+               ->join('o.OverlayOwner', 'u2')
+               ->where('u1.id = :user_id OR u2.id = :user_id')
+               ->setParameter('user_id', $this->security->getUser()->getId())
+               ->orderBy('o.id', 'ASC');
+           },
+           ])
         ;
     }
 

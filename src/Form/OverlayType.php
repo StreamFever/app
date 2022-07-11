@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\Overlay;
 use App\Entity\User;
 
+use App\Repository\UserRepository;
+
 use Symfony\Component\Security\Core\Security;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -33,7 +35,20 @@ class OverlayType extends AbstractType
                     'placeholder' => 'hereYourPlaceHolder'
                 )
             ))
-            ->add('OverlayAccess')
+            ->add('OverlayAccess', EntityType::class, ['class' => User::class,
+            'choice_label' => 'pseudo',
+            'multiple' => true,
+            'query_builder' => function (UserRepository $userrepository) {
+                return $userrepository->createQueryBuilder('u')
+                    ->where('u.id != :user_id')
+                    ->setParameter('user_id', $this->security->getUser()->getId())
+                    ->orderBy('u.pseudo', 'ASC');
+            },
+            'label' => 'Pseudo'], array(
+                'attr' => array(
+                    'placeholder' => 'hereYourPlaceHolder'
+                )
+           ))
             ->add('OverlayOwner');
         ;
     }
