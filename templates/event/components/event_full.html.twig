@@ -16,7 +16,7 @@
 			{% endif %}
 		</div>
 		<div class="logo">
-			<img src="{{ event.eventLogo != null ? event.eventLogo : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Logo de {{ event.eventName }}">
+			<img src="{{ event.eventLogo != null ? asset('uploads/logos/' ~ event.eventLogo) : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Logo de {{ event.eventName }}">
 		</div>
 		<div class="details">
 			<span>
