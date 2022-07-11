@@ -18,6 +18,7 @@
 			<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css">
 			<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" integrity="sha512-mR/b5Y7FRsKqrYZou7uysnOdCIJib/7r5QeJMFvLNHNhtye3xJp1TdJVPLtetkukFn227nKpXD9OjUc09lx97Q==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -30,6 +31,7 @@
 			<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 			<script src="https://player.twitch.tv/js/embed/v1.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js" integrity="sha512-FHZVRMUW9FsXobt+ONiix6Z0tIkxvQfxtCSirkKc5Sb4TKHmqq1dZa8DphF0XqKb3ldLu/wgMa8mT6uXiLlRlw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 			<script></script>
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
@@ -228,11 +230,11 @@
 					<div class="left">
 						{% if app.user %}
 							{% if app.request.get('id') is defined and app.request.get('id') is not null and 'admin/overlay/' in app.request.uri and overlay is defined %}
-								<span>Hello
+								<span>{% trans into 'fr_FR' %}Hello{% endtrans %}
 									<strong>{{ app.user.userFirstName != null ? app.user.userFirstName : app.user.pseudo }}
 										👋</strong>
 								</span>
-								<p>Panel of
+								<p>{% trans into 'fr_FR' %}Panel of{% endtrans %}
 									{{overlay.OverlayOwner.pseudo}}</p>
 
 							{% else %}
@@ -240,7 +242,7 @@
 									<strong>{{ app.user.userFirstName != null ? app.user.userFirstName : app.user.pseudo }}
 										👋</strong>
 								</span>
-								<p>Welcome on your dashboard</p>
+								<p>{% trans into 'fr_FR' %}Welcome on your dashboard{% endtrans %}</p>
 							{% endif %}
 						{% endif %}
 					</div>
