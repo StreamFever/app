@@ -4,8 +4,8 @@
 export const getCheckedValueIntoRadio = (dataArray, list) => {
  list = list.slice()
  for (let i = 0; i < dataArray.length; i++) {
-  // TODO: Si l'input radio widgetIdAlpha est sur widgetIdAlpha ... sinon si il est sur widgetIdBeta ...
-  let nodeList = document.getElementsByName(dataArray[i].WidgetIdAlpha);
+  // TODO: Si l'input radio WidgetId est sur WidgetId ... sinon si il est sur WidgetId.libWidgetId ...
+  let nodeList = document.getElementsByName(dataArray[i].WidgetId);
 
   for (let i = 0; i < nodeList.length; i++) {
    // Liste l'input checked par chaque radio
