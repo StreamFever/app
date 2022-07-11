@@ -128,6 +128,7 @@ class WidgetsController extends AbstractController
                 
                 // relates this product to the category
                 $widget->addMeta($meta);
+                $widget->addMeta($meta2);
 
                 $entityManager = $doctrine->getManager();
                 $entityManager->persist($meta);
