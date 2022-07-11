@@ -122,6 +122,21 @@
 	</div>
 </div>
 
+<div class="input-grp-center">
+	<h3>Associer à un overlay</h3>
+	<p>Si vous voulez associer ce match à un overlay que vous possédez ou que vous gérez, vous devez donc sélectionner l'overlay parmi la liste ci-dessous.</p>
+	<div class="form-floating mb-3">
+		{{ form_widget(form.overlayId, {
+			        'attr': {'class': 'form-select'},
+			        'id': "overlayId",
+			        }) }}
+		{{ form_label(form.overlayId, null, {
+			    'label': 'Associer à un overlay',
+			    'id': 'overlayId'
+			        }) }}
+	</div>
+</div>
+
 {{ form_label(form.userId, null, {
     'label_attr': {'class': 'display_none'},
     }) }}
