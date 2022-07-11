@@ -89,3 +89,8 @@ if (window.location.pathname == "/admin/user/new") {
   }
  })
 }
+
+
+$(document).ready(function() {
+ $('.selectpicker').multiselect();
+});
