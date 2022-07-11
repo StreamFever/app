@@ -69,6 +69,11 @@ class Game
      */
     private $userId;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Overlay::class, inversedBy="games")
+     */
+    private $overlayId;
+
     public function __construct()
     {
         $this->gameIdMaps = new ArrayCollection();
@@ -195,6 +200,18 @@ class Game
     public function setUserId(?User $userId): self
     {
         $this->userId = $userId;
+
+        return $this;
+    }
+
+    public function getOverlayId(): ?Overlay
+    {
+        return $this->overlayId;
+    }
+
+    public function setOverlayId(?Overlay $overlayId): self
+    {
+        $this->overlayId = $overlayId;
 
         return $this;
     }

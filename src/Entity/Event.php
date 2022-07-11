@@ -81,6 +81,11 @@ class Event
      */
     private $eventFormat;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Overlay::class, inversedBy="events")
+     */
+    private $overlayId;
+
     public function __construct()
     {
         $this->eventIdSponsor = new ArrayCollection();
@@ -256,6 +261,18 @@ class Event
     public function setEventFormat(?EventFormat $eventFormat): self
     {
         $this->eventFormat = $eventFormat;
+
+        return $this;
+    }
+
+    public function getOverlayId(): ?Overlay
+    {
+        return $this->overlayId;
+    }
+
+    public function setOverlayId(?Overlay $overlayId): self
+    {
+        $this->overlayId = $overlayId;
 
         return $this;
     }
