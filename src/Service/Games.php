@@ -20,12 +20,12 @@ class Games
  public function getOneCurrentGame(): Array
  {
    $currentUser = $this->security->getUser();
-   return $this->GameRepository->findFirstCurrentByUserId($currentUser->getId());
+   return $this->GameRepository->findFirst();
  }
 
  public function getOneNextMatch(): Array
  {
    $currentUser = $this->security->getUser();
-   return $this->GameRepository->findFirstNextByUserId($currentUser->getId());
+   return $this->GameRepository->findFirst();
  }
 }

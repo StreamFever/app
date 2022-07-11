@@ -20,8 +20,8 @@ class Ui
 //  @ORM\Column(type="array", nullable=true)
  public function getUiData(): Array
  {
-   $currentUser = $this->security->getUser();
+  $currentUser = $this->security->getUser();
 
-   return $this->UiRepository->findAllByIdUser($currentUser->getId());
+  return $this->UiRepository->findAllByIdUser($currentUser->getId());
  }
 }
