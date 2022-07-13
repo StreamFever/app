@@ -143,6 +143,9 @@ class WidgetsController extends AbstractController
             } else {
                 return $this->redirectToRoute('app_overlay_index', [], Response::HTTP_SEE_OTHER);
             }
+
+            $this->addFlash('success', 'Le widget a bien été crée !');
+
         }
 
         return $this->renderForm('overlay/widgets/new.html.twig', [
@@ -156,6 +159,8 @@ class WidgetsController extends AbstractController
      */
     public function edit(Request $request, Widgets $widget, WidgetsRepository $widgetsRepository, ManagerRegistry $doctrine): Response
     {
+        $this->denyAccessUnlessGranted('WIDGET_EDIT', $widget);
+
         $form = $this->createForm(WidgetsType::class, $widget);
         $form->handleRequest($request);
         $idOverlay = $request->get('id_overlay');
@@ -275,6 +280,8 @@ class WidgetsController extends AbstractController
             } else {
                 return $this->redirectToRoute('app_overlay_index', [], Response::HTTP_SEE_OTHER);
             }
+
+            $this->addFlash('success', 'Le widget a bien été modifié !');
         }
 
         return $this->renderForm('overlay/widgets/edit.html.twig', [
@@ -288,6 +295,8 @@ class WidgetsController extends AbstractController
      */
     public function delete(Request $request, Widgets $widget, WidgetsRepository $widgetsRepository): Response
     {
+        $this->denyAccessUnlessGranted('WIDGET_DELETE', $widget);
+
         if ($this->isCsrfTokenValid('delete'.$widget->getId(), $request->request->get('_token'))) {
             $widgetsRepository->remove($widget);
         }

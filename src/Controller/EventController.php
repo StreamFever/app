@@ -59,6 +59,8 @@ class EventController extends AbstractController
             } else {
             $eventRepository->add($event);
             }
+
+            $this->addFlash('success', 'L\'événement a bien été crée !');
             return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -85,6 +87,7 @@ class EventController extends AbstractController
      */
     public function edit(Request $request, FileUploader $fileUploader, Event $event, EventRepository $eventRepository): Response
     {
+        $this->denyAccessUnlessGranted('EVENT_EDIT', $event);
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
@@ -100,7 +103,16 @@ class EventController extends AbstractController
             }
 
             $eventRepository->add($event);
-            return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
+
+            $this->addFlash('success', 'L\'événement a bien été modifié !');
+
+            if ($request->query->get('id_overlay')) {
+                return $this->redirectToRoute('app_overlay_show', [
+                    'id' => $request->query->get('id_overlay'),
+                ], Response::HTTP_SEE_OTHER);
+            } else {
+                return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
+            }
         }
 
         return $this->renderForm('event/edit.html.twig', [
@@ -115,6 +127,7 @@ class EventController extends AbstractController
      */
     public function delete(Request $request, Event $event, EventRepository $eventRepository): Response
     {
+        $this->denyAccessUnlessGranted('EVENT_DELETE', $event);
         if ($this->isCsrfTokenValid('delete'.$event->getId(), $request->request->get('_token'))) {
             $eventRepository->remove($event);
         }

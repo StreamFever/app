@@ -52,6 +52,9 @@ class UserController extends AbstractController
             }
 
             $userRepository->add($user);
+
+            $this->addFlash('success', 'L\'utilisateur a bien été crée !');
+
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -92,6 +95,9 @@ class UserController extends AbstractController
             }
             
             $userRepository->add($user);
+
+            $this->addFlash('success', 'L\'utilisateur a bien été modifié !');
+
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 

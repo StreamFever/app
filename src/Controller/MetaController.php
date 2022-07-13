@@ -44,6 +44,8 @@ class MetaController extends AbstractController
             } else {
                 return $this->redirectToRoute('app_overlay_index', [], Response::HTTP_SEE_OTHER);
             }
+
+            $this->addFlash('success', 'La métadonnée a bien été créée !');
         }
 
         return $this->renderForm('overlay/meta/new.html.twig', [
@@ -71,6 +73,9 @@ class MetaController extends AbstractController
         $form->handleRequest($request);
         $idOverlay = $request->get('id_overlay');
 
+        $this->denyAccessUnlessGranted('META_EDIT', $metum);
+
+
         if ($form->isSubmitted() && $form->isValid()) {
             $metaRepository->add($metum);
             if ($idOverlay) {
@@ -80,6 +85,9 @@ class MetaController extends AbstractController
             } else {
                 return $this->redirectToRoute('app_overlay_index', [], Response::HTTP_SEE_OTHER);
             }
+
+            $this->addFlash('success', 'La métadonnée a bien été modifiée !');
+
         }
 
         return $this->renderForm('overlay/meta/edit.html.twig', [
@@ -93,6 +101,8 @@ class MetaController extends AbstractController
      */
     public function delete(Request $request, Meta $metum, MetaRepository $metaRepository): Response
     {
+        $this->denyAccessUnlessGranted('META_DELETE', $metum);
+
         if ($this->isCsrfTokenValid('delete'.$metum->getId(), $request->request->get('_token'))) {
             $metaRepository->remove($metum);
         }

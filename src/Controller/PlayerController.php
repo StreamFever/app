@@ -48,6 +48,9 @@ class PlayerController extends AbstractController
             }
 
             $playerRepository->add($player);
+
+            $this->addFlash('success', 'Le joueur a bien été crée !');
+
             return $this->redirectToRoute('app_player_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -86,6 +89,9 @@ class PlayerController extends AbstractController
             }
 
             $playerRepository->add($player);
+
+            $this->addFlash('success', 'Le joueur a bien été modifié !');
+
             return $this->redirectToRoute('app_player_index', [], Response::HTTP_SEE_OTHER);
         }
 

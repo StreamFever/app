@@ -36,6 +36,9 @@ class GameController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $gameRepository->add($game);
+
+            $this->addFlash('success', 'Le match a bien été créée !');
+
             return $this->redirectToRoute('app_game_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -60,12 +63,22 @@ class GameController extends AbstractController
      */
     public function edit(Request $request, Game $game, GameRepository $gameRepository): Response
     {
+        $this->denyAccessUnlessGranted('GAME_EDIT', $game);
         $form = $this->createForm(GameType::class, $game);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $gameRepository->add($game);
-            return $this->redirectToRoute('app_game_index', [], Response::HTTP_SEE_OTHER);
+
+            $this->addFlash('success', 'Le match a bien été modifié !');
+
+            if ($request->query->get('id_overlay')) {
+                return $this->redirectToRoute('app_overlay_show', [
+                    'id' => $request->query->get('id_overlay'),
+                ], Response::HTTP_SEE_OTHER);
+            } else {
+                return $this->redirectToRoute('app_game_index', [], Response::HTTP_SEE_OTHER);
+            }
         }
 
         return $this->renderForm('game/edit.html.twig', [
@@ -79,6 +92,7 @@ class GameController extends AbstractController
      */
     public function delete(Request $request, Game $game, GameRepository $gameRepository): Response
     {
+        $this->denyAccessUnlessGranted('GAME_DELETE', $game);
         if ($this->isCsrfTokenValid('delete'.$game->getId(), $request->request->get('_token'))) {
             $gameRepository->remove($game);
         }

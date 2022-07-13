@@ -10,6 +10,8 @@ use App\Entity\Meta;
 
 use App\Form\OverlayType;
 
+use App\Service\WidgetsService;
+
 use App\Repository\GameRepository;
 use App\Repository\EventRepository;
 use App\Repository\UserRepository;
@@ -56,6 +58,8 @@ class OverlayController extends AbstractController
             $overlayRepository->add($overlay);
             
             return $this->redirectToRoute('app_overlay_index', [] , Response::HTTP_SEE_OTHER);
+
+            $this->addFlash('success', 'L\'overlay a bien été crée !');
        
         }
 
@@ -71,8 +75,9 @@ class OverlayController extends AbstractController
     /**
      * @Route("/admin/overlay/{id}", name="app_overlay_show", methods={"GET"})
      */
-    public function show(Overlay $overlay, WidgetsRepository $widgetsRepository, MetaRepository $metaRepository, int $id): Response
+    public function show(Overlay $overlay, WidgetsRepository $widgetsRepository, MetaRepository $metaRepository, WidgetsService $widgetsService, int $id): Response
     {
+        // $this->denyAccessUnlessGranted('OVERLAY_VIEW', $overlay);
         // $this->security->overlayAccess($id, $this->getUser()->getId());
         $widgets = $widgetsRepository->findAllByOverlay($id);
         $metas = $metaRepository->findAllByOverlay($id);
@@ -80,6 +85,7 @@ class OverlayController extends AbstractController
             'overlay' => $overlay,
             'widgets' => $widgets,
             'metas' => $metas,
+            'redmine_widgets' => $widgetsService->getJsonData('https://ticket.artaic.fr/projects/sa-prod/issues.json?set_filter=1&tracker_id=5')["issues"],
             'controller_name' => "Overlay"
         ]);
     }
@@ -90,12 +96,16 @@ class OverlayController extends AbstractController
      */
     public function edit(Request $request, Overlay $overlay, OverlayRepository $overlayRepository, ManagerRegistry $doctrine, WidgetsRepository $widgetsRepository, MetaRepository $metaRepository, int $id): Response
     {
+        $this->denyAccessUnlessGranted('OVERLAY_EDIT', $overlay);
         $form = $this->createForm(OverlayType::class, $overlay);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $overlayRepository->add($overlay);
+
+            $this->addFlash('success', 'L\'overlay a bien été modifié !');
+
             
             return $this->redirectToRoute('app_overlay_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -117,6 +127,7 @@ class OverlayController extends AbstractController
      */
     public function delete(Request $request, Overlay $overlay, OverlayRepository $overlayRepository): Response
     {
+        $this->denyAccessUnlessGranted('OVERLAY_DELETE', $overlay);
         if ($this->isCsrfTokenValid('delete'.$overlay->getId(), $request->request->get('_token'))) {
             $overlayRepository->remove($overlay);
         }

@@ -48,6 +48,7 @@ class MapController extends AbstractController
             }
 
             $mapRepository->add($map);
+            $this->addFlash('success', 'La carte a bien été créée !');
             return $this->redirectToRoute('app_map_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -87,6 +88,9 @@ class MapController extends AbstractController
             }
 
             $mapRepository->add($map);
+
+            $this->addFlash('success', 'La carte a bien été modifiée !');
+
             return $this->redirectToRoute('app_map_index', [], Response::HTTP_SEE_OTHER);
         }
 

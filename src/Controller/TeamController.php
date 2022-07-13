@@ -47,6 +47,9 @@ class TeamController extends AbstractController
             }
 
             $teamRepository->add($team);
+
+            $this->addFlash('success', 'L\'équipe a bien été créée !');
+
             return $this->redirectToRoute('app_team_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -85,6 +88,9 @@ class TeamController extends AbstractController
             }
             
             $teamRepository->add($team);
+
+            $this->addFlash('success', 'L\'équipe a bien été modifiée !');
+
             return $this->redirectToRoute('app_team_index', [], Response::HTTP_SEE_OTHER);
         }
 
