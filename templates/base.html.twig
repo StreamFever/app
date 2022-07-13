@@ -40,14 +40,18 @@
 	{% set classGridContainer = "big" %}
 	{% set classAside = "big-sidebar" %}
 	{% set theme = "theme_light" %}
+	{% set themeIziToast = "light" %}
+
 	{% for ui in uidata.getUiData %}
 
 		{% if ui.uiKey == "theme" %}
 			{% if ui.uiValue == "light" %}
 				{% set theme = "theme_light" %}
+				{% set themeIziToast = "light" %}
 			{% endif %}
 			{% if ui.uiValue == "dark" %}
 				{% set theme = "theme_dark" %}
+				{% set themeIziToast = "dark" %}
 			{% endif %}
 		{% endif %}
 
@@ -65,6 +69,12 @@
 	{% endfor %}
 
 	<body>
+
+		{% for message in app.flashes('success') %}
+			<script>
+				iziToast.show({title: 'Succès !', message: '{{ message }}', theme: '{{ themeIziToast }}', color: 'green'});
+			</script>
+		{% endfor %}
 
 		<input type="text" id="userID" value="{{app.user.id}}" style="display: none;" disabled>
 		<input type="text" id="username" value="{{app.user.pseudo}}" style="display: none;" disabled>
