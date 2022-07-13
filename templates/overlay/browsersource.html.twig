@@ -1,15 +1,17 @@
 {% extends "base_overlay.html.twig" %}
 
+
 {% block body %}
+
 
 	{% if widgets is not empty %}
 		{% for widget in widgets %}
 			{# {% if widget.WidgetId and widget.WidgetId == "cam_tournament_alpha" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "cam_tournament_alpha" %}
-																																															{{ include('overlay/widgets/cams/team_alpha.html.twig') }}
-																																														{% endif %}
-																																														{% if widget.WidgetId and widget.WidgetId == "cam_tournament_beta" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "cam_tournament_beta" %}
-																																															{{ include('overlay/widgets/cams/team_beta.html.twig') }}
-																																														{% endif %} #}
+																																																		{{ include('overlay/widgets/cams/team_alpha.html.twig') }}
+																																																	{% endif %}
+																																																	{% if widget.WidgetId and widget.WidgetId == "cam_tournament_beta" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "cam_tournament_beta" %}
+																																																		{{ include('overlay/widgets/cams/team_beta.html.twig') }}
+																																																	{% endif %} #}
 			{% if widget.WidgetId and widget.WidgetId == "topbar" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "topbar" %}
 				{{ include('overlay/widgets/topbar/v1.html.twig') }}
 			{% endif %}

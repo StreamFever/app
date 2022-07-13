@@ -6,13 +6,13 @@
 
 {% block body %}
 
-	<div id="twitch-embed-content">
-		<div id="twitch-embed" class="twitch-embed-small">
-			<a href="#" id="btn_toggle_size_twitch">
-				<span class="iconify" data-icon="system-uicons:scale-extend"></span>
-			</a>
-		</div>
-	</div>
+	{# <div id="twitch-embed-content">
+																																									<div id="twitch-embed" class="twitch-embed-small">
+																																										<a href="#" id="btn_toggle_size_twitch">
+																																											<span class="iconify" data-icon="system-uicons:scale-extend"></span>
+																																										</a>
+																																									</div>
+																																								</div> #}
 
 
 	<p>Vous vous situez sur le panel de
@@ -38,8 +38,11 @@
 				{% endfor %}
 			{% endif %}
 		</div>
-		<a class="btn btn-warning" href="{{ path('app_overlay_edit', {'id': overlay.id}) }}">
-			<span class="iconify" data-icon="bxs:edit"></span>Editer les permission</a>
+		{% if is_granted('OVERLAY_EDIT', overlay) %}
+			<a class="btn btn-warning" href="{{ path('app_overlay_edit', {'id': overlay.id}) }}">
+				<span class="iconify" data-icon="bxs:edit"></span>Editer les permission</a>
+		{% endif %}
+
 	</section>
 
 
@@ -53,6 +56,7 @@
 					<em>Ca ouvrira un nouvel onglet 😉</em>
 				</p>
 				<a href="{{ path('app_overlay_show_browsersource', {'id': overlay.id}) }}" target="_blank" class="btn btn-info" style="width: 100%">Accéder au browsersource</a>
+				<a class="btn btn-danger" style="width: 100%" onclick="refreshBrowsersource()">Rafraichir le browsersource</a>
 			</div>
 			<div class="col">
 				<p>Vous pouvez cliquer sur le bouton suivant afin de copier le lien de votre browsersource.</p>
@@ -65,6 +69,143 @@
 	</div>
 
 	<section id="overlay_show" class="container">
+		<pre>
+		{{ dump(widgets) }}
+	</pre>
+
+
+		{% if is_granted('ROLE_ADMIN') %}
+			<h3>Informations sur les widgets :</h3>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Etat</th>
+						<th>Détails</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for item in redmine_widgets %}
+						<tr>
+							<td>{{item.subject}}</td>
+							<td>
+								{% if item.status["name"] == "Nouveau" %}
+									<span class="badge bg-info">Nouveau</span>
+								{% endif %}
+								{% if item.status["name"] == "En cours" %}
+									<span class="badge bg-dark text-light">En cours de dév</span>
+								{% endif %}
+								{% if item.status["name"] == "Online" %}
+									<span class="badge bg-success">OK - Online</span>
+								{% endif %}
+								{% if item.status["name"] == "Attent WS" %}
+									<span class="badge bg-warning">Attente WS</span>
+								{% endif %}
+								{% if item.status["name"] == "HS" %}
+									<span class="badge bg-danger">Hors service</span>
+								{% endif %}
+							</td>
+							<td>
+								<p>{{item.description}}</p>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+
+
+		<section id="panel_widgets">
+			<div id="section_btn">
+				{% set break1 = false %}
+				{% for widget in widgets %}
+					{% if break1 == false %}
+						{% if widget.WidgetId.libWidgetId == "topbar" or widget.WidgetId.libWidgetId == "versus" %}
+							<div class="btn_panel" id="btn_panel_event">Evénement</div>
+							<div class="btn_panel" id="btn_panel_match">Match</div>
+							{% set break1 = 1 %}
+						{% endif %}
+					{% endif %}
+					{% if widget.WidgetId.libWidgetId == "twitter" %}
+						<div class="btn_panel" id="btn_panel_twitter">Twitter</div>
+					{% endif %}
+					{% if widget.WidgetId.libWidgetId == "popup_text" %}
+						<div class="btn_panel" id="btn_panel_popup">Popup</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+			<div id="section_panel">
+				{% set break2 = false %}
+				{% for widget in widgets %}
+					{% if break2 == false %}
+						{% if widget.WidgetId.libWidgetId == "topbar" or widget.WidgetId.libWidgetId == "versus" %}
+							<div class="section_panel" id="panel_event">
+								<h3>Gérer l'événement en cours</h3>
+
+
+								<hr>
+								<div class="container">
+									{% set event = event_service.getOneCurrentEvent[0] %}
+									{{ include('event/components/event_card.html.twig') }}
+									<a class="btn btn-warning" href="{{ path('app_event_edit', {'id': event.id, 'id_overlay': overlay.id}) }}">
+										<span class="iconify" data-icon="bxs:edit"></span>Modifier cet événement</a>
+								</div>
+							</div>
+							<div class="section_panel active" id="panel_match">
+								<h3>Gérer le match en cours</h3>
+
+
+								<hr>
+								<div class="container">
+									{% set game = game_service.getOneCurrentGame[0] %}
+									<pre>
+									{{ dump(game) }}
+								</pre>
+									<a class="btn btn-warning" href="{{ path('app_game_edit', {'id': game.id, 'id_overlay': overlay.id}) }}">
+										<span class="iconify" data-icon="bxs:edit"></span>Modifier ce match</a>
+								</div>
+							</div>
+						{% endif %}
+						{% set break2 = true %}
+					{% endif %}
+					{% if widget.WidgetId.libWidgetId == "tweets" %}
+						<div class="section_panel" id="panel_twitter">
+							<h3>Gérer le match en cours</h3>
+
+
+							<hr>
+							<div class="container">
+								{% set game = game_service.getOneCurrentGame[0] %}
+								<pre>
+							{{ dump(game) }}
+						</pre>
+								<a class="btn btn-warning" href="{{ path('app_game_edit', {'id': game.id, 'id_overlay': overlay.id}) }}">
+									<span class="iconify" data-icon="bxs:edit"></span>Modifier ce match</a>
+							</div>
+						</div>
+					{% endif %}
+					{% if widget.WidgetId.libWidgetId == "popup_text" %}
+						<div class="section_panel" id="panel_popup">
+							<h3>Gérer le match en cours</h3>
+
+
+							<hr>
+							<div class="container">
+								{% set game = game_service.getOneCurrentGame[0] %}
+								<pre>
+							{{ dump(game) }}
+						</pre>
+								<a class="btn btn-warning" href="{{ path('app_game_edit', {'id': game.id, 'id_overlay': overlay.id}) }}">
+									<span class="iconify" data-icon="bxs:edit"></span>Modifier ce match</a>
+							</div>
+						</div>
+					{% endif %}
+				{% endfor %}
+
+
+			</div>
+		</section>
+
 		<div class="row">
 			<div class="col">
 				<h3>Widgets de l'overlay</h3>
@@ -88,7 +229,12 @@
 								<td>{{ widget.WidgetName }}</td>
 								<td>
 									<a class="btn btn-warning" href="{{ path('app_widgets_edit', {'id': widget.id, 'id_overlay': overlay.id}) }}">
-							<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
+										<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
+									{% if widget.WidgetId.libWidgetId == "tweets" %}
+										<button class="btn btn-info btn-icon-append" onclick="gettweets()" data-toggle="modal" data-target="#exampleModal" type="button">
+											<span class="iconify" data-icon="akar-icons:twitter-fill"></span>
+											Voir les tweets</button>
+									{% endif %}
 								</td>
 							</tr>
 						{% else %}
@@ -124,7 +270,7 @@
 								<td>{{ meta.MetaValue }}</td>
 								<td>
 									<a class="btn btn-warning" href="{{ path('app_meta_edit', {'id': meta.id, 'id_overlay': overlay.id}) }}">
-							<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
+										<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
 								</td>
 							</tr>
 						{% else %}
@@ -140,6 +286,5 @@
 			</div>
 		</div>
 	</section>
-
-
+	{{ include('components/modal_tweets.html.twig') }}{{ include('components/modal_reset.html.twig') }}
 {% endblock %}

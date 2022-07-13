@@ -20,30 +20,35 @@
 		</thead>
 		<tbody>
 			{% for overlay in overlays %}
-				<tr>
-					{% if is_granted('ROLE_ADMIN') %}
-						<td>{{ overlay.id }}</td>
-					{% endif %}
-					<td>{{overlay.OverlayName}}</td>
-					<td class="bodyAccess">
-						<div class="flex">
-							{% if overlay.OverlayAccess.snapshot is not null %}
-								{% for person in overlay.OverlayAccess.snapshot %}
-									<div class="avatar">
-										<img src="{{person.avatarURL != null ? person.avatarURL : 'https://cdn.artaic.fr/images/Blason-Salty.png'}}" alt="Avatar de {{person.pseudo}}" title="Avatar de {{person.pseudo}}">
-										<p>{{person.pseudo != app.user.pseudo ? person.pseudo : 'Vous' }}</p>
-									</div>
-								{% endfor %}
+				{% if is_granted('OVERLAY_VIEW', overlay)  %}
+					<tr>
+						{% if is_granted('ROLE_ADMIN') %}
+							<td>{{ overlay.id }}</td>
+						{% endif %}
+						<td>{{overlay.OverlayName}}</td>
+						<td class="bodyAccess">
+							<div class="flex">
+								{% if overlay.OverlayAccess.snapshot is not null %}
+									{% for person in overlay.OverlayAccess.snapshot %}
+										<div class="avatar">
+											<img src="{{person.avatarURL != null ? person.avatarURL : 'https://cdn.artaic.fr/images/Blason-Salty.png'}}" alt="Avatar de {{person.pseudo}}" title="Avatar de {{person.pseudo}}">
+											<p>{{person.pseudo != app.user.pseudo ? person.pseudo : 'Vous' }}</p>
+										</div>
+									{% endfor %}
+								{% endif %}
+							</div>
+						</td>
+						<td>
+							<a class="btn btn-info" href="{{ path('app_overlay_show', {'id': overlay.id}) }}">
+								<span class="iconify" data-icon="carbon:view-filled"></span>Accéder au panel</a>
+
+							{% if is_granted('OVERLAY_EDIT', overlay) %}
+								<a class="btn btn-warning" href="{{ path('app_overlay_edit', {'id': overlay.id}) }}">
+									<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
 							{% endif %}
-						</div>
-					</td>
-					<td>
-                        <a class="btn btn-info" href="{{ path('app_overlay_show', {'id': overlay.id}) }}">
-							<span class="iconify" data-icon="carbon:view-filled"></span>Accéder au panel</a>
-						<a class="btn btn-warning" href="{{ path('app_overlay_edit', {'id': overlay.id}) }}">
-							<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
-					</td>
-				</tr>
+						</td>
+					</tr>
+				{% endif %}
 			{% else %}
 				<tr>
 					<td colspan="2">Rien n'a été trouvé</td>
@@ -52,7 +57,7 @@
 		</tbody>
 	</table>
 
-    <a class="btn btn-info" href="{{ path('app_overlay_new') }}">
+	<a class="btn btn-info" href="{{ path('app_overlay_new') }}">
 		<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>
 		Créer un nouvel overlay</a>
 {% endblock %}
