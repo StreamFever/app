@@ -13,9 +13,17 @@
 
 	{{ include('game/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-	<a class="btn btn-dark" href="{{ path('app_game_index') }}">
-		<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
-		Retour à la liste</a>
+
+	{% if app.request.get('id_overlay') %}
+		{% set idOverlay = app.request.get('id_overlay') %}
+		<a class="btn btn-dark" href="{{ path('app_overlay_show', {'id': idOverlay}) }}">
+			<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
+			Retour à l'overlay</a>
+	{% else %}
+		<a class="btn btn-dark" href="{{ path('app_game_index') }}">
+			<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
+			Retour à la liste</a>
+	{% endif %}
 
 	{{ include('game/_delete_form.html.twig') }}
 {% endblock %}
