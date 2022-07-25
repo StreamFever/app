@@ -1,29 +1,42 @@
 console.log("Panel wigets")
 
-function panelBtn(idBtn) {
- // Ne pas enlever l'élément en duppliqué - FIXME: Voir pour que l'algo tourne parmi tous les panel_x
- let arrPanel = ["event", "match", "twitter", "popup", "twitter"];
- document.getElementById('btn_panel_' + idBtn).addEventListener('click', function (e) {
-  arrPanel.forEach(e2 => {
-   console.log(e2);
-   document.getElementById('panel_' + e2).classList.forEach(element => {
-    if (element == 'active') {
-     document.getElementById('panel_' + e2).classList.remove('active');
-     console.log('Suppression active de ' + e2)
-     // document.getElementById('panel_' + e2).classList.add('active');
-    }
-    if (element != 'active') {
-     document.getElementById('panel_' + idBtn).classList.add('active');
-     console.log('Ajout active de ' + e2)
-    }
-   });
-  })
- })
+function testUv(idPanel) {
+ let arrPanel = ["event", "match", "tweets", "popup"];
+
+ arrPanel.forEach(e => {
+  if (document.getElementById('panel_btn_' + e).classList.contains('active')) {
+   console.log("Suppresion")
+   document.getElementById('panel_btn_' + e).classList.remove('active');
+   document.getElementById('panel_' + e).classList.add('display_none');
+  }
+ });
+
+ if (!document.getElementById('panel_btn_' + idPanel).classList.contains('active')) {
+  console.log("Add")
+  document.getElementById('panel_btn_' + idPanel).classList.add('active');
+  document.getElementById('panel_' + idPanel).classList.remove('display_none');
+ }
 }
 
 if (document.location.pathname.includes('/admin/overlay/')) {
- panelBtn('event');
- panelBtn('match');
- panelBtn('twitter');
- panelBtn('popup');
+ document.getElementById('panel_btn_event').addEventListener('click', function (e) {
+  e.preventDefault();
+  testUv('event');
+ });
+
+ document.getElementById('panel_btn_match').addEventListener('click', function (e) {
+  e.preventDefault();
+  testUv('match');
+ });
+
+ document.getElementById('panel_btn_popup').addEventListener('click', function (e) {
+  e.preventDefault();
+  testUv('popup');
+ });
+
+ document.getElementById('panel_btn_tweets').addEventListener('click', function (e) {
+  e.preventDefault();
+  testUv('tweets');
+ });
 }
+

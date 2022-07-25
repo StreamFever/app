@@ -7,12 +7,12 @@
 {% block body %}
 
 	{# <div id="twitch-embed-content">
-																																									<div id="twitch-embed" class="twitch-embed-small">
-																																										<a href="#" id="btn_toggle_size_twitch">
-																																											<span class="iconify" data-icon="system-uicons:scale-extend"></span>
-																																										</a>
-																																									</div>
-																																								</div> #}
+																																																									<div id="twitch-embed" class="twitch-embed-small">
+																																																										<a href="#" id="btn_toggle_size_twitch">
+																																																											<span class="iconify" data-icon="system-uicons:scale-extend"></span>
+																																																										</a>
+																																																									</div>
+																																																								</div> #}
 
 
 	<p>Vous vous situez sur le panel de
@@ -114,97 +114,61 @@
 			</table>
 		{% endif %}
 
+		<div id="panel_widgets">
+			<section id="section_btn_panel">
+				<div id="panel_btn_event" class="btn_panel">Event</div>
+				<div id="panel_btn_match" class="btn_panel active">Match</div>
+				<div id="panel_btn_popup" class="btn_panel">Popup</div>
+				<div id="panel_btn_tweets" class="btn_panel">Tweets</div>
+			</section>
 
-		<section id="panel_widgets">
-			<div id="section_btn">
-				{% set break1 = false %}
-				{% for widget in widgets %}
-					{% if break1 == false %}
-						{% if widget.WidgetId.libWidgetId == "topbar" or widget.WidgetId.libWidgetId == "versus" %}
-							<div class="btn_panel" id="btn_panel_event">Evénement</div>
-							<div class="btn_panel" id="btn_panel_match">Match</div>
-							{% set break1 = 1 %}
+			<section id="section_panels">
+				<div id="panel_event" class="display_none">
+					<h3>Gérer l'événement en cours</h3>
+
+
+					<hr>
+					<div class="container">
+						{% if event_service.getOneCurrentEvent %}
+							{% set event = event_service.getOneCurrentEvent[0] %}
+							{{ include('event/components/event_card.html.twig') }}
+							<a class="btn btn-warning" href="{{ path('app_event_edit', {'id': event.id, 'id_overlay': overlay.id}) }}">
+								<span class="iconify" data-icon="bxs:edit"></span>Modifier cet événement</a>
+						{% else %}
+							<p>Aucun événement en cours</p>
 						{% endif %}
-					{% endif %}
-					{% if widget.WidgetId.libWidgetId == "twitter" %}
-						<div class="btn_panel" id="btn_panel_twitter">Twitter</div>
-					{% endif %}
-					{% if widget.WidgetId.libWidgetId == "popup_text" %}
-						<div class="btn_panel" id="btn_panel_popup">Popup</div>
-					{% endif %}
-				{% endfor %}
-			</div>
-			<div id="section_panel">
-				{% set break2 = false %}
-				{% for widget in widgets %}
-					{% if break2 == false %}
-						{% if widget.WidgetId.libWidgetId == "topbar" or widget.WidgetId.libWidgetId == "versus" %}
-							<div class="section_panel" id="panel_event">
-								<h3>Gérer l'événement en cours</h3>
+					</div>
+				</div>
+				<div id="panel_match">
+					<h3>Gérer le match en cours</h3>
 
 
-								<hr>
-								<div class="container">
-									{% set event = event_service.getOneCurrentEvent[0] %}
-									{{ include('event/components/event_card.html.twig') }}
-									<a class="btn btn-warning" href="{{ path('app_event_edit', {'id': event.id, 'id_overlay': overlay.id}) }}">
-										<span class="iconify" data-icon="bxs:edit"></span>Modifier cet événement</a>
-								</div>
-							</div>
-							<div class="section_panel active" id="panel_match">
-								<h3>Gérer le match en cours</h3>
+					<hr>
+					<div class="container">
+						{% set game = game_service.getOneCurrentGame[0] %}
+						<pre>
+												{{ dump(game) }}
+											</pre>
+						<a class="btn btn-warning" href="{{ path('app_game_edit', {'id': game.id, 'id_overlay': overlay.id}) }}">
+							<span class="iconify" data-icon="bxs:edit"></span>Modifier ce match</a>
+					</div>
+				</div>
+				<div id="panel_popup" class="display_none">
+					<h3>Gérer la popup textuelle</h3>
 
 
-								<hr>
-								<div class="container">
-									{% set game = game_service.getOneCurrentGame[0] %}
-									<pre>
-									{{ dump(game) }}
-								</pre>
-									<a class="btn btn-warning" href="{{ path('app_game_edit', {'id': game.id, 'id_overlay': overlay.id}) }}">
-										<span class="iconify" data-icon="bxs:edit"></span>Modifier ce match</a>
-								</div>
-							</div>
-						{% endif %}
-						{% set break2 = true %}
-					{% endif %}
-					{% if widget.WidgetId.libWidgetId == "tweets" %}
-						<div class="section_panel" id="panel_twitter">
-							<h3>Gérer le match en cours</h3>
+					<hr>
+					<div class="container"></div>
+				</div>
+				<div id="panel_tweets" class="display_none">
+					<h3>Gérer les tweets</h3>
 
 
-							<hr>
-							<div class="container">
-								{% set game = game_service.getOneCurrentGame[0] %}
-								<pre>
-							{{ dump(game) }}
-						</pre>
-								<a class="btn btn-warning" href="{{ path('app_game_edit', {'id': game.id, 'id_overlay': overlay.id}) }}">
-									<span class="iconify" data-icon="bxs:edit"></span>Modifier ce match</a>
-							</div>
-						</div>
-					{% endif %}
-					{% if widget.WidgetId.libWidgetId == "popup_text" %}
-						<div class="section_panel" id="panel_popup">
-							<h3>Gérer le match en cours</h3>
-
-
-							<hr>
-							<div class="container">
-								{% set game = game_service.getOneCurrentGame[0] %}
-								<pre>
-							{{ dump(game) }}
-						</pre>
-								<a class="btn btn-warning" href="{{ path('app_game_edit', {'id': game.id, 'id_overlay': overlay.id}) }}">
-									<span class="iconify" data-icon="bxs:edit"></span>Modifier ce match</a>
-							</div>
-						</div>
-					{% endif %}
-				{% endfor %}
-
-
-			</div>
-		</section>
+					<hr>
+					<div class="container"></div>
+				</div>
+			</section>
+		</div>
 
 		<div class="row">
 			<div class="col">
