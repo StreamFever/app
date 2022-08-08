@@ -47,7 +47,7 @@ class Widgets
     private $metas;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $isTwoWidgets;
 
@@ -59,7 +59,7 @@ class Widgets
     public function getId(): ?int
     {
         return $this->id;
-    } 
+    }
 
     public function __toString()
     {
