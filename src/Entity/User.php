@@ -105,6 +105,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Social::class, mappedBy="userId")
+     */
+    private $socials;
+
     public function __construct()
     {
         $this->logs = new ArrayCollection();
@@ -114,6 +119,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->metas = new ArrayCollection();
         $this->uiData = new ArrayCollection();
         $this->events = new ArrayCollection();
+        $this->socials = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -490,6 +496,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Social>
+     */
+    public function getSocials(): Collection
+    {
+        return $this->socials;
+    }
+
+    public function addSocial(Social $social): self
+    {
+        if (!$this->socials->contains($social)) {
+            $this->socials[] = $social;
+            $social->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSocial(Social $social): self
+    {
+        if ($this->socials->removeElement($social)) {
+            // set the owning side to null (unless already changed)
+            if ($social->getUserId() === $this) {
+                $social->setUserId(null);
+            }
+        }
 
         return $this;
     }
