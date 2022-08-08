@@ -56,9 +56,18 @@ class WidgetsRepository extends ServiceEntityRepository
             ->orderBy('w.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
-       
+            ->getResult();
+    }
+
+    public function findWidgetIdByOverlay($id_overlay, $id_widget) {
+        return $this->createQueryBuilder('w')
+            ->join('w.overlay', 'o')
+            ->where('o.id = :id_overlay')
+            ->andWhere('w.id = :id_widget')
+            ->setParameter('id_overlay', $id_overlay)
+            ->setParameter('id_widget', $id_widget)
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

@@ -47,6 +47,39 @@ class SocialRepository extends ServiceEntityRepository
         }
     }
 
+    // INFO: Retourne la liste des "Social" dont l'utilisateur a accès et ceux dont il est propriétaire
+    public function findByIdUser($id_user) {
+        return $this->createQueryBuilder('s')
+            ->leftJoin('s.socialAccess', 'u1')
+            ->where('u1 = :id_user OR s.userId = :id_user')
+            ->setParameter('id_user', $id_user)
+            ->orderBy('s.socialLib', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    // INFO: Retourne la liste des "Social" dont l'utilisateur a accès
+    public function findByAccessUser($id_user) {
+        return $this->createQueryBuilder('s')
+            ->join('s.socialAccess', 'u1')
+            ->where('u1.id = :id_user')
+            ->setParameter('id_user', $id_user)
+            ->orderBy('s.socialLib', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    // INFO: Retourne la liste des "Social" dont l'utilisateur est propriétaire
+    public function findByOwnerUser($id_user) {
+        return $this->createQueryBuilder('s')
+            ->join('s.userId', 'u1')
+            ->where('u1.id = :id_user')
+            ->setParameter('id_user', $id_user)
+            ->orderBy('s.socialLib', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Social[] Returns an array of Social objects
     //  */

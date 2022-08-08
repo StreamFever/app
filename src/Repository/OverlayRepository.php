@@ -47,67 +47,48 @@ class OverlayRepository extends ServiceEntityRepository
         }
     }
 
-    // // Retourne la liste des widgets que l'user à accès (même si ce n'est pas le propriétaire) ou qu'il a crée
-    // public function findAllOverlaysWhereIdUser($user_id)
-    // {
-    //     return $this->createQueryBuilder('o')
-    //         ->join('o.WidgetPermission', 'u1')
-    //         ->join('o.widgetOwner', 'u2')
-    //         ->where('u1.id = :user_id OR u2.id = :user_id')
-    //         ->setParameter('user_id', $user_id)
-    //         ->orderBy('o.id', 'ASC')
-    //         ->getQuery()
-    //         ->getResult()
-    //     ;
-       
-    // }
-
-    // // Même utilité que celle au dessus sauf qu'on veut que les 2 derniers
-    // public function findLatestOverlaysWhereIdUser($user_id)
-    // {
-    //     return $this->createQueryBuilder('o')
-    //         ->join('o.WidgetPermission', 'u1')
-    //         ->join('o.widgetOwner', 'u2')
-    //         ->where('u1.id = :user_id OR u2.id = :user_id')
-    //         ->setParameter('user_id', $user_id)
-    //         ->orderBy('o.id', 'ASC')
-    //         ->getQuery()
-    //         ->getResult()
-    //     ;
-       
-    // }
-
-    // Retourne la liste des widgets selon l'id d'un utilisateur
-    public function findAllByIdUser($user_id)
-    {
+    // INFO: Retourne la liste des "Overlay" dont l'utilisateur a accès et ceux dont il est propriétaire
+    public function findByIdUser($id_user) {
         return $this->createQueryBuilder('o')
-            ->join('o.OverlayOwner', 'u')
-            ->where('u.id = :user_id')
-            ->setParameter('user_id', $user_id)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
+            ->leftJoin('o.OverlayAccess', 'u1')
+            ->where('u1 = :id_user OR o.OverlayOwner = :id_user')
+            ->setParameter('id_user', $id_user)
+            ->orderBy('o.OverlayName', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
-       
+            ->getResult();
     }
 
-    // Même utilité que celle au dessus sauf qu'on veut que les 2 derniers
-    /*
-    * @ORM\Column(type="array", nullable=true)
-    */
-    public function findLatestOverlaysWhereIdUser($user_id)
-    {
+    // INFO: Retourne la liste des "Overlay" dont l'utilisateur a accès
+    public function findByAccessUser($id_user) {
         return $this->createQueryBuilder('o')
             ->join('o.OverlayAccess', 'u1')
-            ->join('o.OverlayOwner', 'u2')
-            ->where('u1.id = :user_id OR u2.id = :user_id')
-            ->setParameter('user_id', $user_id)
-            ->orderBy('o.id', 'ASC')
+            ->where('u1.id = :id_user')
+            ->setParameter('id_user', $id_user)
+            ->orderBy('o.OverlayName', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
-       
+            ->getResult();
+    }
+
+    // INFO: Retourne la liste des "Overlay" dont l'utilisateur est propriétaire
+    public function findByOwnerUser($id_user) {
+        return $this->createQueryBuilder('e')
+            ->join('o.OverlayOwner', 'u1')
+            ->where('u1.id = :id_user')
+            ->setParameter('id_user', $id_user)
+            ->orderBy('o.OverlayName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    // INFO: Retourne les trois derniers des "Overlay" dont l'utilisateur a accès et ceux dont il est propriétaire
+    public function findLastByIdUser($id_user) {
+        return $this->createQueryBuilder('o')
+            ->leftJoin('o.OverlayAccess', 'u1')
+            ->where('u1 = :id_user OR o.OverlayOwner = :id_user')
+            ->setParameter('id_user', $id_user)
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
     }
 
     // /**
