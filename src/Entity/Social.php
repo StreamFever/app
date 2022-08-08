@@ -20,9 +20,10 @@ class Social
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=LibSocials::class)
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $socialName;
+    private $socialLib;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -30,18 +31,19 @@ class Social
     private $socialTag;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="socials")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $socialLogo;
+    private $userId;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Event::class, mappedBy="eventIdSocial")
+     * @ORM\ManyToMany(targetEntity=Event::class, inversedBy="socials")
      */
-    private $events;
+    private $socialAccess;
 
     public function __construct()
     {
-        $this->events = new ArrayCollection();
+        $this->socialAccess = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -49,14 +51,14 @@ class Social
         return $this->id;
     }
 
-    public function getSocialName(): ?string
+    public function getSocialLib(): ?LibSocials
     {
-        return $this->socialName;
+        return $this->socialLib;
     }
 
-    public function setSocialName(string $socialName): self
+    public function setSocialLib(?LibSocials $socialLib): self
     {
-        $this->socialName = $socialName;
+        $this->socialLib = $socialLib;
 
         return $this;
     }
@@ -73,14 +75,14 @@ class Social
         return $this;
     }
 
-    public function getSocialLogo(): ?string
+    public function getUserId(): ?User
     {
-        return $this->socialLogo;
+        return $this->userId;
     }
 
-    public function setSocialLogo(?string $socialLogo): self
+    public function setUserId(?User $userId): self
     {
-        $this->socialLogo = $socialLogo;
+        $this->userId = $userId;
 
         return $this;
     }
@@ -88,26 +90,23 @@ class Social
     /**
      * @return Collection<int, Event>
      */
-    public function getEvents(): Collection
+    public function getSocialAccess(): Collection
     {
-        return $this->events;
+        return $this->socialAccess;
     }
 
-    public function addEvent(Event $event): self
+    public function addSocialAccess(Event $socialAccess): self
     {
-        if (!$this->events->contains($event)) {
-            $this->events[] = $event;
-            $event->addEventIdSocial($this);
+        if (!$this->socialAccess->contains($socialAccess)) {
+            $this->socialAccess[] = $socialAccess;
         }
 
         return $this;
     }
 
-    public function removeEvent(Event $event): self
+    public function removeSocialAccess(Event $socialAccess): self
     {
-        if ($this->events->removeElement($event)) {
-            $event->removeEventIdSocial($this);
-        }
+        $this->socialAccess->removeElement($socialAccess);
 
         return $this;
     }
