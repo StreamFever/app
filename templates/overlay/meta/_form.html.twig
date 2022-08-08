@@ -8,8 +8,12 @@
 
 
 <div class="input-grp">
-	<h3>Clé/Valeur</h3>
-	<p>Renseignez une clé unique pour cette métadonnée afin de pouvoir l'appeler sur votre overlay ainsi que de renseigner sa valeur.</p>
+	<h3>
+		Clé/Valeur
+	</h3>
+	<p>
+		Renseignez une clé unique pour cette métadonnée afin de pouvoir l'appeler sur votre overlay ainsi que de renseigner sa valeur.
+	</p>
 	<div class="row">
 		<div class="col">
 			<div class="form-floating mb-3">
@@ -50,10 +54,14 @@
 									}) }}
 
 {% else %}
-										
+
 	<div class="input-grp-center">
-		<h3>Associer à un widget</h3>
-		<p>Si vous voulez que cette métadonnée soit associé à un widget, veuillez sélectionner le widget ci-dessous</p>
+		<h3>
+			Associer à un widget
+		</h3>
+		<p>
+			Si vous voulez que cette métadonnée soit associé à un widget, veuillez sélectionner le widget ci-dessous
+		</p>
 		<div class="form-floating mb-3">
 			{{ form_widget(form.Widgets, {
 												'attr': {'class': 'form-select'},
@@ -80,5 +88,6 @@
 
 <button class="btn btn-success">
 	<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
-	{{ button_label|default('Créer la métadonnée') }}</button>
+	{{ button_label|default('Créer la métadonnée') }}
+</button>
 {{ form_end(form) }}
