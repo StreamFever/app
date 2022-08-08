@@ -2,19 +2,32 @@
 	<section id="topbar" class="{{widget.WidgetVisible ? "" : "display_none"}}">
 		<div class="lambda">
 			<section id="display">
-				{{event_service.getOneCurrentEvent[0].eventEdition}}
+				{% if event_service.getOneCurrentEvent %}
+					{{event_service.getOneCurrentEvent[0].eventEdition}}
+				{% else %}
+					Streamcave
+				{% endif %}
 			</section>
 		</div>
 		<div
 			class="name_event">
 			{# TODO: Mettre une valeur dynamique #}
 			<span class="hashtag">#</span>
-			{{event_service.getOneCurrentEvent[0].eventHashtag|slice(1)}}
+			{% if event_service.getOneCurrentEvent %}
+				{{event_service.getOneCurrentEvent[0].eventHashtag|slice(1)}}
+			{% else %}
+				Streamcave
+			{% endif %}
+
 		</div>
 		<div class="scorea" id="scorea">{{game_service.getOneCurrentGame[0].gameScoreTeamAlpha}}</div>
 		<div id="topbar_team_a" class="teama">{{game_service.getOneCurrentGame[0].gameIdTeamAlpha|slice(0,5)|replace({' ': ''})  }}</div>
 		<div class="vs"></div>
-		<div class="logo"><img src="{{ event_service.getOneCurrentEvent[0].eventLogo != null ? event_service.getOneCurrentEvent[0].eventLogo : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Logo de l'event"></div>
+		{% if event_service.getOneCurrentEvent %}
+			<div class="logo"><img src="{{ event_service.getOneCurrentEvent[0].eventLogo != null ? event_service.getOneCurrentEvent[0].eventLogo : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Logo de l'event"></div>
+		{% else %}
+			<div class="logo"><img src="https://cdn.artaic.fr/images/Blason-Salty.png" alt="Logo de l'event"></div>
+		{% endif %}
 		<div id="topbar_team_b" class="teamb">{{game_service.getOneCurrentGame[0].gameIdTeamBeta|slice(0,5)|replace({' ': ''})   }}</div>
 		<div class="scoreb" id="scoreb">{{game_service.getOneCurrentGame[0].gameScoreTeamBeta}}</div>
 		<div class="carte">
@@ -23,65 +36,26 @@
 				<div id="slider">
 					<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 						<div class="carousel-inner">
-							{% if event_service.getOneCurrentEvent[0].eventEdition != "HER6S" %}
-								<div class="carousel-item" id="img_slider">
-									<img src="https://cdn.artaic.fr/images/overlay/campus_cup/white_firstblood_logo.png" class="d-block w-100" alt="...">
+							{% if event_service.getOneCurrentEvent %}
+								<div class="carousel-item active" id="img_slider">
+									<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" class="d-block w-100" alt="Logo de StreamCave">
 								</div>
+								{% if event_service.getOneCurrentEvent[0].eventEdition != "HER6S" %}
+									{% for sponsor in event_service.getOneCurrentEvent[0].eventIdSponsor %}
+										<div class="carousel-item" id="img_slider">
+											<img src="{{sponsor.sponsorLogo}}" class="d-block w-100" alt="Logo de {{sponsor.sponsorName}}">
+										</div>
+									{% endfor %}
+								{% endif %}
+								{% for social in event_service.getOneCurrentEvent[0].socials %}
+									<div class="carousel-item">
+										<span id="text_slider" class="text_slider">
+											<span class="iconify" data-icon="{{social.socialLib.libSocialLogo}}"></span>
+											{{social.socialTag}}
+										</span>
+									</div>
+								{% endfor %}
 							{% endif %}
-							<div class="carousel-item active">
-								<span id="text_slider" class="text_slider">
-									<span class="iconify" data-icon="arcticons:twitter"></span>
-									SIXQUATRE
-								</span>
-							</div>
-							<div class="carousel-item">
-								<span id="text_slider" class="text_slider">
-									<span class="iconify" data-icon="akar-icons:instagram-fill"></span>
-									SIXQUATRE
-								</span>
-							</div>
-							<div class="carousel-item">
-								<span id="text_slider" class="text_slider">
-									<span class="iconify" data-icon="arcticons:twitch"></span>
-									SIXQUATRE
-								</span>
-							</div>
-							<div class="carousel-item">
-								<span id="text_slider" class="text_slider">
-									<span class="iconify" data-icon="arcticons:twitter"></span>
-									LaSaltyAcademy
-								</span>
-							</div>
-							<div class="carousel-item">
-								<span id="text_slider" class="text_slider">
-									<span class="iconify" data-icon="arcticons:youtube"></span>
-									SIXQUATRE
-								</span>
-							</div>
-							<div class="carousel-item">
-								<span id="text_slider" class="text_slider">
-									<span class="iconify" data-icon="akar-icons:facebook-fill"></span>
-									DaRealSixquatre
-								</span>
-							</div>
-							<div class="carousel-item">
-								<span id="text_slider" class="text_slider">
-									<span class="iconify" data-icon="cib:tiktok"></span>
-									saltyacademy
-								</span>
-							</div>
-							<div class="carousel-item">
-								<span id="text_slider" class="text_slider">
-									<span class="iconify" data-icon="akar-icons:instagram-fill"></span>
-									salty_academy
-								</span>
-							</div>
-							<div class="carousel-item">
-								<span id="text_slider" class="text_slider">
-									<span class="iconify" data-icon="arcticons:youtube"></span>
-									!ytreplay
-								</span>
-							</div>
 						</div>
 					</div>
 				</div>
