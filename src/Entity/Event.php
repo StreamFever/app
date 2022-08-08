@@ -65,11 +65,6 @@ class Event
     private $eventIdSponsor;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Social::class, inversedBy="events")
-     */
-    private $eventIdSocial;
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -86,10 +81,27 @@ class Event
      */
     private $overlayId;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="eventsAccess")
+     */
+    private $eventAccess;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Social::class, mappedBy="socialAccess")
+     */
+    private $socials;
+
     public function __construct()
     {
         $this->eventIdSponsor = new ArrayCollection();
-        $this->eventIdSocial = new ArrayCollection();
+        $this->eventSocial = new ArrayCollection();
+        $this->eventAccess = new ArrayCollection();
+        $this->socials = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->eventName;
     }
 
     public function getId(): ?int
@@ -217,30 +229,6 @@ class Event
         return $this;
     }
 
-    /**
-     * @return Collection<int, Social>
-     */
-    public function getEventIdSocial(): Collection
-    {
-        return $this->eventIdSocial;
-    }
-
-    public function addEventIdSocial(Social $eventIdSocial): self
-    {
-        if (!$this->eventIdSocial->contains($eventIdSocial)) {
-            $this->eventIdSocial[] = $eventIdSocial;
-        }
-
-        return $this;
-    }
-
-    public function removeEventIdSocial(Social $eventIdSocial): self
-    {
-        $this->eventIdSocial->removeElement($eventIdSocial);
-
-        return $this;
-    }
-
     public function getUserId(): ?User
     {
         return $this->userId;
@@ -273,6 +261,57 @@ class Event
     public function setOverlayId(?Overlay $overlayId): self
     {
         $this->overlayId = $overlayId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getEventAccess(): Collection
+    {
+        return $this->eventAccess;
+    }
+
+    public function addEventAccess(User $eventAccess): self
+    {
+        if (!$this->eventAccess->contains($eventAccess)) {
+            $this->eventAccess[] = $eventAccess;
+        }
+
+        return $this;
+    }
+
+    public function removeEventAccess(User $eventAccess): self
+    {
+        $this->eventAccess->removeElement($eventAccess);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Social>
+     */
+    public function getSocials(): Collection
+    {
+        return $this->socials;
+    }
+
+    public function addSocial(Social $social): self
+    {
+        if (!$this->socials->contains($social)) {
+            $this->socials[] = $social;
+            $social->addSocialAccess($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSocial(Social $social): self
+    {
+        if ($this->socials->removeElement($social)) {
+            $social->removeSocialAccess($this);
+        }
 
         return $this;
     }
