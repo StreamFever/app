@@ -1,0 +1,43 @@
+{{ form_start(form) }}
+
+{% if form_errors(form) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form) }}
+	</div>
+{% endif %}
+
+<div class="input-grp-center">
+	<h3>Sélectionnez un réseau</h3>
+	<p>Veuillez sélectionner un réseau à configurer</p>
+	<div class="form-floating mb-3">
+		{{ form_widget(form.socialLib, {
+        'attr': {'class': 'form-select'},
+        'id': "socialLib",
+        }) }}
+		{{ form_label(form.socialLib, null, {
+    'label': 'Sélectionnez un réseau à configurer',
+    'id': 'socialLib'
+        }) }}
+
+	</div>
+</div>
+
+<div class="input-grp">
+	<h3>Configurer le réseau</h3>
+	<p>Renseignez les informations nécessaires :</p>
+	<div class="form-floating mb-3">
+		{{ form_widget(form.socialTag, {
+        'attr': {'class': 'form-control'},
+        'id': "socialTag",
+        }) }}
+		{{ form_label(form.socialTag, null, {
+    'label': 'Renseignez le tag de ce réseau',
+    'id': 'socialTag'
+        }) }}
+	</div>
+</div>
+
+<button class="btn btn-success">
+	<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
+	{{ button_label|default('Ajouter le réseau') }}</button>
+{{ form_end(form) }}
