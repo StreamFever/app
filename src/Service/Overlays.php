@@ -22,6 +22,6 @@ class Overlays
  {
    $currentUser = $this->security->getUser();
 
-   return $this->OverlayRepository->findLatestOverlaysWhereIdUser($currentUser->getId());
+   return $this->OverlayRepository->findLastByIdUser($currentUser->getId());
  }
 }
