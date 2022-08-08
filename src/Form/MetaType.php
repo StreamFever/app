@@ -18,17 +18,19 @@ class MetaType extends AbstractType
         $builder
             ->add('MetaKey',  null, array(
                 'attr' => array(
-                    'placeholder' => 'hereYourPlaceHolder'
-                )
-           ))
+                    'placeholder' => 'hereYourPlaceHolder',
+                    'id' => 'test'
+                ),
+
+            ))
             ->add('MetaValue',  null, array(
                 'attr' => array(
-                    'placeholder' => 'hereYourPlaceHolder'
+                    'placeholder' => 'hereYourPlaceHolder',
+                    'id' => 'test'
                 )
-           ))
+            ))
             ->add('Widgets')
-            ->add('userId')
-        ;
+            ->add('userId');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
