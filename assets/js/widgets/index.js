@@ -1,5 +1,6 @@
 // TOP BAR
 import './topbar';
+import { showVideoVersus } from './lib/video_versus';
 
 console.log("Index Widgets OK");
 
@@ -20,6 +21,7 @@ window.showTopbar = function showTopBar() {
 }
 window.showVersus = function showVersus() {
  versuscontainer.className = 'container_versus slide-in-left'
+ showVideoVersus.call(this, 'House');
 }
 window.showBreak = function showBreak() {
  breakk.className = 'slide-in-left'
