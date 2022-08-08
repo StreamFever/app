@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste de mes sponsors
+{% endblock %}
+
+{% block body %}
+	<h1>Liste de mes sponsors</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				{% if is_granted('ROLE_ADMIN') %}
+					<th>Id</th>
+				{% endif %}
+				<th>Nom</th>
+				<th>Logo</th>
+				<th>Banner</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for sponsor in sponsors %}
+				<tr>
+					{% if is_granted('ROLE_ADMIN') %}
+						<td>{{ sponsor.id }}</td>
+					{% endif %}
+					<td>{{ sponsor.sponsorName }}</td>
+					<td><img src="{{ sponsor.sponsorLogo }}" alt="Logo de {{ sponsor.sponsorName }}"></td>
+					<td><img src="{{ sponsor.sponsorBanner }}" alt="Logo de {{ sponsor.sponsorName }}"></td>
+					<td>
+						<a class="btn btn-info" href="{{ path('app_sponsor_show', {'id': sponsor.id}) }}">
+							<span class="iconify" data-icon="carbon:view-filled"></span>Détails</a>
+						<a class="btn btn-warning" href="{{ path('app_sponsor_edit', {'id': sponsor.id}) }}">
+							<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">Aucun sponsor renseigné.</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a class="btn btn-info" href="{{ path('app_sponsor_new') }}">
+		<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>
+		Ajouter un nouveau sponsor</a>
+{% endblock %}
