@@ -1,0 +1,31 @@
+{% set bottombarMarquee = [] %}
+{% for meta in metas %}
+	{% if meta.metaKey == 'bottombar_marquee' %}
+		{% set bottombarMarquee = bottombarMarquee|merge([meta]) %}
+	{% endif %}
+{% endfor %}
+<section id="bottombar">
+	<div class="logo">
+		<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" alt="Logo de StreamCave">
+	</div>
+	<div class="title">PRE-SHOW</div>
+	<div class="details">
+		<div class="top">
+			<span class="event">
+				{% if event_service.getOneCurrentEvent %}
+					{{event_service.getOneCurrentEvent[0].eventName}}
+				{% else %}
+					Bienvenue sur StreamCave !
+				{% endif %}
+			</span>
+		</div>
+		<div class="bottom">
+			<marquee direction="left">{{ bottombarMarquee[0].metaValue }}</marquee>
+		</div>
+	</div>
+	<div class="sponsors">
+		<div class="logo">
+			<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" alt="Logo de StreamCave">
+		</div>
+	</div>
+</section>
