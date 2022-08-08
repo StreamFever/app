@@ -7,10 +7,13 @@ use App\Entity\Event;
 use App\Entity\User;
 use App\Entity\Overlay;
 use App\Entity\Meta;
+use App\Entity\Widgets;
 
 use App\Form\OverlayType;
+use App\Form\MetaType;
 
 use App\Service\WidgetsService;
+use App\Service\MetasService;
 
 use App\Repository\GameRepository;
 use App\Repository\EventRepository;
@@ -18,6 +21,7 @@ use App\Repository\UserRepository;
 use App\Repository\OverlayRepository;
 use App\Repository\WidgetsRepository;
 use App\Repository\MetaRepository;
+use App\Repository\LibWidgetsRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +41,7 @@ class OverlayController extends AbstractController
         $currentUser = $this->getUser();
         
         return $this->render('overlay/index.html.twig', [
-            'overlays' => $overlayRepository->findAllByIdUser($currentUser->getId()),
+            'overlays' => $overlayRepository->findByIdUser($currentUser->getId()),
             'controller_name' => "Overlay"
         ]);
     }
@@ -45,7 +49,7 @@ class OverlayController extends AbstractController
     /**
      * @Route("/admin/overlay/new", name="app_overlay_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, OverlayRepository $overlayRepository, MetaRepository $MetaRepository, ManagerRegistry $doctrine): Response
+    public function new(Request $request, OverlayRepository $overlayRepository, MetaRepository $MetaRepository, WidgetsRepository $widgetsRepository, ManagerRegistry $doctrine): Response
     {
         $em = $this->getDoctrine()->getManager();
         $overlay = new Overlay();
@@ -56,6 +60,8 @@ class OverlayController extends AbstractController
 
             // Insère toutes les données dans la table overlays
             $overlayRepository->add($overlay);
+            // $topbar = new Widgets();
+            // $topbar->setWidgetName('Barre ')
             
             return $this->redirectToRoute('app_overlay_index', [] , Response::HTTP_SEE_OTHER);
 
@@ -73,22 +79,106 @@ class OverlayController extends AbstractController
 
 
     /**
-     * @Route("/admin/overlay/{id}", name="app_overlay_show", methods={"GET"})
+     * @Route("/admin/overlay/{id}", name="app_overlay_show", methods={"GET", "POST"})
      */
-    public function show(Overlay $overlay, WidgetsRepository $widgetsRepository, MetaRepository $metaRepository, WidgetsService $widgetsService, int $id): Response
+    public function show(Request $request, Overlay $overlay, WidgetsRepository $widgetsRepository, MetaRepository $metaRepository, LibWidgetsRepository $libWidgetsRepository, OverlayRepository $overlayRepository, WidgetsService $widgetsService, MetasService $metasService, int $id): Response
     {
         // $this->denyAccessUnlessGranted('OVERLAY_VIEW', $overlay);
         // $this->security->overlayAccess($id, $this->getUser()->getId());
         $widgets = $widgetsRepository->findAllByOverlay($id);
         $metas = $metaRepository->findAllByOverlay($id);
+
+            // INFO: On récupère individuellement les métas de l'overlay
+        // $popup = $metaRepository->findOneBy(['MetaKey' => 'popup_text', 'Widgets' => $widgetsRepository->findOneBy(['WidgetId' => $libWidgetsRepository->findOneBy(['libWidgetId' => 'popup_text'])->getId(),'overlay' => $id])]);
+        // $topbar_title = $metaRepository->findOneBy(['MetaKey' => 'topbar_title', 'Widgets' => $widgetsRepository->findOneBy(['WidgetId' => $libWidgetsRepository->findOneBy(['libWidgetId' => 'topbar'])->getId(),'overlay' => $id])]);
+        // $bottombar_marquee = $metaRepository->findOneBy(['MetaKey' => 'bottombar_marquee', 'Widgets' => $widgetsRepository->findOneBy(['WidgetId' => $libWidgetsRepository->findOneBy(['libWidgetId2' => 'bottombar'])->getId(),'overlay' => $id])]);
+        // $tweet_hashtag = $metaRepository->findOneBy(['MetaKey' => 'tweet_hashtag', 'Widgets' => $widgetsRepository->findOneBy(['WidgetId' => $libWidgetsRepository->findOneBy(['libWidgetId' => 'tweets'])->getId(),'overlay' => $id])]);
+        $popup = null;
+        $topbar_title = null;
+        $bottombar_marquee = null;
+        $tweet_hashtag = null;
+        foreach ($metas as $key => $value) {
+            if ($value->getMetaKey() == 'popup_text') {
+                $popup = $value;
+            } else if ($value->getMetaKey() == 'topbar_title') {
+                $topbar_title = $value;
+            } else if ($value->getMetaKey() == 'bottombar_marquee') {
+                $bottombar_marquee = $value;
+            } else if ($value->getMetaKey() == 'tweet_hashtag') {
+                $tweet_hashtag = $value;
+            }
+        }     
+        
+
+        // INFO: On créer les formulaires en renseignant OBLIGATOIREMENT un nom différent
+        $form_popup = $this->get('form.factory')
+        ->createNamedBuilder('popup_text', MetaType::class, $popup)->getForm();
+        $form_topbar = $this->get('form.factory')
+        ->createNamedBuilder('topbar_title', MetaType::class, $topbar_title)->getForm();
+        $form_bottombar_marquee = $this->get('form.factory')
+        ->createNamedBuilder('bottombar_marquee', MetaType::class, $bottombar_marquee)->getForm();
+        $form_tweet_hashtag = $this->get('form.factory')
+        ->createNamedBuilder('tweet_hashtag', MetaType::class, $tweet_hashtag)->getForm();
+        
+
+        if ($request->isMethod('POST')) {
+
+            // INFO: Détecte quel form est soumis et l'enregistre en Request (1 request à la fois pour le même FormType)
+            if ($request->request->get($form_popup->getName()) != null) {
+                $form_popup->submit($request->request->get($form_popup->getName()));
+            }
+            if ($request->request->get($form_topbar->getName()) != null) {
+                $form_topbar->submit($request->request->get($form_topbar->getName()));
+            }
+            if ($request->request->get($form_bottombar_marquee->getName()) != null) {
+                $form_bottombar_marquee->submit($request->request->get($form_bottombar_marquee->getName()));
+            }
+            if ($request->request->get($form_tweet_hashtag->getName()) != null) {
+                $form_tweet_hashtag->submit($request->request->get($form_tweet_hashtag->getName()));
+            }
+            
+
+            // INFO: Si c'est submit et validé, on enregistre les nouvelles données dans la table metas selon la property MetaKey
+            if ($form_popup->isSubmitted() && $form_popup->isValid() && $form_popup->get('MetaKey')->getData() === "popup_text") {
+                $entityManager = $this->getDoctrine()->getManager();
+                $popup->setMetaValue($form_popup->get('MetaValue')->getData());
+                $entityManager->flush();
+                $this->addFlash('success', 'OUAIS Popup !');
+            } else if ($form_topbar->isSubmitted() && $form_topbar->isValid() && $form_topbar->get('MetaKey')->getData() === "topbar_title") {
+                $entityManager = $this->getDoctrine()->getManager();
+                $topbar_title->setMetaValue($form_topbar->get('MetaValue')->getData());
+                $entityManager->flush();
+                $this->addFlash('success', 'OUAIS Topbar !');
+            } else if ($form_bottombar_marquee->isSubmitted() && $form_bottombar_marquee->isValid() && $form_bottombar_marquee->get('MetaKey')->getData() === "bottombar_marquee") {
+                $entityManager = $this->getDoctrine()->getManager();
+                $bottombar_marquee->setMetaValue($form_bottombar_marquee->get('MetaValue')->getData());
+                $entityManager->flush();
+                $this->addFlash('success', 'OUAIS Bottombar !');
+            } else if ($form_tweet_hashtag->isSubmitted() && $form_tweet_hashtag->isValid() && $form_tweet_hashtag->get('MetaKey')->getData() === "tweet_hashtag") {
+                $entityManager = $this->getDoctrine()->getManager();
+                $tweet_hashtag->setMetaValue($form_tweet_hashtag->get('MetaValue')->getData());
+                $entityManager->flush();
+                $this->addFlash('success', 'OUAIS Hashtag tweet !');
+            }
+            
+
+        }
+
         return $this->render('overlay/panel.html.twig', [
             'overlay' => $overlay,
             'widgets' => $widgets,
             'metas' => $metas,
             'redmine_widgets' => $widgetsService->getJsonData('https://ticket.artaic.fr/projects/sa-prod/issues.json?set_filter=1&tracker_id=5')["issues"],
-            'controller_name' => "Overlay"
+            'controller_name' => "Overlay",
+            'form_topbar' => $form_topbar->createView(),
+            'form_popup' => $form_popup->createView(),
+            'form_bottombar_marquee' => $form_bottombar_marquee->createView(),
+            'form_tweet_hashtag' => $form_tweet_hashtag->createView(),
+            // 'detail_form' => $form_popup->getName(),
+            // 'detail_form2' => $form_topbar->getName(),
         ]);
     }
+
 
 
     /**
