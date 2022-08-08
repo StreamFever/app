@@ -7,13 +7,18 @@
 {% block body %}
 
 	{# <div id="twitch-embed-content">
-																																																									<div id="twitch-embed" class="twitch-embed-small">
-																																																										<a href="#" id="btn_toggle_size_twitch">
-																																																											<span class="iconify" data-icon="system-uicons:scale-extend"></span>
-																																																										</a>
-																																																									</div>
-																																																								</div> #}
+																																																																																								<div id="twitch-embed" class="twitch-embed-small">
+																																																																																									<a href="#" id="btn_toggle_size_twitch">
+																																																																																										<span class="iconify" data-icon="system-uicons:scale-extend"></span>
+																																																																																									</a>
+																																																																																								</div>
+																																																																																							</div> #}
 
+
+	<a href="#section_panels" id="btn-arrow-panels">
+		<span class="iconify" data-icon="oi:arrow-circle-bottom"></span>
+		<span>Accéder au panel</span>
+	</a>
 
 	<p>Vous vous situez sur le panel de
 		<strong>{{overlay.OverlayOwner.pseudo}}</strong>.</p>
@@ -114,6 +119,10 @@
 			</table>
 		{% endif %}
 
+		<pre>
+			{{ dump(app.request) }}
+		</pre>
+
 		<div id="panel_widgets">
 			<section id="section_btn_panel">
 				<div id="panel_btn_event" class="btn_panel">Event</div>
@@ -136,6 +145,9 @@
 								<span class="iconify" data-icon="bxs:edit"></span>Modifier cet événement</a>
 						{% else %}
 							<p>Aucun événement en cours</p>
+
+							<a class="btn btn-info btn-full" href="{{ path('app_event_new') }}">
+								<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>Créer un nouvel événement</a>
 						{% endif %}
 					</div>
 				</div>
@@ -145,27 +157,41 @@
 
 					<hr>
 					<div class="container">
-						{% set game = game_service.getOneCurrentGame[0] %}
-						<pre>
-												{{ dump(game) }}
-											</pre>
-						<a class="btn btn-warning" href="{{ path('app_game_edit', {'id': game.id, 'id_overlay': overlay.id}) }}">
-							<span class="iconify" data-icon="bxs:edit"></span>Modifier ce match</a>
+						{{ include('overlay/forms/_form-topbar-title.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+						{% if game_service.getOneCurrentGame %}
+							{% set game = game_service.getOneCurrentGame[0] %}
+							<div class="center_element">
+								{{ include('components/card_match.html.twig') }}
+							</div>
+						{% else %}
+							<p>Aucun match en cours</p>
+
+							<a class="btn btn-info btn-full" href="{{ path('app_game_new') }}">
+								<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>Créer un nouveau match</a>
+						{% endif %}
+
 					</div>
 				</div>
 				<div id="panel_popup" class="display_none">
-					<h3>Gérer la popup textuelle</h3>
-
-
-					<hr>
-					<div class="container"></div>
+					<div class="container">
+						{{ include('overlay/forms/_form-popup.html.twig', {'button_label': 'Mettre à jour'}) }}
+					</div>
+					<div class="container">
+						{{ include('overlay/forms/_form-bottombar-marquee.html.twig', {'button_label': 'Mettre à jour'}) }}
+					</div>
 				</div>
 				<div id="panel_tweets" class="display_none">
 					<h3>Gérer les tweets</h3>
 
 
 					<hr>
-					<div class="container"></div>
+					<div class="container">
+						{{ include('overlay/forms/_form-tweet-hashtag.html.twig', {'button_label': 'Mettre à jour'}) }}
+						<button class="btn btn-info btn-icon-append btn-full" onclick="gettweets()" data-toggle="modal" data-target="#exampleModal" type="button">
+							<span class="iconify" data-icon="akar-icons:twitter-fill"></span>
+							Voir les tweets</button>
+					</div>
 				</div>
 			</section>
 		</div>
@@ -194,11 +220,6 @@
 								<td>
 									<a class="btn btn-warning" href="{{ path('app_widgets_edit', {'id': widget.id, 'id_overlay': overlay.id}) }}">
 										<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
-									{% if widget.WidgetId.libWidgetId == "tweets" %}
-										<button class="btn btn-info btn-icon-append" onclick="gettweets()" data-toggle="modal" data-target="#exampleModal" type="button">
-											<span class="iconify" data-icon="akar-icons:twitter-fill"></span>
-											Voir les tweets</button>
-									{% endif %}
 								</td>
 							</tr>
 						{% else %}
