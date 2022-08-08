@@ -1,0 +1,119 @@
+{{ form_start(form_topbar, {'name': "test"}) }}
+
+{% if form_errors(form_topbar) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form_topbar) }}
+	</div>
+{% endif %}
+
+{% if app.request.attributes.get('_route') == 'app_meta_new' %}
+	<div class="input-grp">
+		<h3>
+			Clé/Valeur
+		</h3>
+		<p>
+			Renseignez une clé unique pour cette métadonnée afin de pouvoir l'appeler sur votre overlay ainsi que de renseigner sa valeur.
+		</p>
+		<div class="row">
+			<div class="col">
+				<div class="form-floating mb-3">
+					{{ form_widget(form_topbar.MetaKey, {
+        'attr': {'class': 'form-control'},
+        'id': "MetaKey",
+        }) }}
+					{{ form_label(form_topbar.MetaKey, null, {
+    'label': 'Définissez le nom de votre métadonnée',
+    'id': 'MetaKey'
+        }) }}
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-floating mb-3">
+					{{ form_widget(form_topbar.MetaValue, {
+        'attr': {'class': 'form-control'},
+        'id': "MetaValue",
+        }) }}
+					{{ form_label(form_topbar.MetaValue, null, {
+    'label': 'Définissez la valeur de votre métadonnée',
+    'id': 'MetaValue'
+        }) }}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="input-grp-center">
+		<h3>
+			Associer à un widget
+		</h3>
+		<p>
+			Si vous voulez que cette métadonnée soit associé à un widget, veuillez sélectionner le widget ci-dessous
+		</p>
+		<div class="form-floating mb-3">
+			{{ form_widget(form_topbar.Widgets, {
+												'attr': {'class': 'form-select'},
+												'id': "Widgets",
+												}) }}
+			{{ form_label(form_topbar.Widgets, null, {
+								'label': 'Sélectionnez le widget',
+								'id': 'Widgets'
+												}) }}
+		</div>
+	</div>
+{% else %}
+	<div class="input-grp">
+		<h3>
+			Titre de la topbar
+		</h3>
+		<p>
+			Renseignez un titre court pour que cela s'affiche sur la "topbar".
+		</p>
+		<div class="form-floating mb-3">
+			{{ form_widget(form_topbar.MetaValue, {
+        'attr': {'class': 'form-control'},
+        }) }}
+			{{ form_label(form_topbar.MetaValue, null, {
+    'label': 'Définissez la valeur de votre métadonnée',
+        }) }}
+
+			{{ form_widget(form_topbar.MetaKey, {
+        'attr': {'class': 'display_none'},
+        }) }}
+			{{ form_label(form_topbar.MetaKey, null, {
+    'label_attr': {'class': 'display_none'},
+    }) }}
+		</div>
+		{% if app.request.attributes.get('_route') != 'app_meta_new' %}
+			<button class="btn btn-success btn-full">
+				<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
+				{{ button_label|default('Créer la métadonnée') }}
+			</button>
+		{% endif %}
+	</div>
+	{{ form_widget(form_topbar.Widgets, {
+												'attr': {'class': 'display_none'},
+												'id': "Widgets",
+												}) }}
+	{{ form_label(form_topbar.Widgets, null, {
+								    'label_attr': {'class': 'display_none'},
+												}) }}
+{% endif %}
+
+
+{{ form_label(form_topbar.userId, null, {
+    'label_attr': {'class': 'display_none'},
+    }) }}
+{{ form_widget(form_topbar.userId, {
+        'attr': {
+            'class': 'display_none',
+            },
+        }) }}
+
+
+{% if app.request.attributes.get('_route') == 'app_meta_new' %}
+	<button class="btn btn-success">
+		<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
+		{{ button_label|default('Créer la métadonnée') }}
+	</button>
+{% endif %}
+{{ form_end(form_topbar) }}
