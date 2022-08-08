@@ -52,13 +52,56 @@ class EventRepository extends ServiceEntityRepository
         return $this->findBy(array(), array('eventStartDate' => 'ASC'));
     }
 
+    // INFO: Retourne la liste des "Events" dont l'utilisateur a accès et ceux dont il est propriétaire
+    public function findByIdUser($id_user) {
+        return $this->createQueryBuilder('e')
+            ->leftJoin('e.eventAccess', 'u1')
+            ->where('u1 = :id_user OR e.userId = :id_user')
+            ->setParameter('id_user', $id_user)
+            ->orderBy('e.eventStartDate', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    // INFO: Retourne la liste des "Events" dont l'utilisateur a accès
+    public function findByAccessUser($id_user) {
+        return $this->createQueryBuilder('e')
+            ->join('e.eventAccess', 'u1')
+            ->where('u1.id = :id_user')
+            ->setParameter('id_user', $id_user)
+            ->orderBy('e.eventStartDate', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
+    // INFO: Retourne la liste des "Events" dont l'utilisateur est propriétaire
+    public function findByOwnerUser($id_user) {
+        return $this->createQueryBuilder('e')
+            ->join('e.userId', 'u1')
+            ->where('u1.id = :id_user')
+            ->setParameter('id_user', $id_user)
+            ->orderBy('e.eventStartDate', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findFirst()
     {
-        $date = new \DateTime("NOW");
+        // $date = new \DateTime("NOW");
+        // return $this->createQueryBuilder('e')
+        //     ->where('e.eventStartDate > :date AND e.overlayId IS NOT NULL')
+        //     ->orderBy('e.eventStartDate', 'ASC')
+        //     ->setParameter(':date', $date)    
+        //     ->setMaxResults(1)
+        //     ->getQuery()
+        //     ->getResult()
+        // ;
         return $this->createQueryBuilder('e')
-            ->where('e.eventStartDate > :date AND e.overlayId IS NOT NULL')
-            ->orderBy('e.eventStartDate', 'ASC')
-            ->setParameter(':date', $date)    
+            ->join('e.userId', 'u')
+            ->where('e.overlayId IS NOT NULL')
+            ->orderBy('e.id', 'ASC')
             ->setMaxResults(1)
             ->getQuery()
             ->getResult()
