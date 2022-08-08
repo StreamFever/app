@@ -33,7 +33,7 @@ class WidgetsController extends AbstractController
             $widgetsRepository->add($widget);
             $data = $form->getData();
 
-            if ($data->getWidgetId() == "Barre d'information") {
+            if ($data->getWidgetId() == "Barre d'informations") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
@@ -121,19 +121,21 @@ class WidgetsController extends AbstractController
             if ($data->getWidgetId() == "Tweets") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
-                $meta = new Meta();
-                $meta->setMetaKey('curent_tweet_format');
-                $meta->setMetaValue("");
-                $meta->setUserId($this->getUser());
-                
-                // relates this product to the category
-                $widget->addMeta($meta);
-                $widget->addMeta($meta2);
+                $arrTweets = ['tweet_id', 'tweet_hashtag'];
+                foreach ($arrTweets as $key => $value) {
+                    $meta = new Meta();
+                    $meta->setMetaKey($value);
+                    $meta->setMetaValue("");
+                    $meta->setUserId($this->getUser());
 
-                $entityManager = $doctrine->getManager();
-                $entityManager->persist($meta);
-                $entityManager->persist($widget);
-                $entityManager->flush();
+                    $widget->addMeta($meta);
+
+                    $entityManager = $doctrine->getManager();
+                    $entityManager->persist($meta);
+                    $entityManager->persist($widget);
+                    $entityManager->flush();
+                }
+                
             }
             
             if ($idOverlay) {
@@ -170,7 +172,7 @@ class WidgetsController extends AbstractController
             $widgetsRepository->add($widget);
             $data = $form->getData();
 
-            if ($data->getWidgetId() == "Barre d'information") {
+            if ($data->getWidgetId() == "Barre d'informations") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
@@ -259,12 +261,18 @@ class WidgetsController extends AbstractController
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
                 $meta = new Meta();
-                $meta->setMetaKey('curent_tweet_format');
+                $meta->setMetaKey('tweet_id');
                 $meta->setMetaValue("");
                 $meta->setUserId($this->getUser());
+
+                $meta2 = new Meta();
+                $meta2->setMetaKey('tweet_hashtag');
+                $meta2->setMetaValue("");
+                $meta2->setUserId($this->getUser());
                 
                 // relates this product to the category
                 $widget->addMeta($meta);
+                $widget->addMeta($meta2);
 
                 $entityManager = $doctrine->getManager();
                 $entityManager->persist($meta);
