@@ -4,65 +4,70 @@
 {% endblock %}
 
 {% block body %}
-	<pre>
-	{{ dump(games) }}
-</pre>
 	<h1>Liste des matchs</h1>
 
-	<table id="gameList" class="table">
-		<thead>
-			<tr>
-				{% if is_granted('ROLE_ADMIN') %}
-					<th>Id</th>
-				{% endif %}
-				<th>VS</th>
-				<th colspan="2">Score</th>
-				<th>Time</th>
-				<th>Format</th>
-				<th>Status</th>
-				<th>Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for game in games %}
+	<section id="list_matchs">
+		{% for game in games %}
+				{{ include('components/card_match.html.twig') }}
+		{% endfor %}
+	</section>
+
+	{% if is_granted('ROLE_ADMIN') %}
+		<table id="gameList" class="table">
+			<thead>
 				<tr>
 					{% if is_granted('ROLE_ADMIN') %}
-						<td>{{ game.id }}</td>
+						<th>Id</th>
 					{% endif %}
-					<td>{{ game.gameIdTeamAlpha.teamName }}
-						<span class="iconify" data-icon="noto:vs-button"></span>
-						{{ game.gameIdTeamBeta.teamName }}</td>
-					<td>{{ game.gameScoreTeamAlpha }}</td>
-					<td>{{ game.gameScoreTeamBeta }}</td>
-					<td>{{ game.gameStartDate|date }}</td>
-					<td>
-						<span class="badge bg-info">{{ game.gameFormat }}</span>
-					</td>
-					<td>
-						{% if game.gameStatus == "soon" %}
-							<span class="badge bg-info">{{ game.gameStatus }}</span>
-						{% endif %}
-						{% if game.gameStatus == "current" %}
-							<span class="badge bg-success">{{ game.gameStatus }}</span>
-						{% endif %}
-						{% if game.gameStatus == "finished" %}
-							<span class="badge bg-secondary">{{ game.gameStatus }}</span>
-						{% endif %}
-					</td>
-					<td>
-						<a class="btn btn-info" href="{{ path('app_game_show', {'id': game.id}) }}">
-							<span class="iconify" data-icon="carbon:view-filled"></span>Détails</a>
-						<a class="btn btn-warning" href="{{ path('app_game_edit', {'id': game.id}) }}">
-							<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
-					</td>
+					<th>VS</th>
+					<th colspan="2">Score</th>
+					<th>Time</th>
+					<th>Format</th>
+					<th>Status</th>
+					<th>Actions</th>
 				</tr>
-			{% else %}
-				<tr>
-					<td colspan="7">Rien n'a été trouvée</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				{% for game in games %}
+					<tr>
+						{% if is_granted('ROLE_ADMIN') %}
+							<td>{{ game.id }}</td>
+						{% endif %}
+						<td>{{ game.gameIdTeamAlpha.teamName }}
+							<span class="iconify" data-icon="noto:vs-button"></span>
+							{{ game.gameIdTeamBeta.teamName }}</td>
+						<td>{{ game.gameScoreTeamAlpha }}</td>
+						<td>{{ game.gameScoreTeamBeta }}</td>
+						<td>{{ game.gameStartDate|date }}</td>
+						<td>
+							<span class="badge bg-info">{{ game.gameFormat }}</span>
+						</td>
+						<td>
+							{% if game.gameStatus == "soon" %}
+								<span class="badge bg-info">{{ game.gameStatus }}</span>
+							{% endif %}
+							{% if game.gameStatus == "current" %}
+								<span class="badge bg-success">{{ game.gameStatus }}</span>
+							{% endif %}
+							{% if game.gameStatus == "finished" %}
+								<span class="badge bg-secondary">{{ game.gameStatus }}</span>
+							{% endif %}
+						</td>
+						<td>
+							<a class="btn btn-info" href="{{ path('app_game_show', {'id': game.id}) }}">
+								<span class="iconify" data-icon="carbon:view-filled"></span>Détails</a>
+							<a class="btn btn-warning" href="{{ path('app_game_edit', {'id': game.id}) }}">
+								<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="7">Rien n'a été trouvée</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
 
 	<a class="btn btn-info" href="{{ path('app_game_new') }}">
 		<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>
