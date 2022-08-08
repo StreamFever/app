@@ -1,0 +1,30 @@
+#panel_widgets {
+
+ #section_btn_panel {
+   display: flex;
+   flex-flow: row nowrap;
+   justify-content: center;
+   gap: .6rem;
+
+   .btn_panel {
+     cursor: pointer;
+     background: $blue;
+     border-radius: 0 0 30px 0;
+     padding: .5rem 1rem;
+     color: #FFFFFF;
+     font-size: 1.5rem;
+   }
+
+   .active {
+     background: $yellow;
+   }
+ }
+
+ #section_panels {
+   
+
+  &:nth-child(1n) {
+    padding: 2rem 0;
+  }
+ }
+}

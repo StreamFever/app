@@ -1,0 +1,32 @@
+#overlay_show {
+
+ &.btn-section {
+   padding: 2rem 1rem;
+   margin: 2rem 0;
+   border: $black_1 2px solid;
+
+   .row {
+     display: flex;
+     flex-flow: row nowrap;
+     align-items: flex-end;
+   }
+ }
+}
+
+#overlay_show_access_person {
+ background-color: $grey_2;
+ padding: 2rem;
+
+ .flex {
+   display: flex;
+
+   .avatar {
+     width: 6%;
+     text-align: center;
+
+     img {
+       width: 100%;
+     }
+   }
+ }
+}
