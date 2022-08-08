@@ -11,6 +11,7 @@ import '../styles/dashboard.scss';
 import '../styles/animations/index.scss';
 
 // start the Stimulus application
+import '../js/admin/ws';
 import '../bootstrap';
 import '../js/admin/index';
 
