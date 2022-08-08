@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Event;
 use App\Entity\Edition;
 use App\Entity\Sponsor;
+use App\Entity\Social;
 
 use App\Entity\Overlay;
 use App\Repository\OverlayRepository;
@@ -97,12 +98,21 @@ class EventType extends AbstractType
                     'placeholder' => 'hereYourPlaceHolder'
                 )
            ))
+           ->add('eventSocial', EntityType::class, ['class' => Social::class,
+            // 'choice_label' => 'social_lib_id',
+            'multiple' => true,
+            'label' => 'Réseaux sociaux'],  null, array(
+                'attr' => array(
+                    'placeholder' => 'hereYourPlaceHolder'
+                )
+           ))
            ->add('eventSlots',  null, array(
             'attr' => array(
                 'placeholder' => 'hereYourPlaceHolder'
             )
        ))
            ->add('userId')
+           ->add('eventAccess')
            ->add('eventFormat',  null, array(
             'attr' => array(
                 'placeholder' => 'hereYourPlaceHolder'
