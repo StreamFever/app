@@ -37,7 +37,9 @@
 				{% endif %}
 			</td>
 			<td>{{ player.playerName }}</td>
-			<td><a href="{{ player.playerAvatar }}" target="_blank"><img style="width: 40%" src="{{ asset('uploads/avatars/' ~ player.playerAvatar) }}" alt="Logo de {{ player.playerName }}"></a></td>
+			<td>
+				<a href="{{ player.playerAvatar }}" target="_blank"><img style="width: 40%" src="{{ asset('uploads/avatars/' ~ player.playerAvatar) }}" alt="Logo de {{ player.playerName }}"></a>
+			</td>
 			<td>{{ player.playerUplay }}</td>
 			<td>{{ player.playerAtTwitter }}</td>
 			<td>{{ player.playerDiscord }}</td>
