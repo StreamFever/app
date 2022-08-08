@@ -18,7 +18,7 @@ function testUv(idPanel) {
  }
 }
 
-if (document.location.pathname.includes('/admin/overlay/')) {
+if (document.location.pathname.includes('/admin/overlay/') && document.location.pathname != '/admin/overlay/new' && document.location.pathname != '/admin/overlay/edit') {
  document.getElementById('panel_btn_event').addEventListener('click', function (e) {
   e.preventDefault();
   testUv('event');
