@@ -34,6 +34,11 @@ class Sponsor
      */
     private $events;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $sponsorBanner;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -91,6 +96,18 @@ class Sponsor
         if ($this->events->removeElement($event)) {
             $event->removeEventIdSponsor($this);
         }
+
+        return $this;
+    }
+
+    public function getSponsorBanner(): ?string
+    {
+        return $this->sponsorBanner;
+    }
+
+    public function setSponsorBanner(?string $sponsorBanner): self
+    {
+        $this->sponsorBanner = $sponsorBanner;
 
         return $this;
     }
