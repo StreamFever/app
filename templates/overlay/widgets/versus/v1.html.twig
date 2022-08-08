@@ -1,19 +1,33 @@
 {% if widget.WidgetId == "versus" or  widget.WidgetId.libWidgetId == "versus" %}
-	<section id="versus" class="{{widget.WidgetVisible ? "" : "display_none"}}">
-		<div id="versuscontainer" class="container_versus">
-			<div id="leftversus" class="left">
-				<div class="name_profil">
-					<span id="versus_team_a">TBD</span>
+	<section id="versus">
+		<div id="versuscontainer" class="{{widget.WidgetVisible ? "container_versus" : "display_none"}}">
+			<div id="top_versus" class="display_none">
+				<div class="logo">
+					<img src="{{event_service.getOneCurrentEvent[0].eventLogo}}" alt="Logo de l'event">
 				</div>
 			</div>
-			<div id="centerversus" class="center">
-				<span>VS</span>
-			</div>
-			<div id="rightversus" class="right">
-				<div class="name_profil">
-					<span id="versus_team_b">TBD</span>
+			<div class="flex_versus">
+				<div id="leftversus" class="display_none">
+					<div class="name_profil">
+						<span id="versus_team_a">
+							{{game_service.getOneCurrentGame[0].gameIdTeamAlpha|slice(0,5)|replace({' ': ''})  }}
+						</span>
+					</div>
+				</div>
+				<div id="centerversus" class="display_none">
+					<span>
+						VS
+					</span>
+				</div>
+				<div id="rightversus" class="display_none">
+					<div class="name_profil">
+						<span id="versus_team_b">
+							{{game_service.getOneCurrentGame[0].gameIdTeamBeta|slice(0,5)|replace({' ': ''})  }}
+						</span>
+					</div>
 				</div>
 			</div>
 		</div>
+		<div id="video_versus"></div>
 	</section>
 {% endif %}
