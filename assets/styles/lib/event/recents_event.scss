@@ -1,0 +1,27 @@
+.recents_event {
+ margin: 2rem 0;
+ display: flex;
+ flex-flow: row nowrap;
+ justify-content: space-between;
+ gap: 2rem;
+
+ .event {
+
+   a {
+     display: block;
+     text-align: center;
+     font-style: normal;
+     font-weight: 300;
+     font-size: 1.3rem;
+     background-color: $blue;
+     border-radius: 0 0 30px 0;
+
+     &:hover {
+       text-decoration-line: none;
+       background-color: $yellow;
+       color: $white;
+       transition: all ease-in cubic-bezier(0.075, 0.82, 0.165, 1);
+     }
+   }
+ }
+}

@@ -1,0 +1,93 @@
+.event-full {
+ background: url("https://images.unsplash.com/photo-1558008258-7ff8888b42b0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1331&q=80");
+ border-radius: 0 0 10px 0;
+
+ .content {
+   position: relative;
+   display: flex;
+   flex-flow: column nowrap;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+   padding: 4rem 2rem;
+
+   .top_left {
+     position: absolute;
+     top: 0;
+     left: 0;
+     display: flex;
+     flex-flow: column nowrap;
+
+     .name {
+       color: #FFFFFF;
+       background: $yellow;
+       font-size: 1.5rem;
+       font-weight: 700;
+       padding: .3rem 4rem;
+     }
+
+     .edition {
+       background: $white;
+       color: $black_2;
+       text-transform: uppercase;
+       border-radius: 0 0 30px 0;
+     }
+   }
+
+   .top_right {
+     position: absolute;
+     top: 0;
+     right: 0;
+     padding: 1rem;
+   }
+
+   .logo {
+     width: 20%;
+
+     img {
+       width: 100%;
+     }
+   }
+ }
+
+ .details {
+   display: flex;
+   flex-flow: row nowrap;
+   gap: 1rem;
+   color: #FFFFFF;
+   font-size: 1.3rem;
+   background: #00000063;
+   padding: .5rem 5rem;
+
+   span {
+     font-style: normal;
+     font-weight: 300;
+     color: $white;
+   }
+ }
+
+ h3 {
+   color: $yellow;
+   font-size: 2.3rem;
+   font-weight: 200;
+ }
+
+ a {
+   display: block;
+   text-align: center;
+   font-style: normal;
+   font-weight: 300;
+   font-size: 1.3rem;
+   background-color: $blue;
+   padding: .5rem 2rem;
+
+   &:hover {
+     text-decoration-line: none;
+     background-color: $yellow;
+     color: $white;
+     transition: all ease-in cubic-bezier(0.075, 0.82, 0.165, 1);
+   }
+ }
+
+ .btn_section {}
+}
