@@ -4,66 +4,83 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Détail du match "{{game.gameIdTeamAlpha.teamName is defined and game.gameIdTeamBeta.teamName is defined ? game.gameIdTeamAlpha.teamName ~ " VS " ~ game.gameIdTeamBeta.teamName : ""}}"</h1>
 
-	<table class="table">
-		<tbody>
-			{% if is_granted('ROLE_ADMIN') %}
-				<tr>
-					<th>Id</th>
-					<td>{{ game.id }}</td>
-				</tr>
-			{% endif %}
-			<tr>
-				<th>Versus</th>
-				<th>{{ game.gameIdTeamAlpha.teamName ~ " VS " ~ game.gameIdTeamBeta.teamName }}</th>
-			</tr>
-			<tr>
-				<th>Score</th>
-				<td>{{ game.gameScoreTeamAlpha ~ " - " ~ game.gameScoreTeamBeta }}</td>
-			</tr>
-			<tr>
-				<th>Date</th>
-				<th>
-					{% if "now"|date_modify("+1 day")|date("m/d/Y", "Europe/Paris") == game.gameStartDate|date('m/d/Y', "Europe/Paris") %}
-						<span class="badge bg-warning pulsate-bck">Demain</span>
-					{% endif %}
-					{% if "now"|date_modify("-1 day")|date("m/d/Y", "Europe/Paris") == game.gameStartDate|date('m/d/Y', "Europe/Paris") %}
-						<span class="badge bg-light">Hier</span>
-					{% endif %}
-					{% if "now"|date_modify("-1 day")|date("m/d/Y", "Europe/Paris") != game.gameStartDate|date('m/d/Y', "Europe/Paris") and "now"|date_modify("+1 day")|date("m/d/Y", "Europe/Paris") != game.gameStartDate|date('m/d/Y') %}
-						<span class="badge bg-light" style="color: #212529">{{ game.gameStartDate ? game.gameStartDate|date('d/m H:i', "Europe/Paris") : '' }}</span>
-					{% endif %}
-				</th>
-			</tr>
-			<tr>
-				<th>Format</th>
-				<td>{{ game.gameFormat }}</td>
-			</tr>
-			<tr>
-				<th>Status</th>
-				<th>
-					{% if game.gameStatus == "soon" %}
-						<span class="badge bg-info">{{ game.gameStatus }}</span>
-					{% endif %}
-					{% if game.gameStatus == "current" %}
-						<span class="badge bg-success">{{ game.gameStatus }}</span>
-					{% endif %}
-					{% if game.gameStatus == "finished" %}
-						<span class="badge bg-secondary">{{ game.gameStatus }}</span>
-					{% endif %}
-				</th>
-			</tr>
-		</tbody>
-	</table>
+	<pre>
+	{{ dump(game) }}
+</pre>
 
-	<a class="btn btn-dark" href="{{ path('app_game_index') }}">
-		<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
-		Retour à la liste</a>
+	<section id="versus">
+		<div class="left">
+			<div class="logo">
+				<td>
+					<a href="{{ game.gameIdTeamAlpha.teamLogo }}" target="_blank"><img src="{{ game.gameIdTeamAlpha.teamLogo != null ? asset('uploads/logos/' ~ game.gameIdTeamAlpha.teamLogo) : "https://cdn.artaic.fr/images/Blason-Salty.png" }}" alt="Logo de {{ game.gameIdTeamAlpha.teamName }}"></a>
+				</td>
+			</div>
+			<h3>{{game.gameIdTeamAlpha.teamName}}</h3>
+			<a class="btn btn-dark" href="{{ path('app_team_edit', {'id': game.gameIdTeamAlpha.id}) }}" target="_blank">
+				<span class="iconify" data-icon="akar-icons:edit"></span>
+				Gérer l'équipe</a>
+		</div>
+		<div class="center">
+			<div class="content">
+				{% if game.overlayId != null %}
+					<span class="overlay">Lié avec l'overlay
+						{{game.overlayId.OverlayName}}
+						de
+						<strong>{{game.overlayId.OverlayOwner.pseudo}}</strong>
+					</span>
+				{% endif %}
+				<span class="vs">VS</span>
+				<span class="heure">{{game.gameStartDate|date('H:i')}}</span>
+				<span class="badge bg-light" style="color: #212529">{{ game.gameStartDate ? game.gameStartDate|date('j l, F', "Europe/Paris") : '' }}</span>
+				<span class="iconify" data-icon="mdi:sword-cross">{{game.gameFormat.formatName}}</span>
+				<div class="map_section">
+					<pre>
+					{{ dump(game.gameIdMaps.snapshot) }}
+				</pre>
+					{% for map in game.gameIdMaps %}
+						<div class="map">
+							<div class="map_name">
+								<span>{{ map.mapName }}</span>
+							</div>
+							<div class="map_banner">
+								<img src="{{ map.mapImg }}" alt="Map de {{ map.mapName }}">
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="btn_section">
+				{% if is_granted('GAME_EDIT',game) %}
+					<a class="btn btn-dark" href="{{ path('app_game_edit', {'id': game.id}) }}">
+						<span class="iconify" data-icon="akar-icons:edit"></span>
+						Gérer le match</a>
+				{% endif %}
+				{% if is_granted('GAME_DELETE',game) %}
+					{{ include('game/_delete_form.html.twig') }}
+				{% endif %}
+				{% if is_granted('OVERLAY_VIEW',game.overlayId) %}
+					<a class="btn btn-info" href="{{ path('app_overlay_show', {'id': game.overlayId.id}) }}" target="_blank">
+						<span class="iconify" data-icon="akar-icons:edit"></span>
+						Rejoindre l'overlay</a>
+				{% endif %}
+				<a class="btn btn-dark" href="{{ path('app_game_index') }}">
+					<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
+					Retour à la liste</a>
+			</div>
+		</div>
+		<div class="right">
+			<div class="logo">
+				<td>
+					<a href="{{ game.gameIdTeamBeta.teamLogo }}" target="_blank"><img src="{{ game.gameIdTeamBeta.teamLogo != null ? asset('uploads/logos/' ~ game.gameIdTeamBeta.teamLogo) : "https://cdn.artaic.fr/images/Blason-Salty.png" }}" alt="Logo de {{ game.gameIdTeamBeta.teamName }}"></a>
+				</td>
+			</div>
+			<h3>{{game.gameIdTeamBeta.teamName}}</h3>
+			<a class="btn btn-dark" href="{{ path('app_team_edit', {'id': game.gameIdTeamBeta.id}) }}" target="_blank">
+				<span class="iconify" data-icon="akar-icons:edit"></span>
+				Gérer l'équipe</a>
+		</div>
+	</section>
 
-	<a class="btn btn-light" href="{{ path('app_game_edit', {'id': game.id}) }}">
-		<span class="iconify" data-icon="akar-icons:edit"></span>
-		Editer</a>
 
-	{{ include('game/_delete_form.html.twig') }}
 {% endblock %}
