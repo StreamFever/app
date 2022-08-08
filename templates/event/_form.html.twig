@@ -160,6 +160,24 @@
 			</div>
 		</div>
 
+		<div class="input-grp">
+			<h3>Réseaux sociaux</h3>
+			<p>Votre événement possède des réseaux sociaux et vous souhaitez les afficher ? Sélectionnez les à partir de la liste ci-dessous.</p>
+			<p>
+				<u>Si un réseau social n'apparait pas, merci de nous en faire la demande.</u>
+			</p>
+			<div class="form-floating mb-3">
+				{{ form_widget(form.eventSocial, {
+                'attr': {'class': 'form-select'},
+                'id': "eventSocial",
+                }) }}
+				{{ form_label(form.eventSocial, null, {
+            'label': 'Sélectionnez vos réseaux',
+            'id': 'eventSocial'
+                }) }}
+			</div>
+		</div>
+
 		{{ form_label(form.userId, null, {
     'label_attr': {'class': 'display_none'},
     }) }}
