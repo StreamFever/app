@@ -11,7 +11,11 @@
 		<div id="popuptext" class="container_popup">
 			<div id="leftpopuptext" class="left">
 				<div class="img">
+				{% if event_service.getOneCurrentEvent %}
 					<img id="popuplogoimg" src="{{ event_service.getOneCurrentEvent[0].eventLogo != null ? event_service.getOneCurrentEvent[0].eventLogo : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Logo de l'événement">
+				{% else %}
+					<img id="popuplogoimg" src="https://cdn.artaic.fr/images/Blason-Salty.png" alt="Logo de l'événement">
+				{% endif %}
 				</div>
 			</div>
 			<div id="textpopuptext" class="text">
