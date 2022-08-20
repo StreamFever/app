@@ -74,10 +74,35 @@ class Game
      */
     private $overlayId;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="currentGame")
+     */
+    private $currentEvent;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $gameName;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Map::class, inversedBy="gameCurrent")
+     */
+    private $currentMap;
+
     public function __construct()
     {
         $this->gameIdMaps = new ArrayCollection();
+        $this->currentEvent = new ArrayCollection();
     }
+
+    public function __toString()
+    {
+        if (is_null($this->gameName)) {
+            return 'NULL';
+        }
+        return $this->gameName;
+    }
+
 
     public function getId(): ?int
     {
@@ -212,6 +237,60 @@ class Game
     public function setOverlayId(?Overlay $overlayId): self
     {
         $this->overlayId = $overlayId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getCurrentEvent(): Collection
+    {
+        return $this->currentEvent;
+    }
+
+    public function addCurrentEvent(Event $currentEvent): self
+    {
+        if (!$this->currentEvent->contains($currentEvent)) {
+            $this->currentEvent[] = $currentEvent;
+            $currentEvent->setCurrentGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCurrentEvent(Event $currentEvent): self
+    {
+        if ($this->currentEvent->removeElement($currentEvent)) {
+            // set the owning side to null (unless already changed)
+            if ($currentEvent->getCurrentGame() === $this) {
+                $currentEvent->setCurrentGame(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getGameName(): ?string
+    {
+        return $this->gameName;
+    }
+
+    public function setGameName(?string $gameName): self
+    {
+        $this->gameName = $gameName;
+
+        return $this;
+    }
+
+    public function getCurrentMap(): ?Map
+    {
+        return $this->currentMap;
+    }
+
+    public function setCurrentMap(?Map $currentMap): self
+    {
+        $this->currentMap = $currentMap;
 
         return $this;
     }
