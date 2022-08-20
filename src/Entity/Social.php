@@ -46,6 +46,11 @@ class Social
         $this->socialAccess = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->socialTag;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
