@@ -20,8 +20,10 @@ class GameController extends AbstractController
      */
     public function index(GameRepository $gameRepository): Response
     {
+        $currentUser = $this->getUser();
+
         return $this->render('game/index.html.twig', [
-            'games' => $gameRepository->findAll(),
+            'games' => $gameRepository->findAllCreatedByUserId($currentUser->getId()),
         ]);
     }
 
@@ -35,6 +37,9 @@ class GameController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($game->getCurrentMap() == null && $game->getGameIdMaps()->count() > 0) {
+                $game->setCurrentMap($game->getGameIdMaps()[0]);
+            }
             $gameRepository->add($game);
 
             $this->addFlash('success', 'Le match a bien été créée !');
@@ -68,6 +73,9 @@ class GameController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($game->getCurrentMap() == null && $game->getGameIdMaps()->count() > 0) {
+                $game->setCurrentMap($game->getGameIdMaps()[0]);
+            }
             $gameRepository->add($game);
 
             $this->addFlash('success', 'Le match a bien été modifié !');
@@ -93,7 +101,7 @@ class GameController extends AbstractController
     public function delete(Request $request, Game $game, GameRepository $gameRepository): Response
     {
         $this->denyAccessUnlessGranted('GAME_DELETE', $game);
-        if ($this->isCsrfTokenValid('delete'.$game->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $game->getId(), $request->request->get('_token'))) {
             $gameRepository->remove($game);
         }
 
