@@ -64,6 +64,11 @@ class Player
      */
     private $teams;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $playerIdObsNinja;
+
     public function __construct()
     {
         $this->teams = new ArrayCollection();
@@ -193,6 +198,18 @@ class Player
         if ($this->teams->removeElement($team)) {
             $team->removePlayer($this);
         }
+
+        return $this;
+    }
+
+    public function getPlayerIdObsNinja(): ?string
+    {
+        return $this->playerIdObsNinja;
+    }
+
+    public function setPlayerIdObsNinja(?string $playerIdObsNinja): self
+    {
+        $this->playerIdObsNinja = $playerIdObsNinja;
 
         return $this;
     }

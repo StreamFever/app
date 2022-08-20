@@ -50,6 +50,11 @@ class Overlay
      */
     private $games;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Event::class, inversedBy="currentOverlay")
+     */
+    private $currentEvent;
+
     public function __construct()
     {
         $this->OverlayAccess = new ArrayCollection();
@@ -202,6 +207,18 @@ class Overlay
                 $game->setOverlayId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCurrentEvent(): ?Event
+    {
+        return $this->currentEvent;
+    }
+
+    public function setCurrentEvent(?Event $currentEvent): self
+    {
+        $this->currentEvent = $currentEvent;
 
         return $this;
     }
