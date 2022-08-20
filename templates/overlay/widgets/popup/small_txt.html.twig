@@ -6,22 +6,23 @@
 {% endfor %}
 
 
-{% if widget.WidgetId == "popup_text" or  widget.WidgetId.libWidgetId == "popup_text" and popupText[0].metaValue is not empty %}
-	<section id="smalltext" class="{{widget.WidgetVisible ? "" : "display_none"}}">
+{% if widget.WidgetId == "popup_text" or  widget.WidgetId.libWidgetId == "popup_text" %}
+	<section id="smalltext">
 		<div id="popuptext" class="container_popup">
-			<div id="leftpopuptext" class="left">
+			<div id="leftpopuptext" class="{{widget.WidgetVisible ? "left" : "display_none"}}">
 				<div class="img">
-				{% if event_service.getOneCurrentEvent %}
-					<img id="popuplogoimg" src="{{ event_service.getOneCurrentEvent[0].eventLogo != null ? event_service.getOneCurrentEvent[0].eventLogo : 'https://cdn.artaic.fr/images/Blason-Salty.png' }}" alt="Logo de l'événement">
-				{% else %}
-					<img id="popuplogoimg" src="https://cdn.artaic.fr/images/Blason-Salty.png" alt="Logo de l'événement">
-				{% endif %}
+					{% if event is defined %}
+						<img id="popuplogoimg" src="{{ 'http' in event.eventLogo ? event.eventLogo : asset('uploads/logos/' ~ event.eventLogo) }}" alt="Logo de l'événement">
+					{% else %}
+						<img id="popuplogoimg" src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" alt="Logo de l'événement">
+					{% endif %}
 				</div>
 			</div>
-			<div id="textpopuptext" class="text">
-				<span id="txtvalue">{{ popupText[0].metaValue }}</span>
+			<div id="textpopuptext" class="{{widget.WidgetVisible ? "text" : "display_none"}}">
+				<span id="txtvalue">
+					{{ popupText[0].metaValue is not empty ? popupText[0].metaValue : 'Bienvenue sur StreamCave !' }}
+				</span>
 			</div>
 		</div>
 	</section>
-
 {% endif %}
