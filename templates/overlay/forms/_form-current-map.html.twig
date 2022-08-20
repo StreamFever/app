@@ -1,0 +1,64 @@
+{{ form_start(form_current_map) }}
+
+{% if form_errors(form_current_map) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form_current_map) }}
+	</div>
+{% endif %}
+
+{# INFO: Seul input actif #}
+<div class="form-floating mb-3">
+        {{ form_widget(form_current_map.currentMap, {
+        'attr': {'class': 'form-select' , 'oninput': 'updateCurrentMap(this.id)'},
+        'id': "currentMap",
+        }) }}
+{{ form_label(form_current_map.currentMap, null, {
+'label': 'Sélectionnez un match',
+'id': 'currentMap'
+        }) }}
+</div>
+{{ form_widget(form_current_map.gameIdTeamAlpha, {
+                    'attr': {'class': 'display_none'},
+                    'id': "gameIdTeamAlpha",
+                    }) }}
+
+{{ form_widget(form_current_map.gameIdTeamBeta, {
+                    'attr': {'class': 'display_none'},
+                    'id': "gameIdTeamBeta",
+                    }) }}
+{{ form_widget(form_current_map.gameScoreTeamAlpha, {
+            'attr': {'class': 'display_none'},
+            'id': "gameScoreTeamAlpha",
+            }) }}
+{{ form_widget(form_current_map.gameScoreTeamBeta, {
+            'attr': {'class': 'display_none'},
+            'id': "gameScoreTeamBeta",
+            }) }}
+{{ form_widget(form_current_map.gameFormat, {
+        'attr': {'class': 'display_none'},
+        'id': "gameFormat",
+        }) }}
+{{ form_widget(form_current_map.gameIdMaps, {
+    'attr': {'class': 'display_none'},
+    'id': "gameIdMaps",
+    }) }}
+{{ form_widget(form_current_map.gameStatus, {
+        'attr': {'class': 'display_none'},
+        'id': "gameStatus",
+        }) }}
+{{ form_widget(form_current_map.gameStartDate, {
+      'attr': {'class': 'display_none'},
+      'id': "gameStartDate",
+      }) }}
+
+{{ form_widget(form_current_map.overlayId, {
+  'attr': {'class': 'display_none'},
+  'id': "overlayId",
+  }) }}
+{{ form_widget(form_current_map.userId, {
+       'attr': {'class': 'display_none'},
+       'id': "userId",
+       }) }}
+
+
+{{ form_end(form_current_map) }}
