@@ -1,0 +1,50 @@
+{{ form_start(form_player) }}
+
+{% if form_errors(form_player) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form_player) }}
+	</div>
+{% endif %}
+
+
+{# INFO: Seul input actif #}
+<div class="form-floating mb-3">
+	{{ form_widget(form_player.playerIdObsNinja, {
+        'attr': {'class': 'form-control' , 'oninput': 'updatePlayerNinja(this.id)'},
+        'id': "playerIdObsNinja",
+        }) }}
+	{{ form_label(form_player.playerIdObsNinja, null, {
+'label': 'Définissez son ID OBS Ninja',
+'id': 'playerIdObsNinja'
+        }) }}
+</div>
+{{ form_widget(form_player.playerName, {
+        'attr': {'class': 'display_none'},
+        'id': "playerName",
+        }) }}
+{{ form_widget(form_player.playerDiscord, {
+        'attr': {'class': 'display_none'},
+        'id': "playerDiscord",
+        }) }}
+{{ form_widget(form_player.playerUplay, {
+        'attr': {'class': 'display_none'},
+        'id': "playerUplay",
+        }) }}
+{{ form_widget(form_player.playerAvatar, {
+        'attr': {'class': 'display_none'},
+        'id': "playerAvatar",
+        }) }}
+{{ form_widget(form_player.playerAtTwitter, {
+        'attr': {'class': 'display_none'},
+        'id': "playerAtTwitter",
+        }) }}
+{{ form_widget(form_player.playerTwitch, {
+        'attr': {'class': 'display_none'},
+        'id': "playerTwitch",
+        }) }}
+{{ form_widget(form_player.playerStudentSa, {
+        'attr': {'class': 'display_none'},
+        'id': "playerStudentSa",
+        }) }}
+
+{{ form_end(form_player) }}
