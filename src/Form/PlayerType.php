@@ -18,10 +18,10 @@ class PlayerType extends AbstractType
     {
         $builder
             ->add('playerName',  null, array(
-        'attr' => array(
-            'placeholder' => 'hereYourPlaceHolder'
-        ),
-        ))
+                'attr' => array(
+                    'placeholder' => 'hereYourPlaceHolder'
+                ),
+            ))
             ->add('playerAvatar', FileType::class, [
                 'label' => 'Avatar player',
 
@@ -46,36 +46,40 @@ class PlayerType extends AbstractType
                 ],
             ])
             ->add('playerUplay',  null, array(
-        'attr' => array(
-            'placeholder' => 'hereYourPlaceHolder'
-        ),
-        ))
-        //     ->add('playerUplayTag',  null, array(
-        // 'attr' => array(
-        //     'placeholder' => 'hereYourPlaceHolder'
-        // ),
-        // ))
+                'attr' => array(
+                    'placeholder' => 'hereYourPlaceHolder'
+                ),
+            ))
+            //     ->add('playerUplayTag',  null, array(
+            // 'attr' => array(
+            //     'placeholder' => 'hereYourPlaceHolder'
+            // ),
+            // ))
             ->add('playerAtTwitter',  null, array(
-        'attr' => array(
-            'placeholder' => 'hereYourPlaceHolder'
-        ),
-        ))
+                'attr' => array(
+                    'placeholder' => 'hereYourPlaceHolder'
+                ),
+            ))
             ->add('playerDiscord',  null, array(
-        'attr' => array(
-            'placeholder' => 'hereYourPlaceHolder'
-        ),
-        ))
+                'attr' => array(
+                    'placeholder' => 'hereYourPlaceHolder'
+                ),
+            ))
             ->add('playerTwitch',  null, array(
-        'attr' => array(
-            'placeholder' => 'hereYourPlaceHolder'
-        ),
-        ))
+                'attr' => array(
+                    'placeholder' => 'hereYourPlaceHolder'
+                ),
+            ))
             ->add('playerStudentSa',  null, array(
-        'attr' => array(
-            'placeholder' => 'hereYourPlaceHolder'
-        ),
-        ))
-            // ->add('playerIdOBSNinja')
+                'attr' => array(
+                    'placeholder' => 'hereYourPlaceHolder'
+                ),
+            ))
+            ->add('playerIdObsNinja',  null, array(
+                'attr' => array(
+                    'placeholder' => 'hereYourPlaceHolder'
+                ),
+            ))
             // ->add('playerIDTeam', EntityType::class, ['class' => Team::class,
             // 'choice_label' => 'team_name',
             // 'multiple' => true,
