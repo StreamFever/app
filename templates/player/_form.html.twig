@@ -7,8 +7,12 @@
 {% endif %}
 
 <div class="input-grp-center">
-	<h3>Informations principales</h3>
-	<p>Renseignez les deux champs ci-dessous.</p>
+	<h3>
+		Informations principales
+	</h3>
+	<p>
+		Renseignez les deux champs ci-dessous.
+	</p>
 	<div class="form-floating mb-3">
 		{{ form_widget(form.playerName, {
         'attr': {'class': 'form-control'},
@@ -23,7 +27,8 @@
 		{{ form_widget(form.playerDiscord, {
         'attr': {'class': 'form-control'},
         'id': "playerDiscord",
-        }) }}{{ form_label(form.playerDiscord, null, {
+        }) }}
+		{{ form_label(form.playerDiscord, null, {
 'label': 'Définissez le pseudo Discord',
 'id': 'playerDiscord'
         }) }}
@@ -31,20 +36,31 @@
 </div>
 
 <div class="input-grp">
-	<h3>Connexion aux jeux</h3>
-    <div class="form-floating mb-3">
-        {{ form_widget(form.playerUplay, {
+	<h3>
+		Connexion aux jeux
+	</h3>
+	<p>
+		Renseignez les informations de jeux du joueur.
+	</p>
+	<div class="form-floating mb-3">
+		{{ form_widget(form.playerUplay, {
         'attr': {'class': 'form-control'},
         'id': "playerUplay",
         }) }}
-        {{ form_label(form.playerUplay, null, {
+		{{ form_label(form.playerUplay, null, {
     'label': 'Définissez le pseudo uplay',
     'id': 'playerUplay'
         }) }}
-    </div>
+	</div>
 </div>
 
 <div class="input-grp">
+	<h3>
+		Informations supplémentaires
+	</h3>
+	<p>
+		Renseignez un maximum d'informations à propos du joueur.
+	</p>
 	<div class="form-floating mb-3">
 		{{ form_widget(form.playerAvatar, {
         'attr': {'class': 'form-control'},
@@ -65,6 +81,16 @@
                 {{ form_label(form.playerAtTwitter, null, {
                 'label': 'Définissez le pseudo Twitter',
                 'id': 'playerAtTwitter'
+                    }) }}
+            </div>
+            <div class="form-floating mb-3">
+                {{ form_widget(form.playerIdObsNinja, {
+                    'attr': {'class': 'form-control'},
+                    'id': "playerIdObsNinja",
+                    }) }}
+                {{ form_label(form.playerIdObsNinja, null, {
+                'label': 'Définissez son ID OBS Ninja',
+                'id': 'playerIdObsNinja'
                     }) }}
             </div>
         </div>
