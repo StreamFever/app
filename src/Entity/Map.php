@@ -34,14 +34,25 @@ class Map
      */
     private $games;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Game::class, mappedBy="currentMap")
+     */
+    private $gameCurrent;
+
     public function __construct()
     {
         $this->games = new ArrayCollection();
+        $this->gameCurrent = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __toString()
+    {
+        return $this->mapName;
     }
 
     public function getMapName(): ?string
@@ -90,6 +101,36 @@ class Map
     {
         if ($this->games->removeElement($game)) {
             $game->removeGameIdMap($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Game>
+     */
+    public function getGameCurrent(): Collection
+    {
+        return $this->gameCurrent;
+    }
+
+    public function addGameCurrent(Game $gameCurrent): self
+    {
+        if (!$this->gameCurrent->contains($gameCurrent)) {
+            $this->gameCurrent[] = $gameCurrent;
+            $gameCurrent->setCurrentMap($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGameCurrent(Game $gameCurrent): self
+    {
+        if ($this->gameCurrent->removeElement($gameCurrent)) {
+            // set the owning side to null (unless already changed)
+            if ($gameCurrent->getCurrentMap() === $this) {
+                $gameCurrent->setCurrentMap(null);
+            }
         }
 
         return $this;
