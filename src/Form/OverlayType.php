@@ -21,7 +21,8 @@ use Symfony\Component\Form\FormEvents;
 class OverlayType extends AbstractType
 {
 
-    public function __construct(Security $security) {
+    public function __construct(Security $security)
+    {
         $this->security = $security;
     }
 
@@ -35,22 +36,26 @@ class OverlayType extends AbstractType
                     'placeholder' => 'hereYourPlaceHolder'
                 )
             ))
-            ->add('OverlayAccess', EntityType::class, ['class' => User::class,
-            'choice_label' => 'pseudo',
-            'multiple' => true,
-            'query_builder' => function (UserRepository $userrepository) {
-                return $userrepository->createQueryBuilder('u')
-                    ->where('u.id != :user_id')
-                    ->setParameter('user_id', $this->security->getUser()->getId())
-                    ->orderBy('u.pseudo', 'ASC');
-            },
-            'label' => 'Pseudo'], array(
+            ->add('OverlayAccess', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => 'pseudo',
+                'required' => false,
+                'multiple' => true,
+                'query_builder' => function (UserRepository $userrepository) {
+                    return $userrepository->createQueryBuilder('u')
+                        ->where('u.id != :user_id AND u.email != :websocket')
+                        ->setParameter('user_id', $this->security->getUser()->getId())
+                        ->setParameter('websocket', 'websocket@artaic.fr')
+                        ->orderBy('u.pseudo', 'ASC');
+                },
+                'label' => 'Pseudo'
+            ], array(
                 'attr' => array(
                     'placeholder' => 'hereYourPlaceHolder'
                 )
-           ))
-            ->add('OverlayOwner');
-        ;
+            ))
+            ->add('OverlayOwner')
+            ->add('currentEvent', HiddenType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
