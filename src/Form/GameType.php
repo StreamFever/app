@@ -95,6 +95,7 @@ class GameType extends AbstractType
                    ->orderBy('o.id', 'ASC');
                },
                ])
+               ->add('currentMap')
         ;
     }
 
