@@ -54,7 +54,7 @@ class MetaRepository extends ServiceEntityRepository
             ->where('w.overlay = :id_overlay')
             ->setParameter('id_overlay', $id_overlay)
             ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
+            // ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;

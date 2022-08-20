@@ -54,7 +54,7 @@ class WidgetsRepository extends ServiceEntityRepository
             ->where('o.id = :id_overlay')
             ->setParameter('id_overlay', $id_overlay)
             ->orderBy('w.id', 'ASC')
-            ->setMaxResults(10)
+            // ->setMaxResults(10)
             ->getQuery()
             ->getResult();
     }
