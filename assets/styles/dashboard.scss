@@ -673,3 +673,25 @@ table {
   }
 
 }
+
+
+.admin_panel {
+  border: 3px solid black;
+  position: relative;
+  padding: 2rem;
+  margin: 1rem 0;
+
+  &::before {
+    content: "ADMIN PANEL";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    color: white;
+    background: black;
+    padding: .4rem;
+  }
+}
