@@ -12,7 +12,7 @@ class EditionFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
 
-     $editions = ['her6s', 'campus_cup', 'salty_duels', 'hors_serie'];
+     $editions = ['her6s', 'campus_cup', 'salty_duels', 'yunktis_royale', 'hors_serie'];
 
      foreach ($editions as $key => $value) {
       $edition = new Edition();

@@ -58,7 +58,7 @@ class AppFixtures extends Fixture
     {
         $user = new User();
         $user->setEmail('websocket@artaic.fr');
-        $user->setPseudo('Weboscket');
+        $user->setPseudo('Webocket');
         $user->setUuid(Uuid::uuid4());
         $user->setRoles(['ROLE_ADMIN']);
 

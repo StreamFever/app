@@ -18,6 +18,7 @@ class GameFixtures extends Fixture implements DependentFixtureInterface
      $game = new Game();
      $game->setGameIdTeamAlpha($this->getReference('team_' . rand(0, 19)));
      $game->setGameIdTeamBeta($this->getReference('team_' . rand(0, 19)));
+     $game->setGameName($game->getGameIdTeamAlpha()->getTeamName() . ' vs ' . $game->getGameIdTeamBeta()->getTeamName());
      $game->setGameStartDate(new \DateTime(sprintf('-%d days', rand(1, 100))));
      $game->setGameFormat($this->getReference('format_' . rand(0, 4)));
      $game->setGameStatus($this->getReference('status_' . rand(0, 2)));
@@ -25,7 +26,7 @@ class GameFixtures extends Fixture implements DependentFixtureInterface
      $game->addGameIdMap($this->getReference('map_' . rand(0, 4)));
      $game->addGameIdMap($this->getReference('map_' . rand(0, 4)));
      $game->setUserId($this->getReference('user_1'));
-     $game->setOverlayId($this->getReference('overlay_' . rand(0, 24)));
+    //  $game->setOverlayId($this->getReference('overlay_' . rand(0, 24)));
       
       $manager->persist($game);
       $this->addReference('game_' . $key, $game);
