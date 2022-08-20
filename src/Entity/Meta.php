@@ -43,6 +43,11 @@ class Meta
         return $this->id;
     }
 
+    public function __toString()
+    {
+        return $this->MetaKey;
+    }
+
     public function getMetaKey(): ?string
     {
         return $this->MetaKey;
