@@ -1,11 +1,10 @@
-function copyText() {
-    /* Get the text field */
-    let copyText = document.getElementById("inputCopied").href;
-    console.log(copyText);
+import { notification } from './lib/notification';
 
-    /* Copy the text inside the text field */
-    navigator.clipboard.writeText();
+function copyText(e) {
+    navigator.clipboard.writeText(e.value);
+    notification.call(this, "Texte copié dans le presser-papier", "success", "Texte copié");
 }
+window.copyText = copyText;
 
 // Menu déroulant
 let listDropdownMenu = document.querySelectorAll('.dropdown-menu-source');
@@ -93,22 +92,4 @@ if (window.location.pathname == "/admin/user/new") {
     })
 }
 
-export const notification = (message, type, title) => {
-    let color = "blue";
-    if (type == "success") {
-        color = "green"
-    } else if (type == "error") {
-        color = "red"
-    } else if (type == "warning") {
-        color = "yellow"
-    } else if (type == "info") {
-        color = "blue"
-    }
-    iziToast.show({ title: title, message: message, color: color })
-}
 
-
-
-// $(document).ready(function () {
-//     $('.selectpicker').multiselect();
-// });
