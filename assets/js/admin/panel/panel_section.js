@@ -1,7 +1,7 @@
 console.log("Panel wigets")
 
 function testUv(idPanel) {
- let arrPanel = ["event", "match", "tweets", "popup"];
+ let arrPanel = ["event", "match", "tweets", "popup", "ninja"];
 
  arrPanel.forEach(e => {
   if (document.getElementById('panel_btn_' + e).classList.contains('active')) {
@@ -37,6 +37,11 @@ if (document.location.pathname.includes('/admin/overlay/') && document.location.
  document.getElementById('panel_btn_tweets').addEventListener('click', function (e) {
   e.preventDefault();
   testUv('tweets');
+ });
+
+ document.getElementById('panel_btn_ninja').addEventListener('click', function (e) {
+  e.preventDefault();
+  testUv('ninja');
  });
 }
 
