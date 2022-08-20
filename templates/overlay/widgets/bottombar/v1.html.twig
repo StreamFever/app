@@ -1,26 +1,54 @@
 {% set bottombarMarquee = [] %}
 {% for meta in metas %}
-	{% if meta.metaKey == 'bottombar_marquee' %}
+	{% if meta.metaKey == 'bottombar_marquee_1' %}
+		{% set bottombarMarquee = bottombarMarquee|merge([meta]) %}
+	{% endif %}
+	{% if meta.metaKey == 'bottombar_marquee_2' %}
+		{% set bottombarMarquee = bottombarMarquee|merge([meta]) %}
+	{% endif %}
+	{% if meta.metaKey == 'bottombar_marquee_3' %}
+		{% set bottombarMarquee = bottombarMarquee|merge([meta]) %}
+	{% endif %}
+	{% if meta.metaKey == 'bottombar_marquee_4' %}
 		{% set bottombarMarquee = bottombarMarquee|merge([meta]) %}
 	{% endif %}
 {% endfor %}
-<section id="bottombar">
-	<div class="logo">
-		<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" alt="Logo de StreamCave">
+<pre>
+	{{ dump(bottombarMarquee) }}
+</pre>
+<section id="bottombar" class="{{widget.WidgetVisible == 2 ? "" : "display_none"}}">
+	{% if event is defined %}
+		<div class="logo">
+			<img src="{{ 'http' in event.eventLogo ? event.eventLogo : asset('uploads/logos/' ~ event.eventLogo) }}" alt="Logo de l'event">
+		</div>
+	{% else %}
+		<div class="logo">
+			<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" alt="Logo de l'event">
+		</div>
+	{% endif %}
+	<div class="title">
+		PRE-SHOW
 	</div>
-	<div class="title">PRE-SHOW</div>
 	<div class="details">
 		<div class="top">
 			<span class="event">
-				{% if event_service.getOneCurrentEvent %}
-					{{event_service.getOneCurrentEvent[0].eventName}}
+				{% if event is defined %}
+					{{event.eventName}}
 				{% else %}
 					Bienvenue sur StreamCave !
 				{% endif %}
 			</span>
 		</div>
 		<div class="bottom">
-			<marquee direction="left">{{ bottombarMarquee[0].metaValue }}</marquee>
+			<marquee direction="left" id="bottombarMarquee">
+				{% for dataMarquee in bottombarMarquee %}
+					{% if dataMarquee.MetaValue is not empty %}
+						<span id="{{dataMarquee.MetaKey}}">
+							{{dataMarquee.MetaValue}}
+						</span>
+					{% endif %}
+				{% endfor %}
+			</marquee>
 		</div>
 	</div>
 	<div class="sponsors">
