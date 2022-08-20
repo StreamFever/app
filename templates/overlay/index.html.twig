@@ -1,21 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mes overlays
+{% block title %}
+	Mes overlays
 {% endblock %}
 
 {% block body %}
-	<h1>Mes overlays</h1>
-	<p>Vous pouvez retrouvez ci-dessous la liste de vos overlays ainsi que de ceux où vous avez accès.</p>
+	<h1>
+		Mes overlays
+	</h1>
+	<p>
+		Vous pouvez retrouvez ci-dessous la liste de vos overlays ainsi que de ceux où vous avez accès.
+	</p>
 
 	<table class="table">
 		<thead>
 			<tr>
 				{% if is_granted('ROLE_ADMIN') %}
-					<th>Id</th>
+					<th>
+						Id
+					</th>
 				{% endif %}
-				<th>Nom</th>
-				<th>Accès</th>
-				<th>Actions</th>
+				<th>
+					Nom
+				</th>
+				<th>
+					Accès
+				</th>
+				<th>
+					Actions
+				</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -23,16 +36,22 @@
 				{% if is_granted('OVERLAY_VIEW', overlay)  %}
 					<tr>
 						{% if is_granted('ROLE_ADMIN') %}
-							<td>{{ overlay.id }}</td>
+							<td>
+								{{ overlay.id }}
+							</td>
 						{% endif %}
-						<td>{{overlay.OverlayName}}</td>
+						<td>
+							{{overlay.OverlayName}}
+						</td>
 						<td class="bodyAccess">
 							<div class="flex">
 								{% if overlay.OverlayAccess.snapshot is not null %}
 									{% for person in overlay.OverlayAccess.snapshot %}
 										<div class="avatar">
-											<img src="{{person.avatarURL != null ? person.avatarURL : 'https://cdn.artaic.fr/images/Blason-Salty.png'}}" alt="Avatar de {{person.pseudo}}" title="Avatar de {{person.pseudo}}">
-											<p>{{person.pseudo != app.user.pseudo ? person.pseudo : 'Vous' }}</p>
+											<img src="{{person.avatarURL != null ? person.avatarURL : 'https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg'}}" alt="Avatar de {{person.pseudo}}" title="Avatar de {{person.pseudo}}">
+											<p>
+												{{person.pseudo != app.user.pseudo ? person.pseudo : 'Vous' }}
+											</p>
 										</div>
 									{% endfor %}
 								{% endif %}
@@ -40,18 +59,24 @@
 						</td>
 						<td>
 							<a class="btn btn-info" href="{{ path('app_overlay_show', {'id': overlay.id}) }}">
-								<span class="iconify" data-icon="carbon:view-filled"></span>Accéder au panel</a>
+								<span class="iconify" data-icon="carbon:view-filled"></span>
+								Accéder au panel
+							</a>
 
 							{% if is_granted('OVERLAY_EDIT', overlay) %}
 								<a class="btn btn-warning" href="{{ path('app_overlay_edit', {'id': overlay.id}) }}">
-									<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
+									<span class="iconify" data-icon="bxs:edit"></span>
+									Editer
+								</a>
 							{% endif %}
 						</td>
 					</tr>
 				{% endif %}
 			{% else %}
 				<tr>
-					<td colspan="2">Rien n'a été trouvé</td>
+					<td colspan="2">
+						Rien n'a été trouvé
+					</td>
 				</tr>
 			{% endfor %}
 		</tbody>
@@ -59,5 +84,6 @@
 
 	<a class="btn btn-info" href="{{ path('app_overlay_new') }}">
 		<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>
-		Créer un nouvel overlay</a>
+		Créer un nouvel overlay
+	</a>
 {% endblock %}
