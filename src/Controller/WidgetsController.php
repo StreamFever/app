@@ -30,6 +30,9 @@ class WidgetsController extends AbstractController
         $idOverlay = $request->get('id_overlay');
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($widget->getIsTwoWidgets() == null) {
+                $widget->setIsTwoWidgets(false);
+            }
             $widgetsRepository->add($widget);
             $data = $form->getData();
 
@@ -41,7 +44,7 @@ class WidgetsController extends AbstractController
                 $meta->setMetaValue("");
                 $meta->setUserId($this->getUser());
 
-                
+
                 // relates this product to the category
                 $widget->addMeta($meta);
 
@@ -50,21 +53,23 @@ class WidgetsController extends AbstractController
                 $entityManager->persist($widget);
                 $entityManager->flush();
             }
-            if ($data->getWidgetId() == "Barre d'information") {
+            if ($data->getWidgetId() == "Barre d'informations") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
-                $meta = new Meta();
-                $meta->setMetaKey('bottombar_marquee');
-                $meta->setMetaValue("");
-                $meta->setUserId($this->getUser());
-                
-                // relates this product to the category
-                $widget->addMeta($meta);
+                for ($i = 1; $i < 5; $i++) {
+                    $meta = new Meta();
+                    $meta->setMetaKey('bottombar_marquee_' . $i);
+                    $meta->setMetaValue("");
+                    $meta->setUserId($this->getUser());
 
-                $entityManager = $doctrine->getManager();
-                $entityManager->persist($meta);
-                $entityManager->persist($widget);
-                $entityManager->flush();
+                    // relates this product to the category
+                    $widget->addMeta($meta);
+
+                    $entityManager = $doctrine->getManager();
+                    $entityManager->persist($meta);
+                    $entityManager->persist($widget);
+                    $entityManager->flush();
+                }
             }
             if ($data->getWidgetId() == "Popup") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
@@ -73,7 +78,7 @@ class WidgetsController extends AbstractController
                 $meta->setMetaKey('popup_text');
                 $meta->setMetaValue("");
                 $meta->setUserId($this->getUser());
-                
+
                 // relates this product to the category
                 $widget->addMeta($meta);
 
@@ -81,42 +86,6 @@ class WidgetsController extends AbstractController
                 $entityManager->persist($meta);
                 $entityManager->persist($widget);
                 $entityManager->flush();
-            }
-            if ($data->getWidgetId() == "Next") {
-                for ($i=0; $i < 5; $i++) { 
-                    // Insère les données suivantes dans la table meta_overlays si nécessaire
-                    // DOCS: https://symfony.com/doc/current/doctrine/associations.html
-                    $meta = new Meta();
-                    $meta->setMetaKey('id_cam_heros_obsninja_'.$i);
-                    $meta->setMetaValue("");
-                    $meta->setUserId($this->getUser());
-                    
-                    // relates this product to the category
-                    $widget->addMeta($meta);
-
-                    $entityManager = $doctrine->getManager();
-                    $entityManager->persist($meta);
-                    $entityManager->persist($widget);
-                    $entityManager->flush();
-                }
-            }
-            if ($data->getWidgetId() == "cam_tournament_alpha" || $data->getWidgetId() == "cam_tournament_beta") {
-                for ($i=0; $i < 10; $i++) { 
-                    // Insère les données suivantes dans la table meta_overlays si nécessaire
-                    // DOCS: https://symfony.com/doc/current/doctrine/associations.html
-                    $meta = new Meta();
-                    $meta->setMetaKey('id_cam_team_obsninja_'.$i);
-                    $meta->setMetaValue("");
-                    $meta->setUserId($this->getUser());
-                    
-                    // relates this product to the category
-                    $widget->addMeta($meta);
-
-                    $entityManager = $doctrine->getManager();
-                    $entityManager->persist($meta);
-                    $entityManager->persist($widget);
-                    $entityManager->flush();
-                }
             }
             if ($data->getWidgetId() == "Tweets") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
@@ -135,9 +104,8 @@ class WidgetsController extends AbstractController
                     $entityManager->persist($widget);
                     $entityManager->flush();
                 }
-                
             }
-            
+
             if ($idOverlay) {
                 return $this->redirectToRoute('app_overlay_show', [
                     'id' => $idOverlay
@@ -147,7 +115,6 @@ class WidgetsController extends AbstractController
             }
 
             $this->addFlash('success', 'Le widget a bien été crée !');
-
         }
 
         return $this->renderForm('overlay/widgets/new.html.twig', [
@@ -169,67 +136,21 @@ class WidgetsController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($widget->getIsTwoWidgets() == null) {
+                $widget->setIsTwoWidgets(false);
+            }
             $widgetsRepository->add($widget);
             $data = $form->getData();
 
             if ($data->getWidgetId() == "Barre d'informations") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
-                $meta = new Meta();
-                $meta->setMetaKey('topbar_title');
-                $meta->setMetaValue("");
-                $meta->setUserId($this->getUser());
-
-                
-                // relates this product to the category
-                $widget->addMeta($meta);
-
-                $entityManager = $doctrine->getManager();
-                $entityManager->persist($meta);
-                $entityManager->persist($widget);
-                $entityManager->flush();
-            }
-            if ($data->getWidgetId() == "Barre d'information") {
-                // Insère les données suivantes dans la table meta_overlays si nécessaire
-                // DOCS: https://symfony.com/doc/current/doctrine/associations.html
-                $meta = new Meta();
-                $meta->setMetaKey('bottombar_marquee');
-                $meta->setMetaValue("");
-                $meta->setUserId($this->getUser());
-                
-                // relates this product to the category
-                $widget->addMeta($meta);
-
-                $entityManager = $doctrine->getManager();
-                $entityManager->persist($meta);
-                $entityManager->persist($widget);
-                $entityManager->flush();
-            }
-            if ($data->getWidgetId() == "Popup") {
-                // Insère les données suivantes dans la table meta_overlays si nécessaire
-                // DOCS: https://symfony.com/doc/current/doctrine/associations.html
-                $meta = new Meta();
-                $meta->setMetaKey('popup_text');
-                $meta->setMetaValue("");
-                $meta->setUserId($this->getUser());
-                
-                // relates this product to the category
-                $widget->addMeta($meta);
-
-                $entityManager = $doctrine->getManager();
-                $entityManager->persist($meta);
-                $entityManager->persist($widget);
-                $entityManager->flush();
-            }
-            if ($data->getWidgetId() == "Next") {
-                for ($i=0; $i < 5; $i++) { 
-                    // Insère les données suivantes dans la table meta_overlays si nécessaire
-                    // DOCS: https://symfony.com/doc/current/doctrine/associations.html
+                if (!$data->getMetas()->get('topbar_title')) {
                     $meta = new Meta();
-                    $meta->setMetaKey('id_cam_heros_obsninja_'.$i);
+                    $meta->setMetaKey('topbar_title');
                     $meta->setMetaValue("");
                     $meta->setUserId($this->getUser());
-                    
+
                     // relates this product to the category
                     $widget->addMeta($meta);
 
@@ -239,15 +160,37 @@ class WidgetsController extends AbstractController
                     $entityManager->flush();
                 }
             }
-            if ($data->getWidgetId() == "cam_tournament_alpha" || $data->getWidgetId() == "cam_tournament_beta") {
-                for ($i=0; $i < 10; $i++) { 
-                    // Insère les données suivantes dans la table meta_overlays si nécessaire
-                    // DOCS: https://symfony.com/doc/current/doctrine/associations.html
+            if ($data->getWidgetId() == "Barre d'informations") {
+                // Insère les données suivantes dans la table meta_overlays si nécessaire
+                // DOCS: https://symfony.com/doc/current/doctrine/associations.html
+
+                if (!$data->getMetas()->get('bottom_marquee')) {
+                    for ($i = 1; $i < 5; $i++) {
+                        $meta = new Meta();
+                        $meta->setMetaKey('bottombar_marquee_' . $i);
+                        $meta->setMetaValue("");
+                        $meta->setUserId($this->getUser());
+    
+                        // relates this product to the category
+                        $widget->addMeta($meta);
+    
+                        $entityManager = $doctrine->getManager();
+                        $entityManager->persist($meta);
+                        $entityManager->persist($widget);
+                        $entityManager->flush();
+                    }
+                }
+            }
+            if ($data->getWidgetId() == "Popup") {
+                // Insère les données suivantes dans la table meta_overlays si nécessaire
+                // DOCS: https://symfony.com/doc/current/doctrine/associations.html
+
+                if (!$data->getMetas()->get('popup_text')) {
                     $meta = new Meta();
-                    $meta->setMetaKey('id_cam_team_obsninja_'.$i);
+                    $meta->setMetaKey('popup_text');
                     $meta->setMetaValue("");
                     $meta->setUserId($this->getUser());
-                    
+
                     // relates this product to the category
                     $widget->addMeta($meta);
 
@@ -260,27 +203,29 @@ class WidgetsController extends AbstractController
             if ($data->getWidgetId() == "Tweets") {
                 // Insère les données suivantes dans la table meta_overlays si nécessaire
                 // DOCS: https://symfony.com/doc/current/doctrine/associations.html
-                $meta = new Meta();
-                $meta->setMetaKey('tweet_id');
-                $meta->setMetaValue("");
-                $meta->setUserId($this->getUser());
+                if (!$data->getMetas()->get('tweet_id')) {
+                    $meta = new Meta();
+                    $meta->setMetaKey('tweet_id');
+                    $meta->setMetaValue("");
+                    $meta->setUserId($this->getUser());
 
-                $meta2 = new Meta();
-                $meta2->setMetaKey('tweet_hashtag');
-                $meta2->setMetaValue("");
-                $meta2->setUserId($this->getUser());
-                
-                // relates this product to the category
-                $widget->addMeta($meta);
-                $widget->addMeta($meta2);
+                    $meta2 = new Meta();
+                    $meta2->setMetaKey('tweet_hashtag');
+                    $meta2->setMetaValue("");
+                    $meta2->setUserId($this->getUser());
 
-                $entityManager = $doctrine->getManager();
-                $entityManager->persist($meta);
-                $entityManager->persist($widget);
-                $entityManager->flush();
+                    // relates this product to the category
+                    $widget->addMeta($meta);
+                    $widget->addMeta($meta2);
+
+                    $entityManager = $doctrine->getManager();
+                    $entityManager->persist($meta);
+                    $entityManager->persist($widget);
+                    $entityManager->flush();
+                }
             }
-        
-            
+
+
             if ($idOverlay) {
                 return $this->redirectToRoute('app_overlay_show', [
                     'id' => $idOverlay
@@ -305,7 +250,7 @@ class WidgetsController extends AbstractController
     {
         $this->denyAccessUnlessGranted('WIDGET_DELETE', $widget);
 
-        if ($this->isCsrfTokenValid('delete'.$widget->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $widget->getId(), $request->request->get('_token'))) {
             $widgetsRepository->remove($widget);
         }
 
