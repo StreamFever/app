@@ -2,12 +2,12 @@ import './control_widget';
 import './api';
 import './datatable';
 import './ui';
-import './toasts';
+import './lib/toasts';
 import './ws';
 // import './player';
 import './panel/index';
 import './services/colorVideo';
-import './twitch';
+import './lib/twitch';
 import './tweets';
 import { notification } from './ui';
 
