@@ -1,17 +1,22 @@
 {% extends "base_overlay.html.twig" %}
 
+{% if overlay.currentEvent is defined %}
+	{% if overlay.currentEvent is not null %}
+		{% set event = overlay.currentEvent %}
+	{% endif %}
+{% endif %}
+{% if overlay.currentEvent.currentGame is defined %}
+	{% if overlay.currentEvent.currentGame is not null %}
+		{% set game = overlay.currentEvent.currentGame %}
+		{% set playersAlpha = game.gameIdTeamAlpha.players %}
+		{% set playersBeta = game.gameIdTeamBeta.players %}
+	{% endif %}
+{% endif %}
 
 {% block body %}
 
-
 	{% if widgets is not empty %}
 		{% for widget in widgets %}
-			{# {% if widget.WidgetId and widget.WidgetId == "cam_tournament_alpha" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "cam_tournament_alpha" %}
-																																																		{{ include('overlay/widgets/cams/team_alpha.html.twig') }}
-																																																	{% endif %}
-																																																	{% if widget.WidgetId and widget.WidgetId == "cam_tournament_beta" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "cam_tournament_beta" %}
-																																																		{{ include('overlay/widgets/cams/team_beta.html.twig') }}
-																																																	{% endif %} #}
 			{% if widget.WidgetId and widget.WidgetId == "topbar" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "topbar" %}
 				{{ include('overlay/widgets/topbar/v1.html.twig') }}
 			{% endif %}
@@ -24,15 +29,26 @@
 			{% if widget.WidgetId and widget.WidgetId == "next" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "next" %}
 				{{ include('overlay/widgets/next/v1.html.twig') }}
 			{% endif %}
-			{% if widget.WidgetId and widget.WidgetId == "tweets" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "tweets" %}
-				{{ include('overlay/widgets/tweets/index.html.twig') }}
+			{# {% if widget.WidgetId and widget.WidgetId == "tweets" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "tweets" %}
+																																									{{ include('overlay/widgets/tweets/index.html.twig') }}
+																																								{% endif %} #}
+			{% if widget.WidgetId and widget.WidgetId == "topbar" or widget.WidgetId.libWidgetId2 and widget.WidgetId.libWidgetId2 == "bottombar" and widget.isTwoWidgets %}
+				{{ include('overlay/widgets/bottombar/v1.html.twig') }}
 			{% endif %}
+			{# {% if widget.WidgetId and widget.WidgetId == "cameras_alpha" or widget.WidgetId.libWidgetId2 and widget.WidgetId.libWidgetId2 == "cameras_beta" and widget.isTwoWidgets %}
+				{{ include('overlay/widgets/cams/team_alpha.html.twig') }}
+				{{ include('overlay/widgets/cams/team_beta.html.twig') }}
+			{% endif %} #}
 		{% endfor %}
 
 	{% else %}
-		<h1>Aucun widget n'a été inséré sur l'overlay</h1>
+		<h1>
+			Aucun widget n'a été inséré sur l'overlay
+		</h1>
 
-		<p>Si vous êtes le propriétaire de cet overlay où que vous y avez accès, vous devez commencer par ajouter un widget afin qu'il puisse être visible sur cet overlay.</p>
+		<p>
+			Si vous êtes le propriétaire de cet overlay où que vous y avez accès, vous devez commencer par ajouter un widget afin qu'il puisse être visible sur cet overlay.
+		</p>
 	{% endif %}
 
 {% endblock %}
