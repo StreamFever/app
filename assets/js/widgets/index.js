@@ -21,7 +21,7 @@ window.showTopbar = function showTopBar() {
 }
 window.showVersus = function showVersus() {
  versuscontainer.className = 'container_versus slide-in-left'
- showVideoVersus.call(this, 'House');
+ showVideoVersus.call(this);
 }
 window.showBreak = function showBreak() {
  breakk.className = 'slide-in-left'
@@ -40,9 +40,9 @@ window.showText = function showText() {
  }, 500);
 }
 window.showNext = function showNext() {
- teams_nextmatch.className = 'teams slide-in-left'
+ document.getElementById('next_teams').className = 'teams slide-in-left'
  setTimeout(() => {
-  textnextmatch.className = 'text swing-in-top-fwd'
+  document.getElementById('next_text').className = 'text swing-in-top-fwd'
  }, 500)
 }
 window.showBottomBar = function showBottomBar() {
@@ -73,12 +73,13 @@ window.showTweetVideo = function showTweetVideo() {
  </audio>
 </figure>`;
 }
-window.showFiveCam = function showFiveCam() {
- bottom_cam.className = 'fade-in';
+window.showCamsTeamAlpha = function showCamsTeamAlpha() {
+ cameras_alpha.className = 'fade-in';
 }
-window.showFiveCam = function showPoll() {
- poll.className = 'slide-in-left'
+window.showCamsTeamBeta = function showCamsTeamBeta() {
+ cameras_beta.className = 'fade-in';
 }
+
 
 
 window.offTopbar = function offTopBar() {
@@ -89,8 +90,10 @@ window.offTopbar = function offTopBar() {
 }
 window.offVersus = function offVersus() {
  versuscontainer.className = 'container_versus slide-out-left'
+ video_versus.className = 'fade-out'
  setTimeout(() => {
   versuscontainer.className = 'display_none'
+  video_versus.className = 'display_none'
  }, 1000)
 }
 window.offBreak = function offBreak() {
@@ -115,14 +118,14 @@ window.offText = function offText() {
  }, 1200)
 }
 window.offNext = function offNext() {
- textnextmatch.className = 'text swing-out-top-bck'
+ next_text.className = 'text swing-out-top-bck'
  setTimeout(() => {
-  teams_nextmatch.className = 'teams slide-out-left'
+  next_teams.className = 'teams slide-out-left'
  }, 1000)
 
  setTimeout(() => {
-  teams_nextmatch.className = 'display_none'
-  textnextmatch.className = 'display_none'
+  next_teams.className = 'display_none'
+  next_text.className = 'display_none'
  }, 2000)
 }
 window.offBottomBar = function offBottomBar() {
@@ -159,10 +162,16 @@ window.offPoll = function offPoll() {
   poll.className = 'display_none'
  }, 1000)
 }
-window.offFiveCam = function offFiveCam() {
- bottom_cam.className = 'fade-out';
+window.offCamsTeamAlpha = function offCamsTeamAlpha() {
+ cameras_alpha.className = 'fade-out';
  setTimeout(() => {
-  bottom_cam.className = 'display_none'
+  cameras_alpha.className = 'display_none'
+ }, 1000)
+}
+window.offCamsTeamBeta = function offCamsTeamBeta() {
+ cameras_beta.className = 'fade-out';
+ setTimeout(() => {
+  cameras_beta.className = 'display_none'
  }, 1000)
 }
 
