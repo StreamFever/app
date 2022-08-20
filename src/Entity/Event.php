@@ -6,6 +6,7 @@ use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EventRepository::class)
@@ -91,12 +92,22 @@ class Event
      */
     private $socials;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Overlay::class, mappedBy="currentEvent")
+     */
+    private $currentOverlay;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Game::class, inversedBy="currentEvent")
+     */
+    private $currentGame;
+
     public function __construct()
     {
         $this->eventIdSponsor = new ArrayCollection();
-        $this->eventSocial = new ArrayCollection();
         $this->eventAccess = new ArrayCollection();
         $this->socials = new ArrayCollection();
+        $this->currentOverlay = new ArrayCollection();
     }
 
     public function __toString()
@@ -312,6 +323,48 @@ class Event
         if ($this->socials->removeElement($social)) {
             $social->removeSocialAccess($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Overlay>
+     */
+    public function getCurrentOverlay(): Collection
+    {
+        return $this->currentOverlay;
+    }
+
+    public function addCurrentOverlay(Overlay $currentOverlay): self
+    {
+        if (!$this->currentOverlay->contains($currentOverlay)) {
+            $this->currentOverlay[] = $currentOverlay;
+            $currentOverlay->setCurrentEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCurrentOverlay(Overlay $currentOverlay): self
+    {
+        if ($this->currentOverlay->removeElement($currentOverlay)) {
+            // set the owning side to null (unless already changed)
+            if ($currentOverlay->getCurrentEvent() === $this) {
+                $currentOverlay->setCurrentEvent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCurrentGame(): ?Game
+    {
+        return $this->currentGame;
+    }
+
+    public function setCurrentGame(?Game $currentGame): self
+    {
+        $this->currentGame = $currentGame;
 
         return $this;
     }
