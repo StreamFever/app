@@ -1,43 +1,62 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Overlay
+{% block title %}
+	Overlay
 {% endblock %}
 
 
 {% block body %}
 
 	{# <div id="twitch-embed-content">
-																																																																																								<div id="twitch-embed" class="twitch-embed-small">
-																																																																																									<a href="#" id="btn_toggle_size_twitch">
-																																																																																										<span class="iconify" data-icon="system-uicons:scale-extend"></span>
-																																																																																									</a>
-																																																																																								</div>
-																																																																																							</div> #}
+																																																																																																																																					<div id="twitch-embed" class="twitch-embed-small">
+																																																																																																																																						<a href="#" id="btn_toggle_size_twitch">
+																																																																																																																																							<span class="iconify" data-icon="system-uicons:scale-extend"></span>
+																																																																																																																																						</a>
+																																																																																																																																					</div>
+																																																																																																																																				</div> #}
 
 
 	<a href="#section_panels" id="btn-arrow-panels">
 		<span class="iconify" data-icon="oi:arrow-circle-bottom"></span>
-		<span>Accéder au panel</span>
+		<span>
+			Accéder au panel
+		</span>
 	</a>
 
-	<p>Vous vous situez sur le panel de
-		<strong>{{overlay.OverlayOwner.pseudo}}</strong>.</p>
-	<p>Si vous avez accès à cette page c'est que
-		<strong>{{overlay.OverlayOwner.pseudo}}</strong>
+	<p>
+		Vous vous situez sur le panel de
+		<strong>
+			{{overlay.OverlayOwner.pseudo}}
+		</strong>
+		.
+	</p>
+	<p>
+		Si vous avez accès à cette page c'est que
+		<strong>
+			{{overlay.OverlayOwner.pseudo}}
+		</strong>
 		vous a donné accès à son panel pour son overlay :
-		<strong style="font-size: 2rem">{{overlay.OverlayName}}</strong>
+		<strong style="font-size: 2rem">
+			{{overlay.OverlayName}}
+		</strong>
 	</p>
 
 	<section id="overlay_show_access_person">
-		<h2>Qui a accès à mon overlay ?</h2>
-		<p>Toutes les personnes qui ont accès à votre overlay sont listés ci-dessous.</p>
+		<h2>
+			Qui a accès à mon overlay ?
+		</h2>
+		<p>
+			Toutes les personnes qui ont accès à votre overlay sont listés ci-dessous.
+		</p>
 		<div class="flex">
 			{% if overlay.OverlayAccess.snapshot is not null %}
 				{% for person in overlay.OverlayAccess.snapshot %}
 					{% if person.pseudo != "Websocket" %}
 						<div class="avatar">
-							<img src="{{person.avatarURL != null ? person.avatarURL : 'https://cdn.artaic.fr/images/Blason-Salty.png'}}" alt="Avatar de {{person.pseudo}}" title="Avatar de {{person.pseudo}}">
-							<p>{{person.pseudo != app.user.pseudo ? person.pseudo : 'Vous' }}</p>
+							<img src="{{person.avatarURL != null ? person.avatarURL : 'https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg'}}" alt="Avatar de {{person.pseudo}}" title="Avatar de {{person.pseudo}}">
+							<p>
+								{{person.pseudo != app.user.pseudo ? person.pseudo : 'Vous' }}
+							</p>
 						</div>
 					{% endif %}
 				{% endfor %}
@@ -45,7 +64,9 @@
 		</div>
 		{% if is_granted('OVERLAY_EDIT', overlay) %}
 			<a class="btn btn-warning" href="{{ path('app_overlay_edit', {'id': overlay.id}) }}">
-				<span class="iconify" data-icon="bxs:edit"></span>Editer les permission</a>
+				<span class="iconify" data-icon="bxs:edit"></span>
+				Editer les permission
+			</a>
 		{% endif %}
 
 	</section>
@@ -54,135 +75,248 @@
 	<div id="overlay_show" class="btn-section">
 		<div class="row">
 			<div class="col">
-				<p>Vous pouvez accéder au
-					<strong>browsersource</strong>
-					de cette overlay en cliquant le sur lien suivant.</p>
 				<p>
-					<em>Ca ouvrira un nouvel onglet 😉</em>
+					Vous pouvez accéder au
+					<strong>
+						browsersource
+					</strong>
+					de cette overlay en cliquant le sur lien suivant.
 				</p>
-				<a href="{{ path('app_overlay_show_browsersource', {'id': overlay.id}) }}" target="_blank" class="btn btn-info" style="width: 100%">Accéder au browsersource</a>
-				<a class="btn btn-danger" style="width: 100%" onclick="refreshBrowsersource()">Rafraichir le browsersource</a>
+				<p>
+					<em>
+						Ca ouvrira un nouvel onglet 😉
+					</em>
+				</p>
+				<a href="{{ path('app_overlay_show_browsersource', {'id': overlay.id}) }}" target="_blank" class="btn btn-info" style="width: 100%">
+					Accéder au browsersource
+				</a>
+				<a class="btn btn-danger" style="width: 100%" onclick="refreshBrowsersource()">
+					Rafraichir le browsersource
+				</a>
 			</div>
 			<div class="col">
-				<p>Vous pouvez cliquer sur le bouton suivant afin de copier le lien de votre browsersource.</p>
 				<p>
-					<u>Ce lien sera à coller sur votre OBS Studio, Streamlabs ou logiciel similaire afin d'avoir votre rendu.</u>
+					Vous pouvez cliquer sur le bouton suivant afin de copier le lien de votre browsersource.
 				</p>
-				<button class="btn btn-warning" style="width: 100%" onclick="copierTexte(this, event)" value="https://v4.dev.symfony.artaic.fr{{ path('app_overlay_show_browsersource', {'id': overlay.id}) }}">Copier le browsersource</button>
+				<p>
+					<u>
+						Ce lien sera à coller sur votre OBS Studio, Streamlabs ou logiciel similaire afin d'avoir votre rendu.
+					</u>
+				</p>
+				<button class="btn btn-warning" style="width: 100%" onclick="copyText(this)" value="https://v4.dev.symfony.artaic.fr{{ path('app_overlay_show_browsersource', {'id': overlay.id}) }}">
+					Copier le browsersource
+				</button>
 			</div>
 		</div>
 	</div>
 
 	<section id="overlay_show" class="container">
-		<pre>
-		{{ dump(widgets) }}
-	</pre>
-
-
 		{% if is_granted('ROLE_ADMIN') %}
-			<h3>Informations sur les widgets :</h3>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Nom</th>
-						<th>Etat</th>
-						<th>Détails</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for item in redmine_widgets %}
+			<div class="admin_panel">
+				<h3>
+					Informations sur les widgets :
+				</h3>
+				<table class="table">
+					<thead>
 						<tr>
-							<td>{{item.subject}}</td>
-							<td>
-								{% if item.status["name"] == "Nouveau" %}
-									<span class="badge bg-info">Nouveau</span>
-								{% endif %}
-								{% if item.status["name"] == "En cours" %}
-									<span class="badge bg-dark text-light">En cours de dév</span>
-								{% endif %}
-								{% if item.status["name"] == "Online" %}
-									<span class="badge bg-success">OK - Online</span>
-								{% endif %}
-								{% if item.status["name"] == "Attent WS" %}
-									<span class="badge bg-warning">Attente WS</span>
-								{% endif %}
-								{% if item.status["name"] == "HS" %}
-									<span class="badge bg-danger">Hors service</span>
-								{% endif %}
-							</td>
-							<td>
-								<p>{{item.description}}</p>
-							</td>
+							<th>
+								Nom
+							</th>
+							<th>
+								Etat
+							</th>
+							<th>
+								Détails
+							</th>
 						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{% for item in redmine_widgets %}
+							<tr>
+								<td>
+									{{item.subject}}
+								</td>
+								<td>
+									{% if item.status["name"] == "Nouveau" %}
+										<span class="badge bg-info">
+											Nouveau
+										</span>
+									{% endif %}
+									{% if item.status["name"] == "En cours" %}
+										<span class="badge bg-dark text-light">
+											En cours de dév
+										</span>
+									{% endif %}
+									{% if item.status["name"] == "Online" %}
+										<span class="badge bg-success">
+											OK - Online
+										</span>
+									{% endif %}
+									{% if item.status["name"] == "Attent WS" %}
+										<span class="badge bg-warning">
+											Attente WS
+										</span>
+									{% endif %}
+									{% if item.status["name"] == "HS" %}
+										<span class="badge bg-danger">
+											Hors service
+										</span>
+									{% endif %}
+								</td>
+								<td>
+									<p>
+										{{item.description}}
+									</p>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
 		{% endif %}
-
-		<pre>
-			{{ dump(app.request) }}
-		</pre>
 
 		<div id="panel_widgets">
 			<section id="section_btn_panel">
-				<div id="panel_btn_event" class="btn_panel">Event</div>
-				<div id="panel_btn_match" class="btn_panel active">Match</div>
-				<div id="panel_btn_popup" class="btn_panel">Popup</div>
-				<div id="panel_btn_tweets" class="btn_panel">Tweets</div>
+				<div id="panel_btn_event" class="btn_panel">
+					Event
+				</div>
+				<div id="panel_btn_match" class="btn_panel active">
+					Match
+				</div>
+				<div id="panel_btn_popup" class="btn_panel">
+					Popup
+				</div>
+				<div id="panel_btn_tweets" class="btn_panel">
+					Tweets
+				</div>
+				<div id="panel_btn_ninja" class="btn_panel">
+					Ninja
+				</div>
 			</section>
 
 			<section id="section_panels">
 				<div id="panel_event" class="display_none">
-					<h3>Gérer l'événement en cours</h3>
+					<h3>
+						Gérer l'événement en cours
+					</h3>
 
 
 					<hr>
 					<div class="container">
-						{% if event_service.getOneCurrentEvent %}
-							{% set event = event_service.getOneCurrentEvent[0] %}
+						<div class="input-grp-center">
+							<h4>
+								Changer l'événement en cours
+							</h4>
+							<p>
+								Afin de synchroniser un événement avec votre overlay, vous devez en sélectionner un parmi la liste déroulante suivante.
+							</p>
+							{{ include('overlay/forms/_form-current-event.html.twig', {'button_label': 'Mettre à jour'}) }}
+						</div>
+
+						{% if overlay.currentEvent is not null %}
+							{% set event = overlay.currentEvent %}
+						{% endif %}
+						{% if event is defined %}
 							{{ include('event/components/event_card.html.twig') }}
 							<a class="btn btn-warning" href="{{ path('app_event_edit', {'id': event.id, 'id_overlay': overlay.id}) }}">
-								<span class="iconify" data-icon="bxs:edit"></span>Modifier cet événement</a>
-						{% else %}
-							<p>Aucun événement en cours</p>
-
-							<a class="btn btn-info btn-full" href="{{ path('app_event_new') }}">
-								<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>Créer un nouvel événement</a>
+								<span class="iconify" data-icon="bxs:edit"></span>
+								Modifier cet événement
+							</a>
 						{% endif %}
 					</div>
 				</div>
 				<div id="panel_match">
-					<h3>Gérer le match en cours</h3>
+					<h3>
+						Gérer le match en cours
+					</h3>
 
 
 					<hr>
 					<div class="container">
-						{{ include('overlay/forms/_form-topbar-title.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-						{% if game_service.getOneCurrentGame %}
-							{% set game = game_service.getOneCurrentGame[0] %}
+						<div class="input-grp-center">
+							<h4>
+								Modifier la titre de la topbar
+							</h4>
+							<p>
+								Vous pouvez modifier ci-dessous le titre de la topbar.
+							</p>
+							{{ include('overlay/forms/_form-topbar-title.html.twig', {'button_label': 'Mettre à jour'}) }}
+						</div>
+						{% if overlay.currentEvent is defined and overlay.currentEvent is not null %}
+							<div class="input-grp">
+								<div class="row">
+									<div class="col">
+										<h4>
+											Changer le match en cours
+										</h4>
+										{{ include('overlay/forms/_form-current-game.html.twig', {'button_label': 'Mettre à jour'}) }}
+									</div>
+									<div class="col">
+										{% if overlay.currentEvent.currentGame is defined and overlay.currentEvent.currentGame is not null %}
+											<h4>
+												Changer la carte en cours
+											</h4>
+											{{ include('overlay/forms/_form-current-map.html.twig', {'button_label': 'Mettre à jour'}) }}
+										{% endif %}
+									</div>
+								</div>
+							</div>
+						{% endif %}
+
+						{% if overlay.currentEvent.currentGame is defined %}
+							{% if overlay.currentEvent.currentGame is not null %}
+								{% set game = overlay.currentEvent.currentGame %}
+							{% endif %}
+						{% endif %}
+						{% if game is defined %}
 							<div class="center_element">
 								{{ include('components/card_match.html.twig') }}
 							</div>
 						{% else %}
-							<p>Aucun match en cours</p>
+							<p>
+								Aucun match en cours
+							</p>
 
 							<a class="btn btn-info btn-full" href="{{ path('app_game_new') }}">
-								<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>Créer un nouveau match</a>
+								<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>
+								Créer un nouveau match
+							</a>
 						{% endif %}
 
 					</div>
 				</div>
 				<div id="panel_popup" class="display_none">
-					<div class="container">
-						{{ include('overlay/forms/_form-popup.html.twig', {'button_label': 'Mettre à jour'}) }}
-					</div>
-					<div class="container">
-						{{ include('overlay/forms/_form-bottombar-marquee.html.twig', {'button_label': 'Mettre à jour'}) }}
+					<div class="input-grp-center">
+						<div class="row">
+							<div class="col">
+								<h4>
+									Modifier la popup
+								</h4>
+								<p>
+									Vous pouvez changer le ci-dessous le contenu de la popup.
+								</p>
+								{{ include('overlay/forms/_form-popup.html.twig', {'button_label': 'Mettre à jour'}) }}
+							</div>
+							<div class="col">
+								<h4>
+									Modifier le texte défilant
+								</h4>
+								<p>
+									Vous pouvez changer ci-dessous le contenu du texte défilant.
+								</p>
+								{{ include('overlay/forms/_form-bottombar-marquee_1.html.twig', {'button_label': 'Mettre à jour'}) }}
+								{{ include('overlay/forms/_form-bottombar-marquee_2.html.twig', {'button_label': 'Mettre à jour'}) }}
+								{{ include('overlay/forms/_form-bottombar-marquee_3.html.twig', {'button_label': 'Mettre à jour'}) }}
+								{{ include('overlay/forms/_form-bottombar-marquee_4.html.twig', {'button_label': 'Mettre à jour'}) }}
+							</div>
+						</div>
 					</div>
 				</div>
 				<div id="panel_tweets" class="display_none">
-					<h3>Gérer les tweets</h3>
+					<h3>
+						Gérer les tweets
+					</h3>
 
 
 					<hr>
@@ -190,86 +324,289 @@
 						{{ include('overlay/forms/_form-tweet-hashtag.html.twig', {'button_label': 'Mettre à jour'}) }}
 						<button class="btn btn-info btn-icon-append btn-full" onclick="gettweets()" data-toggle="modal" data-target="#exampleModal" type="button">
 							<span class="iconify" data-icon="akar-icons:twitter-fill"></span>
-							Voir les tweets</button>
+							Voir les tweets
+						</button>
+					</div>
+				</div>
+				<div id="panel_ninja" class="display_none">
+					<h3>
+						Gérer les caméras
+					</h3>
+					<hr>
+					<div class="container">
+						<div class="input-grp-center">
+							<h4>
+								Modifier un joueur
+							</h4>
+							<p>
+								Si vous souhaitez modifier les informations autour d'un joueur, veuillez le sélectionner parmi la liste ci-dessous.
+							</p>
+							<form action="" name="selectPlayer" method="get">
+								<div class="form-floating mb-3">
+									<select name="player" id="player" class="form-select">
+										<option value="">
+											Sélectionnez un joueur
+										</option>
+										{% for playerA in playersAlpha %}
+											<option value="{{playerA.id}}">
+												{{playerA.playerName}}
+											</option>
+										{% endfor %}
+										{% for playerB in playersBeta %}
+											<option value="{{playerB.id}}">
+												{{playerB.playerName}}
+											</option>
+										{% endfor %}
+									</select>
+									<label for="player" class="required">
+										Sélectionnez un joueur
+									</label>
+								</div>
+								<input class="btn btn-success btn-full" type="submit" value="Valider">
+							</form>
+						</div>
+						{% if player.id != null %}
+							<div class="input-grp">
+								<h4>
+									Editer les informations de
+									{{player.playerName}}
+								</h4>
+								<p>
+									Vous pouvez éditer les informations du joueur suivant.
+								</p>
+								{{ include('overlay/forms/_form-player.html.twig', {'button_label': 'Mettre à jour'}) }}
+							</div>
+						{% endif %}
+
+						{% if overlay.currentEvent.currentGame is defined %}
+							{% if overlay.currentEvent.currentGame is not null %}
+								{% set game = overlay.currentEvent.currentGame %}
+							{% endif %}
+						{% endif %}
+						<br>
+						{% if game is defined %}
+							<div class="row">
+								<div class="col">
+									<h3>
+										{{game.gameIdTeamAlpha.teamName}}
+									</h3>
+									<table class="table">
+										<thead>
+											<tr>
+												{% if is_granted('ROLE_ADMIN') %}
+													<th>
+														Id
+													</th>
+												{% endif %}
+												<th>
+													Nom
+												</th>
+												<th>
+													IdObsNinja
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for j1 in game.gameIdTeamAlpha.players %}
+												<tr>
+													{% if is_granted('ROLE_ADMIN') %}
+														<td>
+															{{ j1.id }}
+														</td>
+													{% endif %}
+													<td>
+														<a href="{{ path('app_player_edit', {'id': j1.id}) }}">
+															{{ j1.playerName }}
+														</a>
+													</td>
+													<td>
+														{{ j1.playerIdObsNinja }}
+													</td>
+												</tr>
+											{% else %}
+												<tr>
+													<td colspan="8">
+														Aucune donnée
+													</td>
+												</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+								<div class="col">
+									<h3>
+										{{game.gameIdTeamBeta.teamName}}
+									</h3>
+									<table class="table">
+										<thead>
+											<tr>
+												{% if is_granted('ROLE_ADMIN') %}
+													<th>
+														Id
+													</th>
+												{% endif %}
+												<th>
+													Nom
+												</th>
+												<th>
+													IdObsNinja
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for j2 in game.gameIdTeamBeta.players %}
+												<tr>
+													{% if is_granted('ROLE_ADMIN') %}
+														<td>
+															{{ j2.id }}
+														</td>
+													{% endif %}
+													<td>
+														<a href="{{ path('app_player_edit', {'id': j2.id}) }}">
+															{{ j2.playerName }}
+														</a>
+													</td>
+													<td>
+														{{ j2.playerIdObsNinja }}
+													</td>
+												</tr>
+											{% else %}
+												<tr>
+													<td colspan="8">
+														Aucune donnée
+													</td>
+												</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						{% endif %}
 					</div>
 				</div>
 			</section>
 		</div>
-
-		<div class="row">
+		<div class="row admin_panel">
 			<div class="col">
-				<h3>Widgets de l'overlay</h3>
-				<p>Retrouvez la liste des widgets qui appartiennent à l'overlay "{{overlay.OverlayName}}"</p>
+				<h3>
+					Widgets de l'overlay
+				</h3>
+				<p>
+					Retrouvez la liste des widgets qui appartiennent à l'overlay "
+					{{overlay.OverlayName}}
+					"
+				</p>
 				<table class="table">
 					<thead>
 						<tr>
 							{% if is_granted('ROLE_ADMIN') %}
-								<th>Id</th>
+								<th>
+									Id
+								</th>
 							{% endif %}
-							<th>Nom</th>
-							<th>Actions</th>
+							<th>
+								Nom
+							</th>
+							<th>
+								Actions
+							</th>
 						</tr>
 					</thead>
 					<tbody>
 						{% for widget in widgets %}
 							<tr>
 								{% if is_granted('ROLE_ADMIN') %}
-									<td>{{ widget.id }}</td>
+									<td>
+										{{ widget.id }}
+									</td>
 								{% endif %}
-								<td>{{ widget.WidgetName }}</td>
+								<td>
+									{{ widget.WidgetName }}
+								</td>
 								<td>
 									<a class="btn btn-warning" href="{{ path('app_widgets_edit', {'id': widget.id, 'id_overlay': overlay.id}) }}">
-										<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
+										<span class="iconify" data-icon="bxs:edit"></span>
+										Editer
+									</a>
 								</td>
 							</tr>
 						{% else %}
 							<tr>
-								<td colspan="8">Aucune donnée</td>
+								<td colspan="8">
+									Aucune donnée
+								</td>
 							</tr>
 						{% endfor %}
 					</tbody>
 				</table>
 				<a class="btn btn-info" href="{{ path('app_widgets_new', {'id_overlay': overlay.id}) }}">
 					<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>
-					Ajouter un widget</a>
+					Ajouter un widget
+				</a>
 			</div>
 			<div class="col">
-				<h3>Metadonnées de l'overlay</h3>
-				<p>Vous pouvez retrouvez la liste des métadonnées de l'overlay "{{overlay.OverlayName}}"</p>
+				<h3>
+					Metadonnées de l'overlay
+				</h3>
+				<p>
+					Vous pouvez retrouvez la liste des métadonnées de l'overlay "
+					{{overlay.OverlayName}}
+					"
+				</p>
 				<table class="table">
 					<thead>
 						<tr>
 							{% if is_granted('ROLE_ADMIN') %}
-								<th>Id</th>
+								<th>
+									Id
+								</th>
 							{% endif %}
-							<th>Clé</th>
-							<th>Valeur</th>
-							<th>Actions</th>
+							<th>
+								Clé
+							</th>
+							<th>
+								Valeur
+							</th>
+							<th>
+								Actions
+							</th>
 						</tr>
 					</thead>
 					<tbody>
 						{% for meta in metas %}
 							<tr>
-								<td>{{ meta.id }}</td>
-								<td>{{ meta.MetaKey }}</td>
-								<td>{{ meta.MetaValue }}</td>
+								<td>
+									{{ meta.id }}
+								</td>
+								<td>
+									{{ meta.MetaKey }}
+								</td>
+								<td>
+									{{ meta.MetaValue }}
+								</td>
 								<td>
 									<a class="btn btn-warning" href="{{ path('app_meta_edit', {'id': meta.id, 'id_overlay': overlay.id}) }}">
-										<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
+										<span class="iconify" data-icon="bxs:edit"></span>
+										Editer
+									</a>
 								</td>
 							</tr>
 						{% else %}
 							<tr>
-								<td colspan="4">Aucune donnée</td>
+								<td colspan="4">
+									Aucune donnée
+								</td>
 							</tr>
 						{% endfor %}
 					</tbody>
 				</table>
 				<a class="btn btn-info" href="{{ path('app_meta_new') }}">
 					<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>
-					Ajouter une métadonnée</a>
+					Ajouter une métadonnée
+				</a>
 			</div>
 		</div>
 	</section>
-	{{ include('components/modal_tweets.html.twig') }}{{ include('components/modal_reset.html.twig') }}
+	{{ include('components/modal_tweets.html.twig') }}
+	{{ include('components/modal_reset.html.twig') }}
 {% endblock %}
