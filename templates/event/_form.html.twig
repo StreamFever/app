@@ -7,8 +7,12 @@
 {% endif %}
 
 <div class="input-grp">
-	<h3>Identité de votre événement</h3>
-	<p>Il est important de fournir une identité complète à votre événement afin qu'il puissent être utilisé à travers toutes les fonctionnalités qu'on proprose sur notre plateforme.</p>
+	<h3>
+		Identité de votre événement
+	</h3>
+	<p>
+		Il est important de fournir une identité complète à votre événement afin qu'il puissent être utilisé à travers toutes les fonctionnalités qu'on proprose sur notre plateforme.
+	</p>
 	<div class="row">
 		<div class="col">
 			<div class="form-floating mb-3">
@@ -56,8 +60,12 @@
 		</div>
 
 		<div class="input-grp">
-			<h3>Informations complémentaires</h3>
-			<p>Veuillez nous renseigner un maximum d'informations autour de votre événement afin qu'il puisse profiter pleinement de toutes nos fonctionnalités sur la plateforme.</p>
+			<h3>
+				Informations complémentaires
+			</h3>
+			<p>
+				Veuillez nous renseigner un maximum d'informations autour de votre événement afin qu'il puisse profiter pleinement de toutes nos fonctionnalités sur la plateforme.
+			</p>
 			<div class="row">
 				<div class="col">
 					<div class="form-floating mb-3">
@@ -102,6 +110,9 @@
     'id': 'eventCashprize'
         }) }}
 					</div>
+					<div class="form-error">
+						{{ form_errors(form.eventCashprize) }}
+					</div>
 					<div>
 						{{ form_widget(form.eventEndDate, {
         'attr': {'class': 'form-control input-inline datetimepicker'},
@@ -127,8 +138,12 @@
 		</div>
 
 		<div class="input-grp-center">
-			<h3>Associer à un overlay</h3>
-			<p>Si vous voulez associer cet événement à un overlay que vous possédez ou que vous gérez, vous devez donc sélectionner l'overlay parmi la liste ci-dessous.</p>
+			<h3>
+				Associer à un overlay
+			</h3>
+			<p>
+				Si vous voulez associer cet événement à un overlay que vous possédez ou que vous gérez, vous devez donc sélectionner l'overlay parmi la liste ci-dessous.
+			</p>
 			<div class="form-floating mb-3">
 				{{ form_widget(form.overlayId, {
 			        'attr': {'class': 'form-select'},
@@ -143,10 +158,16 @@
 
 
 		<div class="input-grp">
-			<h3>Sponsors</h3>
-			<p>Votre événement possède des sponsors et vous souhaitez les afficher ? Sélectionnez les à partir de la liste ci-dessous.</p>
+			<h3>
+				Sponsors
+			</h3>
 			<p>
-				<u>Si un sponsor n'apparait pas, merci de nous en faire la demande.</u>
+				Votre événement possède des sponsors et vous souhaitez les afficher ? Sélectionnez les à partir de la liste ci-dessous.
+			</p>
+			<p>
+				<u>
+					Si un sponsor n'apparait pas, merci de nous en faire la demande.
+				</u>
 			</p>
 			<div class="form-floating mb-3">
 				{{ form_widget(form.eventIdSponsor, {
@@ -161,19 +182,25 @@
 		</div>
 
 		<div class="input-grp">
-			<h3>Réseaux sociaux</h3>
-			<p>Votre événement possède des réseaux sociaux et vous souhaitez les afficher ? Sélectionnez les à partir de la liste ci-dessous.</p>
+			<h3>
+				Réseaux sociaux
+			</h3>
 			<p>
-				<u>Si un réseau social n'apparait pas, merci de nous en faire la demande.</u>
+				Votre événement possède des réseaux sociaux et vous souhaitez les afficher ? Sélectionnez les à partir de la liste ci-dessous.
+			</p>
+			<p>
+				<u>
+					Si un réseau social n'apparait pas, merci de nous en faire la demande.
+				</u>
 			</p>
 			<div class="form-floating mb-3">
-				{{ form_widget(form.eventSocial, {
+				{{ form_widget(form.socials, {
                 'attr': {'class': 'form-select'},
-                'id': "eventSocial",
+                'id': "socials",
                 }) }}
-				{{ form_label(form.eventSocial, null, {
+				{{ form_label(form.socials, null, {
             'label': 'Sélectionnez vos réseaux',
-            'id': 'eventSocial'
+            'id': 'socials'
                 }) }}
 			</div>
 		</div>
@@ -189,5 +216,6 @@
 
 		<button class="btn btn-success">
 			<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
-			{{ button_label|default('Créer cet événement') }}</button>
+			{{ button_label|default('Créer cet événement') }}
+		</button>
 		{{ form_end(form) }}
