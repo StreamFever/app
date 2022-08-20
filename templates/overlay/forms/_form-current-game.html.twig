@@ -1,0 +1,80 @@
+{{ form_start(form_current_game) }}
+
+{% if form_errors(form_current_game) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form_current_game) }}
+	</div>
+{% endif %}
+
+{# INFO: Seul input actif #}
+<div class="form-floating mb-3">
+	{{ form_widget(form_current_game.currentGame, {
+            'attr': {'class': 'form-select' , 'oninput': 'updateCurrentGame(this.id)'},
+            'id': "currentGame",
+            }) }}
+	{{ form_label(form_current_game.currentGame, null, {
+        'label': 'Sélectionnez un match',
+        'id': 'currentGame'
+            }) }}
+</div>
+{{ form_widget(form_current_game.eventName, {
+                    'attr': {'class': 'display_none'},
+                    'id': "eventName",
+                    }) }}
+
+{{ form_widget(form_current_game.eventLogo, {
+                    'attr': {'class': 'display_none'},
+                    'id': "eventLogo",
+                    }) }}
+{{ form_widget(form_current_game.eventEdition, {
+            'attr': {'class': 'display_none'},
+            'id': "eventEdition",
+            }) }}
+{{ form_widget(form_current_game.eventHashtag, {
+            'attr': {'class': 'display_none'},
+            'id': "eventHashtag",
+            }) }}
+{{ form_widget(form_current_game.eventStartDate, {
+        'attr': {'class': 'display_none'},
+        'id': "eventStartDate",
+        }) }}
+{{ form_widget(form_current_game.eventFormat, {
+    'attr': {'class': 'display_none'},
+    'id': "eventFormat",
+    }) }}
+{{ form_widget(form_current_game.eventCashprize, {
+        'attr': {'class': 'display_none'},
+        'id': "eventCashprize",
+        }) }}
+{{ form_widget(form_current_game.eventEndDate, {
+      'attr': {'class': 'display_none'},
+      'id': "eventEndDate",
+      }) }}
+{{ form_widget(form_current_game.eventSlots, {
+  'attr': {'class': 'display_none'},
+  'id': "eventSlots",
+  }) }}
+{{ form_widget(form_current_game.overlayId, {
+       'attr': {'class': 'display_none'},
+       'id': "overlayId",
+       }) }}
+{{ form_widget(form_current_game.socials, {
+       'attr': {'class': 'display_none'},
+       'id': "socials",
+       }) }}
+{{ form_widget(form_current_game.eventIdSponsor, {
+            'attr': {'class': 'display_none'},
+            'id': "eventIdSponsor",
+            }) }}
+{{ form_widget(form_current_game.eventAccess, {
+            'attr': {'class': 'display_none'},
+            'id': "eventAccess",
+            }) }}
+{{ form_widget(form_current_game.userId, {
+      'attr': {
+          'class': 'display_none',
+          },
+      }) }}
+
+
+{{ form_end(form_current_game) }}
