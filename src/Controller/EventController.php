@@ -54,12 +54,27 @@ class EventController extends AbstractController
             }
 
             if ($data->getEventEdition() == "campus_cup" && $data->getEventLogo() == null) {
-                $data->setEventLogo("https://cdn.artaic.fr/images/CampusCupLogo.png");
+                $data->setEventLogo("https://cdn.artaic.fr/stream_cave/img/event/campus_cup.png");
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($event);
+                $entityManager->flush();
+            } else if ($data->getEventEdition() == "salty_duels" && $data->getEventLogo() == null) {
+                $data->setEventLogo("https://cdn.artaic.fr/stream_cave/img/event/salty_duels.png");
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($event);
+                $entityManager->flush();
+            } else if ($data->getEventEdition() == "hors_serie" && $data->getEventLogo() == null) {
+                $data->setEventLogo("https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg");
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($event);
+                $entityManager->flush();
+            } else if ($data->getEventEdition() == "her6s" && $data->getEventLogo() == null) {
+                $data->setEventLogo("https://cdn.artaic.fr/stream_cave/img/event/salty_academy.png");
                 $entityManager = $doctrine->getManager();
                 $entityManager->persist($event);
                 $entityManager->flush();
             } else {
-            $eventRepository->add($event);
+                $eventRepository->add($event);
             }
 
             $this->addFlash('success', 'L\'événement a bien été crée !');
@@ -87,7 +102,7 @@ class EventController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_event_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, FileUploader $fileUploader, Event $event, EventRepository $eventRepository): Response
+    public function edit(Request $request, FileUploader $fileUploader, Event $event, EventRepository $eventRepository, ManagerRegistry $doctrine): Response
     {
         $this->denyAccessUnlessGranted('EVENT_EDIT', $event);
         $form = $this->createForm(EventType::class, $event);
@@ -102,6 +117,30 @@ class EventController extends AbstractController
             if ($logoFile) {
                 $logoFileName = $fileUploader->uploadLogo($logoFile);
                 $data->setEventLogo($logoFileName);
+            }
+
+            if ($data->getEventEdition() == "campus_cup" && $data->getEventLogo() == null) {
+                $data->setEventLogo("https://cdn.artaic.fr/stream_cave/img/event/campus_cup.png");
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($event);
+                $entityManager->flush();
+            } else if ($data->getEventEdition() == "salty_duels" && $data->getEventLogo() == null) {
+                $data->setEventLogo("https://cdn.artaic.fr/stream_cave/img/event/salty_duels.png");
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($event);
+                $entityManager->flush();
+            } else if ($data->getEventEdition() == "hors_serie" && $data->getEventLogo() == null) {
+                $data->setEventLogo("https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg");
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($event);
+                $entityManager->flush();
+            } else if ($data->getEventEdition() == "her6s" && $data->getEventLogo() == null) {
+                $data->setEventLogo("https://cdn.artaic.fr/stream_cave/img/event/salty_academy.png");
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($event);
+                $entityManager->flush();
+            } else {
+                $eventRepository->add($event);
             }
 
             $eventRepository->add($event);
@@ -130,7 +169,7 @@ class EventController extends AbstractController
     public function delete(Request $request, Event $event, EventRepository $eventRepository): Response
     {
         $this->denyAccessUnlessGranted('EVENT_DELETE', $event);
-        if ($this->isCsrfTokenValid('delete'.$event->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $event->getId(), $request->request->get('_token'))) {
             $eventRepository->remove($event);
         }
 
