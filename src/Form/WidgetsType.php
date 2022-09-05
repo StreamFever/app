@@ -24,15 +24,18 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 
+use Doctrine\ORM\EntityManagerInterface;
+
 class WidgetsType extends AbstractType
 {
 
     private $security;
 
-    public function __construct(Security $security, WidgetsRepository $widgetsRepository)
+    public function __construct(Security $security, WidgetsRepository $widgetsRepository, LibWidgetsRepository $libWidgetsRepository)
     {
         $this->security = $security;
         $this->widgetsRepository = $widgetsRepository;
+        $this->LibWidgetsRepository = $libWidgetsRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -56,7 +59,12 @@ class WidgetsType extends AbstractType
                     'choice_label' => 'libWidgetName',
                     'query_builder' => function (LibWidgetsRepository $librepository) {
                         return $librepository->createQueryBuilder('l')
-                            ->orderBy('l.libWidgetName', 'ASC');
+                            ->leftJoin('l.widgets', 'w1')
+                            ->leftJoin('w1.overlay', 'o')
+                            ->leftJoin('o.widgets', 'w2')
+                            ->leftJoin('w2.WidgetId', 'l2')
+                            ->where('o.id = :id_overlay AND l2.id != l.id')
+                            ->setParameter('id_overlay', 1);
                     },
                 ]
             )
@@ -68,11 +76,10 @@ class WidgetsType extends AbstractType
                     'choice_label' => 'overlay_name',
                     'query_builder' => function (OverlayRepository $overlayrepository) {
                         return $overlayrepository->createQueryBuilder('o')
-                            ->join('o.OverlayAccess', 'u1')
-                            ->join('o.OverlayOwner', 'u2')
-                            ->where('u1.id = :user_id OR u2.id = :user_id')
-                            ->setParameter('user_id', $this->security->getUser()->getId())
-                            ->orderBy('o.id', 'ASC');
+                            ->leftJoin('o.OverlayAccess', 'u1')
+                            ->where('u1 = :id_user OR o.OverlayOwner = :id_user')
+                            ->setParameter('id_user', $this->security->getUser()->getId())
+                            ->orderBy('o.OverlayName', 'ASC');
                     },
                 ]
             )
@@ -88,6 +95,25 @@ class WidgetsType extends AbstractType
                         $form->setData(['isTwoWidgets' => 0]);
                     }
                 }
+
+                $finalData = [];
+                $allLibWidget = $this->LibWidgetsRepository->findAll();
+                $libWidgetIntoOverlay = $this->LibWidgetsRepository->findAllByOverlay(2);
+
+                dump($allLibWidget);
+                dump($libWidgetIntoOverlay);
+                // INFO: Loop dans la liste des LibWidgets DE L'OVERLAY
+                for ($i1 = 0; $i1 < count($libWidgetIntoOverlay); $i1++) {
+                    // INFO: Loop dans la liste des LibWidgets DE L'OVERLAY
+                    for ($i2 = 0; $i2 < count($allLibWidget); $i2++) {
+                        dump($libWidgetIntoOverlay[$i1]->getLibWidgetId() . ' ' . $allLibWidget[$i2]->getLibWidgetId());
+
+                        if ($libWidgetIntoOverlay[$i1]->getLibWidgetId() != $allLibWidget[$i2]->getLibWidgetId()) {
+                            $finalData[$i1] = $libWidgetIntoOverlay[$i1];
+                        }
+                    }
+                }
+                dd($finalData);
             });
 
         // INFO: Lors de la création d'un widget, afficher "isTwoWidgets" si celui-ci est un widget de "deux widgets"
