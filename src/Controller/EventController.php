@@ -25,10 +25,8 @@ class EventController extends AbstractController
      */
     public function index(EventRepository $eventRepository): Response
     {
-        $currentUser = $this->getUser();
-
         return $this->render('event/index.html.twig', [
-            'events' => $eventRepository->findByIdUser($currentUser->getId()),
+            'events' => $eventRepository->findByIdUser($this->getUser()->getId()),
             'controller_name' => 'EventController',
         ]);
     }
@@ -52,6 +50,8 @@ class EventController extends AbstractController
                 $logoFileName = $fileUploader->uploadLogo($logoFile);
                 $data->setEventLogo($logoFileName);
             }
+
+            $data->setUserId($this->getUser());
 
             if ($data->getEventEdition() == "campus_cup" && $data->getEventLogo() == null) {
                 $data->setEventLogo("https://cdn.artaic.fr/stream_cave/img/event/campus_cup.png");
@@ -119,6 +119,8 @@ class EventController extends AbstractController
                 $data->setEventLogo($logoFileName);
             }
 
+            $data->setUserId($this->getUser());
+
             if ($data->getEventEdition() == "campus_cup" && $data->getEventLogo() == null) {
                 $data->setEventLogo("https://cdn.artaic.fr/stream_cave/img/event/campus_cup.png");
                 $entityManager = $doctrine->getManager();
@@ -140,10 +142,13 @@ class EventController extends AbstractController
                 $entityManager->persist($event);
                 $entityManager->flush();
             } else {
-                $eventRepository->add($event);
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($event);
+                $entityManager->flush();
             }
 
-            $eventRepository->add($event);
+            // $eventRepository->add($event);
+
 
             $this->addFlash('success', 'L\'événement a bien été modifié !');
 

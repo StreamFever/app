@@ -36,6 +36,7 @@ class MetaController extends AbstractController
         $idOverlay = $request->get('id_overlay');
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $metum->setUserId($this->getUser());
             $metaRepository->add($metum);
             if ($idOverlay) {
                 return $this->redirectToRoute('app_overlay_show', [
@@ -77,6 +78,7 @@ class MetaController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $metum->setUserId($this->getUser());
             $metaRepository->add($metum);
             if ($idOverlay) {
                 return $this->redirectToRoute('app_overlay_show', [
@@ -87,7 +89,6 @@ class MetaController extends AbstractController
             }
 
             $this->addFlash('success', 'La métadonnée a bien été modifiée !');
-
         }
 
         return $this->renderForm('overlay/meta/edit.html.twig', [
@@ -103,7 +104,7 @@ class MetaController extends AbstractController
     {
         $this->denyAccessUnlessGranted('META_DELETE', $metum);
 
-        if ($this->isCsrfTokenValid('delete'.$metum->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $metum->getId(), $request->request->get('_token'))) {
             $metaRepository->remove($metum);
         }
 

@@ -20,10 +20,10 @@ class GameController extends AbstractController
      */
     public function index(GameRepository $gameRepository): Response
     {
-        $currentUser = $this->getUser();
+
 
         return $this->render('game/index.html.twig', [
-            'games' => $gameRepository->findAllCreatedByUserId($currentUser->getId()),
+            'games' => $gameRepository->findAllCreatedByUserId($this->getUser()->getId()),
         ]);
     }
 
@@ -40,6 +40,8 @@ class GameController extends AbstractController
             if ($game->getCurrentMap() == null && $game->getGameIdMaps()->count() > 0) {
                 $game->setCurrentMap($game->getGameIdMaps()[0]);
             }
+            $game->setGameName($game->getGameIdTeamAlpha()->getTeamName() . ' VS ' . $game->getGameIdTeamBeta()->getTeamName());
+            $game->setUserId($this->getUser());
             $gameRepository->add($game);
 
             $this->addFlash('success', 'Le match a bien été créée !');
@@ -76,6 +78,8 @@ class GameController extends AbstractController
             if ($game->getCurrentMap() == null && $game->getGameIdMaps()->count() > 0) {
                 $game->setCurrentMap($game->getGameIdMaps()[0]);
             }
+            $game->setGameName($game->getGameIdTeamAlpha()->getTeamName() . ' VS ' . $game->getGameIdTeamBeta()->getTeamName());
+            $game->setUserId($this->getUser());
             $gameRepository->add($game);
 
             $this->addFlash('success', 'Le match a bien été modifié !');

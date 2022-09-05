@@ -45,7 +45,7 @@ class OverlayController extends AbstractController
         $currentUser = $this->getUser();
 
         return $this->render('overlay/index.html.twig', [
-            'overlays' => $overlayRepository->findByIdUser($currentUser->getId()),
+            'overlays' => $overlayRepository->findByIdUser($this->getUser()->getId()),
             'controller_name' => "Overlay"
         ]);
     }
@@ -61,7 +61,7 @@ class OverlayController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $overlay->setOverlayOwner($this->getUser());
             // Insère toutes les données dans la table overlays
             $overlayRepository->add($overlay);
             // $topbar = new Widgets();
@@ -141,12 +141,13 @@ class OverlayController extends AbstractController
 
         // INFO: Création form currentEvent & currentGame
         $event = $overlay->getCurrentEvent() != null ? $overlay->getCurrentEvent() : new Event();
+        $game = $event->getCurrentGame() != null ? $event->getCurrentGame() : new Game();
         $form_current_event = $this->get('form.factory')
             ->createNamedBuilder('currentEvent', OverlayType::class, $overlay)->getForm();
         $form_current_game = $this->get('form.factory')
             ->createNamedBuilder('currentGame', EventType::class, $event)->getForm();
         $form_current_map = $this->get('form.factory')
-            ->createNamedBuilder('currentMap', GameType::class, $event->getCurrentGame())->getForm();
+            ->createNamedBuilder('currentMap', GameType::class, $game)->getForm();
 
         // INFO: Création form pour player
         $game = $event->getCurrentGame() != null ? $event->getCurrentGame() : new Game();
@@ -308,7 +309,7 @@ class OverlayController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $overlay->setOverlayOwner($this->getUser());
             $overlayRepository->add($overlay);
 
             $this->addFlash('success', 'L\'overlay a bien été modifié !');
