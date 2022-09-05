@@ -34,6 +34,11 @@ class Status
         $this->games = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->statusName;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
