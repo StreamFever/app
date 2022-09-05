@@ -6,6 +6,8 @@ use App\Entity\Sponsor;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 
 class SponsorType extends AbstractType
 {
@@ -13,10 +15,53 @@ class SponsorType extends AbstractType
     {
         $builder
             ->add('sponsorName')
-            ->add('sponsorLogo')
-            ->add('sponsorBanner')
-            ->add('events')
-        ;
+            ->add('sponsorLogo', FileType::class, [
+                'label' => 'Logo sponsor',
+
+                // unmapped means that this field is not associated to any entity property
+                'mapped' => false,
+
+                // make it optional so you don't have to re-upload the PDF file
+                // every time you edit the Product details
+                'required' => false,
+
+                // unmapped fields can't define their validation using annotations
+                // in the associated entity, so you can use the PHP constraint classes
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpeg',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid PNG or JPEG image',
+                    ])
+                ],
+            ])
+            ->add('sponsorBanner', FileType::class, [
+                'label' => 'Banner sponsor',
+
+                // unmapped means that this field is not associated to any entity property
+                'mapped' => false,
+
+                // make it optional so you don't have to re-upload the PDF file
+                // every time you edit the Product details
+                'required' => false,
+
+                // unmapped fields can't define their validation using annotations
+                // in the associated entity, so you can use the PHP constraint classes
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpeg',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid PNG or JPEG image',
+                    ])
+                ],
+            ])
+            ->add('events');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
