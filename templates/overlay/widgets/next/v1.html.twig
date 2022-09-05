@@ -2,13 +2,13 @@
 	<section id="nextmatch">
 		<div id="next_teams" class="{{widget.WidgetVisible ? "teams" : "display_none"}}">
 			<span id="nextmatch_team_a">
-				{{game is defined ? game.gameIdTeamAlpha.teamName|slice(0,5)|replace({' ': ''})|upper : "TBD" }}
+				{{game is defined ? game.gameIdTeamAlpha.teamName|slice(0,2)|replace({' ': ''})|upper : "TBD" }}
 			</span>
 			<span id="vs">
-				VS
+				<span class="iconify" data-icon="noto-v1:vs-button"></span>
 			</span>
 			<span id="nextmatch_team_b">
-				{{game is defined ? game.gameIdTeamBeta.teamName|slice(0,5)|replace({' ': ''})|upper : "TBD" }}
+				{{game is defined ? game.gameIdTeamBeta.teamName|slice(0,2)|replace({' ': ''})|upper : "TBD" }}
 			</span>
 		</div>
 		<div id="next_text" class="{{widget.WidgetVisible ? "text" : "display_none"}}">
