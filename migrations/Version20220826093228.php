@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220814203420 extends AbstractMigration
+final class Version20220826093228 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -27,7 +27,7 @@ final class Version20220814203420 extends AbstractMigration
         $this->addSql('CREATE TABLE event_format (id INT AUTO_INCREMENT NOT NULL, event_format_name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE flag (id INT AUTO_INCREMENT NOT NULL, flag_code VARCHAR(255) NOT NULL, flag_name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE format (id INT AUTO_INCREMENT NOT NULL, format_name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE game (id INT AUTO_INCREMENT NOT NULL, game_id_team_alpha_id INT NOT NULL, game_id_team_beta_id INT NOT NULL, game_format_id INT NOT NULL, game_status_id INT NOT NULL, user_id_id INT NOT NULL, overlay_id_id INT DEFAULT NULL, game_start_date DATETIME DEFAULT NULL, game_score_team_alpha INT DEFAULT NULL, game_score_team_beta INT DEFAULT NULL, game_name VARCHAR(255) DEFAULT NULL, INDEX IDX_232B318CB5F42ED3 (game_id_team_alpha_id), INDEX IDX_232B318C6CBC15B2 (game_id_team_beta_id), INDEX IDX_232B318C48F3707 (game_format_id), INDEX IDX_232B318CB951C1BF (game_status_id), INDEX IDX_232B318C9D86650F (user_id_id), INDEX IDX_232B318CA5E79627 (overlay_id_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE game (id INT AUTO_INCREMENT NOT NULL, game_id_team_alpha_id INT NOT NULL, game_id_team_beta_id INT NOT NULL, game_format_id INT NOT NULL, game_status_id INT NOT NULL, user_id_id INT NOT NULL, overlay_id_id INT DEFAULT NULL, current_map_id INT DEFAULT NULL, game_start_date DATETIME DEFAULT NULL, game_score_team_alpha INT DEFAULT NULL, game_score_team_beta INT DEFAULT NULL, game_name VARCHAR(255) DEFAULT NULL, INDEX IDX_232B318CB5F42ED3 (game_id_team_alpha_id), INDEX IDX_232B318C6CBC15B2 (game_id_team_beta_id), INDEX IDX_232B318C48F3707 (game_format_id), INDEX IDX_232B318CB951C1BF (game_status_id), INDEX IDX_232B318C9D86650F (user_id_id), INDEX IDX_232B318CA5E79627 (overlay_id_id), INDEX IDX_232B318C540C850A (current_map_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE game_map (game_id INT NOT NULL, map_id INT NOT NULL, INDEX IDX_88F7B97EE48FD905 (game_id), INDEX IDX_88F7B97E53C55F64 (map_id), PRIMARY KEY(game_id, map_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE lib_socials (id INT AUTO_INCREMENT NOT NULL, lib_social_name VARCHAR(255) NOT NULL, lib_social_logo LONGTEXT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE lib_widgets (id INT AUTO_INCREMENT NOT NULL, lib_widget_name VARCHAR(255) NOT NULL, lib_widget_id VARCHAR(255) NOT NULL, lib_widget_id2 VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -64,6 +64,7 @@ final class Version20220814203420 extends AbstractMigration
         $this->addSql('ALTER TABLE game ADD CONSTRAINT FK_232B318CB951C1BF FOREIGN KEY (game_status_id) REFERENCES status (id)');
         $this->addSql('ALTER TABLE game ADD CONSTRAINT FK_232B318C9D86650F FOREIGN KEY (user_id_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE game ADD CONSTRAINT FK_232B318CA5E79627 FOREIGN KEY (overlay_id_id) REFERENCES overlay (id)');
+        $this->addSql('ALTER TABLE game ADD CONSTRAINT FK_232B318C540C850A FOREIGN KEY (current_map_id) REFERENCES map (id)');
         $this->addSql('ALTER TABLE game_map ADD CONSTRAINT FK_88F7B97EE48FD905 FOREIGN KEY (game_id) REFERENCES game (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE game_map ADD CONSTRAINT FK_88F7B97E53C55F64 FOREIGN KEY (map_id) REFERENCES map (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE logs ADD CONSTRAINT FK_F08FC65CD9B08880 FOREIGN KEY (logs_user_id) REFERENCES user (id)');
@@ -102,6 +103,7 @@ final class Version20220814203420 extends AbstractMigration
         $this->addSql('ALTER TABLE game_map DROP FOREIGN KEY FK_88F7B97EE48FD905');
         $this->addSql('ALTER TABLE social DROP FOREIGN KEY FK_7161E1874CB23AC8');
         $this->addSql('ALTER TABLE widgets DROP FOREIGN KEY FK_9D58E4C12402C741');
+        $this->addSql('ALTER TABLE game DROP FOREIGN KEY FK_232B318C540C850A');
         $this->addSql('ALTER TABLE game_map DROP FOREIGN KEY FK_88F7B97E53C55F64');
         $this->addSql('ALTER TABLE event DROP FOREIGN KEY FK_3BAE0AA7A5E79627');
         $this->addSql('ALTER TABLE game DROP FOREIGN KEY FK_232B318CA5E79627');
