@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/social")
+ * @Route("/admin/social")
  */
 class SocialController extends AbstractController
 {
@@ -39,6 +39,13 @@ class SocialController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $social_tag = $data->getSocialTag();
+            $social_lib = $data->getSocialLib()->getLibSocialName();
+            $social_user = $data->getUserId()->getPseudo();
+
+            $data->setSocialName($social_tag . ' - ' . $social_lib . ' de ' . $social_user);
+
             $socialRepository->add($social);
             return $this->redirectToRoute('app_social_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -83,7 +90,7 @@ class SocialController extends AbstractController
      */
     public function delete(Request $request, Social $social, SocialRepository $socialRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$social->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $social->getId(), $request->request->get('_token'))) {
             $socialRepository->remove($social);
         }
 
