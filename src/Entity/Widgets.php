@@ -30,7 +30,7 @@ class Widgets
     private $WidgetVisible;
 
     /**
-     * @ORM\ManyToOne(targetEntity=LibWidgets::class)
+     * @ORM\ManyToOne(targetEntity=LibWidgets::class, inversedBy="widgets")
      * @ORM\JoinColumn(nullable=false)
      */
     private $WidgetId;
