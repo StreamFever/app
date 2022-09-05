@@ -10,7 +10,8 @@
 
 // TODO: Importer selon la version des widgets, soit le index des dossiers ou individuellement les styles
 import '../styles/lib/loader.scss';
-import '../styles/widgets/cc/index.scss';
+// INFO: changer le nom du dossier selon l'événement - rendre dynamique ceci
+import '../styles/widgets/louvard/index.scss';
 import '../js/admin/ws';
 import '../js/admin/control_widget';
 import '../js/widgets/index';
