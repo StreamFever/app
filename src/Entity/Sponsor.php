@@ -30,18 +30,23 @@ class Sponsor
     private $sponsorLogo;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Event::class, mappedBy="eventIdSponsor")
-     */
-    private $events;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $sponsorBanner;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Event::class, mappedBy="eventIdSponsor")
+     */
+    private $events;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->sponsorName;
     }
 
     public function getId(): ?int
@@ -73,6 +78,18 @@ class Sponsor
         return $this;
     }
 
+    public function getSponsorBanner(): ?string
+    {
+        return $this->sponsorBanner;
+    }
+
+    public function setSponsorBanner(?string $sponsorBanner): self
+    {
+        $this->sponsorBanner = $sponsorBanner;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Event>
      */
@@ -96,18 +113,6 @@ class Sponsor
         if ($this->events->removeElement($event)) {
             $event->removeEventIdSponsor($this);
         }
-
-        return $this;
-    }
-
-    public function getSponsorBanner(): ?string
-    {
-        return $this->sponsorBanner;
-    }
-
-    public function setSponsorBanner(?string $sponsorBanner): self
-    {
-        $this->sponsorBanner = $sponsorBanner;
 
         return $this;
     }
