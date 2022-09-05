@@ -1,0 +1,106 @@
+{% set bottombarMarquee = [] %}
+{% for meta in metas %}
+	{% if meta.metaKey == 'bottombar_marquee_1' %}
+		{% set bottombarMarquee = bottombarMarquee|merge([meta]) %}
+	{% endif %}
+	{% if meta.metaKey == 'bottombar_marquee_2' %}
+		{% set bottombarMarquee = bottombarMarquee|merge([meta]) %}
+	{% endif %}
+	{% if meta.metaKey == 'bottombar_marquee_3' %}
+		{% set bottombarMarquee = bottombarMarquee|merge([meta]) %}
+	{% endif %}
+	{% if meta.metaKey == 'bottombar_marquee_4' %}
+		{% set bottombarMarquee = bottombarMarquee|merge([meta]) %}
+	{% endif %}
+{% endfor %}
+
+<section id="bottombar">
+	<div class="logo_event">
+		<img src="https://www.louvardgame.be/images/public/logo.png" alt="">
+	</div>
+	<div id="currentTime"></div>
+	<div class="next_match">
+		<h3>
+			Prochain match
+		</h3>
+		<div class="versus">
+			<span>
+				{{game is defined ? game.gameIdTeamAlpha.teamName|slice(0,2)|replace({' ': ''})|upper : "TBD" }}
+			</span>
+			<span>
+				<span class="iconify" data-icon="noto-v1:vs-button"></span>
+			</span>
+			<span>
+				{{game is defined ? game.gameIdTeamBeta.teamName|slice(0,2)|replace({' ': ''})|upper : "TBD" }}
+			</span>
+		</div>
+	</div>
+
+	{# INFO: Différentes sections sous effet fade #}
+
+	<div id="slider_fade">
+		<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<h3>
+						Ban map :
+					</h3>
+					<div id="maps">
+						{% for map in event.currentGame.gameIdMaps %}
+							<div class="map">
+								<div class="banner">
+									<img src="{{map.mapImg}}" alt="">
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="carousel-item">
+					<div id="infos_event">
+						<h3 class="title">
+							Semi-final - LouvardGame 2022
+						</h3>
+						<marquee direction="left" id="bottombarMarquee">
+							{% for dataMarquee in bottombarMarquee %}
+								{% if dataMarquee.MetaValue is not empty %}
+									<span id="{{dataMarquee.MetaKey}}">
+										{{dataMarquee.MetaValue}}
+									</span>
+								{% endif %}
+							{% endfor %}
+						</marquee>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="sponsors">
+		<div id="slider">
+			<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+				<div class="carousel-inner">
+					{% if event is defined %}
+						<div class="carousel-item active" id="img_slider">
+							<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" class="d-block w-100" alt="Logo de StreamCave">
+						</div>
+					{% endif %}
+					{% if event is defined %}
+						{% for sponsor in event.eventIdSponsor %}
+							<div class="carousel-item" id="img_slider">
+								<img src="{{ asset('uploads/banners/' ~ sponsor.sponsorBann) }}" class="d-block w-100" alt="Logo de {{sponsor.sponsorName}}">
+							</div>
+						{% endfor %}
+						{% for social in event.socials %}
+							<div class="carousel-item">
+								<span id="text_slider" class="text_slider">
+									<span class="iconify" data-icon="{{social.socialLib.libSocialLogo}}"></span>
+									{{social.socialTag}}
+								</span>
+							</div>
+						{% endfor %}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
