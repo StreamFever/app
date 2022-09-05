@@ -12,13 +12,15 @@ class FileUploader
     private $targetDirectoryLogo;
     private $targetDirectoryMap;
     private $targetDirectoryAvatar;
+    private $targetDirectoryBanner;
     private $slugger;
 
-    public function __construct($targetDirectoryLogo, $targetDirectoryMap, $targetDirectoryAvatar, SluggerInterface $slugger)
+    public function __construct($targetDirectoryLogo, $targetDirectoryMap, $targetDirectoryAvatar, $targetDirectoryBanner, SluggerInterface $slugger)
     {
         $this->targetDirectoryLogo = $targetDirectoryLogo;
         $this->targetDirectoryMap = $targetDirectoryMap;
         $this->targetDirectoryAvatar = $targetDirectoryAvatar;
+        $this->targetDirectoryBanner = $targetDirectoryBanner;
         $this->slugger = $slugger;
     }
 
@@ -26,7 +28,7 @@ class FileUploader
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($originalFilename);
-        $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+        $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
 
         try {
             $file->move($this->gettargetDirectoryLogo(), $fileName);
@@ -41,7 +43,7 @@ class FileUploader
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($originalFilename);
-        $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+        $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
 
         try {
             $file->move($this->gettargetDirectoryMap(), $fileName);
@@ -56,10 +58,25 @@ class FileUploader
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($originalFilename);
-        $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+        $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
 
         try {
             $file->move($this->gettargetDirectoryAvatar(), $fileName);
+        } catch (FileException $e) {
+            // ... handle exception if something happens during file upload
+        }
+
+        return $fileName;
+    }
+
+    public function uploadBanner(UploadedFile $file)
+    {
+        $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $safeFilename = $this->slugger->slug($originalFilename);
+        $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
+
+        try {
+            $file->move($this->gettargetDirectoryBanner(), $fileName);
         } catch (FileException $e) {
             // ... handle exception if something happens during file upload
         }
@@ -80,5 +97,10 @@ class FileUploader
     public function gettargetDirectoryAvatar()
     {
         return $this->targetDirectoryAvatar;
+    }
+
+    public function gettargetDirectoryBanner()
+    {
+        return $this->targetDirectoryBanner;
     }
 }
