@@ -75,11 +75,6 @@ class Game
     private $overlayId;
 
     /**
-     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="currentGame")
-     */
-    private $currentEvent;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $gameName;
@@ -88,6 +83,11 @@ class Game
      * @ORM\ManyToOne(targetEntity=Map::class, inversedBy="gameCurrent")
      */
     private $currentMap;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="currentGame")
+     */
+    private $currentEvent;
 
     public function __construct()
     {
@@ -241,6 +241,30 @@ class Game
         return $this;
     }
 
+    public function getGameName(): ?string
+    {
+        return $this->gameName;
+    }
+
+    public function setGameName(?string $gameName): self
+    {
+        $this->gameName = $gameName;
+
+        return $this;
+    }
+
+    public function getCurrentMap(): ?Map
+    {
+        return $this->currentMap;
+    }
+
+    public function setCurrentMap(?Map $currentMap): self
+    {
+        $this->currentMap = $currentMap;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Event>
      */
@@ -267,30 +291,6 @@ class Game
                 $currentEvent->setCurrentGame(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getGameName(): ?string
-    {
-        return $this->gameName;
-    }
-
-    public function setGameName(?string $gameName): self
-    {
-        $this->gameName = $gameName;
-
-        return $this;
-    }
-
-    public function getCurrentMap(): ?Map
-    {
-        return $this->currentMap;
-    }
-
-    public function setCurrentMap(?Map $currentMap): self
-    {
-        $this->currentMap = $currentMap;
 
         return $this;
     }
