@@ -8,6 +8,8 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
+use Doctrine\ORM\EntityManagerInterface;
+
 /**
  * @extends ServiceEntityRepository<LibWidgets>
  *
@@ -18,9 +20,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class LibWidgetsRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
     {
         parent::__construct($registry, LibWidgets::class);
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -46,6 +49,30 @@ class LibWidgetsRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+
+    public function findAllByOverlay($idOverlay)
+    {
+        return $this->createQueryBuilder('l')
+            ->leftJoin('l.widgets', 'w')
+            ->leftJoin('w.overlay', 'o')
+            ->where('o.id = :id_overlay')
+            ->setParameter('id_overlay', $idOverlay)
+            ->getQuery()
+            ->getResult();
+    }
+
+    // public function findOne()
+    // {
+    //     $query = $this->entityManager->createQuery(
+    //         'SELECT lw
+    //         FROM App\Entity\LibWidgets lw
+    //         WHERE lw.id = :id_libwidget'
+    //     );
+    //     $query->setParameter('id_libwidget', 1);
+
+    //     // returns an array of Product objects
+    //     return $query->getResult();
+    // }
 
     // /**
     //  * @return LibWidgets[] Returns an array of LibWidgets objects
