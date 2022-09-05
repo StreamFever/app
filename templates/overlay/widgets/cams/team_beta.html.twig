@@ -9,15 +9,18 @@
 	<section id="cameras_beta" class="{{widget.WidgetVisible == 2 ? "" : "display_none"}}">
 		<div class="container_cam">
 			<div class="left">
-				<iframe src="{{ array[0] is defined ? 'https://live.artaic.fr/?view=' ~ array[0] ~ '&mutespeaker' : 'https://live.artaic.fr/?view=test' }}" frameborder="0"></iframe>
-				<iframe src="{{ array[1] is defined ? 'https://live.artaic.fr/?view=' ~ array[1] ~ '&mutespeaker' : 'https://live.artaic.fr/?view=test' }}" frameborder="0"></iframe>
+				<iframe src="{{ array[0] is defined ? 'https://live.artaic.fr/?view=vgg8keu' ~ array[0] ~ '&mutespeaker' : 'https://live.artaic.fr/?view=test' }}" frameborder="0"></iframe>
+				<iframe src="{{ array[1] is defined ? 'https://live.artaic.fr/?view=vgg8keu' ~ array[1] ~ '&mutespeaker' : 'https://live.artaic.fr/?view=test' }}" frameborder="0"></iframe>
 			</div>
 			<div class="center">
-				<iframe src="{{ array[2] is defined ? 'https://live.artaic.fr/?view=' ~ array[2] ~ '&mutespeaker' : 'https://live.artaic.fr/?view=test' }}" frameborder="0"></iframe>
+				<iframe src="{{ array[2] is defined ? 'https://live.artaic.fr/?view=vgg8keu' ~ array[2] ~ '&mutespeaker' : 'https://live.artaic.fr/?view=test' }}" frameborder="0"></iframe>
+				<span class="team_name">
+					{{game is defined ? game.gameIdTeamAlpha.teamName|slice(0,2)|replace({' ': ''})|upper : "TBD" }}
+				</span>
 			</div>
 			<div class="right">
-				<iframe src="{{ array[3] is defined ? 'https://live.artaic.fr/?view=' ~ array[3] ~ '&mutespeaker' : 'https://live.artaic.fr/?view=test' }}" frameborder="0"></iframe>
-				<iframe src="{{ array[4] is defined ? 'https://live.artaic.fr/?view=' ~ array[4] ~ '&mutespeaker' : 'https://live.artaic.fr/?view=test' }}" frameborder="0"></iframe>
+				<iframe src="{{ array[3] is defined ? 'https://live.artaic.fr/?view=vgg8keu' ~ array[3] ~ '&mutespeaker' : 'https://live.artaic.fr/?view=test' }}" frameborder="0"></iframe>
+				<iframe src="{{ array[4] is defined ? 'https://live.artaic.fr/?view=vgg8keu' ~ array[4] ~ '&mutespeaker' : 'https://live.artaic.fr/?view=test' }}" frameborder="0"></iframe>
 			</div>
 		</div>
 	</section>

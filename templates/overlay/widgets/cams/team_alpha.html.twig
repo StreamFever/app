@@ -15,6 +15,9 @@
 			</div>
 			<div class="center">
 				<iframe id="cam_3" src="{{ array[2] is defined ? 'https://live.artaic.fr/?view=' ~ array[2] ~ '&mutespeaker' : 'https://live.artaic.fr/?view=test' }}" frameborder="0"></iframe>
+				<span class="team_name">
+					{{game is defined ? game.gameIdTeamAlpha.teamName|slice(0,2)|replace({' ': ''})|upper : "TBD" }}
+				</span>
 			</div>
 			<div class="right">
 				<iframe id="cam_4" src="{{ array[3] is defined ? 'https://live.artaic.fr/?view=' ~ array[3] ~ '&mutespeaker' : 'https://live.artaic.fr/?view=test' }}" frameborder="0"></iframe>
