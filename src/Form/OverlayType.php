@@ -2,20 +2,21 @@
 
 namespace App\Form;
 
-use App\Entity\Overlay;
 use App\Entity\User;
+use App\Entity\Overlay;
 
 use App\Repository\UserRepository;
 
-use Symfony\Component\Security\Core\Security;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use App\Repository\EventRepository;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Form\FormBuilderInterface;
+
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 
 class OverlayType extends AbstractType
@@ -55,7 +56,7 @@ class OverlayType extends AbstractType
                 )
             ))
             ->add('OverlayOwner')
-            ->add('currentEvent', HiddenType::class);
+            ->add('currentEvent');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
