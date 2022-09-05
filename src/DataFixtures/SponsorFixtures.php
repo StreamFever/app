@@ -12,15 +12,16 @@ class SponsorFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
 
-        $sponsors = ['Firstblood', 'VastGG', 'maaKu', 'LouvardGame'];
+        // $sponsors = ['Firstblood', 'VastGG', 'maaKu', 'LouvardGame'];
+        // $sponsorsLogo = [''];
 
-        foreach ($sponsors as $key => $value) {
-            $sponsor = new Sponsor();
-            $sponsor->setSponsorName($value);
-            $manager->persist($sponsor);
+        // foreach ($sponsors as $key => $value) {
+        //     $sponsor = new Sponsor();
+        //     $sponsor->setSponsorName($value);
+        //     $manager->persist($sponsor);
 
-            $this->addReference('sponsor_' . $key, $sponsor);
-        }
-        $manager->flush();
+        //     $this->addReference('sponsor_' . $key, $sponsor);
+        // }
+        // $manager->flush();
     }
 }
