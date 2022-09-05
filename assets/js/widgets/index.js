@@ -1,5 +1,6 @@
 // TOP BAR
 import './topbar';
+import './bottombar';
 import { showVideoVersus } from './lib/video_versus';
 
 console.log("Index Widgets OK");
