@@ -1,12 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer un nouveau joueur
+{% block title %}
+	Créer un nouveau joueur
 {% endblock %}
 
 {% block body %}
-	<h1>Créer un nouveau joueur</h1>
+	<h1>
+		Créer un nouveau joueur
+	</h1>
 
 	{{ include('player/_form.html.twig') }}
 
-	<a class="btn btn-dark" href="{{ path('app_player_index') }}"><span class="iconify" data-icon="akar-icons:arrow-back-thick"></span> Retour à la liste</a>
+	<a class="btn btn-dark" href="{{ path('app_player_index') }}">
+		<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
+		Retour à la liste
+	</a>
 {% endblock %}
