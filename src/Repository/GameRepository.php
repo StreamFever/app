@@ -56,8 +56,7 @@ class GameRepository extends ServiceEntityRepository
             ->orderBy('g.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     public function findFirst()
@@ -71,8 +70,7 @@ class GameRepository extends ServiceEntityRepository
             ->addOrderBy('g.gameStatus')
             ->setMaxResults(1)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     public function findFirstCurrentByUserId($id_user)
@@ -86,8 +84,7 @@ class GameRepository extends ServiceEntityRepository
             ->addOrderBy('g.gameStatus')
             ->setMaxResults(1)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     public function findFirstNextByUserId($id_user)
@@ -100,8 +97,7 @@ class GameRepository extends ServiceEntityRepository
             ->orderBy('g.id', 'ASC')
             ->setMaxResults(1)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     // /**
