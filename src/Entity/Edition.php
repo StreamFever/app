@@ -6,6 +6,7 @@ use App\Repository\EditionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EditionRepository::class)
@@ -16,11 +17,15 @@ class Edition
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank
+     * @Assert\Type("integer")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Type("integer")
      */
     private $editionName;
 
@@ -85,4 +90,5 @@ class Edition
 
         return $this;
     }
+
 }
