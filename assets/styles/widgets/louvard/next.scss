@@ -1,0 +1,37 @@
+#nextmatch {
+ z-index: 9;
+ position: absolute;
+ top: 15%;
+ left: 1%;
+
+ .teams {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  background-color: #FFF;
+  padding: 1rem 2rem;
+
+  span {
+   font-size: 2rem;
+   color: #6b9dcd;
+  }
+ }
+
+ #vs {
+  color: black;
+  padding: 0 1rem;
+  font-size: 1.4rem;
+ }
+
+ .text {
+  background-color: #6b9dcd;
+  color: #FFF;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+
+  .next {
+   color: #FFF;
+  }
+ }
+}

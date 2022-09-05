@@ -1,0 +1,136 @@
+#bottombar {
+ display: flex;
+ flex-flow: row nowrap;
+ align-items: center;
+ gap: 2rem;
+ padding: 1rem 1.3rem;
+ background-color: #000;
+ position: absolute;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ max-height: 130px;
+
+ .logo_event {
+  max-height: 200px;
+ }
+
+ #currentTime {
+  font-size: 3rem;
+  font-weight: 600;
+  color: #6b9dcd;
+ }
+
+ .next_match {
+  min-width: 400px;
+  h3 {
+   font-size: 2rem;
+   font-weight: 700;
+   color: #fff;
+   text-transform: uppercase;
+   text-align: center;
+  }
+
+  .versus {
+   display: flex;
+   flex-flow: row nowrap;
+   justify-content: center;
+   gap: 1rem;
+
+   span {
+    font-size: 2rem;
+    font-weight: 400;
+    color: #6b9dcd;
+   }
+  }
+ }
+
+ // INFO: SLIDER FADE
+ #slider_fade {
+  width: 928px;
+  height: 85px;
+
+  .carousel-item {
+   h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+   }
+  }
+
+  &::before {
+   content: "";
+   width: 1px;
+   height: 100px;
+   background-color: #fff;
+   display: block;
+   position: absolute;
+   margin-left: -2rem;
+  }
+ }
+
+ #infos_event {
+  marquee span {
+   font-size: 1rem;
+   font-weight: 300;
+   color: #fff;
+   text-transform: uppercase;
+  }
+ }
+
+ #maps {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 1rem;
+
+  .map {
+   width: 100px;
+
+
+   .banner {
+
+    img {
+     width: 100%;
+    }
+   }
+
+   .score_map {
+    font-size: 1.2rem;
+    font-weight: 300;
+    background: #fff;
+    padding: 1.05rem;
+    display: flex;
+    align-items: center;
+    padding: 0 .5em;
+   }
+  }
+ }
+
+ #sponsors {
+  position: absolute;
+  bottom: 25%;
+  right: 5%;
+
+  #slider {
+   .carousel {
+    width: 100%;
+
+    .carousel-item {
+     text-align: center;
+    }
+   }
+  }
+
+  img {
+   max-height: 48px;
+  }
+
+  span {
+   font-size: 1.5rem;
+   font-weight: 200;
+   color: #fff;
+  }
+ }
+}
