@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=EventRepository::class)
  */
 class Event
@@ -36,7 +37,7 @@ class Event
     private $eventHashtag;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
      */
     private $eventLogo;
 
@@ -88,7 +89,7 @@ class Event
     private $eventAccess;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Social::class, mappedBy="socialAccess")
+     * @ORM\ManyToMany(targetEntity=Social::class, inversedBy="events")
      */
     private $socials;
 
@@ -161,7 +162,7 @@ class Event
         return $this->eventLogo;
     }
 
-    public function setEventLogo(?string $eventLogo): self
+    public function setEventLogo(string $eventLogo): self
     {
         $this->eventLogo = $eventLogo;
 
@@ -312,7 +313,6 @@ class Event
     {
         if (!$this->socials->contains($social)) {
             $this->socials[] = $social;
-            $social->addSocialAccess($this);
         }
 
         return $this;
@@ -320,9 +320,7 @@ class Event
 
     public function removeSocial(Social $social): self
     {
-        if ($this->socials->removeElement($social)) {
-            $social->removeSocialAccess($this);
-        }
+        $this->socials->removeElement($social);
 
         return $this;
     }
