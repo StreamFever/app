@@ -1,4 +1,68 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{% if form_errors(form) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form) }}
+	</div>
+{% endif %}
+
+<div class="input-grp-center">
+	<h3>
+		Informations importantes
+	</h3>
+	<p>
+		Veuillez renseigner le nom du sponsor ainsi que son logo en 200x200 max
+	</p>
+	<div class="row">
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.sponsorName, {
+        'attr': {'class': 'form-control'},
+        'id': "sponsorName",
+        }) }}
+				{{ form_label(form.sponsorName, null, {
+    'label': 'Nom du sponsor',
+    'id': 'sponsorName'
+        }) }}
+
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.sponsorLogo, {
+        'attr': {'class': 'form-control'},
+        'id': "sponsorLogo",
+        }) }}
+				{{ form_label(form.sponsorLogo, null, {
+    'label': 'Logo 200x200 du sponsor',
+    'id': 'sponsorLogo'
+        }) }}
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="input-grp">
+	<h3>
+		La bannière
+	</h3>
+	<p>
+		Insérer la bannière du sponsor
+	</p>
+	<div class="form-floating mb-3">
+		{{ form_widget(form.sponsorBanner, {
+        'attr': {'class': 'form-control'},
+        'id': "sponsorBanner",
+        }) }}
+		{{ form_label(form.sponsorBanner, null, {
+    'label': 'Bannière du sponsor',
+    'id': 'sponsorBanner'
+        }) }}
+	</div>
+</div>
+
+<button class="btn btn-success">
+	<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
+	{{ button_label|default('Ajouter le sponsor') }}
+</button>
 {{ form_end(form) }}
