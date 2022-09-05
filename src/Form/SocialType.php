@@ -14,6 +14,7 @@ class SocialType extends AbstractType
         $builder
             ->add('socialLib')
             ->add('socialTag')
+            ->add('userId')
         ;
     }
 
