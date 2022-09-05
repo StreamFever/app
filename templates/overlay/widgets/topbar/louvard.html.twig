@@ -1,0 +1,175 @@
+{% set topbar_title = [] %}
+{% for meta in metas %}
+	{% if meta.metaKey == 'topbar_title' %}
+		{% set topbar_title = topbar_title|merge([meta]) %}
+	{% endif %}
+{% endfor %}
+
+{% if widget.WidgetId and widget.WidgetId == "topbar" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "topbar" %}
+	<section id="topbar">
+		<div id="sponsors">
+			<div id="slider">
+				<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+					<div class="carousel-inner">
+						{% if event is defined %}
+							<div class="carousel-item active" id="img_slider">
+								<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" class="d-block w-100" alt="Logo de StreamCave">
+							</div>
+						{% endif %}
+						{% if event is defined %}
+							{% for sponsor in event.eventIdSponsor %}
+								<div class="carousel-item" id="img_slider">
+									<img src="{{ asset('uploads/logos/' ~ sponsor.sponsorLogo) }}" class="d-block w-100" alt="Logo de {{sponsor.sponsorName}}">
+								</div>
+							{% endfor %}
+							{% for social in event.socials %}
+								<div class="carousel-item">
+									<span id="text_slider" class="text_slider">
+										<span class="iconify" data-icon="{{social.socialLib.libSocialLogo}}"></span>
+										{{social.socialTag}}
+									</span>
+								</div>
+							{% endfor %}
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="details_match">
+			<h3 id="topbar-title" class="top">
+				{% if topbar_title is defined and topbar_title is not null %}
+					{{topbar_title[0].metaValue}}
+				{% else %}
+					Streamcave
+				{% endif %}
+			</h3>
+			<span>
+				{% if event is defined %}
+					#
+					{{event.eventHashtag|slice(1)}}
+				{% else %}
+					#Streamcave
+				{% endif %}
+				|
+				{% if event.currentGame is defined and event.currentGame is not null %}
+					Format :
+					{{event.currentGame.gameFormat.formatName}}
+					-
+					{{event.eventFormat.eventFormatName}}
+				{% endif %}
+			</span>
+		</div>
+		<div id="teams">
+			<div class="alpha">
+				<h3 class="team_alpha">
+					{{event.currentGame is defined and event.currentGame is not null ? event.currentGame.gameIdTeamAlpha|slice(0,2)|replace({' ': ''}) : "TBD" }}
+				</h3>
+				<div id="score_team_alpha" class="score">
+					{% if event.currentGame is defined and event.currentGame is not null %}
+						{% if event.currentGame.gameFormat.formatName == 'BO1' %}
+							{% if event.currentGame.gameScoreTeamAlpha == 1 %}
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+							{% else %}
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+							{% endif %}
+						{% elseif event.currentGame.gameFormat.formatName == 'BO3' %}
+							{% if event.currentGame.gameScoreTeamAlpha == 1 %}
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+							{% elseif event.currentGame.gameScoreTeamAlpha == 2 %}
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+							{% else %}
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+							{% endif %}
+						{% elseif event.currentGame.gameFormat.formatName == 'BO5' %}
+							{% if event.currentGame.gameScoreTeamAlpha == 1 %}
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+							{% elseif event.currentGame.gameScoreTeamAlpha == 2 %}
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+							{% elseif event.currentGame.gameScoreTeamAlpha == 3 %}
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+							{% else %}
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+							{% endif %}
+						{% endif %}
+					{% endif %}
+				</div>
+			</div>
+			<div class="logo_event">
+				<img src="https://www.louvardgame.be/images/public/logo.png" alt="">
+			</div>
+			<div class="beta">
+				<div id="score_team_beta" class="score">
+					{% if event.currentGame is defined and event.currentGame is not null %}
+						{% if event.currentGame.gameFormat.formatName == 'BO1' %}
+							{% if event.currentGame.gameScoreTeamBeta == 1 %}
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+							{% else %}
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+							{% endif %}
+						{% elseif event.currentGame.gameFormat.formatName == 'BO3' %}
+							{% if event.currentGame.gameScoreTeamBeta == 1 %}
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+							{% elseif event.currentGame.gameScoreTeamBeta == 2 %}
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+							{% else %}
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+							{% endif %}
+						{% elseif event.currentGame.gameFormat.formatName == 'BO5' %}
+							{% if event.currentGame.gameScoreTeamBeta == 1 %}
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+							{% elseif event.currentGame.gameScoreTeamBeta == 2 %}
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+							{% elseif event.currentGame.gameScoreTeamBeta == 3 %}
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-blue.svg" alt="">
+							{% else %}
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+								<img src="https://cdn.artaic.fr/stream_cave/img/icon/louvard-neon-white.svg" alt="">
+							{% endif %}
+						{% endif %}
+					{% endif %}
+				</div>
+				<h3 class="team_beta">
+					{{event.currentGame is defined and event.currentGame is not null ? event.currentGame.gameIdTeamBeta|slice(0,2)|replace({' ': ''}) : "TBD"  }}
+				</h3>
+			</div>
+		</div>
+		<div id="maps">
+			{% if event.currentGame is defined and event.currentGame is not null %}
+				{% for map in event.currentGame.gameIdMaps %}
+					<div class="map">
+						<div class="banner">
+							<img src="{{map.mapImg}}" alt="">
+						</div>
+						{# <span class="score_map">
+																																																															{{map.mapScore}}
+																																																														</span>
+																																																														<span>
+																																																															{{map.mapPickBy.teamName is defined ? map.mapPickBy.teamName|slice(0,2)|replace({' ': ''}) : '' }}
+																																																														</span> #}
+					</div>
+				{% endfor %}
+			{% endif %}
+		</div>
+	</section>
+{% endif %}
