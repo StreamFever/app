@@ -10,8 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Service\FileUploader;
+
 /**
- * @Route("/sponsor")
+ * @Route("/admin/sponsor")
  */
 class SponsorController extends AbstractController
 {
@@ -28,13 +30,27 @@ class SponsorController extends AbstractController
     /**
      * @Route("/new", name="app_sponsor_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, SponsorRepository $sponsorRepository): Response
+    public function new(Request $request, FileUploader $fileUploader, SponsorRepository $sponsorRepository): Response
     {
         $sponsor = new Sponsor();
         $form = $this->createForm(SponsorType::class, $sponsor);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            $sponsorLogoFile = $form->get('sponsorLogo')->getData();
+            if ($sponsorLogoFile) {
+                $sponsortLogoFileName = $fileUploader->uploadLogo($sponsorLogoFile);
+                $data->setSponsorLogo($sponsortLogoFileName);
+            }
+
+            $sponsorBannerFile = $form->get('sponsorBanner')->getData();
+            if ($sponsorLogoFile) {
+                $sponsortBannerFileName = $fileUploader->uploadBanner($sponsorBannerFile);
+                $data->setSponsorBanner($sponsortBannerFileName);
+            }
+
             $sponsorRepository->add($sponsor);
             return $this->redirectToRoute('app_sponsor_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -58,12 +74,26 @@ class SponsorController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_sponsor_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Sponsor $sponsor, SponsorRepository $sponsorRepository): Response
+    public function edit(Request $request, FileUploader $fileUploader, Sponsor $sponsor, SponsorRepository $sponsorRepository): Response
     {
         $form = $this->createForm(SponsorType::class, $sponsor);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            $sponsorLogoFile = $form->get('sponsorLogo')->getData();
+            if ($sponsorLogoFile) {
+                $sponsortLogoFileName = $fileUploader->uploadLogo($sponsorLogoFile);
+                $data->setSponsorLogo($sponsortLogoFileName);
+            }
+
+            $sponsorBannerFile = $form->get('sponsorBanner')->getData();
+            if ($sponsorBannerFile) {
+                $sponsortBannerFileName = $fileUploader->uploadBanner($sponsorBannerFile);
+                $data->setSponsorBanner($sponsortBannerFileName);
+            }
+
             $sponsorRepository->add($sponsor);
             return $this->redirectToRoute('app_sponsor_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -79,7 +109,7 @@ class SponsorController extends AbstractController
      */
     public function delete(Request $request, Sponsor $sponsor, SponsorRepository $sponsorRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$sponsor->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $sponsor->getId(), $request->request->get('_token'))) {
             $sponsorRepository->remove($sponsor);
         }
 
