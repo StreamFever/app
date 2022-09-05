@@ -41,14 +41,14 @@ class Overlay
     private $widgets;
 
     /**
-     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="overlayId")
-     */
-    private $events;
-
-    /**
      * @ORM\OneToMany(targetEntity=Game::class, mappedBy="overlayId")
      */
     private $games;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="overlayId")
+     */
+    private $events;
 
     /**
      * @ORM\ManyToOne(targetEntity=Event::class, inversedBy="currentOverlay")
@@ -59,8 +59,8 @@ class Overlay
     {
         $this->OverlayAccess = new ArrayCollection();
         $this->widgets = new ArrayCollection();
-        $this->events = new ArrayCollection();
         $this->games = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -151,35 +151,6 @@ class Overlay
         return $this;
     }
 
-    /**
-     * @return Collection<int, Event>
-     */
-    public function getEvents(): Collection
-    {
-        return $this->events;
-    }
-
-    public function addEvent(Event $event): self
-    {
-        if (!$this->events->contains($event)) {
-            $this->events[] = $event;
-            $event->setOverlayId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEvent(Event $event): self
-    {
-        if ($this->events->removeElement($event)) {
-            // set the owning side to null (unless already changed)
-            if ($event->getOverlayId() === $this) {
-                $event->setOverlayId(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Game>
@@ -205,6 +176,36 @@ class Overlay
             // set the owning side to null (unless already changed)
             if ($game->getOverlayId() === $this) {
                 $game->setOverlayId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->setOverlayId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getOverlayId() === $this) {
+                $event->setOverlayId(null);
             }
         }
 
