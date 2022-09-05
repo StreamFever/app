@@ -37,6 +37,15 @@
 	</div>
 </div>
 
+{{ form_label(form.userId, null, {
+    'label_attr': {'class': 'display_none'},
+    }) }}
+		{{ form_widget(form.userId, {
+        'attr': {
+            'class': 'display_none',
+            },
+        }) }}
+
 <button class="btn btn-success">
 	<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
 	{{ button_label|default('Ajouter le réseau') }}</button>
