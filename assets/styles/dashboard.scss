@@ -1,27 +1,27 @@
 @import url('./ui.scss');
 
-@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-@font-face {
-  font-family: 'futura_hv_bt';
-  src: url('https://cdn.artaic.fr/stream_cave/fonts/futurah.woff2') format('woff2'),
-       url('https://cdn.artaic.fr/stream_cave/fonts/futurah.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
+@import '../fonts/futura/stylesheet.css';
 
-}
+$black_1: #000;
+$black_2: #2C3233;
+$marine_1: #2B3F44;
+$marine_2: #2A4B54;
+$marine_3: #276475;
+$blue_1: #2296B7;
+$blue_2: #59B0C9;
+$blue_3: #ACD8E4;
+$grey_1: #D6ECF2;
+$grey_2: #EBF6F9;
+$white: #fff;
 
-$font: 'Alumni Sans';
-$font_hv: 'futura_hv_bt';
-$blue: #2196b8;
-$yellow: #EBBE1A;
-$black_1 : #202225;
-$black_2 : rgba(0, 0, 0, 0.58);
-$black_3 : #171821;
-$white : #FFFFFF;
-$grey_1 : #DFDFDF;
-$grey_2: rgba(191, 190, 190, 0.199);
-$grey_3: rgba(155, 153, 153, 0.199);
+$yellow : #EBBE1A;
+$blue : #144478;
+
+$futuraheavy: 'futuraheavy';
+$futurabook: 'futurabook';
+$futuralight: 'futuralight';
 
 :root {
   --bg-color: #000;
@@ -49,7 +49,7 @@ body {
   background-color: $grey_1;
   height: 100vh;
   width: 100vw;
-  font-family: $font;
+  font-family: $futuralight;
 }
 
 table {
@@ -81,7 +81,7 @@ table {
 
 // Sidebar
 .big-sidebar {
-  background-color: $blue;
+  background-color: $blue_1;
   min-height: 100vh;
   height: 100%; // toute la hauteur de l'écran
   position: relative;
@@ -103,6 +103,7 @@ table {
     flex-flow: row nowrap;
     align-items: center;
     gap: .4rem;
+    font-family: 'futuralight';
 
     .left {
       width: 40%;
@@ -126,19 +127,19 @@ table {
       width: 60%;
 
       span {
-        color: white;
+        color: $white;
         font-size: 1.4rem;
         font-weight: 300;
       }
 
       a {
-        color: white;
+        color: $white;
         font-size: 14px;
         font-weight: 600;
         margin-top: -1rem;
 
         &:hover {
-          color: $yellow;
+          color: $marine_3;
         }
       }
     }
@@ -174,7 +175,7 @@ table {
           font-size: 1.3rem;
 
           &:hover {
-            color: $yellow;
+            color: $marine_3;
           }
         }
       }
@@ -188,7 +189,7 @@ table {
 
 // Sidebar réduite
 .mini-sidebar {
-  background-color: $blue;
+  background-color: $blue_1;
   min-height: 100vh;
   height: 100%; // toute la hauteur de l'écran
   position: relative;
@@ -269,7 +270,7 @@ table {
           font-size: 1.3rem;
 
           &:hover {
-            color: $yellow;
+            color: $marine_3;
           }
         }
       }
@@ -288,18 +289,18 @@ table {
   padding: 1rem;
 
   &.theme_light {
-    background: var(--bs-gray-100);
-    color: var(--bs-gray-900);
+    background: $grey_2;
+    color: $black_2;
   }
 
   &.theme_dark {
-    background: var(--bs-gray-900);
-    color: var(--bs-gray-100);
+    background: $black_2;
+    color: $white;
 
     td,
     p,
     span {
-      color: var(--bs-gray-100);
+      color: $blue_2;
     }
   }
 
@@ -311,14 +312,14 @@ table {
 
     .left {
       span {
-        font-family: $font;
+        font-family: $futuraheavy;
         font-style: normal;
         font-weight: 700;
         font-size: 2rem;
       }
 
       p {
-        font-family: $font;
+        font-family: $futuraheavy;
         font-style: normal;
         font-weight: 400;
         font-size: 1.2rem;
@@ -452,7 +453,7 @@ table {
         .content {
           padding: .5rem 1rem;
           border-radius: 10px;
-          background-color: $black_3;
+          background-color: $black_2;
           display: flex;
           flex-flow: row nowrap;
           justify-content: space-between;
@@ -555,7 +556,7 @@ table {
 
     .btn {
       color: white;
-      background-color: $blue;
+      background-color: $blue_1;
       border: none;
       border-bottom-right-radius: 30px;
       padding: .5rem 1rem;
@@ -566,7 +567,7 @@ table {
 }
 
 .input-grp {
-  background-color: $grey_3;
+  background-color: $marine_2;
   padding: 2rem;
   margin: 1rem 0;
 }
@@ -593,14 +594,14 @@ table {
   }
 
   .form-select {
-    color: $blue;
+    color: $blue_1;
     border: 3px solid #ced4da;
     font-weight: 500;
   }
 
   .form-control {
     border: 2px solid #ced4da;
-    color: $blue;
+    color: $blue_1;
     font-weight: 500;
   }
 
@@ -676,7 +677,7 @@ table {
 
 
 .admin_panel {
-  border: 3px solid black;
+  border: 3px solid $black_1;
   position: relative;
   padding: 2rem;
   margin: 1rem 0;
@@ -690,8 +691,8 @@ table {
     font-size: 2rem;
     font-weight: 700;
     text-align: center;
-    color: white;
-    background: black;
+    color: $white;
+    background: $black_1;
     padding: .4rem;
   }
 }

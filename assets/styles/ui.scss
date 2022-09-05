@@ -5,3 +5,7 @@ span.badge {
 span.badge.bg-warning {
  color: black;
 }
+
+select[multiple="multiple"] {
+ min-height: 100px;
+}

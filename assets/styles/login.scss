@@ -1,12 +1,18 @@
-$font: 'Alumni Sans';
-$blue: #144478;
-$yellow: #EBBE1A;
-$black_1 : #202225;
-$black_2 : rgba(0, 0, 0, 0.58);
-$black_3 : #171821;
-$white : #FFFFFF;
-$grey_1 : #DFDFDF;
+$black_1: #000;
+$black_2: #2C3233;
+$marine_1: #2B3F44;
+$marine_2: #2A4B54;
+$marine_3: #276475;
+$blue_1: #2296B7;
+$blue_2: #59B0C9;
+$blue_3: #ACD8E4;
+$grey_1: #D6ECF2;
+$grey_2: #EBF6F9;
+$white: #fff;
 
+$futuraheavy: 'futuraheavy';
+$futurabook: 'futurabook';
+$futuralight: 'futuralight';
 
 .wrap {
  display: grid;
@@ -44,7 +50,7 @@ $grey_1 : #DFDFDF;
 
    a,
    span {
-    font-family: 'Alumni Sans';
+    font-family: $futuraheavy;
     font-style: normal;
     font-weight: 600;
     font-size: 36px;
@@ -63,27 +69,27 @@ $grey_1 : #DFDFDF;
 
    li {
     a {
-     font-family: $font;
+     font-family: $futuraheavy;
      font-style: normal;
      font-weight: 300;
      font-size: 1.5rem;
-     color: #F1960D;
+     color: $blue_1;
      text-decoration-line: none;
 
      &:hover {
-      color: $blue;
-      border-bottom: 2px solid $blue;
+      color: $marine_3;
+      border-bottom: 2px solid $marine_3;
       padding-bottom: 18px;
      }
     }
 
     .active {
-     border-bottom: 2px solid $yellow;
+     border-bottom: 2px solid $blue_2;
      padding-bottom: 18px;
 
      &:hover {
-      border-bottom: 2px solid $yellow;
-      color: #F1960D;
+      border-bottom: 2px solid $blue_2;
+      color: $black_1;
      }
     }
    }
@@ -101,14 +107,14 @@ $grey_1 : #DFDFDF;
     border-bottom: 1px solid #ccc;
 
 
-    font-family: $font;
+    font-family: $futuraheavy;
     font-style: normal;
     font-weight: 700;
     font-size: 1rem;
    }
 
    label {
-    font-family: $font;
+    font-family: $futuraheavy;
     font-style: normal;
     font-weight: 300;
     color: $black_2;
@@ -129,17 +135,17 @@ $grey_1 : #DFDFDF;
     margin-top: 1rem;
 
     a {
-     font-family: $font;
+     font-family: $futuraheavy;
      font-style: normal;
      font-weight: 300;
      font-size: 1rem;
-     color: #F1960D;
+     color: $blue_1;
      text-decoration-line: none;
      transition: all 0.3s ease-in-in;
 
      &:hover {
       transition: all 0.3s ease-in-out;
-      color: $blue;
+      color: $blue_1;
       text-decoration-line: underline;
      }
     }
@@ -148,12 +154,12 @@ $grey_1 : #DFDFDF;
    .submit {
     margin-top: 2rem;
     border: none;
-    background: $yellow;
+    background: $blue_1;
     width: 100%;
     padding: .3rem;
 
-    color: #FFFFFF;
-    font-family: $font;
+    color: $white;
+    font-family: $futuraheavy;
     font-style: normal;
     font-weight: 600;
     font-size: 1.4rem;
@@ -161,7 +167,7 @@ $grey_1 : #DFDFDF;
 
     &:hover {
      transition: all 0.3s ease-in-out;
-     background: $blue;
+     background: $blue_1;
     }
    }
   }
