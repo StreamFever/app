@@ -14,7 +14,8 @@ class GameVoter extends Voter
     public const GAME_EDIT = 'GAME_EDIT';
     public const GAME_DELETE = 'GAME_DELETE';
 
-    public function __construct(GameRepository $gameRepository) {
+    public function __construct(GameRepository $gameRepository)
+    {
         $this->gameRepository = $gameRepository;
     }
 
@@ -43,8 +44,7 @@ class GameVoter extends Voter
                 // return true or false
                 if ($game->getUserId() === $user->getId()) {
                     return true;
-                }
-                if ($this->gameRepository->findFirst()) {
+                } else if ($this->gameRepository->findAllCreatedByUserId($user->getId())) {
                     return true;
                 }
                 break;
@@ -53,8 +53,7 @@ class GameVoter extends Voter
                 // return true or false
                 if ($game->getUserId() === $user->getId()) {
                     return true;
-                }
-                if ($this->gameRepository->findFirst()) {
+                } else if ($this->gameRepository->findAllCreatedByUserId($user->getId())) {
                     return true;
                 }
                 break;
