@@ -169,15 +169,17 @@
 					Si un sponsor n'apparait pas, merci de nous en faire la demande.
 				</u>
 			</p>
-			<div class="form-floating mb-3">
-				{{ form_widget(form.eventIdSponsor, {
-                'attr': {'class': 'form-select'},
-                'id': "eventIdSponsor",
-                }) }}
+			<div>
 				{{ form_label(form.eventIdSponsor, null, {
-            'label': 'Sélectionnez des sponsors',
-            'id': 'eventIdSponsor'
-                }) }}
+    'label': 'Merci de sélectionner le ou les sponsors',
+    'label_attr': {'class': 'form-label select-label'},
+    }) }}
+				{{ form_widget(form.eventIdSponsor, {
+        'attr': {
+            'class': 'selectpicker form-control',
+            'data-max-options': 99
+            },
+        }) }}
 			</div>
 		</div>
 
@@ -193,14 +195,54 @@
 					Si un réseau social n'apparait pas, merci de nous en faire la demande.
 				</u>
 			</p>
-			<div class="form-floating mb-3">
-				{{ form_widget(form.socials, {
-                'attr': {'class': 'form-select'},
-                'id': "socials",
-                }) }}
+			<div>
 				{{ form_label(form.socials, null, {
-            'label': 'Sélectionnez vos réseaux',
-            'id': 'socials'
+    'label': 'Merci de sélectionner un ou des réseaux sociaux',
+    'label_attr': {'class': 'form-label select-label'},
+    }) }}
+				{{ form_widget(form.socials, {
+        'attr': {
+            'class': 'selectpicker form-control',
+            'data-max-options': 99
+            },
+        }) }}
+			</div>
+		</div>
+
+		<div class="input-grp">
+			<h3>
+				Partagez l'accès
+			</h3>
+			<p>
+				Vous pouvez sélectionner les utilisateurs parmi la liste ci-dessous pour partager l'accès à l'édition de cet événement.
+			</p>
+			<div class="form-floating mb-3">
+				{{ form_widget(form.eventAccess, {
+                'attr': {'class': 'form-select'},
+                'id': "eventAccess",
+                }) }}
+				{{ form_label(form.eventAccess, null, {
+            'label': 'Sélectionnez des utilisateurs',
+            'id': 'eventAccess'
+                }) }}
+			</div>
+		</div>
+
+		<div class="input-grp">
+			<h3>
+				Attribuer un match
+			</h3>
+			<p>
+				Vous pouvez attribuer un match déjà crée pour cet événement.
+			</p>
+			<div class="form-floating mb-3">
+				{{ form_widget(form.currentGame, {
+                'attr': {'class': 'form-select'},
+                'id': "currentGame",
+                }) }}
+				{{ form_label(form.currentGame, null, {
+            'label': 'Sélectionnez un match',
+            'id': 'currentGame'
                 }) }}
 			</div>
 		</div>
