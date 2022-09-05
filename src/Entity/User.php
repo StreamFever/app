@@ -96,11 +96,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $AvatarUrl;
 
     /**
-     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="userId")
-     */
-    private $events;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
@@ -108,7 +103,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\OneToMany(targetEntity=Social::class, mappedBy="userId")
      */
-    private $socials;
+    private $socialsOwned;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Social::class, mappedBy="socialAccess")
+     */
+    private $socialsAccess;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="userId")
+     */
+    private $events;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Event::class, mappedBy="eventAccess")
+     */
+    private $eventsAccess;
 
     public function __construct()
     {
@@ -118,8 +128,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->games = new ArrayCollection();
         $this->metas = new ArrayCollection();
         $this->uiData = new ArrayCollection();
+        $this->socialsOwned = new ArrayCollection();
+        $this->socialsAccess = new ArrayCollection();
         $this->events = new ArrayCollection();
-        $this->socials = new ArrayCollection();
+        $this->eventsAccess = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -458,6 +470,75 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Social>
+     */
+    public function getSocialsOwned(): Collection
+    {
+        return $this->socialsOwned;
+    }
+
+    public function addSocialsOwned(Social $socialsOwned): self
+    {
+        if (!$this->socialsOwned->contains($socialsOwned)) {
+            $this->socialsOwned[] = $socialsOwned;
+            $socialsOwned->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSocialsOwned(Social $socialsOwned): self
+    {
+        if ($this->socialsOwned->removeElement($socialsOwned)) {
+            // set the owning side to null (unless already changed)
+            if ($socialsOwned->getUserId() === $this) {
+                $socialsOwned->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Social>
+     */
+    public function getSocialsAccess(): Collection
+    {
+        return $this->socialsAccess;
+    }
+
+    public function addSocialsAccess(Social $socialsAccess): self
+    {
+        if (!$this->socialsAccess->contains($socialsAccess)) {
+            $this->socialsAccess[] = $socialsAccess;
+            $socialsAccess->addSocialAccess($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSocialsAccess(Social $socialsAccess): self
+    {
+        if ($this->socialsAccess->removeElement($socialsAccess)) {
+            $socialsAccess->removeSocialAccess($this);
+        }
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Event>
      */
@@ -488,45 +569,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): self
-    {
-        $this->isVerified = $isVerified;
-
-        return $this;
-    }
-
     /**
-     * @return Collection<int, Social>
+     * @return Collection<int, Event>
      */
-    public function getSocials(): Collection
+    public function getEventsAccess(): Collection
     {
-        return $this->socials;
+        return $this->eventsAccess;
     }
 
-    public function addSocial(Social $social): self
+    public function addEventsAccess(Event $eventsAccess): self
     {
-        if (!$this->socials->contains($social)) {
-            $this->socials[] = $social;
-            $social->setUserId($this);
+        if (!$this->eventsAccess->contains($eventsAccess)) {
+            $this->eventsAccess[] = $eventsAccess;
+            $eventsAccess->addEventAccess($this);
         }
 
         return $this;
     }
 
-    public function removeSocial(Social $social): self
+    public function removeEventsAccess(Event $eventsAccess): self
     {
-        if ($this->socials->removeElement($social)) {
-            // set the owning side to null (unless already changed)
-            if ($social->getUserId() === $this) {
-                $social->setUserId(null);
-            }
+        if ($this->eventsAccess->removeElement($eventsAccess)) {
+            $eventsAccess->removeEventAccess($this);
         }
 
         return $this;
     }
+
 }
