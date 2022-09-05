@@ -18,10 +18,12 @@
 	{% if widgets is not empty %}
 		{% for widget in widgets %}
 			{% if widget.WidgetId and widget.WidgetId == "topbar" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "topbar" %}
-				{{ include('overlay/widgets/topbar/v1.html.twig') }}
+				{# {{ include('overlay/widgets/topbar/v1.html.twig') }} #}
+				{{ include('overlay/widgets/topbar/louvard.html.twig') }}
 			{% endif %}
 			{% if widget.WidgetId and widget.WidgetId == "versus" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "versus" %}
-				{{ include('overlay/widgets/versus/v1.html.twig') }}
+				{# {{ include('overlay/widgets/versus/v1.html.twig') }} #}
+				{{ include('overlay/widgets/versus/louvard.html.twig') }}
 			{% endif %}
 			{% if widget.WidgetId and widget.WidgetId == "popup_text" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "popup_text" %}
 				{{ include('overlay/widgets/popup/small_txt.html.twig') }}
@@ -30,15 +32,16 @@
 				{{ include('overlay/widgets/next/v1.html.twig') }}
 			{% endif %}
 			{# {% if widget.WidgetId and widget.WidgetId == "tweets" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "tweets" %}
-																																									{{ include('overlay/widgets/tweets/index.html.twig') }}
-																																								{% endif %} #}
+																																																																				{{ include('overlay/widgets/tweets/index.html.twig') }}
+																																																																			{% endif %} #}
 			{% if widget.WidgetId and widget.WidgetId == "topbar" or widget.WidgetId.libWidgetId2 and widget.WidgetId.libWidgetId2 == "bottombar" and widget.isTwoWidgets %}
-				{{ include('overlay/widgets/bottombar/v1.html.twig') }}
+				{# {{ include('overlay/widgets/bottombar/v1.html.twig') }} #}
+				{{ include('overlay/widgets/bottombar/louvard.html.twig') }}
 			{% endif %}
-			{# {% if widget.WidgetId and widget.WidgetId == "cameras_alpha" or widget.WidgetId.libWidgetId2 and widget.WidgetId.libWidgetId2 == "cameras_beta" and widget.isTwoWidgets %}
+			{% if widget.WidgetId and widget.WidgetId == "cameras_alpha" or widget.WidgetId.libWidgetId2 and widget.WidgetId.libWidgetId2 == "cameras_beta" and widget.isTwoWidgets %}
 				{{ include('overlay/widgets/cams/team_alpha.html.twig') }}
 				{{ include('overlay/widgets/cams/team_beta.html.twig') }}
-			{% endif %} #}
+			{% endif %}
 		{% endfor %}
 
 	{% else %}
