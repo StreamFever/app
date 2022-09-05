@@ -8,15 +8,31 @@
 
 {# INFO: Seul input actif #}
 <div class="form-floating mb-3">
-        {{ form_widget(form_current_map.currentMap, {
+	{{ form_widget(form_current_map.currentMap, {
         'attr': {'class': 'form-select' , 'oninput': 'updateCurrentMap(this.id)'},
         'id': "currentMap",
         }) }}
-{{ form_label(form_current_map.currentMap, null, {
-'label': 'Sélectionnez un match',
+	{{ form_label(form_current_map.currentMap, null, {
+'label': 'Sélectionnez une carte',
 'id': 'currentMap'
         }) }}
 </div>
+
+<div class="form-floating mb-3">
+	{{ form_widget(form_current_map.gameScoreTeamAlpha, {
+            'attr': {'class': 'form-control', 'oninput': 'updateGameScoreAlpha(this.id)'},
+            'id': "gameScoreTeamAlpha",
+            }) }}
+</div>
+
+<div class="form-floating mb-3">
+	{{ form_widget(form_current_map.gameScoreTeamBeta, {
+            'attr': {'class': 'form-control', 'oninput': 'updateGameScoreBeta(this.id)'},
+            'id': "gameScoreTeamBeta",
+            }) }}
+</div>
+
+
 {{ form_widget(form_current_map.gameIdTeamAlpha, {
                     'attr': {'class': 'display_none'},
                     'id': "gameIdTeamAlpha",
@@ -26,14 +42,7 @@
                     'attr': {'class': 'display_none'},
                     'id': "gameIdTeamBeta",
                     }) }}
-{{ form_widget(form_current_map.gameScoreTeamAlpha, {
-            'attr': {'class': 'display_none'},
-            'id': "gameScoreTeamAlpha",
-            }) }}
-{{ form_widget(form_current_map.gameScoreTeamBeta, {
-            'attr': {'class': 'display_none'},
-            'id': "gameScoreTeamBeta",
-            }) }}
+
 {{ form_widget(form_current_map.gameFormat, {
         'attr': {'class': 'display_none'},
         'id': "gameFormat",
