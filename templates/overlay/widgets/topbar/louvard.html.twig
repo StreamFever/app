@@ -13,13 +13,13 @@
 					<div class="carousel-inner">
 						{% if event is defined %}
 							<div class="carousel-item active" id="img_slider">
-								<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" class="d-block w-100" alt="Logo de StreamCave">
+								<img src="https://cdn.artaic.fr/stream_cave/img/StreamCave_banner.png" class="d-block w-100" alt="Logo de StreamCave">
 							</div>
 						{% endif %}
 						{% if event is defined %}
 							{% for sponsor in event.eventIdSponsor %}
 								<div class="carousel-item" id="img_slider">
-									<img src="{{ asset('uploads/logos/' ~ sponsor.sponsorLogo) }}" class="d-block w-100" alt="Logo de {{sponsor.sponsorName}}">
+									<img src="{{ asset('uploads/banners/' ~ sponsor.sponsorBanner) }}" class="d-block w-100" alt="Logo de {{sponsor.sponsorName}}">
 								</div>
 							{% endfor %}
 							{% for social in event.socials %}
@@ -43,14 +43,15 @@
 					Streamcave
 				{% endif %}
 			</h3>
-			<span>
+			<span class="hashtag">
 				{% if event is defined %}
 					#
 					{{event.eventHashtag|slice(1)}}
 				{% else %}
 					#Streamcave
 				{% endif %}
-				|
+			</span>
+			<span class="format">
 				{% if event.currentGame is defined and event.currentGame is not null %}
 					Format :
 					{{event.currentGame.gameFormat.formatName}}
@@ -106,7 +107,11 @@
 				</div>
 			</div>
 			<div class="logo_event">
-				<img src="https://www.louvardgame.be/images/public/logo.png" alt="">
+				{% if event is defined %}
+					<img src="{{ 'http' in event.eventLogo ? event.eventLogo : asset('uploads/logos/' ~ event.eventLogo) }}" alt="Logo de l'événement">
+				{% else %}
+					<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" alt="Logo de l'événement">
+				{% endif %}
 			</div>
 			<div class="beta">
 				<div id="score_team_beta" class="score">
@@ -157,16 +162,31 @@
 		<div id="maps">
 			{% if event.currentGame is defined and event.currentGame is not null %}
 				{% for map in event.currentGame.gameIdMaps %}
-					<div class="map">
+					<div class="map {{ event.currentGame.currentMap.id == map.id ? 'active' : ''}}">
 						<div class="banner">
-							<img src="{{map.mapImg}}" alt="">
+							<img src="{{map.mapLib.mapImg}}" alt="">
 						</div>
-						{# <span class="score_map">
-																																																															{{map.mapScore}}
-																																																														</span>
-																																																														<span>
-																																																															{{map.mapPickBy.teamName is defined ? map.mapPickBy.teamName|slice(0,2)|replace({' ': ''}) : '' }}
-																																																														</span> #}
+						{% if map.mapScore is not empty or map.mapScore is not null %}
+							<span class="score_map">
+								{{map.mapScore}}
+							</span>
+						{% endif %}
+
+						{% if map.mapPickedBy is not null %}
+							<div class="infos">
+								<span class="iconify" data-icon="akar-icons:person-check"></span>
+								<span class="team_name">
+									{{map.mapPickedBy.teamName|slice(0,2)|replace({' ': ''})}}
+								</span>
+							</div>
+						{% elseif map.mapBannedBy is not null %}
+							<div class="infos">
+								<span class="iconify" data-icon="jam:hammer-f"></span>
+								<span class="team_name">
+									{{map.mapBannedBy.teamName|slice(0,2)|replace({' ': ''})}}
+								</span>
+							</div>
+						{% endif %}
 					</div>
 				{% endfor %}
 			{% endif %}
