@@ -12,9 +12,9 @@ class LibWidgetsFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
 
-        $widgets = ["Barre d'informations", "Versus", "Popup", "Next", "Tweets", "Cameras Team"];
-        $widgetId = ["topbar", "versus", "popup_text", "next", "tweets", "cameras_alpha"];
-        $widgetId2 = ["bottombar", null, null, null, null, 'cameras_beta'];
+        $widgets = ["Barre d'informations", "Versus", "Popup", "Next", "Tweets", "Cameras Team", "Results"];
+        $widgetId = ["topbar", "versus", "popup_text", "next", "tweets", "cameras_alpha", "results"];
+        $widgetId2 = ["bottombar", null, null, null, null, 'cameras_beta', null];
 
         foreach ($widgets as $key => $value) {
             $LibWidget = new LibWidgets();
