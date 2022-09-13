@@ -85,4 +85,5 @@ class EventFormat
 
         return $this;
     }
+
 }
