@@ -16,7 +16,11 @@
 
 <section id="bottombar">
 	<div class="logo_event">
-		<img src="https://www.louvardgame.be/images/public/logo.png" alt="">
+		{% if event is defined %}
+			<img src="{{ 'http' in event.eventLogo ? event.eventLogo : asset('uploads/logos/' ~ event.eventLogo) }}" alt="Logo de l'événement">
+		{% else %}
+			<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" alt="Logo de l'événement">
+		{% endif %}
 	</div>
 	<div id="currentTime"></div>
 	<div class="next_match">
@@ -39,20 +43,43 @@
 	{# INFO: Différentes sections sous effet fade #}
 
 	<div id="slider_fade">
-		<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+		<div id="slider_fade_js" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-inner">
 				<div class="carousel-item active">
 					<h3>
 						Ban map :
 					</h3>
 					<div id="maps">
-						{% for map in event.currentGame.gameIdMaps %}
-							<div class="map">
-								<div class="banner">
-									<img src="{{map.mapImg}}" alt="">
+						{% if event.currentGame is defined and event.currentGame is not null %}
+							{% for map in event.currentGame.gameIdMaps %}
+								<div class="map {{ event.currentGame.currentMap.id == map.id ? 'active' : ''}}">
+									<div class="banner">
+										<img src="{{map.mapLib.mapImg}}" alt="">
+									</div>
+									{% if map.mapScore is not empty or map.mapScore is not null %}
+										<span class="score_map">
+											{{map.mapScore}}
+										</span>
+									{% endif %}
+
+									{% if map.mapPickedBy is not null %}
+										<div class="infos">
+											<span class="iconify" data-icon="akar-icons:person-check"></span>
+											<span class="team_name">
+												{{map.mapPickedBy.teamName|slice(0,2)|replace({' ': ''})}}
+											</span>
+										</div>
+									{% elseif map.mapBannedBy is not null %}
+										<div class="infos">
+											<span class="iconify" data-icon="jam:hammer-f"></span>
+											<span class="team_name">
+												{{map.mapBannedBy.teamName|slice(0,2)|replace({' ': ''})}}
+											</span>
+										</div>
+									{% endif %}
 								</div>
-							</div>
-						{% endfor %}
+							{% endfor %}
+						{% endif %}
 					</div>
 				</div>
 				<div class="carousel-item">
@@ -81,13 +108,13 @@
 				<div class="carousel-inner">
 					{% if event is defined %}
 						<div class="carousel-item active" id="img_slider">
-							<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" class="d-block w-100" alt="Logo de StreamCave">
+							<img src="https://cdn.artaic.fr/stream_cave/img/StreamCave_banner.png" class="d-block w-100" alt="Logo de StreamCave">
 						</div>
 					{% endif %}
 					{% if event is defined %}
 						{% for sponsor in event.eventIdSponsor %}
 							<div class="carousel-item" id="img_slider">
-								<img src="{{ asset('uploads/banners/' ~ sponsor.sponsorBann) }}" class="d-block w-100" alt="Logo de {{sponsor.sponsorName}}">
+								<img src="{{ asset('uploads/banners/' ~ sponsor.sponsorBanner) }}" class="d-block w-100" alt="Logo de {{sponsor.sponsorName}}">
 							</div>
 						{% endfor %}
 						{% for social in event.socials %}
