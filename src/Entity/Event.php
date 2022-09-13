@@ -103,6 +103,11 @@ class Event
      */
     private $currentGame;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Game::class)
+     */
+    private $nextGame;
+
     public function __construct()
     {
         $this->eventIdSponsor = new ArrayCollection();
@@ -363,6 +368,18 @@ class Event
     public function setCurrentGame(?Game $currentGame): self
     {
         $this->currentGame = $currentGame;
+
+        return $this;
+    }
+
+    public function getNextGame(): ?Game
+    {
+        return $this->nextGame;
+    }
+
+    public function setNextGame(?Game $nextGame): self
+    {
+        $this->nextGame = $nextGame;
 
         return $this;
     }
