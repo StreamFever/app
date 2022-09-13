@@ -6,7 +6,11 @@
 		</h3>
 		<div id="centerversus" class="display_none">
 			<div class="logo_event">
-				<img src="https://www.louvardgame.be/images/public/logo.png" alt="">
+				{% if event is defined %}
+					<img src="{{ 'http' in event.eventLogo ? event.eventLogo : asset('uploads/logos/' ~ event.eventLogo) }}" alt="Logo de l'événement">
+				{% else %}
+					<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" alt="Logo de l'événement">
+				{% endif %}
 			</div>
 			<span class="title_event">
 				LouvardGame 2022
