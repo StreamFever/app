@@ -1,29 +1,42 @@
 <section id="topbar_heros">
 	<div class="text">
-		<span class="top">#HER6S</span>
-		<span class="bottom">Her6s d'Oregon</span>
+		<span class="top">
+			#HER6S
+		</span>
+		<span class="bottom">
+			Her6s d'Oregon
+		</span>
 	</div>
 	<div class="versus">
 		<div class="contain">
-			<span class="score_a">0</span>
+			<span class="score_a">
+				0
+			</span>
 			<div class="logo">
-				<img src="https://cdn.artaic.fr/images/Blason-Salty.png" alt="">
+				<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" alt="">
 			</div>
-			<span class="score_b">0</span>
+			<span class="score_b">
+				0
+			</span>
 		</div>
 	</div>
 	<div class="map">
-		<span class="yellow">Map :
-			<span>Oregon</span>
+		<span class="yellow">
+			Map :
+			<span>
+				Oregon
+			</span>
 		</span>
 	</div>
 	<div id="slider">
 		<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-inner">
-				{% if event_service.getOneCurrentEvent[0].eventEdition != "HER6S" %}
-					<div class="carousel-item" id="img_slider">
-						<img src="https://cdn.artaic.fr/images/overlay/campus_cup/white_firstblood_logo.png" class="d-block w-100" alt="...">
-					</div>
+				{% if event is defined %}
+					{% if event.eventEdition != "HER6S" %}
+						<div class="carousel-item" id="img_slider">
+							<img src="https://cdn.artaic.fr/images/overlay/campus_cup/white_firstblood_logo.png" class="d-block w-100" alt="...">
+						</div>
+					{% endif %}
 				{% endif %}
 				<div class="carousel-item active">
 					<span id="text_slider" class="text_slider">
