@@ -13,9 +13,6 @@
 		{% set bottombarMarquee = bottombarMarquee|merge([meta]) %}
 	{% endif %}
 {% endfor %}
-<pre>
-	{{ dump(bottombarMarquee) }}
-</pre>
 <section id="bottombar" class="{{widget.WidgetVisible == 2 ? "" : "display_none"}}">
 	{% if event is defined %}
 		<div class="logo">
@@ -52,8 +49,31 @@
 		</div>
 	</div>
 	<div class="sponsors">
-		<div class="logo">
-			<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" alt="Logo de StreamCave">
+		<div id="slider">
+			<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+				<div class="carousel-inner">
+					{% if event is defined %}
+						<div class="carousel-item active" id="img_slider">
+							<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" class="d-block w-100" alt="Logo de StreamCave">
+						</div>
+					{% endif %}
+					{% if event is defined %}
+						{% for sponsor in event.eventIdSponsor %}
+							<div class="carousel-item" id="img_slider">
+								<img src="{{ asset('uploads/banners/' ~ sponsor.sponsorBanner) }}" class="d-block w-100" alt="Logo de {{sponsor.sponsorName}}">
+							</div>
+						{% endfor %}
+						{% for social in event.socials %}
+							<div class="carousel-item">
+								<span id="text_slider" class="text_slider">
+									<span class="iconify" data-icon="{{social.socialLib.libSocialLogo}}"></span>
+									{{social.socialTag}}
+								</span>
+							</div>
+						{% endfor %}
+					{% endif %}
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
