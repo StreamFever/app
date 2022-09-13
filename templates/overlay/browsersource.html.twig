@@ -32,11 +32,14 @@
 				{{ include('overlay/widgets/next/v1.html.twig') }}
 			{% endif %}
 			{# {% if widget.WidgetId and widget.WidgetId == "tweets" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "tweets" %}
-																																																																				{{ include('overlay/widgets/tweets/index.html.twig') }}
-																																																																			{% endif %} #}
+																																																																																									{{ include('overlay/widgets/tweets/index.html.twig') }}
+																																																																																								{% endif %} #}
 			{% if widget.WidgetId and widget.WidgetId == "topbar" or widget.WidgetId.libWidgetId2 and widget.WidgetId.libWidgetId2 == "bottombar" and widget.isTwoWidgets %}
 				{# {{ include('overlay/widgets/bottombar/v1.html.twig') }} #}
 				{{ include('overlay/widgets/bottombar/louvard.html.twig') }}
+			{% endif %}
+			{% if widget.WidgetId and widget.WidgetId == "results" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "results" %}
+				{{ include('overlay/widgets/results/v1.html.twig') }}
 			{% endif %}
 			{% if widget.WidgetId and widget.WidgetId == "cameras_alpha" or widget.WidgetId.libWidgetId2 and widget.WidgetId.libWidgetId2 == "cameras_beta" and widget.isTwoWidgets %}
 				{{ include('overlay/widgets/cams/team_alpha.html.twig') }}
