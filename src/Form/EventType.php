@@ -94,7 +94,11 @@ class EventType extends AbstractType
                     'class' => Game::class,
                     'choice_label' => 'game_name',
                 ]
-            );
+            )
+            ->add('nextGame', EntityType::class, [
+                'class' => Game::class,
+                'choice_label' => 'game_name'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
