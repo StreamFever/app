@@ -27,6 +27,10 @@ export const initWsServer = () => {
     socket.on('logout', () => {
         window.location.replace("https://v4.dev.symfony.artaic.fr")
     })
+
+    socket.on('refresh',()=>{
+        location.reload()
+    })//Refresh sur event
 }
 
 
