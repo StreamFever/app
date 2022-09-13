@@ -34,7 +34,7 @@
 			{{event.currentGame is defined ? event.currentGame.gameScoreTeamAlpha : ""}}
 		</div>
 		<div id="topbar_team_a" class="teama">
-			{{event.currentGame is defined ? event.currentGame.gameIdTeamAlpha|slice(0,5)|replace({' ': ''}) : "TBD" }}
+			{{event.currentGame is defined ? event.currentGame.gameIdTeamAlpha|slice(0,2)|replace({' ': ''}) : "TBD" }}
 		</div>
 		<div class="vs"></div>
 		{% if event is defined %}
@@ -47,7 +47,7 @@
 			</div>
 		{% endif %}
 		<div id="topbar_team_b" class="teamb">
-			{{event.currentGame is defined ? event.currentGame.gameIdTeamBeta|slice(0,5)|replace({' ': ''}) : "TBD"  }}
+			{{event.currentGame is defined ? event.currentGame.gameIdTeamBeta|slice(0,2)|replace({' ': ''}) : "TBD"  }}
 		</div>
 		<div class="scoreb" id="scoreb">
 			{{event.currentGame is defined ? event.currentGame.gameScoreTeamBeta : ""}}
@@ -68,13 +68,11 @@
 								</div>
 							{% endif %}
 							{% if event is defined %}
-								{% if event.eventEdition != "HER6S" %}
-									{% for sponsor in event.eventIdSponsor %}
-										<div class="carousel-item" id="img_slider">
-											<img src="{{sponsor.sponsorLogo}}" class="d-block w-100" alt="Logo de {{sponsor.sponsorName}}">
-										</div>
-									{% endfor %}
-								{% endif %}
+								{% for sponsor in event.eventIdSponsor %}
+									<div class="carousel-item" id="img_slider">
+										<img src="{{ asset('uploads/logos/' ~ sponsor.sponsorLogo) }}" class="d-block w-100" alt="Logo de {{sponsor.sponsorName}}">
+									</div>
+								{% endfor %}
 								{% for social in event.socials %}
 									<div class="carousel-item">
 										<span id="text_slider" class="text_slider">
