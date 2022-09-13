@@ -11,8 +11,8 @@ function currentTime() {
 
 setInterval(currentTime, 1000);
 
-var slider_fade = document.querySelector('#slider_fade')
+var slider_fade = document.querySelector('#slider_fade_js')
 var carousel_bottombar = new bootstrap.Carousel(slider_fade, {
- interval: 2000,
+ interval: 10000,
  wrap: false
 })
