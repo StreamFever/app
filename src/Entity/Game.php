@@ -6,9 +6,15 @@ use App\Repository\GameRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=GameRepository::class)
+ * @ApiResource(
+ *     normalizationContext={"groups"={"game:read"}},
+ *     denormalizationContext={"groups"={"game:write"}}
+ * )
  */
 class Game
 {
@@ -16,18 +22,21 @@ class Game
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"game:read"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="games")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"game:read"})
      */
     private $gameIdTeamAlpha;
 
     /**
      * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="gamesBeta")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"game:read"})
      */
     private $gameIdTeamBeta;
 
@@ -45,23 +54,21 @@ class Game
     /**
      * @ORM\ManyToOne(targetEntity=Status::class, inversedBy="games")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"game:read"})
      */
     private $gameStatus;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"game:read"})
      */
     private $gameScoreTeamAlpha;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"game:read"})
      */
     private $gameScoreTeamBeta;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Map::class, inversedBy="games")
-     */
-    private $gameIdMaps;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="games")
@@ -76,23 +83,31 @@ class Game
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"game:read"})
      */
     private $gameName;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Map::class, inversedBy="gameCurrent")
-     */
-    private $currentMap;
 
     /**
      * @ORM\OneToMany(targetEntity=Event::class, mappedBy="currentGame")
      */
     private $currentEvent;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Map::class)
+     * @Groups({"game:read"})
+     */
+    private $gameIdMaps;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Map::class)
+     * @Groups({"game:read"})
+     */
+    private $currentMap;
+
     public function __construct()
     {
-        $this->gameIdMaps = new ArrayCollection();
         $this->currentEvent = new ArrayCollection();
+        $this->gameIdMaps = new ArrayCollection();
     }
 
     public function __toString()
@@ -193,30 +208,6 @@ class Game
         return $this;
     }
 
-    /**
-     * @return Collection<int, Map>
-     */
-    public function getGameIdMaps(): Collection
-    {
-        return $this->gameIdMaps;
-    }
-
-    public function addGameIdMap(Map $gameIdMap): self
-    {
-        if (!$this->gameIdMaps->contains($gameIdMap)) {
-            $this->gameIdMaps[] = $gameIdMap;
-        }
-
-        return $this;
-    }
-
-    public function removeGameIdMap(Map $gameIdMap): self
-    {
-        $this->gameIdMaps->removeElement($gameIdMap);
-
-        return $this;
-    }
-
     public function getUserId(): ?User
     {
         return $this->userId;
@@ -253,18 +244,6 @@ class Game
         return $this;
     }
 
-    public function getCurrentMap(): ?Map
-    {
-        return $this->currentMap;
-    }
-
-    public function setCurrentMap(?Map $currentMap): self
-    {
-        $this->currentMap = $currentMap;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Event>
      */
@@ -291,6 +270,42 @@ class Game
                 $currentEvent->setCurrentGame(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Map>
+     */
+    public function getGameIdMaps(): Collection
+    {
+        return $this->gameIdMaps;
+    }
+
+    public function addGameIdMap(Map $gameIdMap): self
+    {
+        if (!$this->gameIdMaps->contains($gameIdMap)) {
+            $this->gameIdMaps[] = $gameIdMap;
+        }
+
+        return $this;
+    }
+
+    public function removeGameIdMap(Map $gameIdMap): self
+    {
+        $this->gameIdMaps->removeElement($gameIdMap);
+
+        return $this;
+    }
+
+    public function getCurrentMap(): ?Map
+    {
+        return $this->currentMap;
+    }
+
+    public function setCurrentMap(?Map $currentMap): self
+    {
+        $this->currentMap = $currentMap;
 
         return $this;
     }
