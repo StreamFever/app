@@ -39,14 +39,8 @@ class MapController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $data = $form->getData();
-
-            /** @var UploadedFile $logoFile */
-            $logoFile = $form->get('mapImg')->getData();
-            if ($logoFile) {
-                $logoFileName = $fileUploader->uploadMap($logoFile);
-                $data->setEventLogo($logoFileName);
-            }
-
+            $teamName = $map->getMapBannedBy() != null ? $map->getMapBannedBy()->getTeamName() : $map->getMapPickedBy()->getTeamName();
+            $map->setMapNameData($map->getId() . ' | ' . $map->getMapLib()->getMapName() . ' - ' . $teamName);
             $mapRepository->add($map);
             $this->addFlash('success', 'La carte a bien été créée !');
             return $this->redirectToRoute('app_map_index', [], Response::HTTP_SEE_OTHER);
@@ -79,14 +73,8 @@ class MapController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $data = $form->getData();
-
-            /** @var UploadedFile $logoFile */
-            $logoFile = $form->get('mapImg')->getData();
-            if ($logoFile) {
-                $logoFileName = $fileUploader->uploadMap($logoFile);
-                $data->setMapImg($logoFileName);
-            }
-
+            $teamName = $map->getMapBannedBy() != null ? $map->getMapBannedBy()->getTeamName() : $map->getMapPickedBy()->getTeamName();
+            $map->setMapNameData($map->getId() . ' | ' . $map->getMapLib()->getMapName() . ' - ' . $teamName);
             $mapRepository->add($map);
 
             $this->addFlash('success', 'La carte a bien été modifiée !');
@@ -105,7 +93,7 @@ class MapController extends AbstractController
      */
     public function delete(Request $request, Map $map, MapRepository $mapRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$map->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $map->getId(), $request->request->get('_token'))) {
             $mapRepository->remove($map);
         }
 
