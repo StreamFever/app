@@ -17,6 +17,16 @@
         'id': 'currentGame'
             }) }}
 </div>
+<div class="form-floating mb-3">
+	{{ form_widget(form_current_game.nextGame, {
+            'attr': {'class': 'form-select' , 'oninput': 'updateNextGame(this.id)'},
+            'id': "nextGame",
+            }) }}
+	{{ form_label(form_current_game.nextGame, null, {
+        'label': 'Sélectionnez un match',
+        'id': 'nextGame'
+            }) }}
+</div>
 {{ form_widget(form_current_game.eventName, {
                     'attr': {'class': 'display_none'},
                     'id': "eventName",
