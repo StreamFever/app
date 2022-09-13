@@ -80,6 +80,9 @@ window.showCamsTeamAlpha = function showCamsTeamAlpha() {
 window.showCamsTeamBeta = function showCamsTeamBeta() {
  cameras_beta.className = 'fade-in';
 }
+window.showResults = function showResults() {
+ marquee_games.className = 'slide-in-bottom'
+}
 
 
 
@@ -175,4 +178,86 @@ window.offCamsTeamBeta = function offCamsTeamBeta() {
   cameras_beta.className = 'display_none'
  }, 1000)
 }
+window.offResults = function offResults() {
+ marquee_games.className = 'slide-out-bottom'
+ setTimeout(() => {
+  marquee_games.className = 'display_none'
+ }, 1000)
+}
 
+let gamesDom = document.getElementById('games');
+console.log(gamesDom);
+
+
+function gameApi() {
+ gamesDom.innerHTML = '';
+ fetch('https://v4.dev.symfony.artaic.fr/api/games.json').then((response) => {
+  return response.json();
+ }).then(data => {
+  console.log(data);
+  data.map((game) => {
+   console.log(game);
+
+   let separator = document.createElement('span');
+   separator.innerText = '|';
+
+   // INFO: <div class="game">
+   let divGame = document.createElement('div');
+   divGame.classList.add('game');
+
+   // INFO: 2x <span class="team">
+   let spanTeamA = document.createElement('span')
+   let spanTeamB = document.createElement('span')
+   spanTeamA.classList.add('team');
+   spanTeamA.innerText = game['gameIdTeamAlpha']['teamName'];
+   spanTeamB.classList.add('team');
+   spanTeamB.innerText = game['gameIdTeamBeta']['teamName'];
+
+   let spanMiddle = document.createElement('span')
+   if (!game['gameScoreTeamAlpha'] && !game['gameScoreTeamBeta']) {
+    // INFO: <span class="iconify" data-icon="fluent-emoji-flat:vs-button">
+    spanMiddle.classList.add('iconify');
+    spanMiddle.setAttribute('data-icon', 'fluent-emoji-flat:vs-button');
+   } else {
+    spanMiddle.classList.add('score');
+    let strong = document.createElement('strong');
+    let score = document.createElement('span');
+    let tiret = document.createElement('span');
+    tiret.innerText = ' - ';
+
+    if (game['gameScoreTeamAlpha'] > game['gameScoreTeamBeta']) {
+     strong.innerText = game['gameScoreTeamAlpha'];
+     score.innerText = game['gameScoreTeamBeta'];
+
+     spanMiddle.append(strong);
+     spanMiddle.append(tiret);
+     spanMiddle.append(score);
+    } else if (game['gameScoreTeamBeta'] > game['gameScoreTeamAlpha']) {
+     strong.innerText = game['gameScoreTeamBeta'];
+     score.innerText = game['gameScoreTeamAlpha'];
+
+     spanMiddle.append(strong);
+     spanMiddle.append(tiret);
+     spanMiddle.append(score);
+    }
+
+   }
+
+   // INFO: Imbriquement des div
+   divGame.append(spanTeamA);
+   divGame.append(spanMiddle);
+   divGame.append(spanTeamB);
+
+   gamesDom.append(divGame);
+   gamesDom.append(separator);
+  })
+ })
+}
+
+if (document.getElementById('games')) {
+ gameApi();
+
+ setInterval(() => {
+  gameApi();
+ }, 120000);
+}
