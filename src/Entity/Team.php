@@ -6,9 +6,15 @@ use App\Repository\TeamRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=TeamRepository::class)
+ * @ApiResource(
+ *     normalizationContext={"groups"={"team:read"}},
+ *     denormalizationContext={"groups"={"team:write"}}
+ * )
  */
 class Team
 {
@@ -16,6 +22,7 @@ class Team
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"team:read", "map:read", "game:read"})
      */
     private $id;
 
@@ -26,11 +33,13 @@ class Team
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"team:read", "map:read", "game:read"})
      */
     private $teamName;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"team:read", "map:read", "game:read"})
      */
     private $teamLogo;
 
@@ -49,29 +58,11 @@ class Team
      */
     private $players;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Map::class, mappedBy="mapPickBy")
-     */
-    private $mapsPicked;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Map::class, mappedBy="mapBanBy")
-     */
-    private $mapsBanned;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Map::class, mappedBy="mapWinner")
-     */
-    private $mapsWinned;
-
     public function __construct()
     {
         $this->games = new ArrayCollection();
         $this->gamesBeta = new ArrayCollection();
         $this->players = new ArrayCollection();
-        $this->mapsPicked = new ArrayCollection();
-        $this->mapsBanned = new ArrayCollection();
-        $this->mapsWinned = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -200,96 +191,6 @@ class Team
     public function removePlayer(Player $player): self
     {
         $this->players->removeElement($player);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Map>
-     */
-    public function getMapsPicked(): Collection
-    {
-        return $this->mapsPicked;
-    }
-
-    public function addMapsPicked(Map $mapsPicked): self
-    {
-        if (!$this->mapsPicked->contains($mapsPicked)) {
-            $this->mapsPicked[] = $mapsPicked;
-            $mapsPicked->setMapPickBy($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMapsPicked(Map $mapsPicked): self
-    {
-        if ($this->mapsPicked->removeElement($mapsPicked)) {
-            // set the owning side to null (unless already changed)
-            if ($mapsPicked->getMapPickBy() === $this) {
-                $mapsPicked->setMapPickBy(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Map>
-     */
-    public function getMapsBanned(): Collection
-    {
-        return $this->mapsBanned;
-    }
-
-    public function addMapsBanned(Map $mapsBanned): self
-    {
-        if (!$this->mapsBanned->contains($mapsBanned)) {
-            $this->mapsBanned[] = $mapsBanned;
-            $mapsBanned->setMapBanBy($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMapsBanned(Map $mapsBanned): self
-    {
-        if ($this->mapsBanned->removeElement($mapsBanned)) {
-            // set the owning side to null (unless already changed)
-            if ($mapsBanned->getMapBanBy() === $this) {
-                $mapsBanned->setMapBanBy(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Map>
-     */
-    public function getMapsWinned(): Collection
-    {
-        return $this->mapsWinned;
-    }
-
-    public function addMapsWinned(Map $mapsWinned): self
-    {
-        if (!$this->mapsWinned->contains($mapsWinned)) {
-            $this->mapsWinned[] = $mapsWinned;
-            $mapsWinned->setMapWinner($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMapsWinned(Map $mapsWinned): self
-    {
-        if ($this->mapsWinned->removeElement($mapsWinned)) {
-            // set the owning side to null (unless already changed)
-            if ($mapsWinned->getMapWinner() === $this) {
-                $mapsWinned->setMapWinner(null);
-            }
-        }
 
         return $this;
     }

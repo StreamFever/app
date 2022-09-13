@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\MapRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=MapRepository::class)
+ * @ApiResource(
+ *     normalizationContext={"groups"={"map:read"}},
+ *     denormalizationContext={"groups"={"map:write"}}
+ * )
  */
 class Map
 {
@@ -16,34 +20,46 @@ class Map
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"map:read", "game:read"})
      */
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity=LibMaps::class)
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"map:read", "game:read"})
+     */
+    private $mapLib;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"map:read", "game:read"})
+     */
+    private $mapScore;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Team::class)
+     * @Groups({"map:read", "game:read"})
+     */
+    private $mapPickedBy;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Team::class)
+     * @Groups({"map:read", "game:read"})
+     */
+    private $mapBannedBy;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Team::class)
+     * @Groups({"map:read", "game:read"})
+     */
+    private $mapWinnedBy;
+
+    /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"map:read", "game:read"})
      */
-    private $mapName;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $mapImg;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Game::class, mappedBy="gameIdMaps")
-     */
-    private $games;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Game::class, mappedBy="currentMap")
-     */
-    private $gameCurrent;
-
-    public function __construct()
-    {
-        $this->games = new ArrayCollection();
-        $this->gameCurrent = new ArrayCollection();
-    }
+    private $mapNameData;
 
     public function getId(): ?int
     {
@@ -52,86 +68,77 @@ class Map
 
     public function __toString()
     {
-        return $this->mapName;
+        return $this->mapNameData;
     }
 
-    public function getMapName(): ?string
+    public function getMapLib(): ?LibMaps
     {
-        return $this->mapName;
+        return $this->mapLib;
     }
 
-    public function setMapName(string $mapName): self
+    public function setMapLib(?LibMaps $mapLib): self
     {
-        $this->mapName = $mapName;
+        $this->mapLib = $mapLib;
 
         return $this;
     }
 
-    public function getMapImg(): ?string
+    public function getMapScore(): ?string
     {
-        return $this->mapImg;
+        return $this->mapScore;
     }
 
-    public function setMapImg(?string $mapImg): self
+    public function setMapScore(?string $mapScore): self
     {
-        $this->mapImg = $mapImg;
+        $this->mapScore = $mapScore;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Game>
-     */
-    public function getGames(): Collection
+    public function getMapPickedBy(): ?Team
     {
-        return $this->games;
+        return $this->mapPickedBy;
     }
 
-    public function addGame(Game $game): self
+    public function setMapPickedBy(?Team $mapPickedBy): self
     {
-        if (!$this->games->contains($game)) {
-            $this->games[] = $game;
-            $game->addGameIdMap($this);
-        }
+        $this->mapPickedBy = $mapPickedBy;
 
         return $this;
     }
 
-    public function removeGame(Game $game): self
+    public function getMapBannedBy(): ?Team
     {
-        if ($this->games->removeElement($game)) {
-            $game->removeGameIdMap($this);
-        }
+        return $this->mapBannedBy;
+    }
+
+    public function setMapBannedBy(?Team $mapBannedBy): self
+    {
+        $this->mapBannedBy = $mapBannedBy;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Game>
-     */
-    public function getGameCurrent(): Collection
+    public function getMapWinnedBy(): ?Team
     {
-        return $this->gameCurrent;
+        return $this->mapWinnedBy;
     }
 
-    public function addGameCurrent(Game $gameCurrent): self
+    public function setMapWinnedBy(?Team $mapWinnedBy): self
     {
-        if (!$this->gameCurrent->contains($gameCurrent)) {
-            $this->gameCurrent[] = $gameCurrent;
-            $gameCurrent->setCurrentMap($this);
-        }
+        $this->mapWinnedBy = $mapWinnedBy;
 
         return $this;
     }
 
-    public function removeGameCurrent(Game $gameCurrent): self
+    public function getMapNameData(): ?string
     {
-        if ($this->gameCurrent->removeElement($gameCurrent)) {
-            // set the owning side to null (unless already changed)
-            if ($gameCurrent->getCurrentMap() === $this) {
-                $gameCurrent->setCurrentMap(null);
-            }
-        }
+        return $this->mapNameData;
+    }
+
+    public function setMapNameData(string $mapNameData): self
+    {
+        $this->mapNameData = $mapNameData;
 
         return $this;
     }
