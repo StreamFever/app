@@ -6,7 +6,7 @@
 {% endfor %}
 
 {% if widget.WidgetId and widget.WidgetId == "topbar" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "topbar" %}
-	<section id="topbar">
+	<section id="topbar" class="{{widget.WidgetVisible ? "" : "display_none"}}">
 		<div id="sponsors">
 			<div id="slider">
 				<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">

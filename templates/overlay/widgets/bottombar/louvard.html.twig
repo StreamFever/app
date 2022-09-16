@@ -14,7 +14,7 @@
 	{% endif %}
 {% endfor %}
 
-<section id="bottombar">
+<section id="bottombar" class="{{widget.WidgetVisible ? "" : "display_none"}}">
 	<div class="logo_event">
 		{% if event is defined %}
 			<img src="{{ 'http' in event.eventLogo ? event.eventLogo : asset('uploads/logos/' ~ event.eventLogo) }}" alt="Logo de l'événement">
