@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer le match "{{game.gameIdTeamAlpha.teamName is defined and game.gameIdTeamBeta.teamName is defined ? game.gameIdTeamAlpha.teamName ~ " VS " ~ game.gameIdTeamBeta.teamName : ""}}"
+{% endblock %}
+
+{% block body %}
+	<pre>
+	{{ dump(game.gameIdMaps.snapshot) }}
+</pre>
+	<h1>Vous éditez le match :
+		{{game.gameIdTeamAlpha.teamName is defined and game.gameIdTeamBeta.teamName is defined ? game.gameIdTeamAlpha.teamName ~ " VS " ~ game.gameIdTeamBeta.teamName : ""}}
+	</h1>
+
+	{{ include('game/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+
+	{% if app.request.get('id_overlay') %}
+		{% set idOverlay = app.request.get('id_overlay') %}
+		<a class="btn btn-dark" href="{{ path('app_overlay_show', {'id': idOverlay}) }}">
+			<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
+			Retour à l'overlay</a>
+	{% else %}
+		<a class="btn btn-dark" href="{{ path('app_game_index') }}">
+			<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
+			Retour à la liste</a>
+	{% endif %}
+
+	{{ include('game/_delete_form.html.twig') }}
+{% endblock %}

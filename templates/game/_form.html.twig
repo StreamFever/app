@@ -1,0 +1,178 @@
+{{ form_start(form) }}
+
+{% if form_errors(form) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form) }}
+	</div>
+{% endif %}
+
+<div class="input-grp-center">
+	<h3>
+		Les équipes
+	</h3>
+	<p>
+		Définissez les équipes qui s'affrontent durant ce match.
+	</p>
+	<div class="row">
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.gameIdTeamAlpha, {
+        'attr': {'class': 'form-control'},
+        'id': "gameIdTeamAlpha",
+        }) }}
+				{{ form_label(form.gameIdTeamAlpha, null, {
+    'label': 'Définissez l\'équipe alpha',
+    'id': 'gameIdTeamAlpha'
+        }) }}
+        </div>
+    </div>
+    <div class="col">
+        <div class="form-floating mb-3">
+        {{ form_widget(form.gameIdTeamBeta, {
+            'attr': {'class': 'form-control'},
+            'id': "gameIdTeamBeta",
+            }) }}
+        {{ form_label(form.gameIdTeamBeta, null, {
+        'label': 'Définissez l\'équipe beta',
+        'id': 'gameIdTeamBeta'
+            }) }}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="input-grp">
+	<h3>
+		Votre match est terminé ?
+	</h3>
+	<p>
+		Renseignez le score de votre match si celui-ci est terminé.
+	</p>
+	<div class="row">
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.gameScoreTeamAlpha, {
+        'attr': {'class': 'form-control'},
+        'id': "gameScoreTeamAlpha",
+        }) }}
+				{{ form_label(form.gameScoreTeamAlpha, null, {
+    'label': 'Définissez le score',
+    'id': 'gameScoreTeamAlpha'
+        }) }}
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.gameScoreTeamBeta, {
+        'attr': {'class': 'form-control'},
+        'id': "gameScoreTeamBeta",
+        }) }}
+				{{ form_label(form.gameScoreTeamBeta, null, {
+    'label': 'Définissez le score',
+    'id': 'gameScoreTeamBeta'
+        }) }}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="input-grp">
+	<h3>
+		Informations complémentaires
+	</h3>
+	<p>
+		Remplissez un maximum d'informations sur ce match afin qu'il puisse profiter pleinement de toutes les fonctionnalités proposées sur la plateforme.
+	</p>
+	<div class="row">
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.gameFormat, {
+			        'attr': {'class': 'form-select'},
+			        'id': "gameFormat",
+			        }) }}
+				{{ form_label(form.gameFormat, null, {
+			    'label': 'Sélectionnez le format',
+			    'id': 'gameFormat'
+			        }) }}
+			</div>
+			<div>
+				{{ form_label(form.gameIdMaps, null, {
+    'label': 'Merci de sélectionner la ou les cartes',
+    'label_attr': {'class': 'form-label select-label'},
+    }) }}
+				{{ form_widget(form.gameIdMaps, {
+        'attr': {
+            'class': 'selectpicker form-control',
+            'data-max-options': 5
+            },
+        }) }}
+			</div>
+		</div>
+
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.gameStatus, {
+        'attr': {'class': 'form-select'},
+        'id': "gameStatus",
+        }) }}
+				{{ form_label(form.gameStatus, null, {
+    'label': 'Sélectionnez le status',
+    'id': 'gameStatus'
+        }) }}
+			</div>
+			<div class="form-group">
+				{{ form_label(form.gameStartDate, null, {
+    'label': 'Sélectionnez la date de lancement',
+    'id': 'gameStartDate'
+        }) }}
+				{{ form_widget(form.gameStartDate, {
+        'attr': {'class': 'form-control'},
+        'id': "gameStartDate",
+        }) }}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="input-grp-center">
+	<h3>
+		Associer à un overlay
+	</h3>
+	<p>
+		Si vous voulez associer ce match à un overlay que vous possédez ou que vous gérez, vous devez donc sélectionner l'overlay parmi la liste ci-dessous.
+	</p>
+	<div class="form-floating mb-3">
+		{{ form_widget(form.overlayId, {
+			        'attr': {'class': 'form-select'},
+			        'id': "overlayId",
+			        }) }}
+		{{ form_label(form.overlayId, null, {
+			    'label': 'Associer à un overlay',
+			    'id': 'overlayId'
+			        }) }}
+	</div>
+</div>
+
+{{ form_label(form.userId, null, {
+    'label_attr': {'class': 'display_none'},
+    }) }}
+{{ form_widget(form.userId, {
+        'attr': {
+            'class': 'display_none',
+            },
+        }) }}
+{{ form_label(form.currentMap, null, {
+    'label_attr': {'class': 'display_none'},
+    }) }}
+{{ form_widget(form.currentMap, {
+        'attr': {
+            'class': 'display_none',
+            },
+        }) }}
+
+
+<button class="btn btn-success">
+	<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
+	{{ button_label|default('Créer le match') }}
+</button>
+{{ form_end(form) }}

@@ -1,0 +1,98 @@
+<section id="topbar_heros">
+	<div class="text">
+		<span class="top">
+			#HER6S
+		</span>
+		<span class="bottom">
+			Her6s d'Oregon
+		</span>
+	</div>
+	<div class="versus">
+		<div class="contain">
+			<span class="score_a">
+				0
+			</span>
+			<div class="logo">
+				<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" alt="">
+			</div>
+			<span class="score_b">
+				0
+			</span>
+		</div>
+	</div>
+	<div class="map">
+		<span class="yellow">
+			Map :
+			<span>
+				Oregon
+			</span>
+		</span>
+	</div>
+	<div id="slider">
+		<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+			<div class="carousel-inner">
+				{% if event is defined %}
+					{% if event.eventEdition != "HER6S" %}
+						<div class="carousel-item" id="img_slider">
+							<img src="https://cdn.artaic.fr/images/overlay/campus_cup/white_firstblood_logo.png" class="d-block w-100" alt="...">
+						</div>
+					{% endif %}
+				{% endif %}
+				<div class="carousel-item active">
+					<span id="text_slider" class="text_slider">
+						<span class="iconify" data-icon="arcticons:twitter"></span>
+						SIXQUATRE
+					</span>
+				</div>
+				<div class="carousel-item">
+					<span id="text_slider" class="text_slider">
+						<span class="iconify" data-icon="akar-icons:instagram-fill"></span>
+						SIXQUATRE
+					</span>
+				</div>
+				<div class="carousel-item">
+					<span id="text_slider" class="text_slider">
+						<span class="iconify" data-icon="arcticons:twitch"></span>
+						SIXQUATRE
+					</span>
+				</div>
+				<div class="carousel-item">
+					<span id="text_slider" class="text_slider">
+						<span class="iconify" data-icon="arcticons:twitter"></span>
+						LaSaltyAcademy
+					</span>
+				</div>
+				<div class="carousel-item">
+					<span id="text_slider" class="text_slider">
+						<span class="iconify" data-icon="arcticons:youtube"></span>
+						SIXQUATRE
+					</span>
+				</div>
+				<div class="carousel-item">
+					<span id="text_slider" class="text_slider">
+						<span class="iconify" data-icon="akar-icons:facebook-fill"></span>
+						DaRealSixquatre
+					</span>
+				</div>
+				<div class="carousel-item">
+					<span id="text_slider" class="text_slider">
+						<span class="iconify" data-icon="cib:tiktok"></span>
+						saltyacademy
+					</span>
+				</div>
+				<div class="carousel-item">
+					<span id="text_slider" class="text_slider">
+						<span class="iconify" data-icon="akar-icons:instagram-fill"></span>
+						salty_academy
+					</span>
+				</div>
+				<div class="carousel-item">
+					<span id="text_slider" class="text_slider">
+						<span class="iconify" data-icon="arcticons:youtube"></span>
+						!ytreplay
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

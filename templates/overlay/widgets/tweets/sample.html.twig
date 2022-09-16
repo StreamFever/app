@@ -1,0 +1,19 @@
+<section id="tweet_sample_text" class="{{widget.WidgetVisible and tweet.tweetMediaType == 'undefined' ? "" : "display_none"}}">
+	<div class="tweet-wrap">
+		<div class="tweet-header">
+			<img src="" alt="" class="avatar" id="text_avatar">
+			<div class="tweet-header-info">
+				<span id="text_pseudo">
+					{{tweet.tweetMediaType == 'undefined' ? tweet.tweetPseudo : ""}}
+				</span>
+				<span class="iconify" data-icon="arcticons:twitter"></span>
+				<span id="text_display">
+					{{tweet.tweetMediaType == 'undefined' ? '@' ~ tweet.tweetAt : ""}}
+				</span>
+				<p id="text_texte">
+					{{tweet.tweetMediaType == 'undefined' ? '@' ~ tweet.tweetContent : ""}}
+				</p>
+			</div>
+		</div>
+	</div>
+</section>

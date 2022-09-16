@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une nouvelle métadonnée
+{% endblock %}
+
+{% block body %}
+	<h1>Créer une nouvelle métadonnée</h1>
+	<p>Vous pouvez créer une métadonnée qui peut être utilisée par la suite sur vos overlays.</p>
+
+	{{ include('overlay/meta/_form.html.twig') }}
+
+	<a class="btn btn-dark" href="{{ path('app_meta_index') }}">
+		<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
+		Retour à la liste</a>
+{% endblock %}

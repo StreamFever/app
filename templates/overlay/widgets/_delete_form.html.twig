@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('app_widgets_delete', {'id': widget.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce widget ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ widget.id) }}">
+    <button class="btn btn-danger">
+		<span class="iconify" data-icon="ant-design:delete-filled"></span>
+		Supprimer ce widget</button>
+</form>

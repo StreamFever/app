@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un nouveau widget
+{% endblock %}
+
+{% block body %}
+	<h1>Créer un nouveau widget</h1>
+
+	<p>Si vous possédez un
+		<strong>overlay</strong>, le formulaire suivant vous permettra de créer un widget et de l'ajouter à votre overlay.</p>
+	<p>
+		<u>Vous devez avoir un overlay qui vous appartient où celui d'un accolyte afin de pouvoir créer un wid</u>
+	</p>
+
+	{{ include('overlay/widgets/_form.html.twig') }}
+
+	<a href="{{ path('app_overlay_index') }}">back to list</a>
+{% endblock %}

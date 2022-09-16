@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un nouvel utilisateur
+{% endblock %}
+
+{% block body %}
+	<h1>Créer un nouvel utilisateur</h1>
+
+	{{ include('user/_form.html.twig') }}
+
+	<a class="btn btn-dark" href="{{ path('app_user_index') }}">
+		<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
+		Retour à la liste</a>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un nouveau match
+{% endblock %}
+
+{% block body %}
+	<h1>Créer un nouveau match</h1>
+
+	{{ include('game/_form.html.twig') }}
+
+	<a class="btn btn-dark" href="{{ path('app_game_index') }}">
+		<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
+		Retour à la liste</a>
+{% endblock %}

@@ -1,0 +1,93 @@
+{{ form_start(form) }}
+
+{% if form_errors(form) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form) }}
+	</div>
+{% endif %}
+
+
+<div class="input-grp">
+	<h3>
+		Clé/Valeur
+	</h3>
+	<p>
+		Renseignez une clé unique pour cette métadonnée afin de pouvoir l'appeler sur votre overlay ainsi que de renseigner sa valeur.
+	</p>
+	<div class="row">
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.MetaKey, {
+        'attr': {'class': 'form-control'},
+        'id': "MetaKey",
+        }) }}
+				{{ form_label(form.MetaKey, null, {
+    'label': 'Définissez le nom de votre métadonnée',
+    'id': 'MetaKey'
+        }) }}
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.MetaValue, {
+        'attr': {'class': 'form-control'},
+        'id': "MetaValue",
+        }) }}
+				{{ form_label(form.MetaValue, null, {
+    'label': 'Définissez la valeur de votre métadonnée',
+    'id': 'MetaValue'
+        }) }}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% if app.request.attributes.get('_route') == 'app_meta_edit' %}
+	{{ form_label(form.Widgets, null, {
+					'label_attr': {'class': 'display_none'},
+					}) }}
+	{{ form_widget(form.Widgets, {
+									'attr': {
+													'class': 'display_none',
+													},
+									}) }}
+
+{% else %}
+
+	<div class="input-grp-center">
+		<h3>
+			Associer à un widget
+		</h3>
+		<p>
+			Si vous voulez que cette métadonnée soit associé à un widget, veuillez sélectionner le widget ci-dessous
+		</p>
+		<div class="form-floating mb-3">
+			{{ form_widget(form.Widgets, {
+												'attr': {'class': 'form-select'},
+												'id': "Widgets",
+												}) }}
+			{{ form_label(form.Widgets, null, {
+								'label': 'Sélectionnez le widget',
+								'id': 'Widgets'
+												}) }}
+		</div>
+	</div>
+{% endif %}
+
+
+{{ form_label(form.userId, null, {
+    'label_attr': {'class': 'display_none'},
+    }) }}
+{{ form_widget(form.userId, {
+        'attr': {
+            'class': 'display_none',
+            },
+        }) }}
+
+
+<button class="btn btn-success">
+	<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
+	{{ button_label|default('Créer la métadonnée') }}
+</button>
+{{ form_end(form) }}

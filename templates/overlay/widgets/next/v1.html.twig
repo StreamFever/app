@@ -1,0 +1,20 @@
+{% if widget.WidgetId == "next" or  widget.WidgetId.libWidgetId == "next" and event is defined %}
+	<section id="nextmatch">
+		<div id="next_teams" class="{{widget.WidgetVisible ? "teams" : "display_none"}}">
+			<span id="nextmatch_team_a">
+				{{event.nextGame is defined and event.nextGame is not null ? event.nextGame.gameIdTeamAlpha.teamName|slice(0,2)|replace({' ': ''})|upper : "TBD" }}
+			</span>
+			<span id="vs">
+				<span class="iconify" data-icon="noto-v1:vs-button"></span>
+			</span>
+			<span id="nextmatch_team_b">
+				{{event.nextGame is defined and event.nextGame is not null ? event.nextGame.gameIdTeamBeta.teamName|slice(0,2)|replace({' ': ''})|upper : "TBD" }}
+			</span>
+		</div>
+		<div id="next_text" class="{{widget.WidgetVisible ? "text" : "display_none"}}">
+			<span class="nextmatch_next" id="nextmatch_heure">
+				{{event.nextGame is defined and event.nextGame is not null ? event.nextGame.gameStartDate|date("H:i") : "SOON" }}
+			</span>
+		</div>
+	</section>
+{% endif %}

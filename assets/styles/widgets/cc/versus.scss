@@ -1,0 +1,54 @@
+$yellow : #EBBE1A;
+$blue : #144478;
+
+#versus {
+ .container_versus {
+  position: absolute;
+  top: 20%;
+  left: 36%;
+  z-index: 99999;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+
+  .top {
+   color: white;
+   font-size: 4rem;
+
+   .logo {
+
+    img {
+     width: 100%;
+    }
+   }
+  }
+
+  .flex_versus {
+   display: flex;
+   flex-flow: row nowrap;
+   align-items: center;
+   justify-content: center;
+   gap: 1rem;
+
+   .left {
+
+    .name_profil {
+     color: white;
+     font-size: 4rem;
+    }
+   }
+
+   .center {
+    color: yellow;
+    font-size: 3rem;
+    padding: 1.4rem 0;
+   }
+
+   .right {
+    color: white;
+    font-size: 4rem;
+   }
+  }
+ }
+}

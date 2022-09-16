@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Liste des événements
+{% endblock %}
+
+
+{% block body %}
+	<section id="event_index">
+		<div class="container">
+			{{ include('event/components/event_hub.html.twig') }}
+		</div>
+	</section>
+	<div class="container" style="padding: 2rem 0">
+		<h1>
+			Liste des événements
+		</h1>
+		<table id="eventList" class="display">
+			<thead>
+				<tr>
+					{% if is_granted('ROLE_ADMIN') %}
+						<th>
+							Id
+						</th>
+					{% endif %}
+					<th>
+						Nom
+					</th>
+					<th>
+						Edition
+					</th>
+					<th>
+						Logo
+					</th>
+					<th>
+						Hashtag
+					</th>
+					<th>
+						Cashprize
+					</th>
+					<th>
+						Début
+					</th>
+					<th>
+						Fin
+					</th>
+					<th>
+						Actions
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for event in events %}
+					<tr>
+						{% if is_granted('ROLE_ADMIN') %}
+							<td>
+								{{ event.id }}
+							</td>
+						{% endif %}
+						<td>
+							{{ event.eventName }}
+						</td>
+						<td>
+							<span class="badge bg-info" style="color: #212529">
+								{{ event.eventEdition }}
+							</span>
+						</td>
+						<td>
+							<a href="{{ event.eventLogo }}" target="_blank">
+								<img style="width: 40%" src="{{ event.eventLogo != null ? asset('uploads/logos/' ~ event.eventLogo) : 'https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg' }}" alt="Logo de {{ event.eventName }}">
+							</a>
+						</td>
+						<td>
+							{{ event.eventHashtag }}
+						</td>
+						<td>
+							<span class="badge bg-info" style="color: #212529">
+								{{ event.eventCashprize }}
+							</span>
+						</td>
+						<td>
+							{% if "now"|date_modify("+1 day")|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
+								<span class="badge bg-warning pulsate-bck">
+									Demain
+								</span>
+							{% endif %}
+							{% if "now"|date_modify("-1 day")|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
+								<span class="badge bg-light">
+									Hier
+								</span>
+							{% endif %}
+							{% if "now"|date_modify("-1 day")|date("m/d/Y", "Europe/Paris") != event.eventStartDate|date('m/d/Y', "Europe/Paris") and "now"|date_modify("+1 day")|date("m/d/Y", "Europe/Paris") != event.eventStartDate|date('m/d/Y') %}
+								<span class="badge bg-light" style="color: #212529">
+									{{ event.eventStartDate ? event.eventStartDate|date('d/m H:i', "Europe/Paris") : '' }}
+								</span>
+							{% endif %}
+						</td>
+						<td>
+							<span class="badge bg-dark">
+								{{ event.eventEndDate ? event.eventEndDate|date('d/m H:i') : '' }}
+							</span>
+						</td>
+						<td>
+							<a class="btn btn-info" href="{{ path('app_event_show', {'id': event.id}) }}">
+								<span class="iconify" data-icon="carbon:view-filled"></span>
+								Détails
+							</a>
+							<a class="btn btn-warning" href="{{ path('app_event_edit', {'id': event.id}) }}">
+								<span class="iconify" data-icon="bxs:edit"></span>
+								Editer
+							</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="10">
+							Rien n'a été trouvé
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<a class="btn btn-info" href="{{ path('app_event_new') }}">
+			<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>
+			Créer un nouvel événement
+		</a>
+	</div>
+{% endblock %}

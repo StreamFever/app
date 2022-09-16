@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Mes réseaux
+{% endblock %}
+
+{% block body %}
+	<h1>
+		Mes réseaux
+	</h1>
+
+	<pre>
+		{{ dump(socials) }}
+	</pre>
+
+	<table id="gameList" class="table">
+		<thead>
+			<tr>
+				{% if is_granted('ROLE_ADMIN') %}
+					<th>
+						Id
+					</th>
+				{% endif %}
+				<th>
+					Réseau
+				</th>
+				<th>
+					Tag
+				</th>
+				<th>
+					Actions
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for social in socials %}
+				<tr>
+					{% if is_granted('ROLE_ADMIN') %}
+						<td>
+							{{ social.id }}
+						</td>
+					{% endif %}
+					<td>
+						<span class="iconify" data-icon="{{social.socialLib.libSocialLogo}}"></span>
+					</td>
+					<td>
+						<strong>
+							{{social.socialTag}}
+						</strong>
+					</td>
+					<td>
+						<a class="btn btn-info" href="{{ path('app_social_show', {'id': social.id}) }}">
+							<span class="iconify" data-icon="carbon:view-filled"></span>
+							Détails
+						</a>
+						<a class="btn btn-warning" href="{{ path('app_social_edit', {'id': social.id}) }}">
+							<span class="iconify" data-icon="bxs:edit"></span>
+							Editer
+						</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="2">
+						Aucun réseau renseigné
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a class="btn btn-info" href="{{ path('app_social_new') }}">
+		<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>
+		Ajouter un nouveau réseau
+	</a>
+{% endblock %}

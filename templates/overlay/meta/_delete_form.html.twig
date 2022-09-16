@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('app_meta_delete', {'id': metum.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer la métadonnée ?');">
+	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ metum.id) }}">
+	<button class="btn btn-danger">
+		<span class="iconify" data-icon="ant-design:delete-filled"></span>
+		Supprimer cette métadonnée</button>
+</form>

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer l'équipe "{{team.teamName is defined ? team.teamName : ""}}"
+{% endblock %}
+
+{% block body %}
+	<h1>Vous éditez l'équipe :
+		{{team.teamName is defined ? team.teamName : ""}}</h1>
+
+	{{ include('team/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+	<a class="btn btn-dark" href="{{ path('app_team_index') }}">
+		<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
+		Retour à la liste</a>
+
+	{{ include('team/_delete_form.html.twig') }}
+{% endblock %}

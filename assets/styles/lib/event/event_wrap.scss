@@ -1,0 +1,49 @@
+.event_wrap {
+ background-color: $white;
+ display: flex;
+ justify-content: space-between;
+
+ .left {
+   width: 65%;
+   padding: 1rem;
+
+   .content {
+     display: flex;
+     gap: .5rem;
+
+     .logo {
+       width: 15%;
+
+       img {
+         width: 100%;
+       }
+     }
+
+     .text {
+       h3 {
+         font-style: normal;
+         font-weight: 300;
+         color: $black_1;
+       }
+
+       .details {
+         display: flex;
+         gap: 1rem;
+
+         span {
+           font-style: normal;
+           font-weight: 300;
+           color: $black_2;
+         }
+       }
+     }
+   }
+ }
+
+ .right {
+   background-color: $yellow;
+   border-radius: 0 0 30px 0;
+   max-height: 30px;
+   padding: 0 1rem;
+ }
+}

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer l'utilisateur "{{user.username is defined ? user.username : ""}}"
+{% endblock %}
+
+{% block body %}
+	<h1>Vous éditez l'utilisateur :
+		{{user.username is defined ? user.username : ""}}</h1>
+
+	{{ include('user/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+	<a class="btn btn-dark" href="{{ path('app_user_index') }}">
+		<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
+		Retour à la liste</a>
+
+	{{ include('user/_delete_form.html.twig') }}
+{% endblock %}

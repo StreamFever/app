@@ -1,0 +1,28 @@
+{% set popupText = [] %}
+{% for meta in metas %}
+	{% if meta.metaKey == 'popup_text' %}
+		{% set popupText = popupText|merge([meta]) %}
+	{% endif %}
+{% endfor %}
+
+
+{% if widget.WidgetId == "popup_text" or  widget.WidgetId.libWidgetId == "popup_text" %}
+	<section id="smalltext">
+		<div id="popuptext" class="container_popup">
+			<div id="leftpopuptext" class="{{widget.WidgetVisible ? "left" : "display_none"}}">
+				<div class="img">
+					{% if event is defined %}
+						<img id="popuplogoimg" src="{{ 'http' in event.eventLogo ? event.eventLogo : asset('uploads/logos/' ~ event.eventLogo) }}" alt="Logo de l'événement">
+					{% else %}
+						<img id="popuplogoimg" src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" alt="Logo de l'événement">
+					{% endif %}
+				</div>
+			</div>
+			<div id="textpopuptext" class="{{widget.WidgetVisible ? "text" : "display_none"}}">
+				<span id="txtvalue">
+					{{ popupText[0].metaValue is not empty ? popupText[0].metaValue : 'Bienvenue sur StreamCave !' }}
+				</span>
+			</div>
+		</div>
+	</section>
+{% endif %}

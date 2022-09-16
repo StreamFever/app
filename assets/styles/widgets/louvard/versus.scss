@@ -1,0 +1,50 @@
+#versus {
+ .container_versus {
+  position: absolute;
+  top: 20%;
+  left: 0;
+  z-index: 99999;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  width: 100%;
+
+  .left, .right {
+   font-weight: 900;
+   font-size: 17rem;
+   color: #6b9dcd;
+   text-transform: uppercase;
+  }
+
+  .center {
+   display: flex;
+   flex-flow: column nowrap;
+   justify-content: center;
+   align-items: center;
+
+   .logo_event {
+    max-height: 200px;
+    margin-bottom: 2rem;
+
+    img {
+     max-height: 250px;
+    }
+   }
+
+   span {
+    color: #6b9dcd;
+   }
+
+   .title_event {
+    font-weight: 600;
+    font-size: 3rem;
+   }
+
+   .phase_event {
+    font-weight: 300;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+   }
+  }
+ }
+}

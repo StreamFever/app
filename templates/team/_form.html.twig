@@ -1,0 +1,63 @@
+{{ form_start(form) }}
+
+{% if form_errors(form) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form) }}
+	</div>
+{% endif %}
+
+<div class="input-grp-center">
+	<h3>Informations de l'équipe</h3>
+	<p>Définissez le nom de l'équipe ainsi que son logo si cette dernière en possède un.</p>
+
+	<div class="row">
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.teamName, {
+        'attr': {'class': 'form-control'},
+        'id': "teamName",
+        }) }}
+				{{ form_label(form.teamName, null, {
+    'label': 'Définissez le nom de l\'équipe',
+    'id': 'teamName'
+        }) }}
+		</div>
+			</div>
+			<div class="col">
+				<div class="form-floating mb-3">
+			{{ form_widget(form.teamLogo, {
+            'attr': {'class': 'form-control'},
+            'id': "teamLogo",
+            }) }}
+		{{ form_label(form.teamLogo, null, {
+        'label': 'Définissez l\'image de l\'équipe',
+        'id': 'teamLogo'
+            }) }}
+	</div>
+			</div>
+		</div>
+</div>
+
+<div class="input-grp">
+<h3>La composition</h3>
+<p>Définissez la composition de votre équipe ci-dessous.</p>
+<p><strong>Rappel :</strong> Vous pouvez avoir 5 joueurs titulaires ainsi que 2 remplaçants.</p>
+	
+	<div>
+	{{ form_label(form.players, null, {
+    'label': 'Merci de sélectionner vos joueurs',
+    'label_attr': {'class': 'form-label select-label'},
+    }) }}
+				{{ form_widget(form.players, {
+        'attr': {
+            'class': 'selectpicker form-control',
+            'data-max-options': 7
+            },
+        }) }}
+			</div>
+		</div>
+
+		<button class="btn btn-success">
+			<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
+			{{ button_label|default('Créer l\'équipe') }}</button>
+			{{ form_end(form) }}

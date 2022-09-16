@@ -1,0 +1,40 @@
+{{ form_start(form_bottombar_marquee_1, {'name': "test"}) }}
+
+{% if form_errors(form_bottombar_marquee_1) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form_bottombar_marquee_1) }}
+	</div>
+{% endif %}
+
+{# INFO: Seul input actif #}
+<div class="form-floating mb-3">
+	{{ form_widget(form_bottombar_marquee_1.MetaValue, {
+        'attr': {'class': 'form-control', 'oninput': 'updateWSValue(this.id)'},
+        }) }}
+	{{ form_label(form_bottombar_marquee_1.MetaValue, null, {
+    'label': 'Définissez la valeur de votre métadonnée',
+        }) }}
+</div>
+{{ form_widget(form_bottombar_marquee_1.MetaKey, {
+        'attr': {'class': 'display_none'},
+        }) }}
+{{ form_label(form_bottombar_marquee_1.MetaKey, null, {
+    'label_attr': {'class': 'display_none'},
+    }) }}
+{{ form_widget(form_bottombar_marquee_1.Widgets, {
+												'attr': {'class': 'display_none'},
+												'id': "Widgets",
+												}) }}
+{{ form_label(form_bottombar_marquee_1.Widgets, null, {
+								    'label_attr': {'class': 'display_none'},
+												}) }}
+{{ form_label(form_bottombar_marquee_1.userId, null, {
+    'label_attr': {'class': 'display_none'},
+    }) }}
+{{ form_widget(form_bottombar_marquee_1.userId, {
+        'attr': {
+            'class': 'display_none',
+            },
+        }) }}
+
+{{ form_end(form_bottombar_marquee_1) }}

@@ -1,0 +1,22 @@
+<section id="tweet_img" class="{{widget.WidgetVisible and tweet.tweetMediaType == 'photo' ? "" : "display_none"}}">
+	<div class="tweet-wrap">
+		<div class="tweet-header">
+			<img src="" alt="" class="avatar" id="img_avatar">
+			<div class="tweet-header-info">
+				<span id='img_pseudo'>
+					{{tweet.tweetMediaType == 'photo' ? tweet.tweetPseudo : ""}}
+				</span>
+				<span class="iconify" data-icon="arcticons:twitter"></span>
+				<span id='img_display'>
+					{{tweet.tweetMediaType == 'photo' ? '@' ~ tweet.tweetAt : ""}}
+				</span>
+				<p id='img_texte'>
+					{{tweet.tweetMediaType == 'photo' ? tweet.tweetContent : ""}}
+				</p>
+			</div>
+		</div>
+		<div class="tweet-img-wrap">
+			<img src="{{tweet.tweetMediaType == 'photo' ? tweet.tweetMediaURL : ""}}" alt="" class="tweet-img" id='img_image'>
+		</div>
+	</div>
+</section>

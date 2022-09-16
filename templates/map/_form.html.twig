@@ -1,0 +1,13 @@
+{{ form_start(form) }}
+
+{% if form_errors(form) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form) }}
+	</div>
+{% endif %}
+
+
+<button class="btn btn-success">
+	<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
+	{{ button_label|default('Créer la carte') }}</button>
+{{ form_end(form) }}

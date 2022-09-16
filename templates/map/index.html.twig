@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Liste des cartes
+{% endblock %}
+
+{% block body %}
+	<h1>
+		Liste des cartes
+	</h1>
+
+	<table id="mapList" class="table">
+		<thead>
+			<tr>
+				{% if is_granted('ROLE_ADMIN') %}
+					<th>
+						Id
+					</th>
+				{% endif %}
+				<th>
+					Nom
+				</th>
+				<th>
+					Image
+				</th>
+				<th>
+					Score
+				</th>
+				<th>
+					Picked by
+				</th>
+				<th>
+					Banned by
+				</th>
+				<th>
+					Winned by
+				</th>
+				<th>
+					Actions
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for map in maps %}
+				<tr>
+					{% if is_granted('ROLE_ADMIN') %}
+						<td>
+							{{ map.id }}
+						</td>
+					{% endif %}
+					<td>
+						{{map.mapLib.mapName}}
+					</td>
+					<td>
+						<a href="{{ map.mapLib.mapImg }}" target="_blank">
+							<img style="width: 40%" src="{{ asset('uploads/maps/' ~ map.mapLib.mapImg) }}" alt="Logo de {{ map.mapLib.mapName }}">
+						</a>
+					</td>
+					<td>
+						{{map.mapScore != null ? map.mapScore : ''}}
+
+					</td>
+					<td>
+						{{map.mapPickedBy != null ? map.mapPickedBy.teamName : ''}}
+					</td>
+					<td>
+						{{map.mapBannedBy != null ? map.mapBannedBy.teamName : ''}}
+
+					</td>
+					<td>
+						{{map.mapWinnedBy != null ? map.mapWinnedBy.teamName : ''}}
+
+					</td>
+					<td>
+						<a class="btn btn-info" href="{{ path('app_map_show', {'id': map.id}) }}">
+							<span class="iconify" data-icon="carbon:view-filled"></span>
+							Détails
+						</a>
+						<a class="btn btn-warning" href="{{ path('app_map_edit', {'id': map.id}) }}">
+							<span class="iconify" data-icon="bxs:edit"></span>
+							Editer
+						</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">
+						Aucune carte n'a été créée
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a class="btn btn-info" href="{{ path('app_map_new') }}">
+		<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>
+		Ajouter une carte
+	</a>
+{% endblock %}

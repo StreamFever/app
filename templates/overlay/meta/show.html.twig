@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de l'évent "{{meta.MetaKey is defined ? meta.MetaKey : ""}}"
+{% endblock %}
+
+{% block body %}
+	<h1>Détails de l'évent "{{meta.MetaKey is defined ? meta.MetaKey : ""}}"</h1>
+
+	<div class="row">
+		<div class="col">
+			<table class="table">
+				<tbody>
+					{% if is_granted('ROLE_ADMIN') %}
+						<tr>
+							<th>Id</th>
+							<td>{{ metum.id }}</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<th>Clé</th>
+						<td>{{ metum.MetaKey }}</td>
+					</tr>
+					<tr>
+						<th>Valeur</th>
+						<td>{{ metum.MetaValue }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col">
+			<h3>Qu'est-ce qu'une métadonnée ?</h3>
+			<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium qui sint voluptatum aut, tempora error amet blanditiis architecto id quo nisi tempore quidem iure officiis laudantium dolorum itaque, provident unde.</p>
+		</div>
+	</div>
+
+	<a href="{{ path('app_meta_index') }}">back to list</a>
+
+	<a href="{{ path('app_meta_edit', {'id': metum.id}) }}">edit</a>
+
+	{{ include('meta/_delete_form.html.twig') }}
+{% endblock %}

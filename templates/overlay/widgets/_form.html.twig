@@ -1,0 +1,100 @@
+{{ form_start(form) }}
+
+{% if form_errors(form) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form) }}
+	</div>
+{% endif %}
+
+
+<div class="input-grp-center">
+	<h3>
+		Sélectionnez un overlay
+	</h3>
+	<p>
+		Vous devez choisir parmi vos overlays sur lequel vous souhaitez insérer ce widget que vous allez créer.
+	</p>
+	<div class="form-floating mb-3">
+		{{ form_widget(form.overlay, {
+        'attr': {'class': 'form-select'},
+        'id': "overlay",
+        }) }}
+		{{ form_label(form.overlay, null, {
+        'label': 'Sélectionnez un overlay',
+        'id': 'overlay'
+            }) }}
+		{{ form_help(form.overlay) }}
+	</div>
+</div>
+
+
+<div class="input-grp">
+	<h3>
+		Informations globales du widget
+	</h3>
+	<p>
+		Vous devez renseigné tous les champs dans ce groupe.
+	</p>
+
+	<div class="row">
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.WidgetName, {
+        'attr': {'class': 'form-control'},
+        'id': "WidgetName",
+        }) }}
+				{{ form_label(form.WidgetName, null, {
+    'label': 'Définissez le nom du widget',
+    'id': 'WidgetName'
+        }) }}
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-floating mb-3">
+				{{ form_widget(form.WidgetId, {
+            'attr': {'class': 'form-select'},
+            'id': "WidgetId",
+            }) }}
+				{{ form_label(form.WidgetId, null, {
+        'label': 'Définissez son identifiant unique',
+        'id': 'WidgetId'
+            }) }}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% if form.isTwoWidgets is defined %}
+	<div class="input-grp-2">
+		<h3>
+			Associer ce widget
+		</h3>
+		<p>
+			Si le widget que vous voulez créer est un groupe de deux sous-widget, dans ce cas vous devez renseigner dans
+			<strong>
+				le groupe au dessus
+			</strong>
+			, l'identifiant du premier sous-widget et ci-dessous l'identifiant du second sous-widget.
+		</p>
+		<p>
+			Ainsi, ils seront liés et vous obtiendrez un bouton à 3 états.
+		</p>
+		<div class="form-check">
+			{{ form_widget(form.isTwoWidgets, {
+                    'attr': {'class': 'form-check-input'},
+                    'id': "isTwoWidgets",
+                    }) }}
+			{{ form_label(form.isTwoWidgets, null, {
+                'label': 'Voulez-vous le widget associé ?',
+                'attr': {'class': 'form-check-label'},
+                'id': 'isTwoWidgets'
+                    }) }}
+		</div>
+	</div>
+{% endif %}
+
+<button class="btn btn-success" onclick="askrefresh(event)">
+	<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
+	{{ button_label|default('Créer le widget') }}
+</button>
+{{ form_end(form) }}

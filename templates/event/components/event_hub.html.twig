@@ -1,0 +1,14 @@
+<div id="event_hub">
+	<h3>Next event | Current event</h3>
+
+	{% for event in event_service.getOneCurrentEvent %}
+		{{ include('event/components/event_full.html.twig') }}
+	{% endfor %}
+
+	<div class="recents_event">
+		{% for event in event_service.getRecentsEvent %}
+			{{ include('event/components/event_card.html.twig') }}
+		{% endfor %}
+	</div>
+
+</div>

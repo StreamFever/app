@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des logs
+{% endblock %}
+
+{% block body %}
+	<h1>Liste des logs</h1>
+
+	<table id="logList" class="display">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Date</th>
+				<th>Level</th>
+				<th>Détail de la trame</th>
+				<th>Overlay</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for log in logs %}
+				<tr>
+					<td>{{ log.id }}</td>
+					<td>{{ log.LogsTimestamp ? log.LogsTimestamp|date('Y-m-d H:i:s') : '' }}</td>
+					<td>
+						{% if log.LogsLevel == 'info' %}
+							<span class="badge bg-info text-dark">{{ log.LogsLevel }}</span>
+						{% else %}
+							<span class="badge bg-danger text-light">Error</span>
+						{% endif %}
+					</td>
+					<td>{{ log.LogsText }}</td>
+					<td>{{ log.LogsOverlay }}</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="6">Rien n'a été trouvé</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}

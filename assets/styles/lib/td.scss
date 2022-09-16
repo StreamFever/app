@@ -1,0 +1,17 @@
+td.bodyAccess {
+ max-width: 400px;
+
+ .flex {
+   display: flex;
+   flex-flow: row nowrap;
+ }
+
+ .avatar {
+   width: 3%;
+   text-align: center;
+
+   img {
+     width: 100%;
+   }
+ }
+}

@@ -1,0 +1,39 @@
+{% if widget.WidgetId == "versus" or  widget.WidgetId.libWidgetId == "versus" %}
+	<section id="versus">
+		<div id="versuscontainer" class="{{widget.WidgetVisible ? "container_versus" : "display_none"}}">
+			<div id="top_versus" class="display_none">
+				{% if event is defined %}
+					<div class="logo">
+						<img src="{{ 'http' in event.eventLogo ? event.eventLogo : asset('uploads/logos/' ~ event.eventLogo) }}" alt="Logo de l'event">
+					</div>
+				{% else %}
+					<div class="logo">
+						<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" alt="Logo de l'event">
+					</div>
+				{% endif %}
+			</div>
+			<div class="flex_versus">
+				<div id="leftversus" class="display_none">
+					<div class="name_profil">
+						<span id="versus_team_a">
+							{{game is defined ? game.gameIdTeamAlpha|slice(0,5)|replace({' ': ''}) : "TBD" }}
+						</span>
+					</div>
+				</div>
+				<div id="centerversus" class="display_none">
+					<span>
+						VS
+					</span>
+				</div>
+				<div id="rightversus" class="display_none">
+					<div class="name_profil">
+						<span id="versus_team_b">
+							{{game is defined ? game.gameIdTeamBeta|slice(0,5)|replace({' ': ''}) :	"TBD" }}
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="video_versus" data-id="auto_off_{{widget.WidgetId.libWidgetId}}" data-map="{{event.currentGame.currentMap}}" data-wid="{{widget.id}}" data-widgetid="{{widget.WidgetId.id}}" data-libid="{{widget.WidgetId.libWidgetId}}" data-idoverlay="{{overlay.id}}"></div>
+	</section>
+{% endif %}

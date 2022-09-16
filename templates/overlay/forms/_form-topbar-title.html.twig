@@ -1,0 +1,41 @@
+{{ form_start(form_topbar, {'name': "test"}) }}
+
+{% if form_errors(form_topbar) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form_topbar) }}
+	</div>
+{% endif %}
+
+{# INFO: seul input actif #}
+<div class="form-floating mb-3">
+	{{ form_widget(form_topbar.MetaValue, {
+						'attr': {'class': 'form-control' , 'oninput': 'updateWSValue(this.id)'},
+						}) }}
+	{{ form_label(form_topbar.MetaValue, null, {
+		'label': 'Définissez la valeur de votre métadonnée',
+						}) }}
+</div>
+{{ form_widget(form_topbar.MetaKey, {
+						'attr': {'class': 'display_none'},
+						}) }}
+{{ form_label(form_topbar.MetaKey, null, {
+		'label_attr': {'class': 'display_none'},
+		}) }}
+{{ form_widget(form_topbar.Widgets, {
+												'attr': {'class': 'display_none'},
+												'id': "Widgets",
+												}) }}
+{{ form_label(form_topbar.Widgets, null, {
+								    'label_attr': {'class': 'display_none'},
+												}) }}
+{{ form_label(form_topbar.userId, null, {
+    'label_attr': {'class': 'display_none'},
+    }) }}
+{{ form_widget(form_topbar.userId, {
+        'attr': {
+            'class': 'display_none',
+            },
+        }) }}
+
+
+{{ form_end(form_topbar) }}

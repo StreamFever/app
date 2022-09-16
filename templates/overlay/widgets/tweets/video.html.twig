@@ -1,0 +1,22 @@
+<section id="tweet_video" class="{{widget.WidgetVisible and (tweet.tweetMediaType == 'video' or tweet.tweetMediaType == 'animated_gif') ? "" : "display_none"}}">
+	<div class="tweet-wrap">
+		<div class="tweet-header">
+			<img src="" alt="" class="avatar" id="video_avatar">
+			<div class="tweet-header-info">
+				<span id="video_pseudo">
+					{{tweet.tweetMediaType == 'video' or tweet.tweetMediaType == 'animated_gif' ? tweet.tweetPseudo : ""}}
+				</span>
+				<span class="iconify" data-icon="arcticons:twitter"></span>
+				<span id="video_display">
+					{{tweet.tweetMediaType == 'video' or tweet.tweetMediaType == 'animated_gif' ? '@' ~ tweet.tweetAt : ""}}
+				</span>
+				<p id="video_texte">
+					{{tweet.tweetMediaType == 'video' or tweet.tweetMediaType == 'animated_gif' ? tweet.tweetContent : ""}}
+				</p>
+				<video width="300px" muted loop autoplay id="video_video">
+					<source autoplay src="{{tweet.tweetMediaType == 'video' or tweet.tweetMediaType == 'animated_gif' ? tweet.tweetMediaUrl : ""}}" type="video/mp4" id='video_src'>
+				</video>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,195 @@
+$black_1: #000;
+$black_2: #2C3233;
+$marine_1: #2B3F44;
+$marine_2: #2A4B54;
+$marine_3: #276475;
+$blue_1: #2296B7;
+$blue_2: #59B0C9;
+$blue_3: #ACD8E4;
+$grey_1: #D6ECF2;
+$grey_2: #EBF6F9;
+$white: #fff;
+
+$futuraheavy: 'futuraheavy';
+$futurabook: 'futurabook';
+$futuralight: 'futuralight';
+
+.wrap {
+ display: grid;
+ grid-auto-rows: 1fr;
+ grid-template-columns: 2.5fr 1fr;
+ grid-template-rows: 1fr;
+ gap: 0px 0px;
+
+ .left {
+  background-image: url('https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1159&q=80');
+  background-size: cover;
+  background-repeat: no-repeat;
+  //height: 100%;
+  min-height: 100vh;
+  max-height: 100vh;
+  grid-columns: 1/2;
+
+  .logo {
+   width: 10%;
+
+   img {
+    width: 100%;
+   }
+  }
+ }
+
+ .right {
+  grid-columns: 2/3;
+
+  .top {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: .4rem 1rem;
+
+   a,
+   span {
+    font-family: $futuraheavy;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 36px;
+    text-decoration-line: none;
+    color: $black_1;
+   }
+  }
+
+  .menu {
+   display: flex;
+   gap: 1rem;
+   align-items: center;
+   padding: 1rem;
+
+   border-bottom: 1px solid $grey_1;
+
+   li {
+    a {
+     font-family: $futuraheavy;
+     font-style: normal;
+     font-weight: 300;
+     font-size: 1.5rem;
+     color: $blue_1;
+     text-decoration-line: none;
+
+     &:hover {
+      color: $marine_3;
+      border-bottom: 2px solid $marine_3;
+      padding-bottom: 18px;
+     }
+    }
+
+    .active {
+     border-bottom: 2px solid $blue_2;
+     padding-bottom: 18px;
+
+     &:hover {
+      border-bottom: 2px solid $blue_2;
+      color: $black_1;
+     }
+    }
+   }
+  }
+
+  #sign-in-form {
+   padding: 4rem 1rem;
+   max-width: 350px;
+   width: 100%;
+   margin: 0 auto;
+
+   input {
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
+
+
+    font-family: $futuraheavy;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1rem;
+   }
+
+   label {
+    font-family: $futuraheavy;
+    font-style: normal;
+    font-weight: 300;
+    color: $black_2;
+   }
+
+   input#inputPassword {
+    position: relative;
+
+   }
+
+   #showpwd {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+   }
+
+   .links {
+    margin-top: 1rem;
+
+    a {
+     font-family: $futuraheavy;
+     font-style: normal;
+     font-weight: 300;
+     font-size: 1rem;
+     color: $blue_1;
+     text-decoration-line: none;
+     transition: all 0.3s ease-in-in;
+
+     &:hover {
+      transition: all 0.3s ease-in-out;
+      color: $blue_1;
+      text-decoration-line: underline;
+     }
+    }
+   }
+
+   .submit {
+    margin-top: 2rem;
+    border: none;
+    background: $blue_1;
+    width: 100%;
+    padding: .3rem;
+
+    color: $white;
+    font-family: $futuraheavy;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.4rem;
+    transition: all 0.3s ease-in-in;
+
+    &:hover {
+     transition: all 0.3s ease-in-out;
+     background: $blue_1;
+    }
+   }
+  }
+ }
+}
+
+
+.display_none {
+ display: none !important;
+}
+
+@media screen and (max-width: 1050px) {
+ .wrap {
+  grid-template-columns: 1fr 1fr;
+ }
+}
+
+@media screen and (max-width: 590px) {
+ .wrap {
+  display: block;
+  .left {
+   display: none;
+  }
+ }
+}

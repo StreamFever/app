@@ -1,0 +1,90 @@
+{% set topbar_title = [] %}
+{% for meta in metas %}
+	{% if meta.metaKey == 'topbar_title' %}
+		{% set topbar_title = topbar_title|merge([meta]) %}
+	{% endif %}
+{% endfor %}
+
+
+{% if widget.WidgetId and widget.WidgetId == "topbar" or widget.WidgetId.libWidgetId and widget.WidgetId.libWidgetId == "topbar" %}
+	<section id="topbar" class="{{widget.WidgetVisible == 1 ? "" : "display_none"}}">
+		<div class="lambda">
+			<section id="topbar-title">
+				{% if topbar_title is defined and topbar_title is not null %}
+					{{topbar_title[0].metaValue}}
+				{% else %}
+					Streamcave
+				{% endif %}
+			</section>
+		</div>
+		<div
+			class="name_event">
+			{# TODO: Mettre une valeur dynamique #}
+			<span class="hashtag">
+				#
+			</span>
+			{% if event is defined %}
+				{{event.eventHashtag|slice(1)}}
+			{% else %}
+				Streamcave
+			{% endif %}
+
+		</div>
+		<div class="scorea" id="scorea">
+			{{event.currentGame is defined ? event.currentGame.gameScoreTeamAlpha : ""}}
+		</div>
+		<div id="topbar_team_a" class="teama">
+			{{event.currentGame is defined ? event.currentGame.gameIdTeamAlpha|slice(0,2)|replace({' ': ''}) : "TBD" }}
+		</div>
+		<div class="vs"></div>
+		{% if event is defined %}
+			<div class="logo">
+				<img src="{{ 'http' in event.eventLogo ? event.eventLogo : asset('uploads/logos/' ~ event.eventLogo) }}" alt="Logo de l'event">
+			</div>
+		{% else %}
+			<div class="logo">
+				<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" alt="Logo de l'event">
+			</div>
+		{% endif %}
+		<div id="topbar_team_b" class="teamb">
+			{{event.currentGame is defined ? event.currentGame.gameIdTeamBeta|slice(0,2)|replace({' ': ''}) : "TBD"  }}
+		</div>
+		<div class="scoreb" id="scoreb">
+			{{event.currentGame is defined ? event.currentGame.gameScoreTeamBeta : ""}}
+		</div>
+		<div class="carte">
+			<span class="yellow">
+				Map :
+			</span>
+			<span id="currentmap">
+				{{event.currentGame is defined ? event.currentGame.currentMap : ""}}
+				<span></div>
+				<div id="slider">
+					<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+						<div class="carousel-inner">
+							{% if event is defined %}
+								<div class="carousel-item active" id="img_slider">
+									<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" class="d-block w-100" alt="Logo de StreamCave">
+								</div>
+							{% endif %}
+							{% if event is defined %}
+								{% for sponsor in event.eventIdSponsor %}
+									<div class="carousel-item" id="img_slider">
+										<img src="{{ asset('uploads/logos/' ~ sponsor.sponsorLogo) }}" class="d-block w-100" alt="Logo de {{sponsor.sponsorName}}">
+									</div>
+								{% endfor %}
+								{% for social in event.socials %}
+									<div class="carousel-item">
+										<span id="text_slider" class="text_slider">
+											<span class="iconify" data-icon="{{social.socialLib.libSocialLogo}}"></span>
+											{{social.socialTag}}
+										</span>
+									</div>
+								{% endfor %}
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	{% endif %}

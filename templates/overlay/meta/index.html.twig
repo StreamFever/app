@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes métadonnées
+{% endblock %}
+
+{% block body %}
+	<h1>Mes métadonnées</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				{% if is_granted('ROLE_ADMIN') %}
+					<th>Id</th>
+				{% endif %}
+				<th>Clé</th>
+				<th>Valeur</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for meta in metas %}
+				<tr>
+					{% if is_granted('ROLE_ADMIN') %}
+						<td>{{ meta.id }}</td>
+					{% endif %}
+					<td>{{ meta.MetaKey }}</td>
+					<td>{{ meta.MetaValue }}</td>
+					<td>
+						<a class="btn btn-info" href="{{ path('app_meta_show', {'id': meta.id}) }}">
+							<span class="iconify" data-icon="carbon:view-filled"></span>
+							Détails</a>
+						<a class="btn btn-warning" href="{{ path('app_meta_edit', {'id': meta.id}) }}">
+							<span class="iconify" data-icon="bxs:edit"></span>
+							Editer</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">Rien n'a été trouvé</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a class="btn btn-info" href="{{ path('app_meta_new') }}">
+		<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>Créer une nouvelle métadonnée</a>
+{% endblock %}

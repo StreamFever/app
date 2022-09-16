@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs
+{% endblock %}
+
+{% block body %}
+	<h1>Liste des utilistateurs</h1>
+	<pre>
+		{{ dump(uidata.getUiData) }}
+	</pre>
+
+	<table id="userList" class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Avatar</th>
+				<th>Email</th>
+				<th>Uuid</th>
+				<th>Roles</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
+				{% set roles = user.roles %}
+				<tr>
+					<td>{{ user.id }}</td>
+					<td>
+							<a href="{{ user.avatarURL }}" target="_blank"><img style="width: 40%" src="{{ asset('uploads/avatars/' ~ user.avatarURL) }}" alt="Logo de {{ user.pseudo }}"></a>
+					<td>{{ user.email }}</td>
+					<td>{{ user.username }}</td>
+					<td>
+						{% for role in roles %}
+							{% if role == "ROLE_USER" %}
+								<span class="badge bg-dark">
+									<span class="iconify" data-icon="ant-design:user-outlined"></span>
+									User</span>
+							{% endif %}
+							{% if role == "ROLE_ADMIN" %}
+								<span class="badge bg-danger">
+									<span class="iconify" data-icon="dashicons:admin-network"></span>
+									Admin</span>
+							{% endif %}
+						{% endfor %}
+					</td>
+					<td>
+						<a class="btn btn-info" href="{{ path('app_user_show', {'id': user.id}) }}">
+							<span class="iconify" data-icon="carbon:view-filled"></span>Détails</a>
+						<a class="btn btn-warning" href="{{ path('app_user_edit', {'id': user.id}) }}">
+							<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="9">Rien n'a été trouvé</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a class="btn btn-info" href="{{ path('app_user_new') }}" style="color: black;">
+		<span class="iconify" data-icon="bxs:widget"></span>
+		Créer un nouvel utilisateur</a>
+{% endblock %}

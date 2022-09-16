@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une nouvelle carte
+{% endblock %}
+
+{% block body %}
+	<h1>Créer une nouvelle carte</h1>
+
+	{{ include('map/_form.html.twig') }}
+
+	<a class="btn btn-dark" href="{{ path('app_map_index') }}">
+		<span class="iconify" data-icon="akar-icons:arrow-back-thick"></span>
+		Retour à la liste</a>
+{% endblock %}

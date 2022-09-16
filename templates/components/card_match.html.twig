@@ -1,0 +1,62 @@
+<div id="card_match">
+	<div class="versus">
+		<div class="left">
+			<div class="logo">
+				<a href="{{ game.gameIdTeamAlpha.teamLogo }}" target="_blank">
+					<img src="{{ game.gameIdTeamAlpha.teamLogo != null ? asset('uploads/logos/' ~ game.gameIdTeamAlpha.teamLogo) : "https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" }}" alt="Logo de {{ game.gameIdTeamAlpha.teamName }}">
+				</a>
+			</div>
+			<span>
+				{{game.gameIdTeamAlpha.teamName}}
+			</span>
+		</div>
+		<div class="center">
+			<span>
+				VS
+			</span>
+		</div>
+		<div class="right">
+			<div class="logo">
+				<a href="{{ game.gameIdTeamBeta.teamLogo }}" target="_blank">
+					<img src="{{ game.gameIdTeamBeta.teamLogo != null ? asset('uploads/logos/' ~ game.gameIdTeamBeta.teamLogo) : "https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" }}" alt="Logo de {{ game.gameIdTeamBeta.teamName }}">
+				</a>
+			</div>
+			<span>
+				{{game.gameIdTeamBeta.teamName}}
+			</span>
+		</div>
+	</div>
+	<div class="date">
+		<span>
+			{{ game.gameStartDate|date }}
+		</span>
+	</div>
+
+	<div class="btn_section">
+		{% if app.request.get('id_overlay') %}
+			{% set idOverlay = app.request.get('id_overlay') %}
+			<div class="left">
+				<a href="{{ path('app_game_show', {'id': game.id, 'id_overlay': idOverlay}) }}">
+					Accéder au match
+				</a>
+			</div>
+			<div class="right">
+				<a href="{{ path('app_game_edit', {'id': game.id, 'id_overlay': idOverlay}) }}">
+					Gérer le match
+				</a>
+			</div>
+		{% else %}
+			<div class="left">
+				<a href="{{ path('app_game_show', {'id': game.id}) }}">
+					Accéder au match
+				</a>
+			</div>
+			<div class="right">
+				<a href="{{ path('app_game_edit', {'id': game.id}) }}">
+					Gérer le match
+				</a>
+			</div>
+		{% endif %}
+
+	</div>
+</div>

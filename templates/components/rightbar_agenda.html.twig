@@ -1,0 +1,69 @@
+<aside id="rightbar">
+	<div class="container">
+		<div class="top">
+			<h2>Agenda</h2>
+			<div class="notification">
+				<span class="iconify" data-icon="clarity:notification-solid"></span>
+			</div>
+		</div>
+
+		<div class="content">
+			{% for event in event_service.getAllEvents %}
+				{% if "now"|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") or "now"|date("m/d/Y", "Europe/Paris") <= event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
+					{% block card_agenda %}
+						<div class="card_rightbar">
+							<div class="top">
+								<div class="left_top">
+									{% if "now"|date_modify("+1 day")|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
+										<span class="badge bg-warning pulsate-bck">Demain</span>
+									{% endif %}
+									{% if "now"|date_modify("now")|date("m/d/Y") == event.eventEndDate|date("m/d/Y") %}
+										<span class="badge bg-success pulsate-bck">Maintenant</span>
+									{% endif %}
+									{% if "now"|date_modify("-1 day")|date("m/d/Y", "Europe/Paris") == event.eventStartDate|date('m/d/Y', "Europe/Paris") %}
+										<span class="badge bg-light">Hier</span>
+									{% endif %}
+									<span class="badge bg-light" style="color: #212529">{{ event.eventStartDate ? event.eventStartDate|date('j l, F', "Europe/Paris") : '' }}</span>
+								</div>
+								<div class="actions">
+									<a href="#">•••</a>
+								</div>
+							</div>
+							<a href="{{ path('app_event_show', {'id': event.id}) }}" class="content">
+								<div class="left">
+									<span>{{event.eventStartDate|date('H:i')}}</span>
+								</div>
+								<div class="right">
+									{% if event.eventEdition.editionName == "HER6S" %}
+										<div class="barre" data-id="green"></div>
+									{% elseif event.eventEdition.editionName == "campus_cup" %}
+										<div class="barre" data-id="orange"></div>
+									{% elseif event.eventEdition.editionName == "salty_duels" %}
+										<div class="barre" data-id="yellow"></div>
+									{% else %}
+										<div class="barre" data-id="blue"></div>
+									{% endif %}
+									<div class="details">
+										{% if event.eventEdition.editionName == "HER6S" %}
+											<span data-id="green">HER6S</span>
+										{% elseif event.eventEdition.editionName == "campus_cup" %}
+											<span data-id="orange">CampusCup</span>
+										{% elseif event.eventEdition.editionName == "salty_duels" %}
+											<span data-id="yellow">SaltyDuels</span>
+										{% else %}
+											<span data-id="blue">Event</span>
+										{% endif %}
+										<span>{{event.eventName | slice(0, 20)}}</span>
+									</div>
+								</div>
+							</a>
+						</div>
+					{% endblock %}
+				{% endif %}
+
+
+			{% endfor %}
+
+		</div>
+	</div>
+</aside>

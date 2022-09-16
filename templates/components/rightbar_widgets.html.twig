@@ -1,0 +1,87 @@
+<aside id="rightbar">
+	<div class="container">
+		<div class="top">
+			<h2>
+				Widgets
+			</h2>
+			<div class="notification">
+				<span class="iconify" data-icon="clarity:notification-solid"></span>
+			</div>
+		</div>
+		<div class="content">
+			{% for card in widgets %}
+				{% if card.isTwoWidgets %}
+					{# Switch à 3 états #}
+					{% block card_widget_bars %}
+						<div class="card_rightbar">
+							<a href="#" class="content">
+								<div class="left">
+									<div class="switch-toggle switch-3 switch-candy">
+
+										<input id="show_{{card.WidgetId.libWidgetId}}" name="{{card.WidgetId.libWidgetId}}" type="radio" checked="{{card.WidgetVisible == 1 ? "checked" : ""}}" data-wid="{{card.id}}" data-widgetId="{{card.WidgetId.id}}" data-libid="{{card.WidgetId.libWidgetId}}"/>
+										<label for="show_{{card.WidgetId.libWidgetId}}" onclick="change('show_{{card.WidgetId.libWidgetId}}')">
+											{{card.WidgetId.libWidgetId  | slice(0, 5)}}
+										</label>
+
+										<input id="off_{{card.WidgetId.libWidgetId}}" name="{{card.WidgetId.libWidgetId}}" class="off" type="radio" checked="{{card.WidgetVisible == 0 ? "checked" : ""}}" data-wid="{{card.id}}" data-widgetId="{{card.WidgetId.id}}" data-libid="{{card.WidgetId.libWidgetId}}"/>
+										<label for="off_{{card.WidgetId.libWidgetId}}" class="disabled" onclick="change('off_{{card.WidgetId.libWidgetId}}')">
+											OFF
+										</label>
+
+										<input id="show_{{card.WidgetId.libWidgetId2}}" name="{{card.WidgetId.libWidgetId}}" type="radio" checked="{{card.WidgetVisible == 2 ? "checked" : ""}}" data-wid="{{card.id}}" data-widgetId="{{card.WidgetId.id}}" data-libid="{{card.WidgetId.libWidgetId2}}"/>
+										<label for="show_{{card.WidgetId.libWidgetId2}}" onclick="change('show_{{card.WidgetId.libWidgetId2}}')">
+											{{card.WidgetId.libWidgetId2  | slice(0, 5)}}
+										</label>
+									</div>
+								</div>
+								<div class="right">
+									<div class="barre"></div>
+									<div class="details">
+										<span>
+											Widgets
+										</span>
+										<span>
+											{{card.widgetName | slice(0, 13) }}
+										</span>
+									</div>
+								</div>
+							</a>
+						</div>
+					{% endblock %}
+				{% else %}
+					{# Switch à 2 etats #}
+					{% block card_widget_next %}
+						<div class="card_rightbar">
+							<a href="#" class="content">
+								<div class="left">
+									<div class="switch-toggle switch-3 switch-candy">
+										<input id="show_{{card.WidgetId.libWidgetId}}" name="{{card.WidgetId.libWidgetId}}" type="radio" {{card.WidgetVisible == 1 ? "checked='checked'" : ""}} data-wid="{{card.id}}" data-widgetId="{{card.WidgetId.id}}" data-libid="{{card.WidgetId.libWidgetId}}"/>
+										<label for="show_{{card.WidgetId.libWidgetId}}" onclick="change('show_{{card.WidgetId.libWidgetId}}')">
+											ON
+										</label>
+
+										<input id="off_{{card.WidgetId.libWidgetId}}" class="off" name="{{card.WidgetId.libWidgetId}}" type="radio" {{card.WidgetVisible == 0 ? "checked='checked'" : ""}} data-wid="{{card.id}}" data-widgetId="{{card.WidgetId.id}}" data-libid="{{card.WidgetId.libWidgetId}}" />
+										<label for="off_{{card.WidgetId.libWidgetId}}" class="disabled" onclick="change('off_{{card.WidgetId.libWidgetId}}')">
+											OFF
+										</label>
+									</div>
+								</div>
+								<div class="right">
+									<div class="barre"></div>
+									<div class="details">
+										<span>
+											Widgets
+										</span>
+										<span>
+											{{card.widgetName}}
+										</span>
+									</div>
+								</div>
+							</a>
+						</div>
+					{% endblock %}
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+</aside>

@@ -1,0 +1,30 @@
+$font: 'Alumni Sans';
+$blue: #144478;
+$yellow: #EBBE1A;
+
+#cameras_alpha, #cameras_beta {
+ .container_cam {
+    iframe {
+      width: 200px;
+      height: 200px;
+    }
+   .left {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+   }
+   .center {
+    position: absolute;
+    bottom: 0;
+    left: 42%;
+   }
+   .right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+   }
+ }
+}

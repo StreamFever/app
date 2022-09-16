@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des équipes
+{% endblock %}
+
+{% block body %}
+	<h1>Liste des équipes</h1>
+
+	<table id="teamList" class="table">
+		<thead>
+			<tr>
+				{% if is_granted('ROLE_ADMIN') %}
+					<th>Id</th>
+				{% endif %}
+				<th>Nom</th>
+				<th>Logo</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for team in teams %}
+				<tr>
+					{% if is_granted('ROLE_ADMIN') %}
+						<td>{{ team.id }}</td>
+					{% endif %}
+					<td>{{ team.teamName }}</td>
+					<td>
+						<a href="{{ team.teamLogo }}" target="_blank"><img style="width: 40%" src="{{ asset('uploads/logos/' ~ team.teamLogo) }}" alt="Logo de {{ team.teamName }}"></a>
+					</td>
+					<td>
+						<a class="btn btn-info" href="{{ path('app_team_show', {'id': team.id}) }}">
+							<span class="iconify" data-icon="carbon:view-filled"></span>Détails</a>
+						<a class="btn btn-warning" href="{{ path('app_team_edit', {'id': team.id}) }}">
+							<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">Aucune équipe n'a été trouvée</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a class="btn btn-info" href="{{ path('app_team_new') }}">
+		<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>
+		Créer une nouvelle équipe</a>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% set bottombarMarquee = [] %}
+{% for meta in metas %}
+	{% if meta.metaKey == 'bottombar_marquee_1' %}
+		{% set bottombarMarquee = bottombarMarquee|merge([meta]) %}
+	{% endif %}
+	{% if meta.metaKey == 'bottombar_marquee_2' %}
+		{% set bottombarMarquee = bottombarMarquee|merge([meta]) %}
+	{% endif %}
+	{% if meta.metaKey == 'bottombar_marquee_3' %}
+		{% set bottombarMarquee = bottombarMarquee|merge([meta]) %}
+	{% endif %}
+	{% if meta.metaKey == 'bottombar_marquee_4' %}
+		{% set bottombarMarquee = bottombarMarquee|merge([meta]) %}
+	{% endif %}
+{% endfor %}
+<section id="bottombar" class="{{widget.WidgetVisible == 2 ? "" : "display_none"}}">
+	{% if event is defined %}
+		<div class="logo">
+			<img src="{{ 'http' in event.eventLogo ? event.eventLogo : asset('uploads/logos/' ~ event.eventLogo) }}" alt="Logo de l'event">
+		</div>
+	{% else %}
+		<div class="logo">
+			<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" alt="Logo de l'event">
+		</div>
+	{% endif %}
+	<div class="title">
+		PRE-SHOW
+	</div>
+	<div class="details">
+		<div class="top">
+			<span class="event">
+				{% if event is defined %}
+					{{event.eventName}}
+				{% else %}
+					Bienvenue sur StreamCave !
+				{% endif %}
+			</span>
+		</div>
+		<div class="bottom">
+			<marquee direction="left" id="bottombarMarquee">
+				{% for dataMarquee in bottombarMarquee %}
+					{% if dataMarquee.MetaValue is not empty %}
+						<span id="{{dataMarquee.MetaKey}}">
+							{{dataMarquee.MetaValue}}
+						</span>
+					{% endif %}
+				{% endfor %}
+			</marquee>
+		</div>
+	</div>
+	<div class="sponsors">
+		<div id="slider">
+			<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+				<div class="carousel-inner">
+					{% if event is defined %}
+						<div class="carousel-item active" id="img_slider">
+							<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" class="d-block w-100" alt="Logo de StreamCave">
+						</div>
+					{% endif %}
+					{% if event is defined %}
+						{% for sponsor in event.eventIdSponsor %}
+							<div class="carousel-item" id="img_slider">
+								<img src="{{ asset('uploads/banners/' ~ sponsor.sponsorBanner) }}" class="d-block w-100" alt="Logo de {{sponsor.sponsorName}}">
+							</div>
+						{% endfor %}
+						{% for social in event.socials %}
+							<div class="carousel-item">
+								<span id="text_slider" class="text_slider">
+									<span class="iconify" data-icon="{{social.socialLib.libSocialLogo}}"></span>
+									{{social.socialTag}}
+								</span>
+							</div>
+						{% endfor %}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,83 @@
+{{ form_start(form) }}
+
+{% if form_errors(form) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form) }}
+	</div>
+{% endif %}
+
+
+<div class="input-grp-center">
+	<h3>
+		Définissez un nom pour votre overlay
+	</h3>
+	<p>
+		Afin de retrouver votre overlay parmis ceux que vous possédez, il est nécessaire que vous lui donniez un nom.
+	</p>
+	<div class="col">
+		<div class="form-floating mb-3">
+			{{ form_widget(form.OverlayName, {
+        'attr': {'class': 'form-control'},
+        'id': "OverlayName",
+        }) }}
+			{{ form_label(form.OverlayName, null, {
+    'label': 'Définissez le nom de votre overlay',
+    'id': 'OverlayName'
+        }) }}
+		</div>
+	</div>
+</div>
+
+
+<div class="input-grp">
+	<h3>
+		Qui peut le gérer ?
+	</h3>
+	<p>
+		Définissez qui peut gérer votre overlay dans son espace.
+	</p>
+	{{ form_label(form.OverlayAccess, null, {
+    'label': 'Merci de définir qui peut avoir accès à votre overlay',
+    'label_attr': {'class': 'form-label select-label'},
+    }) }}
+	{{ form_widget(form.OverlayAccess, {
+        'attr': {
+            'class': 'selectpicker form-control',
+            'data-max-options': 5
+            },
+        }) }}
+</div>
+
+<div class="input-grp">
+	<h3>
+		Lier un événement ?
+	</h3>
+	<p>
+		Si vous souhaitez dors et déjà lier un événement crée à votre overlay, vous pouvez !
+	</p>
+	<div class="form-floating mb-3">
+		{{ form_widget(form.currentEvent, {
+        'attr': {'class': 'form-select'},
+        'id': "currentEvent",
+        }) }}
+		{{ form_label(form.currentEvent, null, {
+    'label': 'Sélectionnez un événement',
+    'id': 'currentEvent'
+        }) }}
+	</div>
+</div>
+
+{{ form_label(form.OverlayOwner, null, {
+    'label_attr': {'class': 'display_none'},
+    }) }}
+{{ form_widget(form.OverlayOwner, {
+        'attr': {
+            'class': 'display_none',
+            },
+        }) }}
+
+
+<button class="btn btn-success">
+	<span class="iconify" data-icon="fluent:save-arrow-right-20-filled"></span>
+	{{ button_label|default('Créer l\'overlay') }}</button>
+{{ form_end(form) }}

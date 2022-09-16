@@ -1,0 +1,27 @@
+<section id="versus">
+	<div id="versuscontainer" class="{{widget.WidgetVisible ? "container_versus" : "display_none"}}">
+		{# <div id="top_versus" class="display_none"></div> #}
+		<h3 id="leftversus" class="display_none">
+					{{event.currentGame is defined and event.currentGame is not null ? event.currentGame.gameIdTeamAlpha|slice(0,2)|replace({' ': ''}) : "TBD" }}
+		</h3>
+		<div id="centerversus" class="display_none">
+			<div class="logo_event">
+				{% if event is defined %}
+					<img src="{{ 'http' in event.eventLogo ? event.eventLogo : asset('uploads/logos/' ~ event.eventLogo) }}" alt="Logo de l'événement">
+				{% else %}
+					<img src="https://cdn.artaic.fr/stream_cave/img/logo_streamcave.svg" alt="Logo de l'événement">
+				{% endif %}
+			</div>
+			<span class="title_event">
+				LouvardGame 2022
+			</span>
+			<span class="phase_event">
+				Semi-final
+			</span>
+		</div>
+		<h3 id="rightversus" class="display_none">
+					{{event.currentGame is defined and event.currentGame is not null ? event.currentGame.gameIdTeamBeta|slice(0,2)|replace({' ': ''}) : "TBD"  }}
+		</h3>
+	</div>
+	<div id="video_versus" data-id="auto_off_{{widget.WidgetId.libWidgetId}}" data-map="{{event is defined ? event.currentGame.currentMap : ''}}" data-wid="{{widget.id}}" data-widgetid="{{widget.WidgetId.id}}" data-libid="{{widget.WidgetId.libWidgetId}}" data-idoverlay="{{overlay.id}}"></div>
+</section>

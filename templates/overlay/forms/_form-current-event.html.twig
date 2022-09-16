@@ -1,0 +1,38 @@
+{{ form_start(form_current_event) }}
+
+{% if form_errors(form_current_event) %}
+	<div class="alert alert-danger" role="alert">
+		{{ form_errors(form_current_event) }}
+	</div>
+{% endif %}
+
+{# INFO: Seul input actif #}
+<div class="form-floating mb-3">
+	{{ form_widget(form_current_event.currentEvent, {
+    'attr': {'class': 'form-select' , 'oninput': 'updateCurrentEvent(this.id)'},
+    'id': "currentEvent",
+    }) }}
+	{{ form_label(form_current_event.currentEvent, null, {
+    'label': 'Sélectionnez un événement',
+    'id': 'currentEvent'
+    }) }}
+</div>
+
+{{ form_widget(form_current_event.OverlayOwner, {
+        'attr': {
+            'class': 'display_none',
+            },
+        }) }}
+{{ form_widget(form_current_event.OverlayName, {
+        'attr': {'class': 'display_none'},
+        'id': "OverlayName",
+        }) }}
+{{ form_widget(form_current_event.OverlayAccess, {
+'attr': {
+    'class': 'display_none',
+    'data-max-options': 5
+    },
+}) }}
+
+
+{{ form_end(form_current_event) }}

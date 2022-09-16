@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des joueurs
+{% endblock %}
+
+{% block body %}
+	<h1>Liste des joueurs</h1>
+
+	<table id="playerList" class="display">
+		<thead>
+			<tr>
+				{% if is_granted('ROLE_ADMIN') %}
+					<th>Id</th>
+				{% endif %}
+				<th>ID OBS</th>
+				<th>Nom</th>
+				<th>Avatar</th>
+				<th>Uplay</th>
+				<th>Twitter</th>
+				<th>Discord</th>
+				<th>Twitch</th>
+				<th>Etudiant ?</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+	</tr>
+</thead>
+<tbody>
+	{% for player in players %}
+		<tr>
+			{% if is_granted('ROLE_ADMIN') %}
+				<td>{{ player.id }}</td>
+			{% endif %}
+			<td>
+				{% if player.playerIdOBSNinja is defined %}
+					{{player.playerIdOBSNinja}}
+				{% endif %}
+			</td>
+			<td>{{ player.playerName }}</td>
+			<td>
+				<a href="{{ player.playerAvatar }}" target="_blank"><img style="width: 40%" src="{{ asset('uploads/avatars/' ~ player.playerAvatar) }}" alt="Logo de {{ player.playerName }}"></a>
+			</td>
+			<td>{{ player.playerUplay }}</td>
+			<td>{{ player.playerAtTwitter }}</td>
+			<td>{{ player.playerDiscord }}</td>
+			<td>{{ player.playerTwitch }}</td>
+			<td>{{ player.playerStudentSA ? '<span class="iconify" color="green" data-icon="akar-icons:circle-check-fill"></span>' : '<span class="iconify" color="red" data-icon="akar-icons:circle-x-fill"></span>' }}</td>
+			<td>
+				<a class="btn btn-info" href="{{ path('app_player_show', {'id': player.id}) }}">
+					<span class="iconify" data-icon="carbon:view-filled"></span>Détails</a>
+				<a class="btn btn-warning" href="{{ path('app_player_edit', {'id': player.id}) }}">
+					<span class="iconify" data-icon="bxs:edit"></span>Editer</a>
+			</td>
+		</tr>
+	{% else %}
+		<tr>
+			<td colspan="9">Aucun joueur n'a été trouvé</td>
+		</tr>
+	{% endfor %}
+</tbody></table><a class="btn btn-info" href="{{ path('app_player_new') }}">
+<span class="iconify" data-icon="akar-icons:circle-plus-fill"></span>
+Créer un nouveau joueur</a>{% endblock %}

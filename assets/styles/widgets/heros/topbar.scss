@@ -1,0 +1,117 @@
+$font: 'Alumni Sans';
+$blue: #144478;
+$yellow: #EBBE1A;
+$black_1 : #202225;
+$black_2 : rgba(0, 0, 0, 0.58);
+$black_3 : #171821;
+$white : #FFFFFF;
+$grey_1 : #DFDFDF;
+$grey_2: rgba(191, 190, 190, 0.199);
+$grey_3: rgba(155, 153, 153, 0.199);
+
+#topbar_heros {
+ background: url('https://cdn.artaic.fr/images/overlay/sa/topbar_heros.png');
+ background-repeat: no-repeat;
+ display: grid;
+ grid-template-columns: 817px 266px 590px 215px;
+ grid-template-rows: 52px;
+ column-gap: 10px;
+
+ .text {
+  grid-columns: 1/2;
+  padding: 0 2rem;
+  display: flex;
+  flex-flow: column nowrap;
+
+  .top {
+   color: $yellow;
+   font-weight: 600;
+   text-transform: uppercase;
+  }
+  .bottom {
+   color: white;
+   font-weight: 600;
+   text-transform: uppercase;
+  }
+ }
+
+ .versus {
+  grid-columns: 2/3;
+  .contain {
+   display: flex;
+   flex-flow: row nowrap;
+   align-items: center;
+   justify-content: space-evenly;
+
+   .score_a, .score_b {
+    color: white;
+    font-size: 2rem;
+    font-weight: 600;
+   }
+
+   .logo {
+    width: 19%;
+    img {
+     width: 100%;
+    }
+   }
+  }
+ }
+
+ .map {
+  grid-columns: 3/4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+   font-size: 1.5rem;
+   font-weight: 600;
+   color: white;
+   text-transform: uppercase;
+
+   &.yellow {
+    color: $yellow;
+   }
+  }
+ }
+
+ #slider {
+  grid-columns: 4/5;
+  padding: .5rem;
+  margin-left: 80px;
+  grid-column: 10/11;
+  max-width: 230px;
+  min-width: 230px;
+  width: 100%;
+ }
+
+ #img_slider {
+  margin-left: 20px;
+  width: 80%;
+ }
+
+ #text_slider {
+  margin-top: -.1rem;
+  padding: 0;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: $yellow;
+
+  i {
+   margin-right: .6rem;
+   margin-top: -.4rem;
+   color: white;
+  }
+ }
+
+}
+
+
+.display_none {
+ display: none;
+}
