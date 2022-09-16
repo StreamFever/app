@@ -26,7 +26,7 @@ use App\Repository\WidgetsRepository;
 use App\Repository\MetaRepository;
 use App\Repository\LibWidgetsRepository;
 use App\Repository\PlayerRepository;
-
+use App\Repository\TweetRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -348,14 +348,18 @@ class OverlayController extends AbstractController
     /**
      * @Route("overlay/{id}/browsersource", name="app_overlay_show_browsersource", methods={"GET"})
      */
-    public function showBrowsersource(WidgetsRepository $widgetsRepository, MetaRepository $MetaRepository, OverlayRepository $overlayRepository, GameRepository $gamesRepository, EventRepository $eventsRepository, int $id): Response
+    public function showBrowsersource(WidgetsRepository $widgetsRepository, MetaRepository $MetaRepository, OverlayRepository $overlayRepository, GameRepository $gamesRepository, EventRepository $eventsRepository, TweetRepository $tweetRepository, int $id): Response
     {
 
-        //TODO: Remplacer les findAll() par findAllByUserId()
+        $idTweet = $MetaRepository->findTweetId($id)[0]->getMetaValue();
+        $tweet = $tweetRepository->find($idTweet);
+        // dd($tweet);
+        
         return $this->render('overlay/browsersource.html.twig', [
             'overlay' => $overlayRepository->find($id),
             'widgets' => $widgetsRepository->findAllByOverlay($id),
             'metas' => $MetaRepository->findAllByOverlay($id),
+            'tweet' => $tweet,
             'controller_name' => "Browsersource"
         ]);
     }
