@@ -8,20 +8,20 @@ import { notification } from './lib/notification';
 let dataArray = [];
 var table = "";
 
-async function thenFindAllOverlays() {
-    try {
-        const res = await findAllOverlays().then((response) => {
-            dataArray = response.data;
-        });
-    } catch (error) {
-        console.log(error);
-    }
-};
+// async function thenFindAllOverlays() {
+//     try {
+//         const res = await findAllOverlays().then((response) => {
+//             dataArray = response.data;
+//         });
+//     } catch (error) {
+//         console.log(error);
+//     }
+// };
 
 function changeAuto(id) {
     socket.timeout(5000).emit(document.getElementById(id).dataset.id, ([document.getElementById(id).dataset.wid, document.getElementById(id).dataset.widgetid, document.getElementById(id).dataset.libid, document.getElementById(id).dataset.idoverlay]), () => { console.log("Hello") }, (err) => {
         if (err) {
-            notification.call(this, "Le changement n'a pas était effectué", "error", "Error lors de la mise à jour");
+            notification.call(this, "Le changement n'a pas était effectué", "error", "Erreur lors de la mise à jour");
         } else {
             notification.call(this, "Le changement à bien était pris en compte.", "success", "Widget mis à jour");
         }
@@ -38,8 +38,14 @@ function twitter_delete(id) {
 window.twitter_delete = twitter_delete;
 
 function twitter_select(id) {
-    socket.emit("twitter_selecttweet", id);
-    successToastSelectTweet();
+    socket.timeout(5000).emit("twitter_selecttweet", id, () => { console.log("Hello") }, (err) => {
+        if (err) {
+            notification.call(this, "Le tweet n'a pas était sélectionné.", "error", "Erreur lors de la sélection");
+        } else {
+            notification.call(this, "Le tweet a bien était sélectionné.", "success", "Tweet sélectionné");
+        }
+    }
+    );
 }
 
 window.twitter_select = twitter_select;
@@ -350,20 +356,21 @@ function refreshBrowsersource() {
 window.refreshBrowsersource = refreshBrowsersource;
 
 
-async function waitApiTraitement() {
-    const arr = await thenFindAllOverlays()
+// async function waitApiTraitement() {
+//     // const arr = await thenFindAllOverlays()
+//     const arr;
 
-    async function controlWidget() {
-        let list = [];
-        await getCheckedValueIntoRadio(dataArray, list);
-        await document.addEventListener('change', () => {
-            getCheckedValueIntoRadio(dataArray, list);
-        })
-    }
+//     async function controlWidget() {
+//         let list = [];
+//         await getCheckedValueIntoRadio(dataArray, list);
+//         await document.addEventListener('change', () => {
+//             getCheckedValueIntoRadio(dataArray, list);
+//         })
+//     }
 
-}
+// }
 
-waitApiTraitement();
+// waitApiTraitement();
 
 //ecoute events WS
 socket.onAny((event, data) => {
@@ -377,14 +384,14 @@ socket.onAny((event, data) => {
             var tweets = ""
             data.forEach(element => {
                 console.log(element.id)
-                if (element.media_type == "undefined") {
-                    tweets = tweets + '<tr><td><div style="width: 80%"><img style="width: 100%;" src="' + element.avatar_url + '" alt="Avatar"></div></td><td>' + element.pseudo + '</td><td><a href="https://twitter.com/' + element.affichage + '" target="blank">@' + element.affichage + '</a></td><td><p>' + element.texte + '</p></td><td></td><td><i style="cursor: pointer" class="mdi mdi-delete-forever" onclick="twitter_delete(' + element.id + ')"></i><i style="cursor: pointer" class="mdi mdi-arrow-right" onclick="twitter_select(' + element.id + ')" data-dismiss="modal"></i></td></tr>'
-                } else if (element.media_type == "photo") {
-                    tweets = tweets + '<tr><td><div style="width: 80%"><img style="width: 100%;" src="' + element.avatar_url + '" alt="Avatar"></div></td><td>' + element.pseudo + '</td><td><a href="https://twitter.com/' + element.affichage + '" target="blank">@' + element.affichage + '</a></td><td><p>' + element.texte + '</p></td><td><div style="width: 100%"><img style="width: 100%;" src="' + element.madia_url + '" alt="Media du Tweet"></div></td><td><i style="cursor: pointer" class="mdi mdi-delete-forever" onclick="twitter_delete(' + element.id + ')"></i><i style="cursor: pointer" class="mdi mdi-arrow-right" onclick="twitter_select(' + element.id + ')" data-dismiss="modal"></i></td></tr>'
-                } else if (element.media_type == "video") {
-                    tweets = tweets + '<tr><td><div style="width: 80%"><img style="width: 100%;" src="' + element.avatar_url + '" alt="Avatar"></div></td><td>' + element.pseudo + '</td><td><a href="https://twitter.com/' + element.affichage + '" target="blank">@' + element.affichage + '</a></td><td><p>' + element.texte + '</p></td><td><div style="width: 100%"><video width="300px" loop autoplay muted><source src="' + element.madia_url + '" type="video/mp4"></video></div></td><td><i style="cursor: pointer" class="mdi mdi-delete-forever" onclick="twitter_delete(' + element.id + ')"></i><i style="cursor: pointer" class="mdi mdi-arrow-right" onclick="twitter_select(' + element.id + ')" data-dismiss="modal"></i></td></tr>'
-                } else if (element.media_type == "animated_gif") {
-                    tweets = tweets + '<tr><td><div style="width: 80%"><img style="width: 100%;" src="' + element.avatar_url + '" alt="Avatar"></div></td><td>' + element.pseudo + '</td><td><a href="https://twitter.com/' + element.affichage + '" target="blank">@' + element.affichage + '</a></td><td><p>' + element.texte + '</p></td><td><div style="width: 100%"><video width="300px" loop autoplay muted><source src="' + element.madia_url + '" type="video/mp4"></video></div></td><td><i style="cursor: pointer" class="mdi mdi-delete-forever" onclick="twitter_delete(' + element.id + ')"></i><i style="cursor: pointer" class="mdi mdi-arrow-right" onclick="twitter_select(' + element.id + ')" data-dismiss="modal"></i></td></tr>'
+                if (element.tweet_media_type == "undefined") {
+                    tweets = tweets + '<tr><td><div style="width: 80%"><img style="width: 100%;" src="' + element.tweet_avatar + '" alt="Avatar"></div></td><td>' + element.tweet_pseudo + '</td><td><a href="https://twitter.com/' + element.tweet_at + '" target="blank">@' + element.tweet_at + '</a></td><td><p>' + element.tweet_content + '</p></td><td></td><td><span class="iconify" data-icon="ant-design:delete-filled" onclick="twitter_delete(' + element.id + ')" ></span><span class="iconify" data-icon="ep:select" onclick="twitter_select(' + element.id + ')" data-dismiss="modal"></span></td></tr>'
+                } else if (element.tweet_media_type == "photo") {
+                    tweets = tweets + '<tr><td><div style="width: 80%"><img style="width: 100%;" src="' + element.tweet_avatar + '" alt="Avatar"></div></td><td>' + element.tweet_pseudo + '</td><td><a href="https://twitter.com/' + element.tweet_at + '" target="blank">@' + element.tweet_at + '</a></td><td><p>' + element.tweet_content + '</p></td><td><div style="width: 100%"><img style="width: 100%;" src="' + element.tweet_media_url + '" alt="Media du Tweet"></div></td><td><span class="iconify" data-icon="ant-design:delete-filled" onclick="twitter_delete(' + element.id + ')" ></span><span class="iconify" data-icon="ep:select" onclick="twitter_select(' + element.id + ')" data-dismiss="modal"></span></td></tr>'
+                } else if (element.tweet_media_type == "video") {
+                    tweets = tweets + '<tr><td><div style="width: 80%"><img style="width: 100%;" src="' + element.tweet_avatar + '" alt="Avatar"></div></td><td>' + element.tweet_pseudo + '</td><td><a href="https://twitter.com/' + element.tweet_at + '" target="blank">@' + element.tweet_at + '</a></td><td><p>' + element.tweet_content + '</p></td><td><div style="width: 100%"><video width="300px" loop autoplay muted><source src="' + element.tweet_media_url + '" type="video/mp4"></video></div></td><td><span class="iconify" data-icon="ant-design:delete-filled" onclick="twitter_delete(' + element.id + ')" ></span><span class="iconify" data-icon="ep:select" onclick="twitter_select(' + element.id + ')" data-dismiss="modal"></span></td></tr>'
+                } else if (element.tweet_media_type == "animated_gif") {
+                    tweets = tweets + '<tr><td><div style="width: 80%"><img style="width: 100%;" src="' + element.tweet_avatar + '" alt="Avatar"></div></td><td>' + element.tweet_pseudo + '</td><td><a href="https://twitter.com/' + element.tweet_at + '" target="blank">@' + element.tweet_at + '</a></td><td><p>' + element.tweet_content + '</p></td><td><div style="width: 100%"><video width="300px" loop autoplay muted><source src="' + element.tweet_media_url + '" type="video/mp4"></video></div></td><td><span class="iconify" data-icon="ant-design:delete-filled" onclick="twitter_delete(' + element.id + ')" ></span><span class="iconify" data-icon="ep:select" onclick="twitter_select(' + element.id + ')" data-dismiss="modal"></span></td></tr>'
                 }
             });
 
@@ -441,9 +448,14 @@ socket.onAny((event, data) => {
             window.showNext.call()
             // }
         } else if (event == 'show_tweets') {
-            // window.showTweetSample.call()
-            // window.showTweetImg.call()
-            // window.showTweetVideo.call()
+            console.log(data)
+            if (data == 'undefined') {
+                window.showTweetSample.call()
+            } else if (data == 'photo') {
+                window.showTweetImg.call()
+            } else if (data == 'video' || data == 'animated_gif') {
+                window.showTweetVideo.call()
+            }
         } else if (event == 'show_cameras_alpha') {
             console.log('Affichage des CAMERAS ALPHA');
             if (document.getElementById('cameras_alpha').classList.contains('display_none')) {
@@ -489,9 +501,14 @@ socket.onAny((event, data) => {
             window.offNext.call()
             // }
         } else if (event == "off_tweets") {
-            // window.offTweetSampleText.call()
-            // window.offTweetImg.call()
-            // window.offTweetVideo.call()
+            console.log(data)
+            if (data == 'undefined') {
+                window.offTweetSampleText.call()
+            } else if (data == 'photo') {
+                window.offTweetImg.call()
+            } else if (data == 'video' || data == 'animated_gif') {
+                window.offTweetVideo.call()
+            }
         } else if (event == 'off_cameras_alpha') {
             console.log('Cacher les CAMERAS ALPHA');
             if (!document.getElementById('cameras_alpha').classList.contains('display_none')) {
@@ -502,9 +519,9 @@ socket.onAny((event, data) => {
             if (!document.getElementById('cameras_beta').classList.contains('display_none')) {
                 window.offCamsTeamBeta.call()
             }
-        } else if ('off_results') {
+        } else if (event == 'off_results') {
             console.log('Cacher results');
-            window.offResults.call();
+            // window.offResults.call();
         }
 
         if (event == "update_topbar_title_MetaValue") {
@@ -543,34 +560,26 @@ socket.onAny((event, data) => {
         } else if (event == 'update_game_score_beta') {
             $("#score_team_beta").load(window.location.href + " #score_team_beta");
         } else if (event == 'tweet_selected') {
-            if (data[3] == 'undefined') {
-                document.getElementById('tweet_sample_text').classList.remove('display_none')
-                document.getElementById('tweet_img').classList.add('display_none')
-                document.getElementById('tweet_video').classList.add('display_none')
-                document.getElementById('text_avatar').src = data[2]
-                document.getElementById('text_pseudo').innerHTML = data[0]
-                document.getElementById('text_display').innerHTML = '@' + data[1]
-                document.getElementById('text_texte').innerHTML = data[5]
-            } else if (data[3] == 'photo') {
-                document.getElementById('tweet_img').classList.remove('display_none')
-                document.getElementById('tweet_sample_text').classList.add('display_none')
-                document.getElementById('tweet_video').classList.add('display_none')
-                document.getElementById('img_avatar').src = data[2]
-                document.getElementById('img_pseudo').innerHTML = data[0]
-                document.getElementById('img_display').innerHTML = '@' + data[1]
-                document.getElementById('img_texte').innerHTML = data[5]
-                document.getElementById('img_image').src = data[4]
-            } else if (data[3] == 'video' || data[3] == 'animated_gif') {
-                document.getElementById('tweet_video').classList.remove('display_none')
-                document.getElementById('tweet_img').classList.add('display_none')
-                document.getElementById('tweet_sample_text').classList.add('display_none')
-                document.getElementById('video_avatar').src = data[2]
-                document.getElementById('video_pseudo').innerHTML = data[0]
-                document.getElementById('video_display').innerHTML = '@' + data[1]
-                document.getElementById('video_texte').innerHTML = data[5]
+            console.log(data)
+            if (data.tweet_media_type == 'undefined') {
+                document.getElementById('text_avatar').src = data.tweet_avatar
+                document.getElementById('text_pseudo').innerHTML = data.tweet_pseudo
+                document.getElementById('text_display').innerHTML = '@' + data.tweet_at
+                document.getElementById('text_texte').innerHTML = data.tweet_content
+            } else if (data.tweet_media_type == 'photo') {
+                document.getElementById('img_avatar').src = data.tweet_avatar
+                document.getElementById('img_pseudo').innerHTML = data.tweet_pseudo
+                document.getElementById('img_display').innerHTML = '@' + data.tweet_at
+                document.getElementById('img_texte').innerHTML = data.tweet_content
+                document.getElementById('img_image').src = data.tweet_media_url
+            } else if (data.tweet_media_type == 'video' || data.tweet_media_type == 'animated_gif') {
+                document.getElementById('video_avatar').src = data.tweet_avatar
+                document.getElementById('video_pseudo').innerHTML = data.tweet_pseudo
+                document.getElementById('video_display').innerHTML = '@' + data.tweet_at
+                document.getElementById('video_texte').innerHTML = data.tweet_content
                 var video = document.getElementById('video_video')
                 var source = document.getElementById('video_src')
-                source.setAttribute('src', data[4])
+                source.setAttribute('src', data.tweet_media_url)
                 video.load().then(video.play())
             }
         }
