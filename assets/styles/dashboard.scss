@@ -702,6 +702,10 @@ table {
 .modal-body {
   max-width: 1200px;
   width: 100%;
+
+  p {
+    max-width: 400px;
+  }
 }
 
 #data_tweets {
