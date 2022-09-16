@@ -61,6 +61,18 @@ class MetaRepository extends ServiceEntityRepository
        
     }
 
+    public function findTweetId($idOverlay)
+    {
+        return $this->createQueryBuilder('m')
+            ->join('m.Widgets', 'w')
+            ->join('w.overlay', 'o')
+            ->where('m.MetaKey = :meta_key AND o.id = :id_overlay')
+            ->setParameter('id_overlay', $idOverlay)
+            ->setParameter('meta_key', 'tweet_id')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Meta[] Returns an array of Meta objects
     //  */
