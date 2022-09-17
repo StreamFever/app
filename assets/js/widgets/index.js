@@ -191,7 +191,7 @@ console.log(gamesDom);
 
 function gameApi() {
  gamesDom.innerHTML = '';
- fetch('https://v4.dev.symfony.artaic.fr/api/games.json').then((response) => {
+ fetch('https://app.streamcave.tv/api/games.json').then((response) => {
   return response.json();
  }).then(data => {
   console.log(data);
