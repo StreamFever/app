@@ -232,6 +232,11 @@ function gameApi() {
      spanMiddle.append(strong);
      spanMiddle.append(tiret);
      spanMiddle.append(score);
+
+     // INFO: Imbriquement des div
+     divGame.append(spanTeamA);
+     divGame.append(spanMiddle);
+     divGame.append(spanTeamB);
     } else if (game['gameScoreTeamBeta'] > game['gameScoreTeamAlpha']) {
      strong.innerText = game['gameScoreTeamBeta'];
      score.innerText = game['gameScoreTeamAlpha'];
@@ -239,14 +244,16 @@ function gameApi() {
      spanMiddle.append(strong);
      spanMiddle.append(tiret);
      spanMiddle.append(score);
+
+     // INFO: Imbriquement des div
+     divGame.append(spanTeamB);
+     divGame.append(spanMiddle);
+     divGame.append(spanTeamA);
     }
 
    }
 
-   // INFO: Imbriquement des div
-   divGame.append(spanTeamA);
-   divGame.append(spanMiddle);
-   divGame.append(spanTeamB);
+
 
    gamesDom.append(divGame);
    gamesDom.append(separator);
