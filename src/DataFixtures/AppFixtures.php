@@ -138,6 +138,9 @@ class AppFixtures extends Fixture
     {
         $this->setBrietgame($manager);
         $this->setArtaic($manager);
+        $this->setAcoui($manager);
+        $this->setExcel($manager)
+        $this->setOlaf($manager);
         $this->setWeboscket($manager);
         $manager->flush();
     }
