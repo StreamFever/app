@@ -82,26 +82,26 @@
 						{% endif %}
 					</div>
 				</div>
-				<div class="carousel-item">
-					<div id="infos_event">
-						<h3 class="title">
-							{% if topbar_title is defined and topbar_title is not null %}
-								{{topbar_title[0].metaValue}}
-							{% else %}
-								Streamcave
-							{% endif %}
-						</h3>
-						<marquee direction="left" id="bottombarMarquee">
-							{% for dataMarquee in bottombarMarquee %}
-								{% if dataMarquee.MetaValue is not empty %}
-									<span id="{{dataMarquee.MetaKey}}">
-										{{dataMarquee.MetaValue}}
-									</span>
-								{% endif %}
-							{% endfor %}
-						</marquee>
-					</div>
-				</div>
+				{# <div class="carousel-item">
+									<div id="infos_event">
+										<h3 class="title">
+											{% if topbar_title is defined and topbar_title is not null %}
+												{{topbar_title[0].metaValue}}
+											{% else %}
+												Streamcave
+											{% endif %}
+										</h3>
+										<marquee direction="left" id="bottombarMarquee">
+											{% for dataMarquee in bottombarMarquee %}
+												{% if dataMarquee.MetaValue is not empty %}
+													<span id="{{dataMarquee.MetaKey}}">
+														{{dataMarquee.MetaValue}}
+													</span>
+												{% endif %}
+											{% endfor %}
+										</marquee>
+									</div>
+								</div> #}
 			</div>
 		</div>
 	</div>
