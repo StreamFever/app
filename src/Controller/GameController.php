@@ -70,7 +70,7 @@ class GameController extends AbstractController
      */
     public function edit(Request $request, Game $game, GameRepository $gameRepository): Response
     {
-        $this->denyAccessUnlessGranted('GAME_EDIT', $game);
+        // $this->denyAccessUnlessGranted('GAME_EDIT', $game);
         $form = $this->createForm(GameType::class, $game);
         $form->handleRequest($request);
 
