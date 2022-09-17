@@ -218,6 +218,10 @@ function gameApi() {
     // INFO: <span class="iconify" data-icon="fluent-emoji-flat:vs-button">
     spanMiddle.classList.add('iconify');
     spanMiddle.setAttribute('data-icon', 'fluent-emoji-flat:vs-button');
+    // INFO: Imbriquement des div
+    divGame.append(spanTeamA);
+    divGame.append(spanMiddle);
+    divGame.append(spanTeamB);
    } else {
     spanMiddle.classList.add('score');
     let strong = document.createElement('strong');
