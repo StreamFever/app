@@ -81,7 +81,7 @@ class AppFixtures extends Fixture
         $password = $this->hasher->hashPassword($user, 'T6DNrXMEfPM4Ha7z');
         $user->setPassword($password);
 
-        $this->addReference('user_3', $user);
+        $this->addReference('user_4', $user);
 
         $manager->persist($user);
     }
@@ -97,7 +97,7 @@ class AppFixtures extends Fixture
         $password = $this->hasher->hashPassword($user, '5KMHA5DzX7kd5isR');
         $user->setPassword($password);
 
-        $this->addReference('user_3', $user);
+        $this->addReference('user_5', $user);
 
         $manager->persist($user);
     }
@@ -113,7 +113,7 @@ class AppFixtures extends Fixture
         $password = $this->hasher->hashPassword($user, '89coDHjdg9FsMEF6');
         $user->setPassword($password);
 
-        $this->addReference('user_3', $user);
+        $this->addReference('user_6', $user);
 
         $manager->persist($user);
     }
@@ -129,7 +129,7 @@ class AppFixtures extends Fixture
         $password = $this->hasher->hashPassword($user, 'aF5RrCdH7rJydHiE');
         $user->setPassword($password);
 
-        $this->addReference('user_3', $user);
+        $this->addReference('user_7', $user);
 
         $manager->persist($user);
     }
