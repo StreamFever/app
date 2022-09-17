@@ -104,7 +104,7 @@ class GameController extends AbstractController
      */
     public function delete(Request $request, Game $game, GameRepository $gameRepository): Response
     {
-        $this->denyAccessUnlessGranted('GAME_DELETE', $game);
+        // $this->denyAccessUnlessGranted('GAME_DELETE', $game);
         if ($this->isCsrfTokenValid('delete' . $game->getId(), $request->request->get('_token'))) {
             $gameRepository->remove($game);
         }
