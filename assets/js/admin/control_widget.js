@@ -521,7 +521,7 @@ socket.onAny((event, data) => {
             }
         } else if (event == 'off_results') {
             console.log('Cacher results');
-            // window.offResults.call();
+            window.offResults.call();
         }
 
         if (event == "update_topbar_title_MetaValue") {
