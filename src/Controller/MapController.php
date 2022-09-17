@@ -40,7 +40,8 @@ class MapController extends AbstractController
 
             $data = $form->getData();
             $teamName = $map->getMapBannedBy() != null ? $map->getMapBannedBy()->getTeamName() : $map->getMapPickedBy()->getTeamName();
-            $map->setMapNameData($map->getId() . ' | ' . $map->getMapLib()->getMapName() . ' - ' . $teamName);
+            // $map->setMapNameData($map->getId() . ' | ' . $map->getMapLib()->getMapName() . ' - ' . $teamName);
+            $map->setMapNameData($map->getMapLib()->getMapName());
             $mapRepository->add($map);
             $this->addFlash('success', 'La carte a bien été créée !');
             return $this->redirectToRoute('app_map_index', [], Response::HTTP_SEE_OTHER);
@@ -74,7 +75,8 @@ class MapController extends AbstractController
 
             $data = $form->getData();
             $teamName = $map->getMapBannedBy() != null ? $map->getMapBannedBy()->getTeamName() : $map->getMapPickedBy()->getTeamName();
-            $map->setMapNameData($map->getId() . ' | ' . $map->getMapLib()->getMapName() . ' - ' . $teamName);
+            // $map->setMapNameData($map->getId() . ' | ' . $map->getMapLib()->getMapName() . ' - ' . $teamName);
+            $map->setMapNameData($map->getMapLib()->getMapName());
             $mapRepository->add($map);
 
             $this->addFlash('success', 'La carte a bien été modifiée !');
