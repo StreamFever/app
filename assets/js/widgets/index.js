@@ -254,10 +254,8 @@ function gameApi() {
  })
 }
 
-if (document.getElementById('games')) {
- gameApi();
+gameApi();
 
- setInterval(() => {
-  gameApi();
- }, 120000);
-}
+setInterval(() => {
+ gameApi();
+}, 120000);
