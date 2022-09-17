@@ -38,10 +38,10 @@
 		<div class="details_match">
 			<h3
 				id="topbar-title" class="top">{# {% if topbar_title is defined and topbar_title is not null %}
-										{{topbar_title[0].metaValue}}
-									{% else %}
-										Streamcave
-									{% endif %} #}
+																																													{{topbar_title[0].metaValue}}
+																																												{% else %}
+																																													Streamcave
+																																												{% endif %} #}
 			</h3>
 			<span class="hashtag">
 				{% if event is defined %}
@@ -62,9 +62,15 @@
 		</div>
 		<div id="teams">
 			<div class="alpha">
-				<h3 class="team_alpha">
-					{{event.currentGame is defined and event.currentGame is not null ? event.currentGame.gameIdTeamAlpha|slice(0,2)|replace({' ': ''}) : "TBD" }}
-				</h3>
+				{% if event.currentGame.gameIdTeamAlpha.teamLogo is not null %}
+					<div class="logo_team">
+						<img style="width: 62%;max-width: 100px;max-height: 52px;" src="{{ asset('uploads/logos/' ~ event.currentGame.gameIdTeamAlpha.teamLogo) }}" alt="Logo de {{ event.currentGame.gameIdTeamAlpha.teamName }}">
+					</div>
+				{% else %}
+					<h3 class="team_alpha">
+						{{event.currentGame.gameIdTeamAlpha.teamName|slice(0,2)|replace({' ': ''})}}
+					</h3>
+				{% endif %}
 				<div id="score_team_alpha" class="score">
 					{% if event.currentGame is defined and event.currentGame is not null %}
 						{% if event.currentGame.gameFormat.formatName == 'BO1' %}
@@ -154,9 +160,15 @@
 						{% endif %}
 					{% endif %}
 				</div>
-				<h3 class="team_beta">
-					{{event.currentGame is defined and event.currentGame is not null ? event.currentGame.gameIdTeamBeta|slice(0,2)|replace({' ': ''}) : "TBD"  }}
-				</h3>
+				{% if event.currentGame.gameIdTeamBeta.teamLogo is not null %}
+					<div class="logo_team">
+						<img style="width: 62%;max-width: 100px;max-height: 52px;" src="{{ asset('uploads/logos/' ~ event.currentGame.gameIdTeamBeta.teamLogo) }}" alt="Logo de {{ event.currentGame.gameIdTeamBeta.teamName }}">
+					</div>
+				{% else %}
+					<h3 class="team_beta">
+						{{event.currentGame.gameIdTeamBeta|slice(0,2)|replace({' ': ''})}}
+					</h3>
+				{% endif %}
 			</div>
 		</div>
 		<div id="maps">
