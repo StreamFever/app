@@ -23,7 +23,7 @@ class GameController extends AbstractController
 
 
         return $this->render('game/index.html.twig', [
-            'games' => $gameRepository->findAllCreatedByUserId($this->getUser()->getId()),
+            'games' => $gameRepository->findAll(),
         ]);
     }
 
