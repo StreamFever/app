@@ -21,7 +21,7 @@ export const showVideoVersus = () => {
                     console.log(document.getElementById("video_element_versus"));
                     console.log(document.getElementById("audio_element_versus"));
                     versuscontainer.className = 'container_versus scale-in-center'
-                    top_versus.className = "top";
+                    // top_versus.className = "top";
                     leftversus.className = "left";
                     centerversus.className = "center";
                     rightversus.className = "right";
