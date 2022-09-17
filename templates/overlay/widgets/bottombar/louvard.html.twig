@@ -85,7 +85,11 @@
 				<div class="carousel-item">
 					<div id="infos_event">
 						<h3 class="title">
-							Semi-final - LouvardGame 2022
+							{% if topbar_title is defined and topbar_title is not null %}
+								{{topbar_title[0].metaValue}}
+							{% else %}
+								Streamcave
+							{% endif %}
 						</h3>
 						<marquee direction="left" id="bottombarMarquee">
 							{% for dataMarquee in bottombarMarquee %}
