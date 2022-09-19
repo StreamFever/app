@@ -1,6 +1,6 @@
-# Salty Academy Production
+# StreamCave
 
-La Salty Academy Production est une production audiovisuelle géré par l'équipe du pôle événementiel du campus de la Salty Academy.
+Une application qui permet à quiconque de controller une production audiovisuelle autour d'un événement à distance depuis n'importe quelle appareil.
 
 
 # Collaborateurs :
