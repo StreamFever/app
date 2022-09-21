@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220910212536 extends AbstractMigration
+final class Version20220921174649 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -34,7 +34,7 @@ final class Version20220910212536 extends AbstractMigration
         $this->addSql('CREATE TABLE lib_socials (id INT AUTO_INCREMENT NOT NULL, lib_social_name VARCHAR(255) NOT NULL, lib_social_logo LONGTEXT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE lib_widgets (id INT AUTO_INCREMENT NOT NULL, lib_widget_name VARCHAR(255) NOT NULL, lib_widget_id VARCHAR(255) NOT NULL, lib_widget_id2 VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE logs (id INT AUTO_INCREMENT NOT NULL, logs_user_id INT NOT NULL, logs_timestamp DATETIME NOT NULL, logs_level VARCHAR(255) NOT NULL, logs_text LONGTEXT NOT NULL, logs_overlay VARCHAR(255) NOT NULL, INDEX IDX_F08FC65CD9B08880 (logs_user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE map (id INT AUTO_INCREMENT NOT NULL, map_lib_id INT NOT NULL, map_picked_by_id INT DEFAULT NULL, map_banned_by_id INT DEFAULT NULL, map_winned_by_id INT DEFAULT NULL, map_score VARCHAR(255) DEFAULT NULL, INDEX IDX_93ADAABB167D8328 (map_lib_id), INDEX IDX_93ADAABB7E3A69D0 (map_picked_by_id), INDEX IDX_93ADAABB9BB33509 (map_banned_by_id), INDEX IDX_93ADAABBB5CB4EA0 (map_winned_by_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE map (id INT AUTO_INCREMENT NOT NULL, map_lib_id INT NOT NULL, map_picked_by_id INT DEFAULT NULL, map_banned_by_id INT DEFAULT NULL, map_winned_by_id INT DEFAULT NULL, map_score VARCHAR(255) DEFAULT NULL, map_name_data VARCHAR(255) NOT NULL, INDEX IDX_93ADAABB167D8328 (map_lib_id), INDEX IDX_93ADAABB7E3A69D0 (map_picked_by_id), INDEX IDX_93ADAABB9BB33509 (map_banned_by_id), INDEX IDX_93ADAABBB5CB4EA0 (map_winned_by_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE meta (id INT AUTO_INCREMENT NOT NULL, user_id_id INT NOT NULL, widgets_id INT DEFAULT NULL, meta_key VARCHAR(255) NOT NULL, meta_value LONGTEXT DEFAULT NULL, INDEX IDX_D7F214359D86650F (user_id_id), INDEX IDX_D7F21435A98ED6F4 (widgets_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE overlay (id INT AUTO_INCREMENT NOT NULL, overlay_owner_id INT NOT NULL, current_event_id INT DEFAULT NULL, overlay_name VARCHAR(255) NOT NULL, INDEX IDX_B9FF3CBEADCB7129 (overlay_owner_id), INDEX IDX_B9FF3CBEEC8F92A1 (current_event_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE overlay_user (overlay_id INT NOT NULL, user_id INT NOT NULL, INDEX IDX_4E237622F77080E1 (overlay_id), INDEX IDX_4E237622A76ED395 (user_id), PRIMARY KEY(overlay_id, user_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
