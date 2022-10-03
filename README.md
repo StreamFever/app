@@ -2,6 +2,7 @@
 
 Une application qui permet à quiconque de controller une production audiovisuelle autour d'un événement à distance depuis n'importe quelle appareil.
 
+[![Symfony](https://github.com/StreamCave/app/actions/workflows/symfony.yml/badge.svg)](https://github.com/StreamCave/app/actions/workflows/symfony.yml)
 
 # Collaborateurs :
 
